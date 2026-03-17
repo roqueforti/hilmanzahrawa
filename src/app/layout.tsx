@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import Background from '@/components/Background';
-import Navbar from '@/components/Navbar';
+import Cursor from '@/components/Cursor';
 
 export const metadata: Metadata = {
   title: 'Hilman Zahrawa | Digital Excellence',
@@ -22,9 +22,7 @@ export default function RootLayout({
       </head>
       <body>
         <Background />
-        <div className="nav-wrapper">
-          <Navbar />
-        </div>
+        <Cursor />
         {children}
       </body>
     </html>

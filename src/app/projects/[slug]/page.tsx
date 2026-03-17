@@ -8,8 +8,9 @@ async function getProject(slug: string) {
   return await client.fetch(query, { slug });
 }
 
-export default async function ProjectDetail({ params }: { params: { slug: string } }) {
-  const project = await getProject(params.slug);
+export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = await getProject(slug);
 
   if (!project) return <div className="container section">Project not found</div>;
 

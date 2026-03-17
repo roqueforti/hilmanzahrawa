@@ -8,8 +8,9 @@ async function getExperience(slug: string) {
   return await client.fetch(query, { slug });
 }
 
-export default async function ExperienceDetail({ params }: { params: { slug: string } }) {
-  const exp = await getExperience(params.slug);
+export default async function ExperienceDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const exp = await getExperience(slug);
 
   if (!exp) return <div className="container section">Experience detail not found</div>;
 

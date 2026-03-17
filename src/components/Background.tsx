@@ -63,10 +63,12 @@ const Background: React.FC = () => {
 
     const initBlobs = () => {
       blobs.length = 0;
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(0, 102, 255, 0.08)'));
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(0, 51, 102, 0.05)'));
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(0, 204, 255, 0.06)'));
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(124, 185, 232, 0.05)'));
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(240, 248, 255, 0.1)'));
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(124, 185, 232, 0.03)'));
     };
+
+
 
     const handleResize = () => {
       canvas.width = window.innerWidth;

@@ -2,21 +2,50 @@ export const projectType = {
   name: 'project',
   title: 'Project',
   type: 'document',
+  groups: [
+    { name: 'content', title: 'Content' },
+    { name: 'media', title: 'Media' },
+    { name: 'metadata', title: 'Metadata' },
+  ],
   fields: [
-    { name: 'title', title: 'Title', type: 'string', validation: (Rule: any) => Rule.required() },
-    { name: 'featured', title: 'Featured Project', type: 'boolean', initialValue: false },
+    { name: 'title', title: 'Title', type: 'string', group: 'content', validation: (Rule: any) => Rule.required() },
+    { name: 'featured', title: 'Featured Project', type: 'boolean', initialValue: false, group: 'metadata' },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      group: 'metadata',
       options: { source: 'title', maxLength: 96 },
       validation: (Rule: any) => Rule.required(),
     },
-    { name: 'description', title: 'Description', type: 'text', validation: (Rule: any) => Rule.required() },
-    { name: 'content', title: 'Detailed Content', type: 'array', of: [{ type: 'block' }] },
-    { name: 'image', title: 'Main image', type: 'image', options: { hotspot: true } },
-    { name: 'tags', title: 'Tags', type: 'array', of: [{ type: 'string' }] },
-    { name: 'link', title: 'Project Link', type: 'url' },
+    { name: 'description', title: 'Description', type: 'text', group: 'content', validation: (Rule: any) => Rule.required() },
+    { name: 'content', title: 'Detailed Content', type: 'array', of: [{ type: 'block' }], group: 'content' },
+    { name: 'image', title: 'Main image', type: 'image', group: 'media', options: { hotspot: true } },
+    { 
+      name: 'gallery', 
+      title: 'Gallery', 
+      type: 'array', 
+      group: 'media',
+      of: [{ type: 'image', options: { hotspot: true } }] 
+    },
+    { name: 'tags', title: 'Tags', type: 'array', of: [{ type: 'string' }], group: 'metadata' },
+    { name: 'year', title: 'Project Year', type: 'string', group: 'metadata' },
+    { 
+      name: 'category', 
+      title: 'Category', 
+      type: 'string', 
+      group: 'metadata',
+      options: {
+        list: [
+          { title: 'IT', value: 'it' },
+          { title: 'Design', value: 'design' }
+        ],
+        layout: 'dropdown'
+      },
+      validation: (Rule: any) => Rule.required()
+    },
+    { name: 'subtitle', title: 'Subtitle/Client', type: 'string', group: 'metadata' },
+    { name: 'link', title: 'Project Link', type: 'url', group: 'metadata' },
   ],
 };
 
@@ -24,17 +53,26 @@ export const bioType = {
   name: 'bio',
   title: 'Biography',
   type: 'document',
+  groups: [
+    { name: 'profile', title: 'Profile' },
+    { name: 'contact', title: 'Contact' },
+    { name: 'social', title: 'Social' },
+    { name: 'skills', title: 'Skills' },
+  ],
   fields: [
-    { name: 'name', title: 'Name', type: 'string' },
-    { name: 'headline', title: 'Headline', type: 'string' },
-    { name: 'about', title: 'About Me', type: 'text' },
-    { name: 'experienceSummary', title: 'Experience Summary', type: 'string' },
-    { name: 'location', title: 'Location', type: 'string' },
-    { name: 'avatar', title: 'Profile Picture', type: 'image', options: { hotspot: true } },
+    { name: 'name', title: 'Name', type: 'string', group: 'profile' },
+    { name: 'headline', title: 'Headline', type: 'string', group: 'profile' },
+    { name: 'about', title: 'About Me', type: 'text', group: 'profile' },
+    { name: 'experienceSummary', title: 'Experience Summary', type: 'string', group: 'profile' },
+    { name: 'location', title: 'Location', type: 'string', group: 'contact' },
+    { name: 'email', title: 'Email Address', type: 'string', group: 'contact' },
+    { name: 'whatsapp', title: 'WhatsApp Number', type: 'string', description: 'Enter number with country code, e.g. 628123456789', group: 'contact' },
+    { name: 'avatar', title: 'Profile Picture', type: 'image', group: 'profile', options: { hotspot: true } },
     {
       name: 'socialLinks',
       title: 'Social Links',
       type: 'array',
+      group: 'social',
       of: [
         {
           type: 'object',
@@ -50,6 +88,7 @@ export const bioType = {
       name: 'skills',
       title: 'Skills & Tech Stack',
       type: 'array',
+      group: 'skills',
       of: [{ type: 'string' }],
     },
   ],
@@ -112,4 +151,16 @@ export const certificationType = {
   ],
 };
 
-export const schemaTypes = [projectType, bioType, experienceType, educationType, honorType, certificationType];
+const certificateType = {
+  name: 'certificate',
+  title: 'Certificate',
+  type: 'document',
+  fields: [
+    { name: 'title', title: 'Certificate Title', type: 'string' },
+    { name: 'issuer', title: 'Issuer', type: 'string' },
+    { name: 'date', title: 'Date Received', type: 'string' },
+    { name: 'image', title: 'Certificate Image', type: 'image', options: { hotspot: true } },
+  ],
+};
+
+export const schemaTypes = [projectType, bioType, experienceType, educationType, honorType, certificateType];
