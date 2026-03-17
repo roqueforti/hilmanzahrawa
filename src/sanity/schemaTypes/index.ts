@@ -31,6 +31,20 @@ export const projectType = {
     { name: 'tags', title: 'Tags', type: 'array', of: [{ type: 'string' }], group: 'metadata' },
     { name: 'year', title: 'Project Year', type: 'string', group: 'metadata' },
     { name: 'role', title: 'My Role / Position', type: 'string', group: 'metadata', description: 'e.g. Lead Developer, UI/UX Designer, System Architect' },
+    {
+      name: 'deviceType',
+      title: 'Device Display Style',
+      type: 'string',
+      group: 'metadata',
+      options: {
+        list: [
+          { title: 'Desktop (Wide)', value: 'desktop' },
+          { title: 'Mobile (Portrait)', value: 'mobile' },
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'desktop'
+    },
     { 
       name: 'category', 
       title: 'Category', 

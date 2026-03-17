@@ -2,13 +2,40 @@
 
 import { client, urlFor } from "@/sanity/client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design'>('it');
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [scrollTopPos, setScrollTopPos] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartY(e.pageY - sliderRef.current.offsetTop);
+    setScrollTopPos(sliderRef.current.scrollTop);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const y = e.pageY - sliderRef.current.offsetTop;
+    const walk = (y - startY) * 2; // Scroll speed
+    sliderRef.current.scrollTop = scrollTopPos - walk;
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -23,7 +50,7 @@ export default function Home() {
     async function fetchData() {
       const query = `{
         "projects": *[_type == "project"] | order(_createdAt desc) {
-          _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role,
+          _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
           "gallery": gallery[].asset->url
         },
         "bio": *[_type == "bio"][0] {
@@ -256,10 +283,19 @@ export default function Home() {
                     </div>
                     
                     {/* Social Links on About Page */}
-                    <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                       {displayBio.socialLinks.map((link: any) => (
                         <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--pocari-blue-soft)', textDecoration: 'none', textTransform: 'lowercase' }}>{link.platform}</a>
                       ))}
+                    </div>
+
+                    <div style={{ marginTop: '3rem' }}>
+                      <span className="text-meta-compact" style={{ display: 'block', marginBottom: '1.2rem' }}>Expertise</span>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
+                        {displayBio.skills.map((skill: string) => (
+                          <span key={skill} style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.3rem 0.8rem', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', textTransform: 'lowercase' }}>{skill}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -281,7 +317,7 @@ export default function Home() {
                     style={{ cursor: 'pointer' }}
                   >
                     <div className="img-wrapper">
-                      {project.image ? <img src={urlFor(project.image).width(400).url()} alt={project.title} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>⚙️</div>}
+                      {project.image ? <img src={urlFor(project.image).width(800).url()} alt={project.title} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>⚙️</div>}
                     </div>
                     <div className="content">
                       <div className="metadata-row">
@@ -315,7 +351,7 @@ export default function Home() {
                     style={{ cursor: 'pointer' }}
                   >
                     <div className="img-wrapper">
-                      {project.image ? <img src={urlFor(project.image).width(400).url()} alt={project.title} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>🎨</div>}
+                      {project.image ? <img src={urlFor(project.image).width(800).url()} alt={project.title} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>🎨</div>}
                     </div>
                     <div className="content">
                       <div className="metadata-row">
@@ -374,9 +410,26 @@ export default function Home() {
               </button>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: '4rem' }}>
-                {/* Media Column */}
-                <div>
-                  <div className="slider-container" style={{ width: '100%', height: '75vh', background: '#111', overflow: 'hidden', position: 'relative' }}>
+                {/* Media Column - Mobile Optimized */}
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: selectedProject.deviceType === 'mobile' ? 'center' : 'stretch' 
+                }}>
+                  <div 
+                    className="slider-outer-container" 
+                    style={{ 
+                      width: '100%', 
+                      maxWidth: selectedProject.deviceType === 'mobile' ? '400px' : 'none',
+                      height: selectedProject.deviceType === 'mobile' ? '85vh' : '65vh', 
+                      background: '#111', 
+                      position: 'relative', 
+                      overflow: 'hidden',
+                      borderRadius: '0',
+                      border: selectedProject.deviceType === 'mobile' ? '1px solid #333' : 'none',
+                      boxShadow: selectedProject.deviceType === 'mobile' ? '0 30px 60px rgba(0,0,0,0.5)' : 'none'
+                    }}
+                  >
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={currentImageIndex}
@@ -384,7 +437,19 @@ export default function Home() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
-                        style={{ width: '100%', height: '100%' }}
+                        ref={sliderRef}
+                        onMouseDown={handleMouseDown}
+                        onMouseLeave={handleMouseLeave}
+                        onMouseUp={handleMouseUp}
+                        onMouseMove={handleMouseMove}
+                        style={{ 
+                          width: '100%', 
+                          height: '100%', 
+                          overflowY: 'auto',
+                          cursor: isDragging ? 'grabbing' : 'grab',
+                          userSelect: isDragging ? 'none' : 'auto'
+                        }}
+                        className="custom-scrollbar"
                       >
                         {(() => {
                           const gallery = selectedProject.gallery || [];
@@ -393,14 +458,54 @@ export default function Home() {
 
                           if (currentImg) {
                             const imgUrl = typeof currentImg === 'string' ? currentImg : urlFor(currentImg).width(1200).url();
-                            return <img src={imgUrl} alt={`${selectedProject.title} ${currentImageIndex + 1}`} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'top' }} />;
+                            return (
+                              <div style={{ width: '100%', position: 'relative' }}>
+                                <img 
+                                  src={imgUrl} 
+                                  alt={`${selectedProject.title} ${currentImageIndex + 1}`} 
+                                  draggable="false"
+                                  onDragStart={(e) => e.preventDefault()}
+                                  style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    display: 'block',
+                                    userSelect: 'none',
+                                    pointerEvents: isDragging ? 'none' : 'auto'
+                                  }} 
+                                />
+                                <a 
+                                  href={imgUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  style={{
+                                    position: 'absolute',
+                                    top: '1rem',
+                                    right: '1rem',
+                                    background: 'rgba(0,0,0,0.6)',
+                                    color: 'white',
+                                    padding: '0.4rem 0.8rem',
+                                    borderRadius: '50px',
+                                    fontSize: '0.65rem',
+                                    fontWeight: 800,
+                                    textDecoration: 'none',
+                                    backdropFilter: 'blur(5px)',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    zIndex: 20,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.05em'
+                                  }}
+                                >
+                                  Full View ↗
+                                </a>
+                              </div>
+                            );
                           }
                           return <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>📽️</div>;
                         })()}
                       </motion.div>
                     </AnimatePresence>
 
-                    {/* Slider Controls */}
+                    {/* Slider Controls - Fixed outside the scrolling container */}
                     {(() => {
                       const gallery = selectedProject.gallery || [];
                       const images = gallery.length > 0 ? gallery : [selectedProject.image];
@@ -409,17 +514,17 @@ export default function Home() {
                           <>
                             <button 
                               onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
-                              style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', width: '2.5rem', height: '2.5rem', borderRadius: '50%', cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}
+                              style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.4)', border: 'none', color: 'white', width: '2.5rem', height: '2.5rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', backdropFilter: 'blur(4px)' }}
                             >
                               ←
                             </button>
                             <button 
                               onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
-                              style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', width: '2.5rem', height: '2.5rem', borderRadius: '50%', cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}
+                              style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.4)', border: 'none', color: 'white', width: '2.5rem', height: '2.5rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', backdropFilter: 'blur(4px)' }}
                             >
                               →
                             </button>
-                            <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'rgba(0,0,0,0.7)', color: 'white', padding: '0.3rem 0.8rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em' }}>
+                            <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'rgba(0,0,0,0.7)', color: 'white', padding: '0.3rem 0.8rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', zIndex: 30 }}>
                               {currentImageIndex + 1} / {images.length}
                             </div>
                           </>
@@ -428,15 +533,17 @@ export default function Home() {
                       return null;
                     })()}
                   </div>
-                  <div style={{ marginTop: '2rem' }}>
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', textTransform: 'uppercase' }}>{selectedProject.title}</h3>
-                    <p style={{ fontSize: '0.9rem', color: '#888', marginTop: '0.5rem' }}>{selectedProject.description}</p>
-                    <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                      {selectedProject.tags?.map((t: string) => (
-                        <span key={t} style={{ fontSize: '0.7rem', color: 'var(--pocari-blue-soft)', fontWeight: 800, textTransform: 'uppercase' }}>#{t}</span>
-                      ))}
+                  {selectedProject.deviceType !== 'mobile' && (
+                    <div style={{ marginTop: '2rem' }}>
+                      <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', textTransform: 'uppercase' }}>{selectedProject.title}</h3>
+                      <p style={{ fontSize: '0.9rem', color: '#888', marginTop: '0.5rem' }}>{selectedProject.description}</p>
+                      <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                        {selectedProject.tags?.map((t: string) => (
+                          <span key={t} style={{ fontSize: '0.7rem', color: 'var(--pocari-blue-soft)', fontWeight: 800, textTransform: 'uppercase' }}>#{t}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                   {/* Credits Column */}
@@ -460,6 +567,18 @@ export default function Home() {
                       <div>
                         <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: '0.3rem' }}>Link</span>
                         <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--pocari-blue-soft)', fontWeight: 700, textDecoration: 'none' }}>Live Site ↗</a>
+                      </div>
+                    )}
+
+                    {selectedProject.deviceType === 'mobile' && (
+                      <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2.5rem' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'white', textTransform: 'uppercase', lineHeight: '1.3' }}>{selectedProject.title}</h3>
+                        <p style={{ fontSize: '0.85rem', color: '#888', marginTop: '1rem', lineHeight: '1.6' }}>{selectedProject.description}</p>
+                        <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                          {selectedProject.tags?.map((t: string) => (
+                            <span key={t} style={{ fontSize: '0.65rem', color: 'var(--pocari-blue-soft)', fontWeight: 800, textTransform: 'uppercase' }}>#{t}</span>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
