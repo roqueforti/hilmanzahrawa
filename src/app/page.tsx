@@ -23,7 +23,7 @@ export default function Home() {
     async function fetchData() {
       const query = `{
         "projects": *[_type == "project"] | order(_createdAt desc) {
-          _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category,
+          _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role,
           "gallery": gallery[].asset->url
         },
         "bio": *[_type == "bio"][0] {
@@ -446,7 +446,7 @@ export default function Home() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
                       <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: '0.3rem' }}>Position</span>
-                      <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 500 }}>{selectedProject.category === 'it' ? 'Lead Developer' : 'UI/UX Designer'}</span>
+                      <span style={{ fontSize: '0.8rem', color: 'white', fontWeight: 500 }}>{selectedProject.role || (selectedProject.category === 'it' ? 'Lead Developer' : 'UI/UX Designer')}</span>
                     </div>
                     <div>
                       <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: '0.3rem' }}>Client / Subtitle</span>
