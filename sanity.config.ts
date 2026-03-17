@@ -5,7 +5,7 @@ import { schemaTypes } from './src/sanity/schemaTypes';
 
 export default defineConfig({
   name: 'default',
-  title: 'Portfolio Studio',
+  title: 'Hilman Zahrawa Studio',
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'dummy',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
