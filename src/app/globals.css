@@ -288,7 +288,15 @@ body {
 .compact-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem 1.5rem; /* Tighter gap */
+  grid-auto-columns: 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  justify-items: stretch;
+  grid-auto-rows: minmax(0, auto);
+}
+
+.compact-grid > * {
+  width: 100%;
 }
 
 @media (max-width: 1200px) { .compact-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -296,13 +304,18 @@ body {
 @media (max-width: 480px) { .compact-grid { grid-template-columns: 1fr; } }
 
 .card-compact {
-  border: none; /* No border for bleeding look */
+  border: none;
   background: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  min-width: 0;
 }
 
 .card-compact:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
 .card-compact:hover .img-wrapper {
@@ -310,12 +323,12 @@ body {
 }
 
 .card-compact .img-wrapper {
-  aspect-ratio: 16/10;
+  height: 150px;
   overflow: hidden;
   background: var(--pocari-blue-airy);
   filter: grayscale(100%); /* High-end aesthetic */
-  transition: filter 0.5s ease;
-  margin-bottom: 0.75rem;
+  transition: filter 0.4s ease;
+  margin-bottom: 0.4rem;
 }
 
 .card-compact img {
@@ -323,6 +336,57 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+.card-compact .content {
+  padding: 0;
+}
+
+.card-compact .metadata-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.card-compact .metadata-row.secondary {
+  margin-top: 0.15rem;
+  opacity: 0.4;
+}
+
+.card-compact .title {
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-compact .year {
+  font-size: 0.55rem;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+.card-compact .subtitle {
+  font-size: 0.55rem;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-compact .tags {
+  display: flex;
+  gap: 0.25rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .card-compact .content {

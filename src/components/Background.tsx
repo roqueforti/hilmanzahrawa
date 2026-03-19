@@ -109,7 +109,7 @@ const Background: React.FC = () => {
         height: '100%',
         zIndex: -1,
         pointerEvents: 'none',
-        background: '#ffffff'
+        background: '#050505'
       }}
     />
   );

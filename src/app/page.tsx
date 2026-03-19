@@ -105,9 +105,22 @@ export default function Home() {
     { _id: "5", title: "Mandala Pure Love", year: "2025", subtitle: "Community", tags: ["Social"], description: "Pemberdayaan masyarakat dan pengembangan sociopreneurship.", slug: "mandala", category: 'it' },
   ];
 
+  // Sort by year (newest first), then by ID (oldest/lowest first)
+  const sortedProjects = [...displayProjects].sort((a: any, b: any) => {
+    const yearA = parseInt(a.year || "0", 10);
+    const yearB = parseInt(b.year || "0", 10);
+    if (yearB !== yearA) {
+      return yearB - yearA; // Year descending (newest first)
+    }
+    // If same year, sort by ID ascending (oldest ID first)
+    const idA = parseInt(a._id || "999", 10);
+    const idB = parseInt(b._id || "999", 10);
+    return idA - idB;
+  });
+
   // Sorting projects for sections (Simple filter for demo, usually via Sanity tags)
-  const itProjects = displayProjects.filter((p: any) => p.tags?.some((t: string) => ['SaaS', 'LMS', 'Web', 'Dev', 'SQL', 'IT'].includes(t)) || p.category === 'it');
-  const designProjects = displayProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
+  const itProjects = sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['SaaS', 'LMS', 'Web', 'Dev', 'SQL', 'IT'].includes(t)) || p.category === 'it');
+  const designProjects = sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
 
   const containerVariants: any = {
     hidden: { opacity: 0, y: 10 },
