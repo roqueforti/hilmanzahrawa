@@ -57,7 +57,7 @@ export default function Cursor() {
           top: 0,
           width: '6px',
           height: '6px',
-          backgroundColor: 'var(--pocari-blue-deep)',
+          backgroundColor: 'var(--accent)',
           borderRadius: '50%',
           zIndex: 20000,
           pointerEvents: 'none',
@@ -77,7 +77,7 @@ export default function Cursor() {
           top: 0,
           width: '32px',
           height: '32px',
-          border: '1.5px solid var(--pocari-blue-soft)',
+          border: '1.5px solid white',
           borderRadius: '50%',
           zIndex: 19999,
           pointerEvents: 'none',
@@ -85,7 +85,7 @@ export default function Cursor() {
           y: circleY,
           translateX: '-50%',
           translateY: '-50%',
-          opacity: 0.6,
+          opacity: 0.2,
         }}
       />
     </>

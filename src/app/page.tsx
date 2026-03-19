@@ -77,7 +77,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  if (!data) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}><motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} style={{ width: 40, height: 40, border: '4px solid var(--pocari-blue-soft)', borderTopColor: 'transparent', borderRadius: '50%' }} /></div>;
+  if (!data) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}><motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} style={{ width: 40, height: 40, border: '4px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%' }} /></div>;
 
   const { projects, bio, experiences, education, honors } = data;
   
@@ -129,65 +129,50 @@ export default function Home() {
   };
 
   return (
-    <main style={{ background: 'white', minHeight: '100vh' }}>
+    <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
       <nav className="switcher-nav">
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.6rem' }}>
-            <div style={{ fontWeight: 900, textTransform: 'lowercase', fontSize: '0.8rem', letterSpacing: '0.05em' }}>
-              {displayBio.name}
-            </div>
-            
-            {/* The Work Toggle Label */}
-            <div 
-              className={`work-toggle ${activeTab !== 'umum' ? 'active' : ''}`}
-              onClick={() => {
-                if (activeTab === 'umum') {
-                  setActiveTab('it');
-                } else {
-                  setActiveTab(activeTab === 'it' ? 'design' : 'it');
-                }
-              }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={activeTab === 'umum' ? 'it' : activeTab}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ display: 'inline-block' }}
-                >
-                  {activeTab === 'umum' ? 'it' : activeTab}
-                </motion.span>
-              </AnimatePresence>
-            </div>
+        <div className="container">
+          <div className="nav-brand">
+            <span className="name">{displayBio.name}</span>
+            <span className="tagline">Developer / Designer</span>
           </div>
-
-          <div>
+          
+          <div className="nav-links">
+            <button 
+              className={`work-toggle ${activeTab === 'it' ? 'active' : ''}`}
+              onClick={() => setActiveTab('it')}
+            >
+              it
+            </button>
+            <button 
+              className={`work-toggle ${activeTab === 'design' ? 'active' : ''}`}
+              onClick={() => setActiveTab('design')}
+            >
+              design
+            </button>
             <button 
               className={`switcher-btn ${activeTab === 'umum' ? 'active' : ''}`}
               onClick={() => setActiveTab('umum')}
             >
-              About
+              about
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="container" style={{ paddingTop: '4rem', paddingBottom: '10rem' }}>
+      <div className="container" style={{ paddingTop: '5rem', paddingBottom: '4rem' }}>
         <AnimatePresence mode="wait">
           {activeTab === 'umum' && (
             <motion.div key="umum" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-              {/* Ritchie style About: Minimal, side image */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '6rem', alignItems: 'start', padding: '4rem 0' }}>
+              <div className="grid-responsive" style={{ marginTop: '3rem' }}>
                 <div>
                   <span className="text-meta-compact" style={{ marginBottom: '1.5rem', display: 'block' }}>About</span>
-                  <p style={{ maxWidth: '650px', color: 'var(--text-primary)', fontSize: '1.4rem', lineHeight: 1.4, marginBottom: '3rem', fontWeight: 500 }}>
+                  <p className="bio-headline">
                     {displayBio.about}
                   </p>
                   
                   {/* Row 1: Experience & Education */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
+                  <div className="grid-split">
                     <div>
                       <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Experience</h2>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -220,7 +205,7 @@ export default function Home() {
                   </div>
 
                   {/* Row 2: Achievements & Organizations */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginTop: '4rem' }}>
+                  <div className="grid-split" style={{ marginTop: '2.5rem' }}>
                     <div>
                       <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Achievements</h2>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -283,22 +268,22 @@ export default function Home() {
                 </div>
 
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ width: '100%', aspectRatio: '4/5', overflow: 'hidden', background: 'var(--pocari-blue-airy)', filter: 'grayscale(100%)' }}>
-                    {displayBio.avatarUrl && <img src={displayBio.avatarUrl} alt={displayBio.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                  <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', background: 'var(--bg-secondary)', filter: 'grayscale(100%) brightness(0.8)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-light)' }}>
+                    {displayBio.avatarUrl && <img src={displayBio.avatarUrl} alt={displayBio.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />}
                   </div>
                   <div style={{ marginTop: '2rem', textAlign: 'left' }}>
                     <span className="text-meta-compact" style={{ display: 'block', marginBottom: '1rem' }}>Contact</span>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      <a href={`mailto:${displayBio.email}`} style={{ fontSize: '0.85rem', textDecoration: 'none', color: 'var(--text-primary)', fontWeight: 700 }}>{displayBio.email}</a>
+                      <a href={`mailto:${displayBio.email}`} style={{ fontSize: '0.85rem', textDecoration: 'none', color: 'white', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{displayBio.email}</a>
                       {displayBio.whatsapp && (
-                        <a href={`https://wa.me/${displayBio.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', textDecoration: 'none', color: 'var(--pocari-blue-soft)', fontWeight: 700 }}>WhatsApp: +{displayBio.whatsapp}</a>
+                        <a href={`https://wa.me/${displayBio.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', textDecoration: 'none', color: 'var(--accent)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>WhatsApp: +{displayBio.whatsapp}</a>
                       )}
                     </div>
                     
                     {/* Social Links on About Page */}
                     <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                       {displayBio.socialLinks.map((link: any) => (
-                        <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--pocari-blue-soft)', textDecoration: 'none', textTransform: 'lowercase' }}>{link.platform}</a>
+                        <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>{link.platform}</a>
                       ))}
                     </div>
 
@@ -306,7 +291,7 @@ export default function Home() {
                       <span className="text-meta-compact" style={{ display: 'block', marginBottom: '1.2rem' }}>Expertise</span>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                         {displayBio.skills.map((skill: string) => (
-                          <span key={skill} style={{ fontSize: '0.65rem', fontWeight: 800, padding: '0.3rem 0.8rem', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', textTransform: 'lowercase' }}>{skill}</span>
+                          <span key={skill} style={{ fontSize: '0.65rem', fontWeight: 600, padding: '0.4rem 0.8rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>{skill}</span>
                         ))}
                       </div>
                     </div>
@@ -318,8 +303,8 @@ export default function Home() {
 
           {activeTab === 'it' && (
             <motion.div key="it" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-              <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '0.8rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Selected IT Projects</h2>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h2 className="text-heading-compact">Selected IT Projects</h2>
               </div>
               <div className="compact-grid">
                 {itProjects.map((project: any) => (
@@ -337,10 +322,10 @@ export default function Home() {
                         <h4 className="title">{project.title}</h4>
                         <span className="year">{project.year || (new Date().getFullYear())}</span>
                       </div>
-                      <div className="metadata-row secondary">
+                      <div className="metadata-row secondary" style={{ marginTop: '0.1rem' }}>
                         <p className="subtitle">{project.subtitle || project.description}</p>
-                        <div className="tags">
-                          {project.tags?.slice(0, 2).map((t: string) => <span key={t}>#{t}</span>)}
+                        <div className="tags" style={{ textAlign: 'right', textTransform: 'uppercase' }}>
+                          {project.category || (project.tags && project.tags[0]) || 'Project'}
                         </div>
                       </div>
                     </div>
@@ -352,8 +337,8 @@ export default function Home() {
 
           {activeTab === 'design' && (
             <motion.div key="design" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-              <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '0.8rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Visual Works</h2>
+              <div style={{ marginBottom: '1.2rem' }}>
+                <h2 className="text-heading-compact">Visual Works</h2>
               </div>
               <div className="compact-grid">
                 {designProjects.map((project: any) => (
@@ -371,8 +356,11 @@ export default function Home() {
                         <h4 className="title">{project.title}</h4>
                         <span className="year">{project.year || (new Date().getFullYear())}</span>
                       </div>
-                      <div className="metadata-row secondary">
+                      <div className="metadata-row secondary" style={{ marginTop: '0.1rem' }}>
                         <p className="subtitle">{project.subtitle || project.description}</p>
+                        <div className="tags" style={{ textAlign: 'right', textTransform: 'uppercase' }}>
+                          {project.category || 'Visual'}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -396,10 +384,10 @@ export default function Home() {
               left: 0, 
               width: '100%', 
               height: '100%', 
-              background: '#0a0a0a', 
+              background: 'var(--bg-primary)', 
               zIndex: 10000,
               padding: '2rem',
-              color: '#d1d1d1',
+              color: 'var(--text-primary)',
               overflowY: 'auto'
             }}
           >
@@ -422,7 +410,7 @@ export default function Home() {
                 ✕
               </button>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: '4rem' }}>
+              <div className="grid-responsive">
                 {/* Media Column - Mobile Optimized */}
                 <div style={{ 
                   display: 'flex', 
@@ -435,12 +423,12 @@ export default function Home() {
                       width: '100%', 
                       maxWidth: selectedProject.deviceType === 'mobile' ? '400px' : 'none',
                       height: selectedProject.deviceType === 'mobile' ? '85vh' : '65vh', 
-                      background: '#111', 
+                      background: 'var(--bg-secondary)', 
                       position: 'relative', 
                       overflow: 'hidden',
-                      borderRadius: '0',
-                      border: selectedProject.deviceType === 'mobile' ? '1px solid #333' : 'none',
-                      boxShadow: selectedProject.deviceType === 'mobile' ? '0 30px 60px rgba(0,0,0,0.5)' : 'none'
+                      borderRadius: 'var(--radius-lg)',
+                      border: '1px solid var(--border-light)',
+                      boxShadow: '0 30px 60px rgba(0,0,0,0.5)'
                     }}
                   >
                     <AnimatePresence mode="wait">
@@ -552,7 +540,7 @@ export default function Home() {
                       <p style={{ fontSize: '0.9rem', color: '#888', marginTop: '0.5rem' }}>{selectedProject.description}</p>
                       <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                         {selectedProject.tags?.map((t: string) => (
-                          <span key={t} style={{ fontSize: '0.7rem', color: 'var(--pocari-blue-soft)', fontWeight: 800, textTransform: 'uppercase' }}>#{t}</span>
+                          <span key={t} style={{ fontSize: '0.7rem', color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>#{t}</span>
                         ))}
                       </div>
                     </div>
@@ -578,8 +566,8 @@ export default function Home() {
                     </div>
                     {selectedProject.link && (
                       <div>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: '0.3rem' }}>Link</span>
-                        <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--pocari-blue-soft)', fontWeight: 700, textDecoration: 'none' }}>Live Site ↗</a>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '0.3rem', fontFamily: 'var(--font-mono)' }}>Link</span>
+                        <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}>Live Site ↗</a>
                       </div>
                     )}
 
@@ -589,7 +577,7 @@ export default function Home() {
                         <p style={{ fontSize: '0.85rem', color: '#888', marginTop: '1rem', lineHeight: '1.6' }}>{selectedProject.description}</p>
                         <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
                           {selectedProject.tags?.map((t: string) => (
-                            <span key={t} style={{ fontSize: '0.65rem', color: 'var(--pocari-blue-soft)', fontWeight: 800, textTransform: 'uppercase' }}>#{t}</span>
+                            <span key={t} style={{ fontSize: '0.65rem', color: 'var(--accent)', fontWeight: 800, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>#{t}</span>
                           ))}
                         </div>
                       </div>
@@ -602,12 +590,12 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--border-light)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.5 }}>
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'lowercase' }}>© 2026 {displayBio.name}</span>
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
+      <footer style={{ padding: '6rem 0', borderTop: '1px solid var(--border-light)', background: 'var(--bg-secondary)' }}>
+        <div className="container footer-container">
+          <span style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>© 2026 {displayBio.name}</span>
+          <div style={{ display: 'flex', gap: '2rem' }}>
             {displayBio.socialLinks.map((link: any) => (
-              <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'lowercase' }}>{link.platform}</a>
+              <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>{link.platform}</a>
             ))}
           </div>
         </div>

@@ -63,9 +63,9 @@ const Background: React.FC = () => {
 
     const initBlobs = () => {
       blobs.length = 0;
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(124, 185, 232, 0.05)'));
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(240, 248, 255, 0.1)'));
-      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(124, 185, 232, 0.03)'));
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(187, 134, 252, 0.08)')); // accent purple
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(0, 242, 255, 0.05)'));  // accent cyan
+      blobs.push(new Blob(canvas.width, canvas.height, 'rgba(255, 255, 255, 0.02)'));
     };
 
 
@@ -109,7 +109,7 @@ const Background: React.FC = () => {
         height: '100%',
         zIndex: -1,
         pointerEvents: 'none',
-        background: '#050505'
+        background: '#080808'
       }}
     />
   );
