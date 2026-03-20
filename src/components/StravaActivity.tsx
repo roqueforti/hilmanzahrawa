@@ -181,7 +181,24 @@ export default function StravaActivity({ activities, stats, profile, clubs }: St
     prevCountRef.current = displayedActivities.length;
   }, [displayedActivities.length]);
 
-  if (!hasData) return null;
+  if (!hasData) {
+    return (
+      <div style={{ 
+        padding: '4rem 2rem', 
+        textAlign: 'center', 
+        background: 'var(--bg-secondary)', 
+        borderRadius: 'var(--radius-lg)', 
+        border: '1px dashed var(--border-light)',
+        marginTop: '3rem'
+      }}>
+        <Activity size={40} className="text-accent" style={{ opacity: 0.3, marginBottom: '1.5rem', margin: '0 auto' }} />
+        <h3 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>No Strava Activities Found</h3>
+        <p style={{ fontSize: '0.75rem', opacity: 0.6, maxWidth: '400px', margin: '0 auto', lineHeight: '1.5' }}>
+          Connect your Strava account by adding the required environment variables to your deployment settings.
+        </p>
+      </div>
+    );
+  }
 
   // Animation calculation for the path growth
   const prevCount = prevCountRef.current;
