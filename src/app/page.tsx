@@ -135,7 +135,9 @@ export default function Home() {
       { platform: "LinkedIn", url: "https://linkedin.com/in/hilmanzahrawa" },
       { platform: "Portfolio", url: "https://hilmanzahrawa.vercel.app" }
     ],
-    skills: bio?.skills || ["Java", "PHP", "Laravel", "SQL", "Python", "JavaScript", "HTML", "CSS", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Power BI", "Looker Studio"],
+    skills: typeof bio?.skills === 'string' 
+      ? bio.skills.split(',').map((s: string) => s.trim()).filter(Boolean)
+      : (bio?.skills || ["Java", "PHP", "Laravel", "SQL", "Python", "JavaScript", "HTML", "CSS", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Power BI", "Looker Studio"]),
     mediumUsername: bio?.mediumUsername
   };
 

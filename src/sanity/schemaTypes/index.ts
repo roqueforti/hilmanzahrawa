@@ -138,9 +138,9 @@ export const bioType = {
     {
       name: 'skills',
       title: 'Skills & Tech Stack',
-      type: 'array',
+      type: 'text',
       group: 'skills',
-      of: [{ type: 'string' }],
+      description: 'Separate skills with commas (e.g., React, Next.js, Tailwind)',
     },
     { name: 'mediumUsername', title: 'Medium Username', type: 'string', group: 'profile', description: 'e.g. @username' },
   ],
