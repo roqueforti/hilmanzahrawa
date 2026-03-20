@@ -82,10 +82,12 @@ export default function Home() {
           ...,
           itProjectsOrder[]->{
             _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
+            mediaType, videoUrl, layoutSize,
             "gallery": gallery[].asset->url
           },
           designProjectsOrder[]->{
             _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
+            mediaType, videoUrl, layoutSize,
             "gallery": gallery[].asset->url
           }
         }
@@ -599,6 +601,12 @@ export default function Home() {
                         className="custom-scrollbar"
                       >
                         {(() => {
+                          console.log("Selected Project Details:", {
+                            title: selectedProject.title,
+                            mediaType: selectedProject.mediaType,
+                            videoUrl: selectedProject.videoUrl,
+                            image: !!selectedProject.image
+                          });
                           if (selectedProject.mediaType === 'video' && selectedProject.videoUrl) {
                             let embedUrl = selectedProject.videoUrl;
                             if (embedUrl.includes('youtube.com/watch?v=')) {
