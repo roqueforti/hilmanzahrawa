@@ -4,12 +4,19 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const [activities, profile, clubs] = await Promise.all([
-      getStravaActivities(),
-      getStravaProfile(),
-      getStravaClubs()
+      getStravaActivities().catch(() => []),
+      getStravaProfile().catch(() => null),
+      getStravaClubs().catch(() => [])
     ]);
 
-    const stats = await getStravaStats(profile.id);
+    let stats = null;
+    if (profile?.id) {
+      try {
+        stats = await getStravaStats(profile.id);
+      } catch (e) {
+        console.error("Stats fetch failed", e);
+      }
+    }
 
     return NextResponse.json({ 
       activities,

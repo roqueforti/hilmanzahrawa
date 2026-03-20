@@ -6,24 +6,35 @@ const TOKEN_ENDPOINT = `https://www.strava.com/oauth/token`;
 const ACTIVITIES_ENDPOINT = `https://www.strava.com/api/v3/athlete/activities`;
 
 const getAccessToken = async () => {
-  const response = await fetch(TOKEN_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      client_id: client_id!,
-      client_secret: client_secret!,
-      refresh_token: refresh_token!,
-      grant_type: 'refresh_token',
-    }),
-  });
+  try {
+    const response = await fetch(TOKEN_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        client_id: client_id!,
+        client_secret: client_secret!,
+        refresh_token: refresh_token!,
+        grant_type: 'refresh_token',
+      }),
+    });
 
-  return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      console.error("Strava Token Exchange Error:", data);
+      return { access_token: null };
+    }
+    return data;
+  } catch (error) {
+    console.error("Strava Fetch Error:", error);
+    return { access_token: null };
+  }
 };
 
 export const getStravaActivities = async () => {
   const { access_token } = await getAccessToken();
+  if (!access_token) return [];
 
   // Filter from November 1st, 2025 (Epoch: 1730419200)
   const after = 1730419200;
@@ -63,6 +74,7 @@ export const getStravaActivities = async () => {
 };
 export const getStravaProfile = async () => {
   const { access_token } = await getAccessToken();
+  if (!access_token) return null;
   const response = await fetch(`https://www.strava.com/api/v3/athlete`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
@@ -73,6 +85,7 @@ export const getStravaProfile = async () => {
 
 export const getStravaStats = async (athleteId: number) => {
   const { access_token } = await getAccessToken();
+  if (!access_token) return null;
   const response = await fetch(`https://www.strava.com/api/v3/athletes/${athleteId}/stats`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
@@ -83,6 +96,7 @@ export const getStravaStats = async (athleteId: number) => {
 
 export const getStravaClubs = async () => {
   const { access_token } = await getAccessToken();
+  if (!access_token) return null;
   const response = await fetch(`https://www.strava.com/api/v3/athlete/clubs`, {
     headers: {
       Authorization: `Bearer ${access_token}`,

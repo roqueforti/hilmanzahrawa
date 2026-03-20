@@ -229,6 +229,26 @@ export default function StravaActivity({ activities, stats, profile, clubs }: St
           .snake-grid { grid-template-columns: 1fr; gap: 3rem; }
           .snake-svg { display: none; }
         }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          margin-bottom: 4rem;
+        }
+
+        @media (max-width: 1023px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+        }
       `}} />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '4rem' }}>
@@ -241,7 +261,7 @@ export default function StravaActivity({ activities, stats, profile, clubs }: St
         </div>
       </div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
+      <div className="stats-grid">
         {/* Stats Dashboard */}
         <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', padding: '1.5rem', borderRadius: 'var(--radius-lg)' }}>
           <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', marginBottom: '1rem' }}>
