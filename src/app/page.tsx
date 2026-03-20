@@ -69,10 +69,29 @@ export default function Home() {
         },
         "certificates": *[_type == "certificate"] | order(date desc) {
           _id, title, issuer, date, "imageUrl": image.asset->url
+        },
+        "organizations": *[_type == "organization"] | order(startDate desc) {
+          _id, role, organization, period
+        },
+        "landingPage": *[_type == "landingPage"][0] {
+          ...,
+          itProjectsOrder[]->{
+            _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
+            "gallery": gallery[].asset->url
+          },
+          designProjectsOrder[]->{
+            _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
+            "gallery": gallery[].asset->url
+          }
         }
       }`;
       const result = await client.fetch(query);
       setData(result);
+      
+      // Set initial tab based on landing page sections if available
+      if (result.landingPage?.sections?.length > 0) {
+        setActiveTab(result.landingPage.sections[0].type);
+      }
     }
     fetchData();
   }, []);
@@ -118,9 +137,14 @@ export default function Home() {
     return idA - idB;
   });
 
-  // Sorting projects for sections (Simple filter for demo, usually via Sanity tags)
-  const itProjects = sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['SaaS', 'LMS', 'Web', 'Dev', 'SQL', 'IT'].includes(t)) || p.category === 'it');
-  const designProjects = sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
+  // Sorting projects for sections
+  const itProjects = data.landingPage?.itProjectsOrder?.length > 0 
+    ? data.landingPage.itProjectsOrder.filter(Boolean) 
+    : sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['SaaS', 'LMS', 'Web', 'Dev', 'SQL', 'IT'].includes(t)) || p.category === 'it');
+
+  const designProjects = data.landingPage?.designProjectsOrder?.length > 0 
+    ? data.landingPage.designProjectsOrder.filter(Boolean) 
+    : sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
 
   const containerVariants: any = {
     hidden: { opacity: 0, y: 10 },
@@ -138,24 +162,38 @@ export default function Home() {
           </div>
           
           <div className="nav-links">
-            <button 
-              className={`work-toggle ${activeTab === 'it' ? 'active' : ''}`}
-              onClick={() => setActiveTab('it')}
-            >
-              it
-            </button>
-            <button 
-              className={`work-toggle ${activeTab === 'design' ? 'active' : ''}`}
-              onClick={() => setActiveTab('design')}
-            >
-              design
-            </button>
-            <button 
-              className={`switcher-btn ${activeTab === 'umum' ? 'active' : ''}`}
-              onClick={() => setActiveTab('umum')}
-            >
-              about
-            </button>
+            {data.landingPage?.sections?.length > 0 ? (
+              data.landingPage.sections.map((section: any) => (
+                <button 
+                  key={section.type}
+                  className={`work-toggle ${activeTab === section.type ? 'active' : ''} ${section.type === 'umum' ? 'switcher-btn' : ''}`}
+                  onClick={() => setActiveTab(section.type as any)}
+                >
+                  {section.title || section.type}
+                </button>
+              ))
+            ) : (
+              <>
+                <button 
+                  className={`work-toggle ${activeTab === 'it' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('it')}
+                >
+                  it
+                </button>
+                <button 
+                  className={`work-toggle ${activeTab === 'design' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('design')}
+                >
+                  design
+                </button>
+                <button 
+                  className={`switcher-btn ${activeTab === 'umum' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('umum')}
+                >
+                  about
+                </button>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -171,100 +209,154 @@ export default function Home() {
                     {displayBio.about}
                   </p>
                   
-                  {/* Row 1: Experience & Education */}
-                  <div className="grid-split">
-                    <div>
-                      <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Experience</h2>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        {(data.experiences?.length > 0 ? data.experiences : [
-                          { _id: "e1", role: "Digital Marketing", company: "NZ Box Smart Laundry", startDate: "2026-02-01" },
-                          { _id: "e2", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025-09-01" },
-                          { _id: "e3", role: "UI/UX Designer Magang", company: "Profile Image Studio", startDate: "2025-08-01" },
-                        ]).map((exp: any) => (
-                          <div key={exp._id}>
-                            <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{exp.role}</h4>
-                            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{exp.company} • {exp.startDate.split('-')[0]}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Education</h2>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        {(data.education?.length > 0 ? data.education : [
-                          { _id: "edu1", school: "Politeknik Negeri Malang", degree: "D4 Sistem Informasi Bisnis", startDate: "2022" },
-                          { _id: "edu2", school: "SMAN 1 Malang", degree: "SMA MIPA", startDate: "2019" },
-                        ]).map((edu: any) => (
-                          <div key={edu._id}>
-                            <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{edu.school}</h4>
-                            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{edu.degree} • {edu.startDate}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  {/* Reorderable About Blocks */}
+                  {(() => {
+                    const blockOrder = data.landingPage?.aboutSections || [
+                      { title: 'Experience', type: 'experience' },
+                      { title: 'Education', type: 'education' },
+                      { title: 'Achievements', type: 'achievements' },
+                      { title: 'Organizations', type: 'organizations' },
+                      { title: 'Certificates', type: 'certificates' }
+                    ];
 
-                  {/* Row 2: Achievements & Organizations */}
-                  <div className="grid-split" style={{ marginTop: '2.5rem' }}>
-                    <div>
-                      <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Achievements</h2>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        {(data.honors?.length > 0 ? data.honors : [
-                          { _id: "h1", title: "Most Inspiring Community Empowerment", issuer: "Mandala Pure Love", date: "2024" },
-                          { _id: "h2", title: "Mawapres Non-Akademik Jurusan TI", issuer: "Polinema", date: "2024" },
-                          { _id: "h3", title: "2nd Runner Up - IT Poly Debate Cup", issuer: "Debate Cup", date: "2024" },
-                          { _id: "h4", title: "Mentor Debat ITDEC", issuer: "ITDEC", date: "2024" },
-                          { _id: "h5", title: "Finalis Desain Poster Infografis", issuer: "4C National", date: "2024" },
-                        ]).map((honor: any) => (
-                          <div key={honor._id}>
-                            <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{honor.title}</h4>
-                            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{honor.issuer} • {honor.date}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Organizations</h2>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        {[
-                          { id: "o1", role: "Ketua Umum", org: "HMTI Polinema", period: "2024 - 2025" },
-                          { id: "o2", role: "Kepala Divisi Pubdekdok", org: "RekaDjuang", period: "2024 - 2025" },
-                        ].map((org: any) => (
-                          <div key={org.id}>
-                            <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{org.org}</h4>
-                            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{org.role} • {org.period}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                    const renderBlock = (block: any) => {
+                      switch (block.type) {
+                        case 'experience':
+                          return (
+                            <div key="experience">
+                              <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>{block.title || 'Experience'}</h2>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                {(data.experiences?.length > 0 ? data.experiences : [
+                                  { _id: "e1", role: "Digital Marketing", company: "NZ Box Smart Laundry", startDate: "2026-02-01" },
+                                  { _id: "e2", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025-09-01" },
+                                  { _id: "e3", role: "UI/UX Designer Magang", company: "Profile Image Studio", startDate: "2025-08-01" },
+                                ]).map((exp: any) => (
+                                  <div key={exp._id}>
+                                    <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{exp.role}</h4>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{exp.company} • {exp.startDate?.split('-')[0] || 'Present'}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        case 'education':
+                          return (
+                            <div key="education">
+                              <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>{block.title || 'Education'}</h2>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                {(data.education?.length > 0 ? data.education : [
+                                  { _id: "edu1", school: "Politeknik Negeri Malang", degree: "D4 Sistem Informasi Bisnis", startDate: "2022" },
+                                  { _id: "edu2", school: "SMAN 1 Malang", degree: "SMA MIPA", startDate: "2019" },
+                                ]).map((edu: any) => (
+                                  <div key={edu._id}>
+                                    <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{edu.school}</h4>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{edu.degree} • {edu.startDate}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        case 'achievements':
+                          return (
+                            <div key="achievements">
+                              <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>{block.title || 'Achievements'}</h2>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                {(data.honors?.length > 0 ? data.honors : [
+                                  { _id: "h1", title: "Most Inspiring Community Empowerment", issuer: "Mandala Pure Love", date: "2024" },
+                                  { _id: "h2", title: "Mawapres Non-Akademik Jurusan TI", issuer: "Polinema", date: "2024" },
+                                ]).map((honor: any) => (
+                                  <div key={honor._id}>
+                                    <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{honor.title}</h4>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{honor.issuer} • {honor.date}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        case 'organizations':
+                          return (
+                            <div key="organizations">
+                              <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>{block.title || 'Organizations'}</h2>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                {(data.organizations?.length > 0 ? data.organizations : [
+                                  { id: "o1", role: "Ketua Umum", organization: "HMTI Polinema", period: "2024 - 2025" },
+                                ]).map((org: any) => (
+                                  <div key={org._id || org.id}>
+                                    <h4 style={{ fontSize: '0.85rem', fontWeight: 800 }}>{org.organization}</h4>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{org.role} • {org.period}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        case 'certificates':
+                          return (
+                            <div key="certificates" style={{ marginTop: '4rem', gridColumn: '1 / -1' }}>
+                              <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>{block.title || 'Certificates'}</h2>
+                              <div className="certificates-grid">
+                                {(data.certificates?.length > 0 ? data.certificates : [
+                                  { _id: "cert1", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding Indonesia", date: "2024" },
+                                ]).map((cert: any) => (
+                                  <div key={cert._id} className="certificate-card">
+                                    <div className="cert-img-wrapper">
+                                      {cert.imageUrl ? (
+                                        <img src={cert.imageUrl} alt={cert.title} />
+                                      ) : (
+                                        <div className="cert-placeholder">📜</div>
+                                      )}
+                                    </div>
+                                    <div className="cert-info">
+                                      <h4 className="cert-title">{cert.title}</h4>
+                                      <p className="cert-meta">{cert.issuer} • {cert.date}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        default:
+                          return null;
+                      }
+                    };
 
-                  {/* Certificates Section */}
-                  <div style={{ marginTop: '4rem' }}>
-                    <h2 className="text-heading-compact" style={{ marginBottom: '2rem', fontSize: '0.75rem' }}>Certificates</h2>
-                    <div className="certificates-grid">
-                      {(data.certificates?.length > 0 ? data.certificates : [
-                        { _id: "cert1", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding Indonesia", date: "2024" },
-                        { _id: "cert2", title: "Belajar Dasar AI", issuer: "Dicoding Indonesia", date: "2024" },
-                        { _id: "cert3", title: "Character Building & Leadership", issuer: "Djarum Beasiswa Plus", date: "2024" },
-                        { _id: "cert4", title: "Leadership Program", issuer: "Outward Bound Indonesia", date: "2024" },
-                      ]).map((cert: any) => (
-                        <div key={cert._id} className="certificate-card">
-                          <div className="cert-img-wrapper">
-                            {cert.imageUrl ? (
-                              <img src={cert.imageUrl} alt={cert.title} />
-                            ) : (
-                              <div className="cert-placeholder">📜</div>
-                            )}
-                          </div>
-                          <div className="cert-info">
-                            <h4 className="cert-title">{cert.title}</h4>
-                            <p className="cert-meta">{cert.issuer} • {cert.date}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                    // Group non-certificate blocks into pairs for the grid layout
+                    const groupedBlocks = [];
+                    let currentGroup: any[] = [];
+                    
+                    blockOrder.forEach((block: any) => {
+                      if (block.type === 'certificates') {
+                        if (currentGroup.length > 0) {
+                          groupedBlocks.push({ type: 'grid', items: currentGroup });
+                          currentGroup = [];
+                        }
+                        groupedBlocks.push({ type: 'single', item: block });
+                      } else {
+                        currentGroup.push(block);
+                        if (currentGroup.length === 2) {
+                          groupedBlocks.push({ type: 'grid', items: currentGroup });
+                          currentGroup = [];
+                        }
+                      }
+                    });
+                    
+                    if (currentGroup.length > 0) {
+                      groupedBlocks.push({ type: 'grid', items: currentGroup });
+                    }
+
+                    return (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                        {(groupedBlocks as any[]).map((group: any, idx: number) => (
+                          group.type === 'grid' ? (
+                            <div key={idx} className="grid-split">
+                              {group.items.map((block: any) => renderBlock(block))}
+                            </div>
+                          ) : (
+                            renderBlock(group.item)
+                          )
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 <div style={{ textAlign: 'right' }}>

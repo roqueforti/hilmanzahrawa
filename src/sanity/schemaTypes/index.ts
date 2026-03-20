@@ -178,4 +178,138 @@ const certificateType = {
   ],
 };
 
-export const schemaTypes = [projectType, bioType, experienceType, educationType, honorType, certificateType];
+export const organizationType = {
+  name: 'organization',
+  title: 'Organization',
+  type: 'document',
+  fields: [
+    { name: 'role', title: 'Role/Position', type: 'string' },
+    { name: 'organization', title: 'Organization Name', type: 'string' },
+    { name: 'period', title: 'Period', type: 'string', description: 'e.g. 2024 - 2025' },
+    { name: 'startDate', title: 'Start Date', type: 'date', hidden: true }, // Optional sorting
+  ],
+};
+
+export const landingPageType = {
+  name: 'landingPage',
+  title: 'Landing Page Settings',
+  type: 'document',
+  fields: [
+    {
+      name: 'title',
+      title: 'Page Title',
+      type: 'string',
+      initialValue: 'Home'
+    },
+    {
+      name: 'sections',
+      title: 'Navigation & Sections Order',
+      description: 'Drag and drop to reorder sections on the landing page.',
+      type: 'array',
+      initialValue: [
+        { title: 'it', type: 'it' },
+        { title: 'design', type: 'design' },
+        { title: 'about', type: 'umum' }
+      ],
+      of: [
+        {
+          type: 'object',
+          name: 'section',
+          fields: [
+            { name: 'title', title: 'Label (in Nav)', type: 'string' },
+            { 
+              name: 'type', 
+              title: 'Section Content', 
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'IT Projects', value: 'it' },
+                  { title: 'Design Projects', value: 'design' },
+                  { title: 'About Me', value: 'umum' },
+                ]
+              }
+            }
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              type: 'type'
+            },
+            prepare(selection: any) {
+              const { title, type } = selection;
+              return {
+                title: title,
+                subtitle: `Type: ${type}`
+              };
+            }
+          }
+        }
+      ]
+    },
+    {
+      name: 'aboutSections',
+      title: 'About Tab Content Order',
+      description: 'Drag and drop to reorder content blocks inside the About section.',
+      type: 'array',
+      initialValue: [
+        { title: 'Experience', type: 'experience' },
+        { title: 'Education', type: 'education' },
+        { title: 'Achievements', type: 'achievements' },
+        { title: 'Organizations', type: 'organizations' },
+        { title: 'Certificates', type: 'certificates' }
+      ],
+      of: [
+        {
+          type: 'object',
+          name: 'aboutSectionItem',
+          fields: [
+            { name: 'title', title: 'Section Title', type: 'string' },
+            { 
+              name: 'type', 
+              title: 'Block Type', 
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Experience', value: 'experience' },
+                  { title: 'Education', value: 'education' },
+                  { title: 'Achievements', value: 'achievements' },
+                  { title: 'Organizations', value: 'organizations' },
+                  { title: 'Certificates', value: 'certificates' },
+                ]
+              }
+            }
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              type: 'type'
+            },
+            prepare(selection: any) {
+              const { title, type } = selection;
+              return {
+                title: title || type,
+                subtitle: `Content: ${type}`
+              };
+            }
+          }
+        }
+      ]
+    },
+    {
+      name: 'itProjectsOrder',
+      title: 'Manually Order IT Projects',
+      description: 'Select and reorder projects for the IT tab. If empty, all IT projects will show sorted by year.',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'project' }] }],
+    },
+    {
+      name: 'designProjectsOrder',
+      title: 'Manually Order Design Projects',
+      description: 'Select and reorder projects for the Design tab. If empty, all Design projects will show sorted by year.',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'project' }] }],
+    }
+  ]
+};
+
+export const schemaTypes = [projectType, bioType, experienceType, educationType, honorType, certificateType, organizationType, landingPageType];
