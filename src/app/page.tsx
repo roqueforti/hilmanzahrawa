@@ -90,7 +90,6 @@ export default function Home() {
       }`;
       try {
         const result = await client.fetch(query);
-        console.log("Sanity Fetch Result:", result);
         setData(result);
         
         // Set initial tab based on landing page sections if available

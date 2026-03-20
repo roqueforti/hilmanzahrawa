@@ -14,7 +14,6 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("MediumArticles: Received username prop:", username);
     if (!username) {
       setLoading(false);
       return;
@@ -49,9 +48,6 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
       }}>
         <BookOpen size={32} className="text-accent" style={{ opacity: 0.3, marginBottom: '1rem', margin: '0 auto' }} />
         <h3 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Medium Username Missing</h3>
-        <p style={{ fontSize: '0.7rem', opacity: 0.5, marginTop: '0.5rem' }}>
-          Current value: <span style={{ fontFamily: 'var(--font-mono)', background: 'rgba(255,255,255,0.05)', padding: '0.2rem 0.4rem', borderRadius: '4px' }}>{String(username || 'null/undefined')}</span>
-        </p>
         <p style={{ fontSize: '0.7rem', opacity: 0.5, marginTop: '0.5rem' }}>Add your Medium username in Sanity Studio to display your articles.</p>
       </div>
     );
