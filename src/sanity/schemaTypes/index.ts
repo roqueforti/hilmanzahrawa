@@ -106,6 +106,7 @@ export const bioType = {
       group: 'skills',
       of: [{ type: 'string' }],
     },
+    { name: 'mediumUsername', title: 'Medium Username', type: 'string', group: 'profile', description: 'e.g. @username' },
   ],
 };
 
@@ -233,6 +234,7 @@ export const landingPageType = {
                   { title: 'IT Projects', value: 'it' },
                   { title: 'Design Projects', value: 'design' },
                   { title: 'Strava Activity', value: 'strava' },
+                  { title: 'Medium Articles', value: 'medium' },
                   { title: 'About Me', value: 'umum' },
                 ]
               }
@@ -285,6 +287,7 @@ export const landingPageType = {
                   { title: 'Organizations', value: 'organizations' },
                   { title: 'Certificates', value: 'certificates' },
                   { title: 'Strava Activity', value: 'strava' },
+                  { title: 'Medium Articles', value: 'medium' },
                 ]
               }
             }

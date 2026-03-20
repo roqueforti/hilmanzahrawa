@@ -4,10 +4,11 @@ import { client, urlFor } from "@/sanity/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import StravaActivity from "@/components/StravaActivity";
+import MediumArticles from "@/components/MediumArticles";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design' | 'strava'>('it');
+  const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design' | 'strava' | 'medium'>('it');
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [stravaData, setStravaData] = useState<any>(null);
@@ -55,7 +56,7 @@ export default function Home() {
           _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
           "gallery": gallery[].asset->url
         },
-        "bio": *[_type == "bio"][0] {
+        "bio": *[_type == "bio"] | order(_updatedAt desc)[0] {
           ...,
           "avatarUrl": avatar.asset->url,
           socialLinks[] { platform, url }
@@ -87,12 +88,17 @@ export default function Home() {
           }
         }
       }`;
-      const result = await client.fetch(query);
-      setData(result);
-      
-      // Set initial tab based on landing page sections if available
-      if (result.landingPage?.sections?.length > 0) {
-        setActiveTab(result.landingPage.sections[0].type);
+      try {
+        const result = await client.fetch(query);
+        console.log("Sanity Fetch Result:", result);
+        setData(result);
+        
+        // Set initial tab based on landing page sections if available
+        if (result.landingPage?.sections?.length > 0) {
+          setActiveTab(result.landingPage.sections[0].type);
+        }
+      } catch (err) {
+        console.error("Failed to fetch data from Sanity:", err);
       }
     }
     fetchData();
@@ -128,7 +134,8 @@ export default function Home() {
       { platform: "LinkedIn", url: "https://linkedin.com/in/hilmanzahrawa" },
       { platform: "Portfolio", url: "https://hilmanzahrawa.vercel.app" }
     ],
-    skills: bio?.skills || ["Java", "PHP", "Laravel", "SQL", "Python", "JavaScript", "HTML", "CSS", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Power BI", "Looker Studio"]
+    skills: bio?.skills || ["Java", "PHP", "Laravel", "SQL", "Python", "JavaScript", "HTML", "CSS", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Power BI", "Looker Studio"],
+    mediumUsername: bio?.mediumUsername
   };
 
   const displayProjects = projects?.length > 0 ? projects : [
@@ -340,6 +347,12 @@ export default function Home() {
                               />
                             </div>
                           );
+                        case 'medium':
+                          return (
+                            <div key="medium" style={{ gridColumn: '1 / -1' }}>
+                              <MediumArticles username={displayBio.mediumUsername} title={block.title} />
+                            </div>
+                          );
                         default:
                           return null;
                       }
@@ -350,7 +363,7 @@ export default function Home() {
                     let currentGroup: any[] = [];
                     
                     blockOrder.forEach((block: any) => {
-                      if (block.type === 'certificates' || block.type === 'strava') {
+                      if (block.type === 'certificates' || block.type === 'strava' || block.type === 'medium') {
                         if (currentGroup.length > 0) {
                           groupedBlocks.push({ type: 'grid', items: currentGroup });
                           currentGroup = [];
@@ -503,6 +516,20 @@ export default function Home() {
                   profile={stravaData?.profile} 
                   clubs={stravaData?.clubs || []} 
                 />
+              </div>
+            </motion.div>
+          )}
+          {activeTab === 'medium' && (
+            <motion.div 
+              key="medium" 
+              variants={containerVariants} 
+              initial="hidden" 
+              animate="visible" 
+              exit="exit"
+              style={{ marginTop: '3rem' }}
+            >
+              <div style={{ maxWidth: '1400px' }}>
+                <MediumArticles username={displayBio.mediumUsername} />
               </div>
             </motion.div>
           )}
