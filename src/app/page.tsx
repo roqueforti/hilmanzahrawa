@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import StravaActivity from "@/components/StravaActivity";
 import MediumArticles from "@/components/MediumArticles";
+import DesignSection from "@/components/DesignSection";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
@@ -54,6 +55,7 @@ export default function Home() {
       const query = `{
         "projects": *[_type == "project"] | order(_createdAt desc) {
           _id, title, description, tags, "slug": slug.current, image, featured, link, year, subtitle, category, role, deviceType,
+          mediaType, videoUrl, layoutSize,
           "gallery": gallery[].asset->url
         },
         "bio": *[_type == "bio"] | order(_updatedAt desc)[0] {
@@ -468,34 +470,12 @@ export default function Home() {
           {activeTab === 'design' && (
             <motion.div key="design" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
               <div style={{ marginBottom: '1.2rem' }}>
-                <h2 className="text-heading-compact">Visual Works</h2>
+                <h2 className="text-heading-compact">Creative & Visual Works</h2>
               </div>
-              <div className="compact-grid">
-                {designProjects.map((project: any) => (
-                  <div 
-                    key={project._id} 
-                    className="card-compact"
-                    onClick={() => setSelectedProject(project)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <div className="img-wrapper">
-                      {project.image ? <img src={urlFor(project.image).width(800).url()} alt={project.title} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>🎨</div>}
-                    </div>
-                    <div className="content">
-                      <div className="metadata-row">
-                        <h4 className="title">{project.title}</h4>
-                        <span className="year">{project.year || (new Date().getFullYear())}</span>
-                      </div>
-                      <div className="metadata-row secondary" style={{ marginTop: '0.1rem' }}>
-                        <p className="subtitle">{project.subtitle || project.description}</p>
-                        <div className="tags" style={{ textAlign: 'right', textTransform: 'uppercase' }}>
-                          {project.category || 'Visual'}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <DesignSection 
+                projects={designProjects} 
+                onProjectClick={(project) => setSelectedProject(project)} 
+              />
             </motion.div>
           )}
 
@@ -617,6 +597,28 @@ export default function Home() {
                         className="custom-scrollbar"
                       >
                         {(() => {
+                          if (selectedProject.mediaType === 'video' && selectedProject.videoUrl) {
+                            let embedUrl = selectedProject.videoUrl;
+                            if (embedUrl.includes('youtube.com/watch?v=')) {
+                              embedUrl = embedUrl.replace('watch?v=', 'embed/');
+                            } else if (embedUrl.includes('youtu.be/')) {
+                              embedUrl = embedUrl.replace('youtu.be/', 'youtube.com/embed/');
+                            } else if (embedUrl.includes('vimeo.com/')) {
+                              embedUrl = embedUrl.replace('vimeo.com/', 'player.vimeo.com/video/');
+                            }
+
+                            return (
+                              <div style={{ width: '100%', height: '100%', background: '#000' }}>
+                                <iframe 
+                                  src={embedUrl} 
+                                  style={{ width: '100%', height: '100%', border: 'none' }}
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              </div>
+                            );
+                          }
+
                           const gallery = selectedProject.gallery || [];
                           const images = gallery.length > 0 ? gallery : [selectedProject.image];
                           const currentImg = images[currentImageIndex];

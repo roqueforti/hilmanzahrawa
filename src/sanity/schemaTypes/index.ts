@@ -61,6 +61,42 @@ export const projectType = {
     },
     { name: 'subtitle', title: 'Subtitle/Client', type: 'string', group: 'metadata' },
     { name: 'link', title: 'Project Link', type: 'url', group: 'metadata' },
+    { 
+      name: 'mediaType', 
+      title: 'Media Type', 
+      type: 'string', 
+      group: 'media',
+      options: {
+        list: [
+          { title: 'Standard Image', value: 'image' },
+          { title: 'Video / Motion Graphic', value: 'video' },
+          { title: 'Image Gallery', value: 'gallery' }
+        ]
+      },
+      initialValue: 'image'
+    },
+    { 
+      name: 'videoUrl', 
+      title: 'Video URL (YouTube/Vimeo/Embed)', 
+      type: 'url', 
+      group: 'media',
+      hidden: ({ document }: any) => document?.mediaType !== 'video'
+    },
+    {
+      name: 'layoutSize',
+      title: 'Layout Size (Masonry Control)',
+      type: 'string',
+      group: 'media',
+      options: {
+        list: [
+          { title: 'Regular Square', value: 'regular' },
+          { title: 'Wide (Horizontal)', value: 'wide' },
+          { title: 'Tall (Vertical)', value: 'tall' },
+          { title: 'Large (Feature)', value: 'large' }
+        ]
+      },
+      initialValue: 'regular'
+    },
   ],
 };
 
