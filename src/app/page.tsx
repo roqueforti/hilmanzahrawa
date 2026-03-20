@@ -3,12 +3,14 @@
 import { client, urlFor } from "@/sanity/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import StravaActivity from "@/components/StravaActivity";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design'>('it');
+  const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design' | 'strava'>('it');
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [stravaData, setStravaData] = useState<any>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -96,6 +98,19 @@ export default function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    async function fetchStrava() {
+      try {
+        const response = await fetch('/api/strava');
+        const res = await response.json();
+        setStravaData(res);
+      } catch (e) {
+        console.error("Failed to fetch Strava data", e);
+      }
+    }
+    fetchStrava();
+  }, []);
+
   if (!data) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}><motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} style={{ width: 40, height: 40, border: '4px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%' }} /></div>;
 
   const { projects, bio, experiences, education, honors } = data;
@@ -158,7 +173,7 @@ export default function Home() {
         <div className="container">
           <div className="nav-brand">
             <span className="name">{displayBio.name}</span>
-            <span className="tagline">Developer / Designer</span>
+            <span className="tagline">{data.landingPage?.tagline || "Developer / Designer / Walker / Runner"}</span>
           </div>
           
           <div className="nav-links">
@@ -314,6 +329,17 @@ export default function Home() {
                               </div>
                             </div>
                           );
+                        case 'strava':
+                          return (
+                            <div key="strava" style={{ gridColumn: '1 / -1' }}>
+                              <StravaActivity 
+                                activities={stravaData?.activities || []} 
+                                stats={stravaData?.stats} 
+                                profile={stravaData?.profile} 
+                                clubs={stravaData?.clubs || []} 
+                              />
+                            </div>
+                          );
                         default:
                           return null;
                       }
@@ -324,7 +350,7 @@ export default function Home() {
                     let currentGroup: any[] = [];
                     
                     blockOrder.forEach((block: any) => {
-                      if (block.type === 'certificates') {
+                      if (block.type === 'certificates' || block.type === 'strava') {
                         if (currentGroup.length > 0) {
                           groupedBlocks.push({ type: 'grid', items: currentGroup });
                           currentGroup = [];
@@ -457,6 +483,26 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'strava' && (
+            <motion.div 
+              key="strava" 
+              variants={containerVariants} 
+              initial="hidden" 
+              animate="visible" 
+              exit="exit"
+              style={{ marginTop: '3rem' }}
+            >
+              <div style={{ maxWidth: '1400px' }}>
+                <StravaActivity 
+                  activities={stravaData?.activities || []} 
+                  stats={stravaData?.stats} 
+                  profile={stravaData?.profile} 
+                  clubs={stravaData?.clubs || []} 
+                />
               </div>
             </motion.div>
           )}
