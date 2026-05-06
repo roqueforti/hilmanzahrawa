@@ -29,10 +29,10 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
       {projects.map((project, index) => (
         <motion.div
           key={project._id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.05, duration: 0.5 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95, filter: 'blur(10px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ delay: 0.2 + (index * 0.1), duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={`design-card ${project.layoutSize || 'regular'}`}
           onClick={() => onProjectClick(project)}
         >

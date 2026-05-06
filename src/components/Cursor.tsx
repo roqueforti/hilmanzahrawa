@@ -1,91 +1,74 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function Cursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const [dotPos, setDotPos] = useState({ x: 0, y: 0 });
-  
-  const circleSpringConfig = { damping: 25, stiffness: 200, mass: 0.5 };
-  const circleX = useSpring(0, circleSpringConfig);
-  const circleY = useSpring(0, circleSpringConfig);
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const springConfig = { damping: 25, stiffness: 300 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    const mouseMove = (e: MouseEvent) => {
-      setDotPos({ x: e.clientX, y: e.clientY });
-      circleX.set(e.clientX);
-      circleY.set(e.clientY);
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
-
-    window.addEventListener('mousemove', mouseMove);
-    return () => window.removeEventListener('mousemove', mouseMove);
-  }, [circleX, circleY]);
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, .card-compact, .switcher-btn, .work-toggle, .project-card, .certificate-card, .swiper-button-next, .swiper-button-prev, .close-btn, .work-tag')) {
+        setIsHovered(true);
+      } else {
+        setIsHovered(false);
+      }
+    };
+    
+    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => {
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, [cursorX, cursorY]);
 
   return (
     <>
       <style jsx global>{`
-        * {
-          cursor: none !important;
-        }
+        * { cursor: none !important; }
         @media (max-width: 1024px) {
-          * {
-            cursor: auto !important;
-          }
-          .custom-cursor {
-            display: none !important;
-          }
-        }
-        
-        /* Adaptive Cursor Colors */
-        body.cursor-detail-open .custom-cursor.dot {
-          background-color: white !important;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        body.cursor-detail-open .custom-cursor.circle {
-          border-color: rgba(255, 255, 255, 0.8) !important;
+          * { cursor: auto !important; }
+          .custom-cinematic-cursor { display: none !important; }
         }
       `}</style>
       
-      {/* The Central Dot */}
+      {/* Outer Lagging Ring */}
       <motion.div
-        className="custom-cursor dot"
+        className="custom-cinematic-cursor"
         style={{
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          width: '6px',
-          height: '6px',
-          backgroundColor: 'var(--accent)',
-          borderRadius: '50%',
-          zIndex: 20000,
-          pointerEvents: 'none',
-          x: dotPos.x,
-          y: dotPos.y,
-          translateX: '-50%',
-          translateY: '-50%',
+          position: 'fixed', left: 0, top: 0, x: cursorXSpring, y: cursorYSpring,
+          marginLeft: '-16px', marginTop: '-16px',
+          width: 32, height: 32, borderRadius: '50%',
+          backgroundColor: 'transparent',
+          border: '1.5px solid rgba(255, 255, 255, 0.4)',
+          scale: isHovered ? 1.5 : 1,
+          opacity: isHovered ? 0.2 : 1,
+          mixBlendMode: 'difference', pointerEvents: 'none', zIndex: 9999998,
         }}
       />
 
-      {/* The Lagging Circle */}
+      {/* Inner Fast Dot */}
       <motion.div
-        className="custom-cursor circle"
+        className="custom-cinematic-cursor"
         style={{
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          width: '32px',
-          height: '32px',
-          border: '1.5px solid white',
-          borderRadius: '50%',
-          zIndex: 19999,
-          pointerEvents: 'none',
-          x: circleX,
-          y: circleY,
-          translateX: '-50%',
-          translateY: '-50%',
-          opacity: 0.2,
+          position: 'fixed', left: 0, top: 0, 
+          x: cursorX, y: cursorY,
+          marginLeft: '-4px', marginTop: '-4px',
+          width: 8, height: 8, borderRadius: '50%',
+          backgroundColor: 'rgba(255, 255, 255, 1)',
+          scale: isHovered ? 0 : 1, // Hides on hover
+          mixBlendMode: 'difference', pointerEvents: 'none', zIndex: 9999999,
         }}
       />
     </>

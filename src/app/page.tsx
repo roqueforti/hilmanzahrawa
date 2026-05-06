@@ -9,6 +9,7 @@ import DesignSection from "@/components/DesignSection";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
+  const [showIntro, setShowIntro] = useState(true);
   const [activeTab, setActiveTab] = useState<'umum' | 'it' | 'design' | 'strava' | 'medium'>('it');
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -17,6 +18,8 @@ export default function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [scrollTopPos, setScrollTopPos] = useState(0);
+
+
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!sliderRef.current) return;
@@ -49,6 +52,14 @@ export default function Home() {
       document.body.classList.remove('cursor-detail-open');
     }
   }, [selectedProject]);
+
+  useEffect(() => {
+    // Cinematic Intro Timer (Macro Lens Pull-back)
+    const timer = setTimeout(() => setShowIntro(false), 8500);
+    return () => clearTimeout(timer);
+  }, []);
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -102,6 +113,8 @@ export default function Home() {
         }
       } catch (err) {
         console.error("Failed to fetch data from Sanity:", err);
+        // Fallback to empty data to show dummy content and hide loader
+        setData({});
       }
     }
     fetchData();
@@ -120,9 +133,8 @@ export default function Home() {
     fetchStrava();
   }, []);
 
-  if (!data) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}><motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} style={{ width: 40, height: 40, border: '4px solid var(--accent)', borderTopColor: 'transparent', borderRadius: '50%' }} /></div>;
-
-  const { projects, bio, experiences, education, honors } = data;
+  // We safely handle empty data to keep the React tree intact for AnimatePresence
+  const { projects = [], bio = {}, experiences = [], education = [], honors = [] } = data || {};
   
   const displayBio = {
     name: bio?.name || "HILMAN ZAHRAWA BUDIARTO",
@@ -165,27 +177,177 @@ export default function Home() {
   });
 
   // Sorting projects for sections
-  const itProjects = data.landingPage?.itProjectsOrder?.length > 0 
+  const itProjects = data?.landingPage?.itProjectsOrder?.length > 0 
     ? data.landingPage.itProjectsOrder.filter(Boolean) 
     : sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['SaaS', 'LMS', 'Web', 'Dev', 'SQL', 'IT'].includes(t)) || p.category === 'it');
 
-  const designProjects = data.landingPage?.designProjectsOrder?.length > 0 
+  const designProjects = data?.landingPage?.designProjectsOrder?.length > 0 
     ? data.landingPage.designProjectsOrder.filter(Boolean) 
     : sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
 
-  const containerVariants: any = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-    exit: { opacity: 0, y: -10, transition: { duration: 0.3 } }
+  const getVariantsForTab = (tab: string): any => {
+    switch(tab) {
+      case 'it':
+        return {
+          hidden: { opacity: 0, scale: 0.95, filter: 'blur(15px)' }, // Dolly Zoom In
+          visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, scale: 1.05, filter: 'blur(15px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        };
+      case 'design':
+        return {
+          hidden: { opacity: 0, x: '5vw', scale: 0.95, filter: 'blur(15px)' }, // Tracking Pan from Right
+          visible: { opacity: 1, x: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, x: '-5vw', scale: 0.95, filter: 'blur(15px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        };
+      case 'umum':
+        return {
+          hidden: { opacity: 0, y: '5vh', scale: 0.95, filter: 'blur(15px)' }, // Crane Shot from Bottom
+          visible: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, y: '-5vh', scale: 1.05, filter: 'blur(15px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        };
+      case 'strava':
+        return {
+          hidden: { opacity: 0, scale: 1.1, filter: 'blur(20px)', rotate: 2 }, // Dutch Angle Snap out
+          visible: { opacity: 1, scale: 1, filter: 'blur(0px)', rotate: 0, transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, scale: 0.9, filter: 'blur(20px)', rotate: -2, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        };
+      case 'medium':
+        return {
+          hidden: { opacity: 0, x: '-5vw', scale: 0.95, filter: 'blur(15px)' }, // Tracking Pan from Left
+          visible: { opacity: 1, x: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, x: '5vw', scale: 0.95, filter: 'blur(15px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        };
+      default:
+        return {
+          hidden: { opacity: 0, scale: 0.98, filter: 'blur(10px)' },
+          visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
+          exit: { opacity: 0, scale: 1.02, filter: 'blur(10px)', transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+        };
+    }
   };
 
   return (
-    <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
-      <nav className="switcher-nav">
-        <div className="container">
+    <>
+      {/* Global CSS for Cinematic Elements */}
+      <style dangerouslySetInnerHTML={{__html: `
+        * { cursor: none !important; }
+        .card-compact { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s !important; }
+        .card-compact:hover { transform: scale(0.98) translateY(-5px) !important; filter: brightness(1.15); }
+        .img-wrapper img { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important; }
+        .card-compact:hover .img-wrapper img { transform: scale(1.08) !important; }
+        @keyframes gradientFlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}} />
+
+      {/* Global Cinematic Film Grain */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")',
+        opacity: 0.03, zIndex: 9999998, pointerEvents: 'none', mixBlendMode: 'overlay'
+      }} />
+
+
+
+      <AnimatePresence mode="wait">
+        {(showIntro || !data) && (
+          <motion.div 
+            key="cinematic-intro"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, filter: 'blur(10px)', transition: { duration: 1.5, ease: "easeInOut" } }}
+            style={{ 
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', 
+              background: '#020202', zIndex: 99999, overflow: 'hidden',
+              display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}
+          >
+            {/* Cinematic Lens Vignette */}
+            <div style={{
+              position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+              background: 'radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,1) 90%)',
+              zIndex: 10, pointerEvents: 'none'
+            }} />
+
+            {/* Subtle Anamorphic Light Leak (Deep Cinematic Blue) */}
+            <motion.div
+              initial={{ opacity: 0, y: '10%', scaleX: 1 }}
+              animate={{ opacity: [0, 0.5, 0], y: ['10%', '-10%'], scaleX: [1, 1.5] }}
+              transition={{ duration: 8, ease: "easeInOut" }}
+              style={{
+                position: 'absolute', width: '150%', height: '40vh',
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(40, 60, 150, 0.15), rgba(0,0,0,0))',
+                filter: 'blur(40px)', zIndex: 1, pointerEvents: 'none',
+                transformOrigin: 'center'
+              }}
+            />
+
+            {/* Macro Camera Tracking Pull-Back */}
+            <motion.div
+              initial={{ scale: 3.5, x: '20vw', filter: 'blur(15px)', opacity: 0 }}
+              animate={{ scale: 1, x: 0, filter: 'blur(0px)', opacity: 1 }}
+              transition={{ 
+                duration: 7, 
+                ease: [0.16, 1, 0.3, 1], // Very strong ease-out for dramatic slow landing
+                opacity: { duration: 2, ease: "linear" }
+              }}
+              style={{ zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            >
+              {/* Main Title */}
+              <motion.div
+                initial={{ letterSpacing: '-0.05em' }}
+                animate={{ letterSpacing: '0.35em' }}
+                transition={{ duration: 7, ease: [0.16, 1, 0.3, 1] }}
+                style={{ 
+                  fontFamily: 'var(--font-display)', fontSize: 'clamp(1.2rem, 4vw, 3.5rem)', 
+                  fontWeight: 200, color: '#fff', textTransform: 'uppercase', textAlign: 'center',
+                  textShadow: '0px 0px 20px rgba(255,255,255,0.3)', // Cinematic bloom
+                  marginLeft: '0.35em', // Optical alignment
+                  whiteSpace: 'nowrap' // Prevent breaking into two lines on mobile
+                }}
+              >
+                HILMAN ZAHRAWA
+              </motion.div>
+              
+              {/* Subtitle */}
+              <motion.div
+                initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 3, delay: 4, ease: "easeOut" }}
+                style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-secondary)',
+                  textTransform: 'uppercase', letterSpacing: '0.5em', marginTop: '1.5rem', fontWeight: 500
+                }}
+              >
+                Creative Developer
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {data && (
+        <motion.main 
+          initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(15px)' }}
+          animate={{ 
+            opacity: showIntro ? 0 : 1, 
+            y: showIntro ? 40 : 0, 
+            scale: showIntro ? 0.98 : 1,
+            filter: showIntro ? 'blur(15px)' : 'blur(0px)' 
+          }}
+          transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1], delay: showIntro ? 0 : 0.4 }}
+          style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}
+        >
+          <nav className="switcher-nav">
+            <div className="container">
           <div className="nav-brand">
             <span className="name">{displayBio.name}</span>
-            <span className="tagline">{data.landingPage?.tagline || "Developer / Designer / Walker / Runner"}</span>
+            <span className="tagline" style={{ 
+              background: 'linear-gradient(270deg, var(--text-secondary), var(--accent), var(--text-primary))',
+              backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              animation: 'gradientFlow 8s ease infinite'
+            }}>{data.landingPage?.tagline || "Developer / Designer / Walker / Runner"}</span>
           </div>
           
           <div className="nav-links">
@@ -214,6 +376,18 @@ export default function Home() {
                   design
                 </button>
                 <button 
+                  className={`work-toggle ${activeTab === 'strava' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('strava')}
+                >
+                  strava
+                </button>
+                <button 
+                  className={`work-toggle ${activeTab === 'medium' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('medium')}
+                >
+                  medium
+                </button>
+                <button 
                   className={`switcher-btn ${activeTab === 'umum' ? 'active' : ''}`}
                   onClick={() => setActiveTab('umum')}
                 >
@@ -228,7 +402,7 @@ export default function Home() {
       <div className="container" style={{ paddingTop: '5rem', paddingBottom: '4rem' }}>
         <AnimatePresence mode="wait">
           {activeTab === 'umum' && (
-            <motion.div key="umum" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+            <motion.div key="umum" variants={getVariantsForTab(activeTab)} initial="hidden" animate="visible" exit="exit">
               <div className="grid-responsive" style={{ marginTop: '3rem' }}>
                 <div>
                   <span className="text-meta-compact" style={{ marginBottom: '1.5rem', display: 'block' }}>About</span>
@@ -438,14 +612,18 @@ export default function Home() {
           )}
 
           {activeTab === 'it' && (
-            <motion.div key="it" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+            <motion.div key="it" variants={getVariantsForTab(activeTab)} initial="hidden" animate="visible" exit="exit">
               <div style={{ marginBottom: '1.5rem' }}>
                 <h2 className="text-heading-compact">Selected IT Projects</h2>
               </div>
               <div className="compact-grid">
-                {itProjects.map((project: any) => (
-                  <div 
+                {itProjects.map((project: any, index: number) => (
+                  <motion.div 
                     key={project._id} 
+                    variants={{
+                      hidden: { opacity: 0, y: 30, scale: 0.95 },
+                      visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 + (index * 0.1) } }
+                    }}
                     className="card-compact" 
                     onClick={() => setSelectedProject(project)}
                     style={{ cursor: 'pointer' }}
@@ -465,14 +643,14 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
           )}
 
           {activeTab === 'design' && (
-            <motion.div key="design" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+            <motion.div key="design" variants={getVariantsForTab(activeTab)} initial="hidden" animate="visible" exit="exit">
               <div style={{ marginBottom: '1.2rem' }}>
                 <h2 className="text-heading-compact">Creative & Visual Works</h2>
               </div>
@@ -486,7 +664,7 @@ export default function Home() {
           {activeTab === 'strava' && (
             <motion.div 
               key="strava" 
-              variants={containerVariants} 
+              variants={getVariantsForTab(activeTab)} 
               initial="hidden" 
               animate="visible" 
               exit="exit"
@@ -505,7 +683,7 @@ export default function Home() {
           {activeTab === 'medium' && (
             <motion.div 
               key="medium" 
-              variants={containerVariants} 
+              variants={getVariantsForTab(activeTab)} 
               initial="hidden" 
               animate="visible" 
               exit="exit"
@@ -523,9 +701,10 @@ export default function Home() {
       <AnimatePresence>
         {selectedProject && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, scale: 0.95, filter: 'blur(20px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.95, filter: 'blur(20px)' }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             style={{ 
               position: 'fixed', 
               top: 0, 
@@ -776,6 +955,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </main>
+        </motion.main>
+    )}
+  </>
   );
 }

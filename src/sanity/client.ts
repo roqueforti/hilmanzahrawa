@@ -1,14 +1,14 @@
 import { createClient } from 'next-sanity';
-import imageUrlBuilder from '@sanity/image-url';
+import createImageUrlBuilder from '@sanity/image-url';
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'dummy',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '1plh3iom',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-03-17',
-  useCdn: false, // Set to false for real-time updates
+  useCdn: false,
 });
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 export function urlFor(source: any) {
   return builder.image(source);
