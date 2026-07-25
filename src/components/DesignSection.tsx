@@ -25,50 +25,68 @@ interface DesignSectionProps {
 
 const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick }) => {
   return (
-    <div className="design-grid">
+    <div className="compact-grid">
       {projects.map((project, index) => (
         <motion.div
           key={project._id}
-          initial={{ opacity: 0, y: 30, scale: 0.95, filter: 'blur(10px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: 0.2 + (index * 0.1), duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className={`design-card ${project.layoutSize || 'regular'}`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ delay: index * 0.05, duration: 0.4 }}
+          className="card-compact"
           onClick={() => onProjectClick(project)}
         >
-          {/* Media Type Badge */}
-          {project.mediaType && project.mediaType !== 'image' && (
-            <div className="design-type-badge">
-              {project.mediaType === 'video' ? 'Video' : 'Gallery'}
-            </div>
-          )}
+          <div className="img-wrapper" style={{ position: 'relative' }}>
+            {project.image ? (
+              <img 
+                src={urlFor(project.image).width(800).url()} 
+                alt={project.title} 
+                loading="lazy"
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-tertiary)', fontSize: '2rem' }}>
+                🎨
+              </div>
+            )}
 
-          {/* Media Content */}
-          {project.image ? (
-            <img 
-              src={urlFor(project.image).width(1200).url()} 
-              alt={project.title} 
-              loading="lazy"
-            />
-          ) : (
-            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-secondary)', fontSize: '2rem' }}>
-              🎨
-            </div>
-          )}
+            {/* Media Type Badge (Clean Floating Pill) */}
+            {project.mediaType && project.mediaType !== 'image' && (
+              <span 
+                style={{
+                  position: 'absolute',
+                  top: '0.65rem',
+                  right: '0.65rem',
+                  background: 'rgba(9, 9, 11, 0.85)',
+                  color: '#FFFFFF',
+                  padding: '0.2rem 0.6rem',
+                  borderRadius: '20px',
+                  fontSize: '0.625rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 700,
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                  backdropFilter: 'blur(8px)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  zIndex: 2
+                }}
+              >
+                {project.mediaType === 'video' ? '▶ Video' : '🖼 Gallery'}
+              </span>
+            )}
+          </div>
 
-          {/* Overlay Info */}
-          <div className="design-overlay">
-            <span style={{ fontSize: '0.6rem', color: 'var(--accent)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: '0.4rem' }}>
-              {project.subtitle || 'Creative Work'}
-            </span>
-            <h3 style={{ fontSize: '0.9rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              {project.title}
-            </h3>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.4rem' }}>
-              <p style={{ fontSize: '0.65rem', opacity: 0.6 }}>
-                {project.year || new Date().getFullYear()}
-              </p>
-              <div style={{ width: '15px', height: '1px', background: 'var(--accent)', opacity: 0.5 }}></div>
+          <div className="content">
+            <div className="metadata-row">
+              <h4 className="title">{project.title}</h4>
+              <span className="year">{project.year || new Date().getFullYear()}</span>
+            </div>
+            <div className="metadata-row secondary" style={{ marginTop: '0.2rem' }}>
+              <p className="subtitle">{project.subtitle || project.description || 'Creative Design'}</p>
+              <div className="tags">
+                {project.category || (project.mediaType === 'video' ? 'Video' : 'Design')}
+              </div>
             </div>
           </div>
         </motion.div>
