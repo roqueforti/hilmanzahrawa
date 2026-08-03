@@ -316,7 +316,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       viewBox="0 0 100 100" 
                       style={{ width: '65%', height: '65%', color: 'var(--text-primary)', opacity: 0.8 }}
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     >
                       {/* Outer Proportional Hexagon (6 sides) */}
                       <path d="M 50 0 L 93.3 25 L 93.3 75 L 50 100 L 6.7 75 L 6.7 25 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
@@ -336,12 +336,14 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                         animate={{ 
                           d: [
                             "M 50 20 L 88.97 27.5 L 71.65 62.5 L 50 90 L 32.68 60 L 19.69 32.5 Z",
-                            "M 50 5 L 67.32 40 L 84.64 70 L 50 75 L 11.03 72.5 L 32.68 40 Z",
-                            "M 50 30 L 84.64 30 L 67.32 60 L 50 95 L 28.35 62.5 L 11.03 27.5 Z",
+                            "M 50 10 L 80 75 L 90 90 L 50 85 L 10 90 L 20 75 Z",
+                            "M 50 10 L 60 45 L 90 80 L 50 65 L 10 80 L 40 45 Z",
+                            "M 20 20 L 50 40 L 80 20 L 80 80 L 50 60 L 20 80 Z",
+                            "M 50 5 L 75 35 L 90 60 L 50 95 L 10 60 L 25 35 Z",
                             "M 50 20 L 88.97 27.5 L 71.65 62.5 L 50 90 L 32.68 60 L 19.69 32.5 Z"
                           ] 
                         }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
                         fill="currentColor" 
                         fillOpacity="0.1" 
                         stroke="currentColor" 
