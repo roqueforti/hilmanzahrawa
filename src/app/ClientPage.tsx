@@ -770,8 +770,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '2px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
                     {(data.experiences?.length > 0 ? data.experiences : [
                       { _id: "e1", role: "HRIS Developer – HCM Division", company: "PT PAL Indonesia (Persero)", startDate: "2026", displayDate: "April 2026 - Present" },
-                      { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present" },
-                      { _id: "e3", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025", displayDate: "Dec 2025 - Apr 2026" },
+                      { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present", desc: "Led inclusive communication strategies and creative direction to promote disability inclusion and community empowerment. Developed insights-driven campaigns and collaborated with disability communities and partners. Contributed to the development of the The Cup We Share barista training program with Kafe Among Rasa (outputs), which supported the establishment of sociopreneurship initiatives at SLB YPAC Kota Malang and enabled students to participate in real-world coffee shop internships (outcomes)." },
+                      { _id: "e3", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025", displayDate: "Dec 2025 - Apr 2026", desc: "As a Web Developer at Mandala Pure Love, I contributed to the development of BrewTech, a digital platform designed to support technology-driven entrepreneurship and community empowerment initiatives under the Innovillage program. I was responsible for analyzing system requirements, designing and developing the website architecture, implementing both front-end and back-end functionalities, managing databases, and optimizing performance to ensure scalability, security, and responsiveness across devices. Through this project, I helped deliver a sustainable digital solution that aligns technological innovation with measurable social impact." },
                       { _id: "e4", role: "Social Media Specialist", company: "NZ Box Smart Laundry", startDate: "2026", displayDate: "Feb 2026 - Apr 2026" },
                       { _id: "e5", role: "UI/UX Designer", company: "Social Economic Accelerator Lab", startDate: "2025", displayDate: "Aug 2025 - Dec 2025" },
                       { _id: "e6", role: "Chairman", company: "HMTI Polinema", startDate: "2024", displayDate: "Feb 2024 - Feb 2025" },
@@ -786,6 +786,11 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
                             <strong style={{ color: 'var(--text-primary)' }}>{exp.company}</strong> • {exp.displayDate || (exp.startDate?.split('-')[0] || 'Present')}
                           </p>
+                          {exp.desc && (
+                            <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', marginTop: '0.75rem', lineHeight: 1.6 }}>
+                              {exp.desc}
+                            </p>
+                          )}
                         </motion.div>
                       );
                     })}
@@ -854,41 +859,57 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     <motion.div 
                         initial="hidden" animate="visible"
                         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-                        className={getDynamicContainerClass(4)}
+                        className={getDynamicContainerClass(6)}
                         style={{ marginBottom: '3rem' }}
                       >
                         {[
                           { 
                             id: "aw1", 
-                            title: "2nd Runner Up IT Poly Debate Cup 2024", 
-                            issuer: "IT Debate Society", 
-                            date: "Jan 2024", 
-                            assoc: "Politeknik Negeri Malang", 
-                            desc: "The I&T Open Debate Competition is a cross-cultural public debating event that draws participants from diverse Asian nations such as Indonesia, Taiwan, the Philippines, China, and more. The Indonesian Student Association (PPI) in Taiwan takes the lead in organizing and launching this competition. Adhering to the format of the British Parliamentary Debate System, the event features representatives from four distinct countries serving as judges."
+                            title: "\"Mandala Pure Love\" Most Inspiring Community Empowerment", 
+                            issuer: "Djarum Beasiswa Plus", 
+                            date: "2026", 
+                            assoc: "Mandala Pure Love", 
+                            desc: "Awarded as the most inspiring community empowerment initiative for 2024/2025."
                           },
                           { 
                             id: "aw2", 
-                            title: "2nd Best Novice Team International I&T Open Debate Competition", 
-                            issuer: "Indonesian Student Association in Taiwan", 
-                            date: "Dec 2023", 
-                            assoc: "Politeknik Negeri Malang", 
-                            desc: "The I&T Open Debate Competition is a cross-cultural public debating event that draws participants from diverse Asian nations such as Indonesia, Taiwan, the Philippines, China, and more. The Indonesian Student Association (PPI) in Taiwan takes the lead in organizing and launching this competition. Adhering to the format of the British Parliamentary Debate System, the event features representatives from four distinct countries serving as judges." 
+                            title: "Innovillage Top 180 for Brewtech", 
+                            issuer: "Innovillage", 
+                            date: "2026", 
+                            assoc: "BrewTech", 
+                            desc: "Selected as one of the top 180 social projects in Indonesia for the BrewTech platform under the Innovillage program." 
                           },
                           { 
                             id: "aw3", 
-                            title: "Finalist Poster Infographic Design 4C National Competition", 
-                            issuer: "The Faculty of Computer Science, University of Brawijaya", 
-                            date: "Nov 2023", 
+                            title: "2nd Runner Up - IT Poly Debate Cup", 
+                            issuer: "IT Debate Society", 
+                            date: "2024", 
                             assoc: "Politeknik Negeri Malang", 
-                            desc: "The 4C National Competition is an event at the national level hosted by the Faculty of Computer Science at the University of Brawijaya (FILKOM UB) to celebrate its 12th anniversary. It is specifically crafted for university students seeking to improve their critical thinking, collaboration, creativity, and communication abilities." 
+                            desc: "National level public debating event adhering to the British Parliamentary Debate System format." 
                           },
                           { 
                             id: "aw4", 
-                            title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", 
-                            issuer: "Badan Eksekutif Mahasiswa Politeknik Negeri Malang", 
-                            date: "Aug 2023", 
-                            assoc: "Himpunan Mahasiswa Teknologi Informasi (HMTI) Polinema", 
-                            desc: "The \"Expo Kelembagaan OKi Polinema\" Video Competition is an event organized by the Student Executive Board of Politeknik Negeri Malang to welcome the new students of 2023. This competition is specifically designed to allow the organizations within Politeknik Negeri Malang to introduce themselves in a more engaging and creative manner." 
+                            title: "Finalis Desain Poster Infografis - 4C National Competition", 
+                            issuer: "Universitas Brawijaya", 
+                            date: "2024", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "The 4C National Competition is an event hosted by the Faculty of Computer Science at the University of Brawijaya." 
+                          },
+                          { 
+                            id: "aw5", 
+                            title: "2nd Best Novice Team - International I&T Open Debate Competition", 
+                            issuer: "Indonesian Student Association in Taiwan", 
+                            date: "2023", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "Cross-cultural public debating event drawing participants from diverse Asian nations including Indonesia, Taiwan, the Philippines, and China." 
+                          },
+                          { 
+                            id: "aw6", 
+                            title: "Finalis Desain Poster Infografis - 4C National Competition", 
+                            issuer: "Universitas Brawijaya", 
+                            date: "2023", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "The 4C National Competition is an event hosted by the Faculty of Computer Science at the University of Brawijaya." 
                           }
                         ].map((award, _, arr) => (
                           <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={`award-card ${getDynamicItemClass(arr.length)}`}>
