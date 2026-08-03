@@ -1,14 +1,14 @@
 :root {
-  /* Seamless & Clean Monochrome Design System */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #FAFAFA;
-  --bg-tertiary: #F4F4F5;
-  --text-primary: #09090B;
-  --text-secondary: #52525B;
-  --text-muted: #A1A1AA;
-  --accent: #09090B;
-  --border-light: #F4F4F5;
-  --border-hairline: #E4E4E7;
+  /* Deep Teal Theme */
+  --bg-primary: #081C1D;
+  --bg-secondary: #112B2C;
+  --bg-tertiary: #1E4648;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #4FA3A5;
+  --accent: #3BB273;
+  --border-light: #2A3E3F;
+  --border-hairline: #1E4648;
   
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
@@ -26,7 +26,7 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
