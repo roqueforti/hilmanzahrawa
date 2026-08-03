@@ -1007,12 +1007,50 @@ body {
 }
 
 /* -------------------------------------
-   MISCELLANEOUS
+   COMPACT GRID (HORIZONTAL SLIDER)
    ------------------------------------- */
 .compact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 3rem) / 3);
   gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scroll-snap-type: x mandatory;
+}
+
+.compact-grid > * {
+  scroll-snap-align: start;
+}
+
+.compact-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.compact-grid::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+.compact-grid::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+.compact-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+@media (max-width: 1024px) {
+  .compact-grid {
+    grid-auto-columns: calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .compact-grid {
+    grid-template-rows: 1fr;
+    grid-auto-columns: 85%;
+  }
 }
 
 /* -------------------------------------
