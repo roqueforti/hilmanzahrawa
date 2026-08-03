@@ -758,9 +758,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       const monogram = exp.company.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
                       return (
                         <motion.div key={exp._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
-                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--accent)', border: '1px solid var(--border-glow)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800, color: '#FFFFFF' }}>{monogram}</span>
-                          </div>
+                          <div style={{ position: 'absolute', left: '-1.1rem', top: '0.35rem', width: '10px', height: '10px', background: 'var(--bg-primary)', border: '2px solid var(--accent)', borderRadius: '50%', boxShadow: '0 0 8px var(--accent-glow)' }} />
                           <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{exp.role}</h4>
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
                             <strong style={{ color: 'var(--text-primary)' }}>{exp.company}</strong> • {exp.displayDate || (exp.startDate?.split('-')[0] || 'Present')}
@@ -784,9 +782,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       const monogram = edu.school.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
                       return (
                         <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
-                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--accent)', border: '1px solid var(--border-glow)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800, color: '#FFFFFF' }}>{monogram}</span>
-                          </div>
+                          <div style={{ position: 'absolute', left: '-1.1rem', top: '0.35rem', width: '10px', height: '10px', background: 'var(--bg-primary)', border: '2px solid var(--accent)', borderRadius: '50%', boxShadow: '0 0 8px var(--accent-glow)' }} />
                           <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{edu.school}</h4>
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
                             {edu.degree} • {edu.startDate}
