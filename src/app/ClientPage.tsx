@@ -221,8 +221,10 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             
             {/* SEAMLESS HERO PROFILE SECTION (SWISS GRID) */}
             <section id="hero" style={{ position: 'relative', marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)', minHeight: '75vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              {/* Massive Radial Glow */}
+              <div style={{ position: 'absolute', top: '10%', left: '-10%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 60%)', filter: 'blur(100px)', zIndex: 0, pointerEvents: 'none', opacity: 0.6 }} />
               {/* Architectural Tracking Grid Background */}
-              <div className="hero-mesh-background" />
+              <div className="hero-mesh-background" style={{ opacity: 0.5 }} />
               
               <div style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', textAlign: 'left', width: '100%' }}>
                 
@@ -230,8 +232,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                      <span className="hero-badge-pulse" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', background: 'var(--text-primary)', borderRadius: '0px', fontSize: '0.725rem', fontWeight: 700, color: 'var(--bg-primary)', fontFamily: 'var(--font-mono)' }}>
-                        <span className="hero-pulse-dot" style={{ background: 'var(--accent)' }} /> AVAILABLE FOR HIRE
+                      <span className="hero-badge-pulse" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.5rem 1.2rem', background: 'var(--bg-tint)', border: '1px solid var(--border-tint)', borderRadius: '30px', fontSize: '0.725rem', fontWeight: 800, color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>
+                        <span className="hero-pulse-dot" style={{ background: 'var(--accent)', boxShadow: '0 0 10px var(--accent)' }} /> AVAILABLE FOR HIRE
                       </span>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.725rem', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.05em' }}>
                         // HZ-2026
@@ -260,22 +262,22 @@ export default function ClientPage({ initialData }: { initialData: any }) {
 
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hero-btn-group" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
                     <motion.a 
-                      whileHover={{ backgroundColor: 'rgba(9, 9, 11, 0.85)' }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.05, boxShadow: 'var(--shadow-glow)' }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2 }}
                       href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ display: 'inline-block', background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '1.2rem 2.5rem', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                      style={{ display: 'inline-block', background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)', color: '#FFFFFF', padding: '1.2rem 2.8rem', borderRadius: '40px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', boxShadow: 'var(--shadow-premium)' }}
                     >
                       Hire Me ↗
                     </motion.a>
                     <motion.a 
-                      whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ backgroundColor: 'var(--bg-tint)', borderColor: 'var(--accent)', color: 'var(--accent)' }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2 }}
                       href={`mailto:${displayBio.email}`}
-                      style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--text-primary)', padding: '1.15rem 2.4rem', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                      style={{ display: 'inline-block', background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-light)', padding: '1.15rem 2.8rem', borderRadius: '40px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', boxShadow: 'var(--shadow-premium)' }}
                     >
                       Email ✉
                     </motion.a>
@@ -742,7 +744,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
                     style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '2.5rem' }}
                   >
-                    <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '1px', background: 'var(--text-primary)' }} />
+                    <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '2px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
                     {(data.experiences?.length > 0 ? data.experiences : [
                       { _id: "e1", role: "HRIS Developer – HCM Division", company: "PT PAL Indonesia (Persero)", startDate: "2026", displayDate: "April 2026 - Present" },
                       { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present" },
@@ -756,8 +758,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       const monogram = exp.company.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
                       return (
                         <motion.div key={exp._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
-                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--bg-primary)', border: '1px solid var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800 }}>{monogram}</span>
+                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--accent)', border: '1px solid var(--border-glow)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800, color: '#FFFFFF' }}>{monogram}</span>
                           </div>
                           <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{exp.role}</h4>
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
@@ -774,7 +776,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
                     style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}
                   >
-                    <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '1px', background: 'var(--text-primary)' }} />
+                    <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '2px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
                     {(data.education?.length > 0 ? data.education : [
                       { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
                       { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
@@ -782,8 +784,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       const monogram = edu.school.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
                       return (
                         <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
-                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--bg-primary)', border: '1px solid var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800 }}>{monogram}</span>
+                          <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '24px', height: '24px', background: 'var(--accent)', border: '1px solid var(--border-glow)', borderRadius: '50%', boxShadow: '0 0 10px var(--accent-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 800, color: '#FFFFFF' }}>{monogram}</span>
                           </div>
                           <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{edu.school}</h4>
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
@@ -863,26 +865,33 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             </motion.section>
 
             {/* SEAMLESS CALL TO ACTION */}
-            <motion.section id="contact-cta" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ padding: '4.5rem 2rem', background: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-light)', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
-              <span style={{ fontSize: '0.725rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', color: '#A1A1AA', letterSpacing: '0.12em' }}>INITIATE A PROJECT</span>
-              <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', maxWidth: '720px', lineHeight: 1.25 }}>
-                Let's Bring Your Digital Vision to Life with Hilman Zahrawa.
-              </h2>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
-                <a 
-                  href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20discuss%20a%20project`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                >
-                  Chat on WhatsApp 💬
-                </a>
-                <a 
-                  href={`mailto:${displayBio.email}`}
-                  style={{ background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--text-muted)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                >
-                  Send Email ✉️
-                </a>
+            <motion.section id="contact-cta" initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ position: 'relative', padding: '6rem 2rem', background: 'radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-surface) 100%)', color: 'var(--text-primary)', border: '1px solid var(--border-glow)', borderRadius: '16px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem', overflow: 'hidden', boxShadow: 'var(--shadow-premium)' }}>
+              <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 50%)', filter: 'blur(80px)', zIndex: 0, opacity: 0.4, pointerEvents: 'none' }} />
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
+                <span style={{ fontSize: '0.725rem', fontFamily: 'var(--font-mono)', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent)', letterSpacing: '0.12em', background: 'var(--bg-tint)', padding: '0.4rem 1rem', borderRadius: '20px', border: '1px solid var(--border-tint)' }}>INITIATE A PROJECT</span>
+                <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', maxWidth: '720px', lineHeight: 1.25, textShadow: '0 0 20px rgba(255,255,255,0.1)' }}>
+                  Let's Bring Your Digital Vision to Life with Hilman Zahrawa.
+                </h2>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1.5rem' }}>
+                  <motion.a 
+                    whileHover={{ scale: 1.05, boxShadow: 'var(--shadow-glow)' }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20discuss%20a%20project`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)', color: '#FFFFFF', padding: '1rem 2.2rem', borderRadius: '30px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', boxShadow: 'var(--shadow-premium)' }}
+                  >
+                    Chat on WhatsApp 💬
+                  </motion.a>
+                  <motion.a 
+                    whileHover={{ backgroundColor: 'var(--bg-tint)', borderColor: 'var(--accent)', color: 'var(--accent)' }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`mailto:${displayBio.email}`}
+                    style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-light)', padding: '0.95rem 2.2rem', borderRadius: '30px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', boxShadow: 'var(--shadow-premium)' }}
+                  >
+                    Send Email ✉️
+                  </motion.a>
+                </div>
               </div>
             </motion.section>
 
