@@ -60,83 +60,6 @@ const MiniDeco = () => (
       <circle cx="25" cy="25" r="3" fill="var(--accent)" />
     </svg>
   </motion.div>
-);
-
-const ScrollParallaxDecorations = () => {
-  const { scrollYProgress } = useScroll();
-  
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 360]);
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -540]);
-  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 720]);
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -300]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -500]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y4 = useTransform(scrollYProgress, [0, 1], [0, -400]);
-  const scale1 = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.2, 0.9]);
-  const scale2 = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.7, 1.1]);
-
-  return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-      {/* Large Hexagon - Top Left */}
-      <motion.div style={{ position: 'absolute', top: '8%', left: '2%', rotate: rotate1, y: y1, scale: scale1, opacity: 0.12 }}>
-        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" stroke="var(--accent)" strokeWidth="0.8">
-          <path d="M 100 10 L 178 55 L 178 145 L 100 190 L 22 145 L 22 55 Z" />
-          <path d="M 100 40 L 152 67.5 L 152 132.5 L 100 160 L 48 132.5 L 48 67.5 Z" />
-          <path d="M 100 70 L 126 82.5 L 126 117.5 L 100 130 L 74 117.5 L 74 82.5 Z" />
-          <line x1="100" y1="10" x2="100" y2="190" strokeDasharray="6 8" />
-          <line x1="22" y1="55" x2="178" y2="145" strokeDasharray="6 8" />
-          <line x1="22" y1="145" x2="178" y2="55" strokeDasharray="6 8" />
-        </svg>
-      </motion.div>
-
-      {/* Large Triangle - Right Side */}
-      <motion.div style={{ position: 'absolute', top: '30%', right: '3%', rotate: rotate2, y: y2, opacity: 0.1 }}>
-        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" stroke="var(--text-primary)" strokeWidth="0.6">
-          <polygon points="90,10 170,160 10,160" />
-          <polygon points="90,50 140,135 40,135" />
-          <polygon points="90,80 115,115 65,115" />
-          <circle cx="90" cy="110" r="4" fill="var(--accent)" fillOpacity="0.3" />
-        </svg>
-      </motion.div>
-
-      {/* Large Grid/Square - Bottom Left */}
-      <motion.div style={{ position: 'absolute', top: '55%', left: '3%', rotate: rotate3, y: y3, scale: scale2, opacity: 0.1 }}>
-        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" stroke="var(--accent)" strokeWidth="0.5">
-          <rect x="10" y="10" width="140" height="140" />
-          <rect x="30" y="30" width="100" height="100" transform="rotate(15 80 80)" />
-          <rect x="50" y="50" width="60" height="60" transform="rotate(30 80 80)" />
-          <circle cx="80" cy="80" r="50" strokeDasharray="3 5" />
-          <circle cx="80" cy="80" r="25" strokeDasharray="3 5" />
-        </svg>
-      </motion.div>
-
-      {/* Large Diamond - Right Bottom */}
-      <motion.div style={{ position: 'absolute', top: '72%', right: '4%', rotate: rotate1, y: y4, opacity: 0.12 }}>
-        <svg width="150" height="150" viewBox="0 0 150 150" fill="none" stroke="var(--text-primary)" strokeWidth="0.6">
-          <path d="M 75 5 L 145 75 L 75 145 L 5 75 Z" />
-          <path d="M 75 30 L 120 75 L 75 120 L 30 75 Z" />
-          <path d="M 75 50 L 100 75 L 75 100 L 50 75 Z" />
-          <line x1="75" y1="5" x2="75" y2="145" strokeDasharray="4 6" />
-          <line x1="5" y1="75" x2="145" y2="75" strokeDasharray="4 6" />
-          <circle cx="75" cy="75" r="6" fill="var(--accent)" fillOpacity="0.2" />
-        </svg>
-      </motion.div>
-
-      {/* Large Circle Compass - Mid Center Left */}
-      <motion.div style={{ position: 'absolute', top: '45%', left: '5%', rotate: rotate2, y: y2, opacity: 0.08 }}>
-        <svg width="220" height="220" viewBox="0 0 220 220" fill="none" stroke="var(--accent)" strokeWidth="0.4">
-          <circle cx="110" cy="110" r="100" strokeDasharray="8 12" />
-          <circle cx="110" cy="110" r="70" />
-          <circle cx="110" cy="110" r="40" strokeDasharray="4 6" />
-          <line x1="110" y1="10" x2="110" y2="210" />
-          <line x1="10" y1="110" x2="210" y2="110" />
-          <line x1="39" y1="39" x2="181" y2="181" strokeDasharray="6 8" />
-          <line x1="181" y1="39" x2="39" y2="181" strokeDasharray="6 8" />
-          <circle cx="110" cy="110" r="5" fill="var(--accent)" fillOpacity="0.3" />
-        </svg>
-      </motion.div>
-    </div>
-  );
 };
 
 export default function ClientPage({ initialData }: { initialData: any }) {
@@ -276,9 +199,6 @@ export default function ClientPage({ initialData }: { initialData: any }) {
     <>
       {/* Subtle Noise Texture */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0, opacity: 0.05, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
-
-      {/* Scroll-Driven Parallax Decorations */}
-      <ScrollParallaxDecorations />
 
       {/* Scroll Progress Bar */}
       <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '3px', background: 'var(--text-primary)', originX: 0, scaleX, zIndex: 10000 }} />
