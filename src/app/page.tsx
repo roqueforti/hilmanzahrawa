@@ -189,10 +189,13 @@ export default function Home() {
           <div className="container" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
             
             {/* SEAMLESS HERO PROFILE SECTION */}
-            <section id="hero" style={{ marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)' }}>
-              <div className="hero-seamless-grid">
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
+            <section id="hero" style={{ position: 'relative', marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)' }}>
+              {/* Subtle interactive background glow */}
+              <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(9,9,11,0.02) 0%, rgba(255,255,255,0) 65%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none' }} />
+              
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '860px', margin: '0 auto' }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem', justifyContent: 'center' }}>
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', background: '#DCFCE7', border: '1px solid #86EFAC', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, color: '#15803D', fontFamily: 'var(--font-mono)' }}>
                       ● Available for Hire & Freelance
                     </span>
@@ -200,55 +203,61 @@ export default function Home() {
                       #HZ-2026
                     </span>
                   </div>
+                </motion.div>
 
-                  <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', marginBottom: '1.25rem' }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                  <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 6vw, 4.2rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', marginBottom: '1.5rem' }}>
                     Engineering Scalable Web Products & Iconic Brand Systems.
                   </h1>
+                </motion.div>
 
-                  <p style={{ fontSize: '1.1rem', lineHeight: '1.65', color: 'var(--text-secondary)', marginBottom: '2rem', maxWidth: '640px' }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                  <p style={{ fontSize: '1.1rem', lineHeight: '1.65', color: 'var(--text-secondary)', marginBottom: '2.5rem', maxWidth: '640px', margin: '0 auto 2.5rem' }}>
                     {displayBio.about}
                   </p>
+                </motion.div>
 
-                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '2.5rem' }}>
-                    <a 
-                      href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.8rem 1.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                    >
-                      Free Consultation via WhatsApp ↗
-                    </a>
-                    <a 
-                      href={`mailto:${displayBio.email}`}
-                      style={{ background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.8rem 1.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                    >
-                      Send Email ✉
-                    </a>
-                  </div>
-                </div>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hero-btn-group" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', marginBottom: '4.5rem' }}>
+                  <motion.a 
+                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(9, 9, 11, 0.9)' }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', transition: 'background-color 0.2s' }}
+                  >
+                    Free Consultation via WhatsApp ↗
+                  </motion.a>
+                  <motion.a 
+                    whileHover={{ scale: 1.05, borderColor: 'var(--text-primary)', backgroundColor: 'var(--bg-secondary)' }}
+                    whileTap={{ scale: 0.95 }}
+                    href={`mailto:${displayBio.email}`}
+                    style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', transition: 'all 0.2s' }}
+                  >
+                    Send Email ✉
+                  </motion.a>
+                </motion.div>
 
-                {/* Portrait & Track Record Summary */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start' }}>
-
-                  <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', borderTop: '1px solid var(--border-hairline)', paddingTop: '1.5rem' }}>
-                    <div>
-                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>100%</div>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} style={{ width: '100%' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', borderTop: '1px solid var(--border-hairline)', paddingTop: '2.5rem' }}>
+                    <motion.div whileHover={{ y: -6 }}>
+                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>100%</div>
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Client Satisfaction</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>15+</div>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -6 }}>
+                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>15+</div>
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Projects Completed</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>100%</div>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -6 }}>
+                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>100%</div>
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>On-Time Delivery</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>3+ Years</div>
+                    </motion.div>
+                    <motion.div whileHover={{ y: -6 }}>
+                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>3+ Yrs</div>
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Experience</div>
-                    </div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </section>
 

@@ -147,7 +147,7 @@ body {
 
 @media (max-width: 640px) {
   .brand-name { font-size: 0.85rem; }
-  .nav-link { font-size: 0.65rem; }
+  .nav-link { display: none; } /* Hide text links on mobile for cleaner look */
 }
 
 /* Seamless Section Header */
@@ -736,5 +736,11 @@ body {
     min-width: 85vw;
     scroll-snap-align: center;
     flex-shrink: 0;
+  }
+
+  .hero-btn-group a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }
