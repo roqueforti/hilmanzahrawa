@@ -828,11 +828,12 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       ) : null;
 
                       return (
-                              <SkillGroup title="Engineering" skills={devSkills} />
-                              <SkillGroup title="Design & Creative" skills={designSkills} />
-                              <SkillGroup title="General & Soft Skills" skills={otherSkills} />
-                            </>
-                          );
+                        <>
+                          <SkillGroup title="Engineering" skills={devSkills} />
+                          <SkillGroup title="Design & Creative" skills={designSkills} />
+                          <SkillGroup title="General & Soft Skills" skills={otherSkills} />
+                        </>
+                      );
                         })()}
                       </div>
 
