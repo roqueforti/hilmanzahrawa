@@ -313,8 +313,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                   <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1', border: '1px solid var(--border-hairline)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
                     {/* SVG Wireframe Anchor */}
                     <motion.svg 
-                      viewBox="0 0 100 100" 
-                      style={{ width: '65%', height: '65%', color: 'var(--text-primary)', opacity: 0.8 }}
+                      viewBox="-5 -5 110 110" 
+                      style={{ width: '65%', height: '65%', color: 'var(--text-primary)', opacity: 0.8, overflow: 'visible' }}
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     >
