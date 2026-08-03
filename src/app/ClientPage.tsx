@@ -493,6 +493,12 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     <span>田</span> Grid View
                   </button>
                   <button 
+                    onClick={() => setItViewMode('list')}
+                    className={`view-btn ${itViewMode === 'list' ? 'active' : ''}`}
+                  >
+                    <span>𝌆</span> Editorial List
+                  </button>
+                  <button 
                     onClick={() => setItViewMode('table')}
                     className={`view-btn ${itViewMode === 'table' ? 'active' : ''}`}
                   >
@@ -529,7 +535,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                 </motion.button>
               </div>
 
-              {itViewMode === 'grid' ? (
+              {itViewMode === 'list' ? (
                 <motion.div layout className="editorial-list-container">
                   <AnimatePresence mode="popLayout">
                   {filteredItProjects.map((project: any, index: number) => (
@@ -577,6 +583,62 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       </div>
                     </motion.div>
                   ))}
+                  </AnimatePresence>
+                </motion.div>
+              ) : itViewMode === 'grid' ? (
+                <motion.div layout className="compact-grid">
+                  <AnimatePresence mode="popLayout">
+                    {filteredItProjects.map((project: any, index: number) => (
+                      <motion.div
+                        layout
+                        key={project._id}
+                        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                        transition={{ duration: 0.3, delay: index * 0.04 }}
+                        className="card-compact"
+                        onClick={() => setSelectedProject(project)}
+                      >
+                        <div className="img-wrapper" style={{ position: 'relative', aspectRatio: '16/10' }}>
+                          {project.image ? (
+                            <img 
+                              src={urlFor(project.image).width(800).url()} 
+                              alt={project.title} 
+                              loading="lazy"
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                            />
+                          ) : (
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-tertiary)', fontSize: '2.5rem' }}>
+                              ⚙️
+                            </div>
+                          )}
+                          {project.featured && (
+                            <span style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', background: '#000', color: '#fff', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
+                              FEATURED
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="content" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', paddingTop: '0.25rem' }}>
+                          <div className="metadata-row" style={{ alignItems: 'flex-start' }}>
+                            <h4 className="title" style={{ fontSize: '1.05rem', fontWeight: 800 }}>{project.title}</h4>
+                          </div>
+                          
+                          <p className="subtitle" style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: '1.45', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {project.subtitle || project.description}
+                          </p>
+
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-hairline)' }}>
+                            <span style={{ fontSize: '0.675rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                              {project.role || 'Full-Stack Developer'} • {project.year || '2026'}
+                            </span>
+                            <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--text-primary)' }}>
+                              View Work ↗
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
                   </AnimatePresence>
                 </motion.div>
               ) : (
