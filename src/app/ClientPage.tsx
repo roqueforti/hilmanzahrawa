@@ -25,6 +25,16 @@ const CountUp = ({ to, suffix = "", duration = 2 }: { to: number, suffix?: strin
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
+const getDynamicContainerClass = (len: number, baseClass = '') => {
+  if (len > 6) return `${baseClass} dynamic-slider-container`.trim();
+  if (len >= 4 && len <= 6) return `${baseClass} dynamic-grid-2-rows`.trim();
+  return `${baseClass} dynamic-grid-1-row`.trim();
+};
+
+const getDynamicItemClass = (len: number, baseClass = '') => {
+  return len > 6 ? `${baseClass} dynamic-slider-item`.trim() : baseClass;
+};
+
 export default function ClientPage({ initialData }: { initialData: any }) {
   const [data, setData] = useState<any>(initialData);
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -388,7 +398,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
               </div>
 
               <motion.div 
-                className="seamless-service-grid"
+                className={getDynamicContainerClass(3, "seamless-service-grid")}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
@@ -617,7 +627,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                   </AnimatePresence>
                 </motion.div>
               ) : itViewMode === 'grid' ? (
-                <motion.div layout className="compact-grid">
+                <motion.div layout className={getDynamicContainerClass(filteredItProjects.length, "compact-grid")}>
                   <AnimatePresence mode="popLayout">
                     {filteredItProjects.map((project: any, index: number) => (
                       <motion.div
@@ -627,7 +637,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 15 }}
                         transition={{ duration: 0.3, delay: index * 0.04 }}
-                        className="card-compact"
+                        className={getDynamicItemClass(filteredItProjects.length, "card-compact")}
                         onClick={() => setSelectedProject(project)}
                       >
                         <div className="img-wrapper" style={{ position: 'relative', aspectRatio: '16/10' }}>
@@ -841,6 +851,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       <motion.div 
                         initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+                        className={getDynamicContainerClass(4)}
                         style={{ marginBottom: '3rem' }}
                       >
                         {[
@@ -876,8 +887,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                             assoc: "Himpunan Mahasiswa Teknologi Informasi (HMTI) Polinema", 
                             desc: "The \"Expo Kelembagaan OKi Polinema\" Video Competition is an event organized by the Student Executive Board of Politeknik Negeri Malang to welcome the new students of 2023. This competition is specifically designed to allow the organizations within Politeknik Negeri Malang to introduce themselves in a more engaging and creative manner." 
                           }
-                        ].map((award) => (
-                          <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="award-card">
+                        ].map((award, _, arr) => (
+                          <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={`award-card ${getDynamicItemClass(arr.length)}`}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                               <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.3 }}>{award.title}</h4>
                               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
@@ -896,7 +907,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                   <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                     variants={{ visible: { transition: { staggerChildren: 0.05 } }, hidden: {} }}
-                    style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}
+                    className={getDynamicContainerClass(data.certificates?.length || 8)}
                   >
                     {(data.certificates?.length > 0 ? data.certificates : [
                       { _id: "cert1", title: "2nd Best Novice Team International I&T Open Debate Competition", issuer: "Award", date: "2024" },
@@ -907,8 +918,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       { _id: "cert6", title: "Communicating for Community Engagement and Influence", issuer: "Innovillage", date: "2025" },
                       { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
                       { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
-                    ]).map((cert: any) => (
-                      <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)' }}>
+                    ]).map((cert: any, _, arr) => (
+                      <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className={getDynamicItemClass(arr.length)} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)', height: '100%' }}>
                         <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
                         <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.2rem' }}>{cert.issuer} • {cert.date}</p>
                       </motion.div>
