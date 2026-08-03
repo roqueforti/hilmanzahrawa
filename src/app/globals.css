@@ -1289,8 +1289,10 @@ body {
 .dynamic-slider-container {
   display: flex;
   overflow-x: auto;
+  overflow-y: visible;
   scroll-snap-type: x mandatory;
   gap: 1.5rem;
+  padding-top: 0.75rem;
   padding-bottom: 1.5rem;
   margin: 0 -1.5rem; /* Let it bleed to edges slightly */
   padding-left: 1.5rem;
