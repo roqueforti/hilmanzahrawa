@@ -106,12 +106,12 @@ export default function Home() {
   
   const displayBio = {
     name: bio?.name || "HILMAN ZAHRAWA BUDIARTO",
-    headline: bio?.headline || "Transforming Ideas into Impactful Digital Solutions.",
-    about: bio?.about || "Business Information Systems student at State Polytechnic of Malang and Djarum Beasiswa Plus awardee with a strong focus on software development, UI/UX design, and data analytics. Experienced in engineering digital solutions as a Web Developer and UI/UX Designer, including architecting the BrewTech platform for the Innovillage program with a focus on system architecture, web development, and performance optimization. Skilled in designing scalable, user-centered digital products aligned with business needs.",
-    location: bio?.location || "Malang, East Java, ID",
+    headline: bio?.headline || "Fullstack Developer | UI UX Designer",
+    about: bio?.about || "Business Information System student based in Malang and a recipient of the Djarum Beasiswa Plus scholarship. Skilled in software development, UI/UX design, and video editing. Experienced as a Chairman of Information Technology Student Association (HMTI), successfully leading 11 programs and coordinating 5 departments. Accustomed to working in a team, taking initiative, and being adaptive in various situations.",
+    location: bio?.location || "Malang, Jawa Timur, Indonesia",
     email: bio?.email || "budiarto3788@gmail.com",
     whatsapp: bio?.whatsapp || "6285806003234",
-    address: bio?.address || "Jl. Candi Bajang Ratu No. 3-B, Malang City",
+    address: bio?.address || "Malang, Indonesia",
     avatarUrl: bio?.avatarUrl,
     socialLinks: bio?.socialLinks || [
       { platform: "LinkedIn", url: "https://linkedin.com/in/hilmanzahrawa" },
@@ -119,7 +119,7 @@ export default function Home() {
     ],
     skills: typeof bio?.skills === 'string' 
       ? bio.skills.split(',').map((s: string) => s.trim()).filter(Boolean)
-      : (bio?.skills || ["Java", "PHP", "Laravel", "SQL", "Python", "JavaScript", "HTML", "CSS", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Power BI", "Looker Studio"]),
+      : (bio?.skills || ["Software Development", "UI/UX Design", "Video Editing", "Creative Strategy", "Content Strategy", "Fostering inclusivity", "English (Full Professional)"]),
     mediumUsername: bio?.mediumUsername
   };
 
@@ -164,7 +164,6 @@ export default function Home() {
           <nav className="seamless-nav">
             <div className="container">
               <a href="#hero" className="nav-brand">
-                <div className="brand-badge">HZ</div>
                 <span className="brand-name">{displayBio.name}</span>
                 <span className="brand-tagline">{data.landingPage?.tagline || "Software Engineer & Product Designer"}</span>
               </a>
@@ -576,13 +575,18 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Experience</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
                     {(data.experiences?.length > 0 ? data.experiences : [
-                      { _id: "e1", role: "Digital Marketing", company: "NZ Box Smart Laundry", startDate: "2026-02-01" },
-                      { _id: "e2", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025-09-01" },
-                      { _id: "e3", role: "UI/UX Design Intern", company: "Profile Image Studio", startDate: "2025-08-01" },
+                      { _id: "e1", role: "HRIS Developer – HCM Division", company: "PT PAL Indonesia (Persero)", startDate: "2026", displayDate: "April 2026 - Present" },
+                      { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present" },
+                      { _id: "e3", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025", displayDate: "Dec 2025 - Apr 2026" },
+                      { _id: "e4", role: "Social Media Specialist", company: "NZ Box Smart Laundry", startDate: "2026", displayDate: "Feb 2026 - Apr 2026" },
+                      { _id: "e5", role: "UI/UX Designer", company: "Social Economic Accelerator Lab", startDate: "2025", displayDate: "Aug 2025 - Dec 2025" },
+                      { _id: "e6", role: "Chairman", company: "HMTI Polinema", startDate: "2024", displayDate: "Feb 2024 - Feb 2025" },
+                      { _id: "e7", role: "Organizing Committee", company: "HMTI Polinema", startDate: "2023", displayDate: "Feb 2023 - Feb 2024" },
+                      { _id: "e8", role: "Debate Mentor", company: "IT Dept English Community", startDate: "2023", displayDate: "Dec 2023 - Feb 2025" },
                     ]).map((exp: any) => (
                       <div key={exp._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{exp.role}</h4>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{exp.company} • {exp.startDate?.split('-')[0] || 'Present'}</p>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{exp.company} • {exp.displayDate || (exp.startDate?.split('-')[0] || 'Present')}</p>
                       </div>
                     ))}
                   </div>
@@ -590,8 +594,8 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Education</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                     {(data.education?.length > 0 ? data.education : [
-                      { _id: "edu1", school: "Politeknik Negeri Malang", degree: "B.A.S. in Business Information Systems", startDate: "2022" },
-                      { _id: "edu2", school: "SMAN 1 Malang", degree: "High School Diploma in Natural Sciences", startDate: "2019" },
+                      { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
+                      { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
                     ]).map((edu: any) => (
                       <div key={edu._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{edu.school}</h4>
@@ -614,7 +618,14 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     {(data.certificates?.length > 0 ? data.certificates : [
-                      { _id: "cert1", title: "Python Programming Fundamentals", issuer: "Dicoding Indonesia", date: "2024" },
+                      { _id: "cert1", title: "2nd Best Novice Team International I&T Open Debate Competition", issuer: "Award", date: "2024" },
+                      { _id: "cert2", title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", issuer: "Award", date: "2023" },
+                      { _id: "cert3", title: "Finalist Poster Infographic Design 4C National Competition", issuer: "Award", date: "2023" },
+                      { _id: "cert4", title: "2nd Runner Up IT Poly Debate Cup", issuer: "Award", date: "2024" },
+                      { _id: "cert5", title: "How to Validate Your Social Project Leadership Program", issuer: "Innovillage", date: "2025" },
+                      { _id: "cert6", title: "Communicating for Community Engagement and Influence", issuer: "Innovillage", date: "2025" },
+                      { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
+                      { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
                     ]).map((cert: any) => (
                       <div key={cert._id} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)' }}>
                         <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
@@ -697,7 +708,7 @@ export default function Home() {
                   overflowY: 'auto'
                 }}
               >
-                <div className="container" style={{ position: 'relative', marginTop: '2rem', maxWidth: '1050px' }}>
+                <div style={{ position: 'relative', margin: '0 auto', maxWidth: '1536px', width: '100%', padding: '2rem 0', minHeight: 'calc(100vh - 8rem)', display: 'flex', alignItems: 'center' }}>
                   <button 
                     onClick={() => setSelectedProject(null)}
                     style={{ 
@@ -722,7 +733,7 @@ export default function Home() {
                     ✕
                   </button>
 
-                  <div style={{ display: 'grid', gap: '3rem', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)' }}>
+                  <div style={{ display: 'grid', gap: '4rem', gridTemplateColumns: 'minmax(0, 1.6fr) minmax(0, 1fr)', width: '100%' }}>
                     {/* Media Column */}
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <div 
@@ -730,11 +741,11 @@ export default function Home() {
                         style={{ 
                           width: '100%', 
                           maxWidth: selectedProject.deviceType === 'mobile' ? '360px' : 'none',
-                          height: selectedProject.deviceType === 'mobile' ? '70vh' : '55vh', 
+                          height: selectedProject.deviceType === 'mobile' ? '80vh' : '75vh', 
                           background: 'var(--bg-tertiary)', 
                           position: 'relative', 
                           overflow: 'hidden',
-                          borderRadius: '8px',
+                          borderRadius: '12px',
                           border: '1px solid var(--border-hairline)',
                           margin: selectedProject.deviceType === 'mobile' ? '0 auto' : '0'
                         }}
