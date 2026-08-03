@@ -105,7 +105,7 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
           {articles.map((article, index) => (
             <motion.a
-              key={article.guid}
+              key={article.guid || article.link || `medium-article-${index}`}
               href={article.link}
               target="_blank"
               rel="noopener noreferrer"
