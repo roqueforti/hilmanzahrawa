@@ -297,13 +297,14 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                     >
-                      {/* Outer Diamond */}
-                      <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      {/* Vertical and Horizontal Intersects */}
-                      <path d="M50 0 L50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      <path d="M0 50 L100 50" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Outer Proportional Hexagon (6 sides) */}
+                      <path d="M 50 0 L 93.3 25 L 93.3 75 L 50 100 L 6.7 75 L 6.7 25 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Intersecting Diagonals */}
+                      <path d="M 50 0 L 50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M 6.7 25 L 93.3 75" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M 6.7 75 L 93.3 25" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       {/* Inner Circles */}
-                      <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <circle cx="50" cy="50" r="10" fill="currentColor" />
                     </motion.svg>
                     
