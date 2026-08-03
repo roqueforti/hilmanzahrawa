@@ -313,9 +313,6 @@ export default function ClientPage({ initialData }: { initialData: any }) {
           {/* Global Noise Overlay */}
           <div className="global-noise" />
           
-          {/* Scatter Ambient Decorations */}
-          <BackgroundDecorations />
-          
           {/* SEAMLESS NAVBAR */}
           <nav className="seamless-nav">
             <div className="container">
