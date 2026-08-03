@@ -497,7 +497,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             <motion.section id="it" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless" style={{ alignItems: 'center' }}>
                 <div>
-                  <h2 className="section-title-seamless">Software & Web Engineering Projects</h2>
+                  <h2 className="section-title-seamless">Software, Web, & UI/UX Projects</h2>
                   <span className="section-tag" style={{ marginTop: '0.25rem', display: 'block' }}>02 / IT PROJECTS ({filteredItProjects.length})</span>
                 </div>
 
@@ -717,8 +717,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             {/* SEAMLESS DESIGN SECTION */}
             <motion.section id="design" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
-                <h2 className="section-title-seamless">UI/UX & Creative Portfolio</h2>
-                <span className="section-tag">03 / CREATIVE & DESIGN</span>
+                <h2 className="section-title-seamless">Creative Portfolio</h2>
+                <span className="section-tag">03 / CREATIVE PORTFOLIO</span>
               </div>
 
               <DesignSection 
