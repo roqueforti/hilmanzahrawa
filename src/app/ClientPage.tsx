@@ -62,6 +62,70 @@ const MiniDeco = () => (
   </motion.div>
 );
 
+const BackgroundDecorations = () => {
+  const decos = [
+    { top: '5%', left: '4%', type: 'cross' },
+    { top: '8%', right: '6%', type: 'dots' },
+    { top: '15%', left: '85%', type: 'circle' },
+    { top: '22%', left: '3%', type: 'cross' },
+    { top: '28%', right: '8%', type: 'circle' },
+    { top: '35%', left: '7%', type: 'dots' },
+    { top: '42%', right: '5%', type: 'cross' },
+    { top: '48%', left: '88%', type: 'dots' },
+    { top: '55%', left: '4%', type: 'circle' },
+    { top: '62%', right: '7%', type: 'cross' },
+    { top: '68%', left: '82%', type: 'dots' },
+    { top: '75%', left: '6%', type: 'cross' },
+    { top: '82%', right: '4%', type: 'circle' },
+    { top: '88%', left: '90%', type: 'dots' },
+    { top: '95%', left: '5%', type: 'cross' },
+    { top: '98%', right: '10%', type: 'circle' },
+  ];
+
+  return (
+    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+      {decos.map((deco, i) => (
+        <motion.div
+          key={i}
+          style={{ position: 'absolute', top: deco.top, left: deco.left, right: deco.right, opacity: 0.15 }}
+          animate={{
+            y: [0, -30, 0],
+            rotate: deco.type === 'cross' ? 360 : (deco.type === 'circle' ? -360 : 0)
+          }}
+          transition={{
+            y: { duration: 10 + (i % 5), repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 },
+            rotate: { duration: 30 + i * 2, repeat: Infinity, ease: 'linear' }
+          }}
+        >
+          {deco.type === 'cross' && (
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text-muted)" strokeWidth="0.5">
+              <path d="M 16 0 L 16 32 M 0 16 L 32 16" />
+              <circle cx="16" cy="16" r="6" />
+              <circle cx="16" cy="16" r="2" fill="var(--text-muted)" />
+            </svg>
+          )}
+          {deco.type === 'dots' && (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text-muted)">
+              <circle cx="4" cy="4" r="1.5" />
+              <circle cx="20" cy="4" r="1.5" />
+              <circle cx="4" cy="20" r="1.5" />
+              <circle cx="20" cy="20" r="1.5" />
+              <circle cx="12" cy="12" r="1.5" />
+            </svg>
+          )}
+          {deco.type === 'circle' && (
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="var(--text-muted)" strokeWidth="0.5">
+              <circle cx="24" cy="24" r="20" strokeDasharray="4 6" />
+              <circle cx="24" cy="24" r="10" />
+              <path d="M 24 14 L 24 10 M 24 34 L 24 38 M 14 24 L 10 24 M 34 24 L 38 24" />
+            </svg>
+          )}
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
 export default function ClientPage({ initialData }: { initialData: any }) {
   const [data, setData] = useState<any>(initialData);
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -229,9 +293,12 @@ export default function ClientPage({ initialData }: { initialData: any }) {
           />
         </div>
       ) : (
-        <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
+        <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)', position: 'relative' }}>
           {/* Global Noise Overlay */}
           <div className="global-noise" />
+          
+          {/* Scatter Ambient Decorations */}
+          <BackgroundDecorations />
           
           {/* SEAMLESS NAVBAR */}
           <nav className="seamless-nav">
