@@ -1,14 +1,15 @@
 :root {
-  /* Deep Teal Theme */
-  --bg-primary: #081C1D;
-  --bg-secondary: #112B2C;
-  --bg-tertiary: #1E4648;
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #4FA3A5;
-  --accent: #3BB273;
-  --border-light: #2A3E3F;
-  --border-hairline: #1E4648;
+  /* Crimson Red Theme */
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #171717;
+  --bg-tertiary: #262626;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D4D4D8;
+  --text-muted: #A1A1AA;
+  --accent: #FF3B5C;
+  --accent-hover: #FF5D79;
+  --border-light: #262626;
+  --border-hairline: #3F3F46;
   
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
