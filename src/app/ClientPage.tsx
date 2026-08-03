@@ -859,7 +859,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     <motion.div 
                         initial="hidden" animate="visible"
                         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-                        className={getDynamicContainerClass(6)}
+                        className="dynamic-slider-container"
                         style={{ marginBottom: '3rem' }}
                       >
                         {[
@@ -911,8 +911,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                             assoc: "Politeknik Negeri Malang", 
                             desc: "The 4C National Competition is an event hosted by the Faculty of Computer Science at the University of Brawijaya." 
                           }
-                        ].map((award, _, arr) => (
-                          <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={`award-card ${getDynamicItemClass(arr.length)}`}>
+                        ].map((award) => (
+                          <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="award-card dynamic-slider-item">
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                               <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.3 }}>{award.title}</h4>
                               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
