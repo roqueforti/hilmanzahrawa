@@ -399,7 +399,10 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             <motion.section id="services" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Services & Project Specializations</h2>
-                <span className="section-tag">01 / SERVICES</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <MiniDeco />
+                  <span className="section-tag">01 / SERVICES</span>
+                </div>
               </div>
 
               <motion.div 
@@ -748,7 +751,10 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             <motion.section id="design" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Creative Portfolio</h2>
-                <span className="section-tag">03 / CREATIVE PORTFOLIO</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <MiniDeco />
+                  <span className="section-tag">03 / CREATIVE PORTFOLIO</span>
+                </div>
               </div>
 
               <DesignSection 
@@ -761,7 +767,10 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             <motion.section id="about" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Experience & Credentials</h2>
-                <span className="section-tag">04 / BACKGROUND</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <MiniDeco />
+                  <span className="section-tag">04 / BACKGROUND</span>
+                </div>
               </div>
 
               <div className="about-grid">
@@ -985,7 +994,10 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             <motion.section id="medium" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Articles & Publications</h2>
-                <span className="section-tag">05 / ARTICLES</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <MiniDeco />
+                  <span className="section-tag">05 / ARTICLES</span>
+                </div>
               </div>
 
               <MediumArticles username={displayBio.mediumUsername} />
