@@ -230,8 +230,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                      <span className="hero-badge-pulse" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', background: '#000000', borderRadius: '0px', fontSize: '0.725rem', fontWeight: 700, color: '#FFFFFF', fontFamily: 'var(--font-mono)' }}>
-                        <span className="hero-pulse-dot" style={{ background: '#22C55E' }} /> AVAILABLE FOR HIRE
+                      <span className="hero-badge-pulse" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', background: 'var(--text-primary)', borderRadius: '0px', fontSize: '0.725rem', fontWeight: 700, color: 'var(--bg-primary)', fontFamily: 'var(--font-mono)' }}>
+                        <span className="hero-pulse-dot" style={{ background: 'var(--accent)' }} /> AVAILABLE FOR HIRE
                       </span>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.725rem', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.05em' }}>
                         // HZ-2026
@@ -266,7 +266,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '1.2rem 2.5rem', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                      style={{ display: 'inline-block', background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '1.2rem 2.5rem', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
                     >
                       Hire Me ↗
                     </motion.a>
@@ -591,7 +591,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>⚙️</div>
                           )}
                           {project.featured && (
-                            <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: '#000', color: '#fff', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
+                            <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
                               FEATURED
                             </div>
                           )}
@@ -629,7 +629,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                             </div>
                           )}
                           {project.featured && (
-                            <span style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', background: '#000', color: '#fff', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
+                            <span style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
                               FEATURED
                             </span>
                           )}
@@ -701,7 +701,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                           <td style={{ textAlign: 'right' }}>
                             <button 
                               onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }} 
-                              style={{ background: 'var(--text-primary)', color: '#FFFFFF', border: 'none', padding: '0.45rem 0.9rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)' }}
+                              style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)', border: 'none', padding: '0.45rem 0.9rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)' }}
                             >
                               Details ↗
                             </button>
@@ -863,7 +863,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             </motion.section>
 
             {/* SEAMLESS CALL TO ACTION */}
-            <motion.section id="contact-cta" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ padding: '4.5rem 2rem', background: '#09090B', color: '#FFFFFF', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
+            <motion.section id="contact-cta" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ padding: '4.5rem 2rem', background: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-light)', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
               <span style={{ fontSize: '0.725rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', color: '#A1A1AA', letterSpacing: '0.12em' }}>INITIATE A PROJECT</span>
               <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', maxWidth: '720px', lineHeight: 1.25 }}>
                 Let's Bring Your Digital Vision to Life with Hilman Zahrawa.
@@ -873,13 +873,13 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                   href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20discuss%20a%20project`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ background: '#FFFFFF', color: '#09090B', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
+                  style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                 >
                   Chat on WhatsApp 💬
                 </a>
                 <a 
                   href={`mailto:${displayBio.email}`}
-                  style={{ background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
+                  style={{ background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--text-muted)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                 >
                   Send Email ✉️
                 </a>
@@ -933,7 +933,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       top: '2rem', 
                       background: 'var(--text-primary)', 
                       border: 'none', 
-                      color: '#FFFFFF', 
+                      color: 'var(--text-primary)', 
                       fontSize: '1rem', 
                       fontWeight: 700,
                       cursor: 'pointer',
@@ -1039,7 +1039,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                                         top: '1rem',
                                         right: '1rem',
                                         background: 'var(--text-primary)',
-                                        color: '#FFFFFF',
+                                        color: 'var(--bg-primary)',
                                         padding: '0.4rem 0.8rem',
                                         borderRadius: '4px',
                                         fontSize: '0.7rem',
@@ -1069,17 +1069,17 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                               <>
                                 <button 
                                   onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
-                                  style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--text-primary)', border: 'none', color: '#FFFFFF', width: '2.2rem', height: '2.2rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}
+                                  style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--text-primary)', border: 'none', color: 'var(--bg-primary)', width: '2.2rem', height: '2.2rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}
                                 >
                                   ←
                                 </button>
                                 <button 
                                   onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
-                                  style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--text-primary)', border: 'none', color: '#FFFFFF', width: '2.2rem', height: '2.2rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}
+                                  style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--text-primary)', border: 'none', color: 'var(--bg-primary)', width: '2.2rem', height: '2.2rem', borderRadius: '50%', cursor: 'pointer', zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}
                                 >
                                   →
                                 </button>
-                                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 700, zIndex: 30 }}>
+                                <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'var(--text-primary)', color: 'var(--bg-primary)', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 700, zIndex: 30 }}>
                                   {currentImageIndex + 1} / {images.length}
                                 </div>
                               </>
@@ -1143,7 +1143,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                               alignItems: 'center',
                               gap: '0.5rem',
                               background: 'var(--text-primary)', 
-                              color: '#FFFFFF', 
+                              color: 'var(--bg-primary)', 
                               padding: '0.75rem 1.5rem', 
                               borderRadius: '4px', 
                               fontSize: '0.825rem', 

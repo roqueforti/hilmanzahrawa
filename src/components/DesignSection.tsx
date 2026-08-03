@@ -126,7 +126,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                       top: '0.75rem',
                       right: '0.75rem',
                       background: 'rgba(9, 9, 11, 0.85)',
-                      color: '#FFFFFF',
+                      color: 'var(--bg-primary)',
                       padding: '0.25rem 0.65rem',
                       borderRadius: '20px',
                       fontSize: '0.625rem',
