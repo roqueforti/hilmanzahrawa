@@ -1,10 +1,28 @@
 'use client';
 
 import { client, urlFor } from "@/sanity/client";
-import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent, animate, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import { CheckCircle, Briefcase, Clock, Star, Terminal, GraduationCap } from "lucide-react";
 import MediumArticles from "@/components/MediumArticles";
 import DesignSection from "@/components/DesignSection";
+
+const CountUp = ({ to, suffix = "", duration = 2 }: { to: number, suffix?: string, duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  useEffect(() => {
+    if (inView) {
+      const controls = animate(0, to, {
+        duration,
+        onUpdate: (value) => setCount(Math.round(value)),
+        ease: "easeOut"
+      });
+      return controls.stop;
+    }
+  }, [inView, to, duration]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
@@ -174,7 +192,7 @@ export default function Home() {
   return (
     <>
       {/* Subtle Noise Texture */}
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999, opacity: 0.35, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0, opacity: 0.05, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
 
       {/* Scroll Progress Bar */}
       <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '3px', background: 'var(--text-primary)', originX: 0, scaleX, zIndex: 10000 }} />
@@ -235,83 +253,135 @@ export default function Home() {
 
           <div className="container" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
             
-            {/* SEAMLESS HERO PROFILE SECTION */}
-            <section id="hero" style={{ position: 'relative', marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)' }}>
-              {/* Subtle interactive background glow */}
-              <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(9,9,11,0.025) 0%, rgba(255,255,255,0) 65%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', mixBlendMode: 'multiply' }} />
+            {/* SEAMLESS HERO PROFILE SECTION (SWISS GRID) */}
+            <section id="hero" style={{ position: 'relative', marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)', minHeight: '75vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              {/* Architectural Tracking Grid Background */}
+              <div className="hero-mesh-background" />
               
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '860px', margin: '0 auto' }}>
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem', justifyContent: 'center' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', background: '#DCFCE7', border: '1px solid #86EFAC', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, color: '#15803D', fontFamily: 'var(--font-mono)' }}>
-                      ● Available for Hire & Freelance
-                    </span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.725rem', color: 'var(--text-muted)', fontWeight: 700 }}>
-                      #HZ-2026
-                    </span>
+              <div style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', textAlign: 'left', width: '100%' }}>
+                
+                {/* LEFT: TEXT CONTENT */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.5rem' }}>
+                      <span className="hero-badge-pulse" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', background: '#000000', borderRadius: '0px', fontSize: '0.725rem', fontWeight: 700, color: '#FFFFFF', fontFamily: 'var(--font-mono)' }}>
+                        <span className="hero-pulse-dot" style={{ background: '#22C55E' }} /> AVAILABLE FOR HIRE
+                      </span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.725rem', color: 'var(--text-muted)', fontWeight: 700, letterSpacing: '0.05em' }}>
+                        // HZ-2026
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  <motion.h1 
+                    initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }, hidden: {} }}
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
+                  >
+                    {"Engineering Scalable Web Products & Iconic Brand Systems.".split(" ").map((word, idx) => (
+                      <span key={idx} style={{ overflow: 'hidden', display: 'inline-block', paddingBottom: '0.15em', marginBottom: '-0.15em' }}>
+                        <motion.span variants={{ hidden: { y: '100%', opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', damping: 20, stiffness: 100 } } }} style={{ display: 'inline-block' }}>
+                          {word}
+                        </motion.span>
+                      </span>
+                    ))}
+                  </motion.h1>
+
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.65', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '540px' }}>
+                      {displayBio.about}
+                    </p>
+                  </motion.div>
+
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hero-btn-group" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <motion.a 
+                      whileHover={{ backgroundColor: 'rgba(9, 9, 11, 0.85)' }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ duration: 0.2 }}
+                      href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '1.2rem 2.5rem', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                    >
+                      Hire Me ↗
+                    </motion.a>
+                    <motion.a 
+                      whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ duration: 0.2 }}
+                      href={`mailto:${displayBio.email}`}
+                      style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--text-primary)', padding: '1.15rem 2.4rem', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                    >
+                      Email ✉
+                    </motion.a>
+                  </motion.div>
+                </div>
+
+                {/* RIGHT: FOCAL VISUAL */}
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', width: '100%', height: '100%' }}
+                >
+                  <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1', border: '1px solid var(--border-hairline)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
+                    {/* SVG Wireframe Anchor */}
+                    <motion.svg 
+                      viewBox="0 0 100 100" 
+                      style={{ width: '65%', height: '65%', color: 'var(--text-primary)', opacity: 0.8 }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                    >
+                      <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M50 0 L50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M0 25 L100 75" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M0 75 L100 25" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <circle cx="50" cy="50" r="10" fill="currentColor" />
+                    </motion.svg>
+                    
+                    {/* Architectural crosshairs */}
+                    <div style={{ position: 'absolute', top: '15px', left: '15px', width: '10px', height: '10px', borderTop: '1px solid var(--text-primary)', borderLeft: '1px solid var(--text-primary)' }} />
+                    <div style={{ position: 'absolute', top: '15px', right: '15px', width: '10px', height: '10px', borderTop: '1px solid var(--text-primary)', borderRight: '1px solid var(--text-primary)' }} />
+                    <div style={{ position: 'absolute', bottom: '15px', left: '15px', width: '10px', height: '10px', borderBottom: '1px solid var(--text-primary)', borderLeft: '1px solid var(--text-primary)' }} />
+                    <div style={{ position: 'absolute', bottom: '15px', right: '15px', width: '10px', height: '10px', borderBottom: '1px solid var(--text-primary)', borderRight: '1px solid var(--text-primary)' }} />
                   </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-                  <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 6vw, 4.2rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', marginBottom: '1.5rem' }}>
-                    Engineering Scalable Web Products & Iconic Brand Systems.
-                  </h1>
-                </motion.div>
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
-                  <p style={{ fontSize: '1.1rem', lineHeight: '1.65', color: 'var(--text-secondary)', marginBottom: '2.5rem', maxWidth: '640px', margin: '0 auto 2.5rem' }}>
-                    {displayBio.about}
-                  </p>
-                </motion.div>
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hero-btn-group" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', marginBottom: '4.5rem' }}>
-                  <motion.a 
-                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(9, 9, 11, 0.9)' }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                  >
-                    Free Consultation via WhatsApp ↗
-                  </motion.a>
-                  <motion.a 
-                    whileHover={{ scale: 1.05, borderColor: 'var(--text-primary)', backgroundColor: 'var(--bg-secondary)' }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    href={`mailto:${displayBio.email}`}
-                    style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
-                  >
-                    Send Email ✉
-                  </motion.a>
-                </motion.div>
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} style={{ width: '100%' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', borderTop: '1px solid var(--border-hairline)', paddingTop: '2.5rem' }}>
-                    <motion.div whileHover={{ y: -6 }}>
-                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>100%</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Client Satisfaction</div>
-                    </motion.div>
-                    <motion.div whileHover={{ y: -6 }}>
-                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>15+</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Projects Completed</div>
-                    </motion.div>
-                    <motion.div whileHover={{ y: -6 }}>
-                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>100%</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>On-Time Delivery</div>
-                    </motion.div>
-                    <motion.div whileHover={{ y: -6 }}>
-                      <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>3+ Yrs</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Experience</div>
-                    </motion.div>
-                  </div>
-                </motion.div>
               </div>
+
+              {/* Swiss Grid Stats */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} style={{ width: '100%', marginTop: '5rem', maxWidth: '1200px', margin: '5rem auto 0' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', borderTop: '1px solid var(--text-primary)', borderBottom: '1px solid var(--text-primary)' }}>
+                  <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
+                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                      <Star size={24} strokeWidth={2.5} /> <CountUp to={100} suffix="%" />
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Client Satisfaction</div>
+                  </motion.div>
+                  <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
+                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                      <Briefcase size={24} strokeWidth={2.5} /> <CountUp to={15} suffix="+" />
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Projects Completed</div>
+                  </motion.div>
+                  <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
+                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                      <CheckCircle size={24} strokeWidth={2.5} /> <CountUp to={100} suffix="%" />
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>On-Time Delivery</div>
+                  </motion.div>
+                  <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem' }}>
+                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                      <Clock size={24} strokeWidth={2.5} /> <CountUp to={3} suffix="+" />
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Years Experience</div>
+                  </motion.div>
+                </div>
+              </motion.div>
             </section>
 
             {/* SEAMLESS SERVICES SECTION */}
-            <section id="services" style={{ marginBottom: '5.5rem' }}>
+            <motion.section id="services" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Services & Project Specializations</h2>
                 <span className="section-tag">01 / SERVICES</span>
@@ -433,10 +503,10 @@ export default function Home() {
                   </a>
                 </motion.div>
               </motion.div>
-            </section>
+            </motion.section>
 
             {/* SEAMLESS IT PROJECTS SECTION */}
-            <section id="it" style={{ marginBottom: '5.5rem' }}>
+            <motion.section id="it" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless" style={{ alignItems: 'center' }}>
                 <div>
                   <h2 className="section-title-seamless">Software & Web Engineering Projects</h2>
@@ -488,79 +558,55 @@ export default function Home() {
               </div>
 
               {itViewMode === 'grid' ? (
-                <div className="bento-projects-grid">
+                <motion.div layout className="editorial-list-container">
+                  <AnimatePresence mode="popLayout">
                   {filteredItProjects.map((project: any, index: number) => (
                     <motion.div
+                      layout
                       key={project._id}
                       initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.05, duration: 0.3 }}
-                      className="project-bento-card"
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.4 }}
+                      className="editorial-project-row"
                       onClick={() => setSelectedProject(project)}
                     >
-                      <div className="bento-img-container">
-                        {project.image ? (
-                          <img src={urlFor(project.image).width(800).url()} alt={project.title} loading="lazy" />
-                        ) : (
-                          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>
-                            ⚙️
-                          </div>
-                        )}
+                      <div className="editorial-row-content">
+                        <div className="editorial-title-col">
+                          <h3 className="editorial-project-title">{project.title}</h3>
+                          <p className="editorial-project-subtitle">{project.subtitle || project.description}</p>
+                        </div>
                         
-                        {/* Top floating status badge */}
-                        <div style={{ position: 'absolute', top: '0.85rem', left: '0.85rem', zIndex: 2 }}>
-                          {project.featured ? (
-                            <span className="featured-star-badge">★ Featured</span>
-                          ) : (
-                            <span className="live-pulse-badge">
-                              <span className="pulse-dot" /> Live System
-                            </span>
-                          )}
-                        </div>
-
-                        <div style={{ position: 'absolute', top: '0.85rem', right: '0.85rem', zIndex: 2 }}>
-                          <span style={{ padding: '0.25rem 0.6rem', background: 'rgba(9, 9, 11, 0.8)', color: '#FFFFFF', borderRadius: '4px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, backdropFilter: 'blur(6px)' }}>
-                            {project.year || '2026'}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="bento-card-body">
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                            <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                              {project.role || 'Full-Stack Developer'}
-                            </span>
-                          </div>
-                          <h3 className="bento-project-title">{project.title}</h3>
-                          <p className="bento-project-subtitle" style={{ marginTop: '0.4rem' }}>
-                            {project.subtitle || project.description}
-                          </p>
-                        </div>
-
-                        <div>
+                        <div className="editorial-meta-col">
+                          <span className="editorial-meta-role">{project.role || 'Full-Stack Developer'} // {project.year || '2026'}</span>
                           {project.tags?.length > 0 && (
-                            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                              {project.tags.slice(0, 4).map((tag: string) => (
-                                <span key={tag} className="tech-tag-chip">{tag}</span>
+                            <div className="editorial-tags">
+                              {project.tags.slice(0, 3).map((tag: string) => (
+                                <span key={tag} className="editorial-tag">{tag}</span>
                               ))}
                             </div>
                           )}
+                        </div>
+                      </div>
 
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border-hairline)' }}>
-                            <span className="bento-action-btn">
-                              Explore Project ↗
-                            </span>
-                            <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)' }}>
-                              {project.category?.toUpperCase() || 'IT'}
-                            </span>
-                          </div>
+                      <div className="editorial-img-col">
+                        <div className="editorial-img-container">
+                          {project.image ? (
+                            <img src={urlFor(project.image).width(800).url()} alt={project.title} loading="lazy" />
+                          ) : (
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>⚙️</div>
+                          )}
+                          {project.featured && (
+                            <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: '#000', color: '#fff', padding: '0.2rem 0.6rem', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, zIndex: 2 }}>
+                              FEATURED
+                            </div>
+                          )}
                         </div>
                       </div>
                     </motion.div>
                   ))}
-                </div>
+                  </AnimatePresence>
+                </motion.div>
               ) : (
                 <div className="flat-table-container">
                   <table className="redesigned-table">
@@ -616,10 +662,10 @@ export default function Home() {
                   </table>
                 </div>
               )}
-            </section>
+            </motion.section>
 
             {/* SEAMLESS DESIGN SECTION */}
-            <section id="design" style={{ marginBottom: '5.5rem' }}>
+            <motion.section id="design" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">UI/UX & Creative Portfolio</h2>
                 <span className="section-tag">03 / CREATIVE & DESIGN</span>
@@ -629,10 +675,10 @@ export default function Home() {
                 projects={designProjects} 
                 onProjectClick={(project) => setSelectedProject(project)} 
               />
-            </section>
+            </motion.section>
 
             {/* SEAMLESS ABOUT SECTION */}
-            <section id="about" style={{ marginBottom: '5.5rem' }}>
+            <motion.section id="about" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Experience & Credentials</h2>
                 <span className="section-tag">04 / BACKGROUND</span>
@@ -644,8 +690,9 @@ export default function Home() {
                   <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                     variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}
+                    style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.75rem', marginBottom: '2.5rem' }}
                   >
+                    <div style={{ position: 'absolute', left: '7px', top: '0', bottom: '0', width: '2px', background: 'var(--border-hairline)' }} />
                     {(data.experiences?.length > 0 ? data.experiences : [
                       { _id: "e1", role: "HRIS Developer – HCM Division", company: "PT PAL Indonesia (Persero)", startDate: "2026", displayDate: "April 2026 - Present" },
                       { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present" },
@@ -656,7 +703,10 @@ export default function Home() {
                       { _id: "e7", role: "Organizing Committee", company: "HMTI Polinema", startDate: "2023", displayDate: "Feb 2023 - Feb 2024" },
                       { _id: "e8", role: "Debate Mentor", company: "IT Dept English Community", startDate: "2023", displayDate: "Dec 2023 - Feb 2025" },
                     ]).map((exp: any) => (
-                      <motion.div key={exp._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
+                      <motion.div key={exp._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
+                        <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '22px', height: '22px', background: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Briefcase size={14} color="var(--text-primary)" strokeWidth={2.5} />
+                        </div>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{exp.role}</h4>
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{exp.company} • {exp.displayDate || (exp.startDate?.split('-')[0] || 'Present')}</p>
                       </motion.div>
@@ -667,13 +717,17 @@ export default function Home() {
                   <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                     variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+                    style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}
                   >
+                    <div style={{ position: 'absolute', left: '7px', top: '0', bottom: '0', width: '2px', background: 'var(--border-hairline)' }} />
                     {(data.education?.length > 0 ? data.education : [
                       { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
                       { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
                     ]).map((edu: any) => (
-                      <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
+                      <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
+                        <div style={{ position: 'absolute', left: '-1.85rem', top: '0.1rem', width: '22px', height: '22px', background: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <GraduationCap size={14} color="var(--text-primary)" strokeWidth={2.5} />
+                        </div>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{edu.school}</h4>
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{edu.degree} • {edu.startDate}</p>
                       </motion.div>
@@ -683,12 +737,33 @@ export default function Home() {
 
                 <div>
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Skills & Expertise</h3>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.5rem' }}>
-                    {displayBio.skills.map((skill: string) => (
-                      <span key={skill} style={{ fontSize: '0.725rem', fontWeight: 700, padding: '0.3rem 0.7rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
-                        {skill}
-                      </span>
-                    ))}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.5rem' }}>
+                    {(() => {
+                      const devSkills = displayBio.skills.filter((s: string) => /dev|code|react|node|next|script|python|web|software/i.test(s));
+                      const designSkills = displayBio.skills.filter((s: string) => /design|ui|ux|video|creative|figma/i.test(s));
+                      const otherSkills = displayBio.skills.filter((s: string) => !devSkills.includes(s) && !designSkills.includes(s));
+                      
+                      const SkillGroup = ({ title, skills }: { title: string, skills: string[] }) => skills.length > 0 ? (
+                        <div>
+                          <div style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.6rem' }}>{title}</div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                            {skills.map((skill: string) => (
+                              <span key={skill} style={{ fontSize: '0.725rem', fontWeight: 700, padding: '0.3rem 0.7rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null;
+
+                      return (
+                        <>
+                          <SkillGroup title="Engineering" skills={devSkills} />
+                          <SkillGroup title="Design & Creative" skills={designSkills} />
+                          <SkillGroup title="General & Soft Skills" skills={otherSkills} />
+                        </>
+                      );
+                    })()}
                   </div>
 
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
@@ -715,20 +790,20 @@ export default function Home() {
                   </motion.div>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            {/* SEAMLESS MEDIUM SECTION */}
-            <section id="medium" style={{ marginBottom: '5.5rem' }}>
+            {/* SEAMLESS ARTICLES SECTION */}
+            <motion.section id="medium" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
                 <h2 className="section-title-seamless">Articles & Publications</h2>
                 <span className="section-tag">05 / ARTICLES</span>
               </div>
 
               <MediumArticles username={displayBio.mediumUsername} />
-            </section>
+            </motion.section>
 
-            {/* SEAMLESS BOTTOM CTA BANNER */}
-            <section id="contact-cta" style={{ padding: '4.5rem 2rem', background: '#09090B', color: '#FFFFFF', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
+            {/* SEAMLESS CALL TO ACTION */}
+            <motion.section id="contact-cta" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} style={{ padding: '4.5rem 2rem', background: '#09090B', color: '#FFFFFF', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
               <span style={{ fontSize: '0.725rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', color: '#A1A1AA', letterSpacing: '0.12em' }}>INITIATE A PROJECT</span>
               <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', maxWidth: '720px', lineHeight: 1.25 }}>
                 Let's Bring Your Digital Vision to Life with Hilman Zahrawa.
@@ -749,7 +824,7 @@ export default function Home() {
                   Send Email ✉️
                 </a>
               </div>
-            </section>
+            </motion.section>
 
           </div>
 

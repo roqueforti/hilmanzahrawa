@@ -34,7 +34,32 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
     { id: 'video', label: 'Video & Motion' },
   ];
 
-  const filteredProjects = projects.filter(project => {
+  // Group "Nevasca" episodes into a single project card
+  const aggregatedProjects: Project[] = [];
+  const nevascaEpisodes: Project[] = [];
+
+  projects.forEach(project => {
+    if (project.title.toLowerCase().includes('nevasca')) {
+      nevascaEpisodes.push(project);
+    } else {
+      aggregatedProjects.push(project);
+    }
+  });
+
+  if (nevascaEpisodes.length > 0) {
+    const mainEpisode = nevascaEpisodes[0];
+    aggregatedProjects.push({
+      ...mainEpisode,
+      _id: 'nevasca-series',
+      title: 'The Nevasca (Web Series)',
+      subtitle: `${nevascaEpisodes.length} Episodes • Short Web Series`,
+      mediaType: 'gallery',
+      // Store all episodes in gallery if possible, or just link to the first one
+      gallery: nevascaEpisodes.map(ep => ep.image).filter(Boolean)
+    });
+  }
+
+  const filteredProjects = aggregatedProjects.filter(project => {
     if (activeFilter === 'all') return true;
     if (activeFilter === 'uiux') {
       return project.mediaType !== 'video' && (!project.category || project.category === 'design' || project.tags?.includes('UI/UX'));
@@ -115,25 +140,6 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                   </span>
                 )}
 
-                {/* Role / Year Floating Pill Badge */}
-                <span
-                  style={{
-                    position: 'absolute',
-                    bottom: '0.75rem',
-                    left: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    color: 'var(--text-primary)',
-                    padding: '0.2rem 0.55rem',
-                    borderRadius: '4px',
-                    fontSize: '0.625rem',
-                    fontFamily: 'var(--font-mono)',
-                    fontWeight: 800,
-                    backdropFilter: 'blur(6px)',
-                    zIndex: 2
-                  }}
-                >
-                  {project.year || new Date().getFullYear()}
-                </span>
               </div>
 
               <div className="content" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', paddingTop: '0.25rem' }}>
@@ -147,7 +153,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-hairline)' }}>
                   <span style={{ fontSize: '0.675rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    {project.role || (project.mediaType === 'video' ? 'Video Producer' : 'UI/UX Designer')}
+                    {project.role || (project.mediaType === 'video' ? 'Video Producer' : 'UI/UX Designer')} • {project.year || new Date().getFullYear()}
                   </span>
                   <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--text-primary)' }}>
                     View Work ↗
