@@ -3,7 +3,7 @@
 import { client, urlFor } from "@/sanity/client";
 import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent, animate, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { CheckCircle, Briefcase, Clock, Star, Terminal, GraduationCap } from "lucide-react";
+import { CheckCircle, Briefcase, Clock, Star, Terminal, GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
 import MediumArticles from "@/components/MediumArticles";
 import DesignSection from "@/components/DesignSection";
 import Lenis from "lenis";
@@ -45,6 +45,9 @@ export default function ClientPage({ initialData }: { initialData: any }) {
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [scrollTopPos, setScrollTopPos] = useState(0);
+  
+  const awardsRef = useRef<HTMLDivElement>(null);
+  const certsRef = useRef<HTMLDivElement>(null);
 
   const { scrollY, scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -855,8 +858,19 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                   </div>
 
                   <div style={{ marginTop: '5rem' }}>
-                    <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Awards & Achievements</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', margin: 0 }}>Awards & Achievements</h3>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button onClick={() => awardsRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button onClick={() => awardsRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                          <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    </div>
                     <motion.div 
+                        ref={awardsRef}
                         initial="hidden" animate="visible"
                         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
                         className="dynamic-slider-container"
@@ -927,9 +941,21 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                         ))}
                       </motion.div>
 
-                  <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
-                  <motion.div 
-                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                  <div style={{ marginTop: '4rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', margin: 0 }}>Certificates</h3>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button onClick={() => certsRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button onClick={() => certsRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                          <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <motion.div 
+                      ref={certsRef}
+                      initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                     variants={{ visible: { transition: { staggerChildren: 0.05 } }, hidden: {} }}
                     className={getDynamicContainerClass(data.certificates?.length || 8)}
                   >
@@ -950,6 +976,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                     ))}
                   </motion.div>
                 </div>
+              </div>
             </motion.section>
 
             {/* SEAMLESS ARTICLES SECTION */}

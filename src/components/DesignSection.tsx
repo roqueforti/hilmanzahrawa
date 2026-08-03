@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { urlFor } from '@/sanity/client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Project {
   _id: string;
@@ -28,6 +29,7 @@ interface DesignSectionProps {
 
 const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     { id: 'all', label: 'All Creative' },
@@ -73,21 +75,33 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
 
   return (
     <div>
-      {/* Category Filters */}
-      <div className="filter-pills">
-        {categories.map(cat => (
-          <button
-            key={cat.id}
-            onClick={() => setActiveFilter(cat.id)}
-            className={`filter-pill ${activeFilter === cat.id ? 'active' : ''}`}
-          >
-            {cat.label}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        {/* Category Filters */}
+        <div className="filter-pills" style={{ marginBottom: 0 }}>
+          {categories.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveFilter(cat.id)}
+              className={`filter-pill ${activeFilter === cat.id ? 'active' : ''}`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Slider Controls */}
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button onClick={() => sliderRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <ChevronLeft size={16} />
           </button>
-        ))}
+          <button onClick={() => sliderRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <ChevronRight size={16} />
+          </button>
+        </div>
       </div>
 
       {/* Modern Card Slider */}
-      <motion.div layout className="compact-grid dynamic-slider-container">
+      <motion.div ref={sliderRef} layout className="compact-grid dynamic-slider-container">
         <AnimatePresence>
           {filteredProjects.map((project, index) => (
             <motion.div
