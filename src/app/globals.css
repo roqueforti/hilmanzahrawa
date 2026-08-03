@@ -339,7 +339,6 @@ body {
 }
 
 @media (max-width: 1024px) { .compact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .compact-grid { grid-template-columns: 1fr; } }
 
 .card-compact {
   display: flex;
@@ -491,12 +490,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 1.75rem;
-}
-
-@media (max-width: 768px) {
-  .bento-projects-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .project-bento-card {
@@ -699,3 +692,49 @@ body {
   background: var(--bg-secondary);
 }
 
+/* --------------------------------- */
+/* Mobile Responsive Sliders & Grids */
+/* --------------------------------- */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 3.5rem;
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Make these sections horizontal sliders on mobile to prevent extreme vertical length */
+  .bento-projects-grid,
+  .compact-grid,
+  .seamless-service-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin: 0 -1.25rem; /* negate container padding to touch edges */
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .bento-projects-grid::-webkit-scrollbar,
+  .compact-grid::-webkit-scrollbar,
+  .seamless-service-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-bento-card,
+  .card-compact,
+  .seamless-service-card {
+    min-width: 85vw;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+}

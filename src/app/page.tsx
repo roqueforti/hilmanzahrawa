@@ -229,11 +229,6 @@ export default function Home() {
 
                 {/* Portrait & Track Record Summary */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start' }}>
-                  {displayBio.avatarUrl && (
-                    <div style={{ width: '180px', height: '180px', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border-hairline)', background: 'var(--bg-tertiary)' }}>
-                      <img src={displayBio.avatarUrl} alt={displayBio.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
-                    </div>
-                  )}
 
                   <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', borderTop: '1px solid var(--border-hairline)', paddingTop: '1.5rem' }}>
                     <div>
@@ -570,7 +565,7 @@ export default function Home() {
                 <span className="section-tag">04 / BACKGROUND</span>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)', gap: '3.5rem' }}>
+              <div className="about-grid">
                 <div>
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Experience</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
@@ -708,7 +703,7 @@ export default function Home() {
                   overflowY: 'auto'
                 }}
               >
-                <div style={{ position: 'relative', margin: '0 auto', maxWidth: '1536px', width: '100%', padding: '2rem 0', minHeight: 'calc(100vh - 8rem)', display: 'flex', alignItems: 'center' }}>
+                <div style={{ position: 'relative', margin: '0 auto', maxWidth: '1536px', width: '100%', padding: '2rem 0', minHeight: 'calc(100vh - 8rem)', display: 'flex', alignItems: 'flex-start' }}>
                   <button 
                     onClick={() => setSelectedProject(null)}
                     style={{ 
@@ -741,10 +736,10 @@ export default function Home() {
                         style={{ 
                           width: '100%', 
                           maxWidth: selectedProject.deviceType === 'mobile' ? '360px' : 'none',
-                          height: selectedProject.deviceType === 'mobile' ? '80vh' : '75vh', 
+                          height: selectedProject.deviceType === 'mobile' ? '80vh' : 'auto', 
                           background: 'var(--bg-tertiary)', 
                           position: 'relative', 
-                          overflow: 'hidden',
+                          overflow: selectedProject.deviceType === 'mobile' ? 'hidden' : 'visible',
                           borderRadius: '12px',
                           border: '1px solid var(--border-hairline)',
                           margin: selectedProject.deviceType === 'mobile' ? '0 auto' : '0'
@@ -764,9 +759,9 @@ export default function Home() {
                             onMouseMove={handleMouseMove}
                             style={{ 
                               width: '100%', 
-                              height: '100%', 
-                              overflowY: 'auto',
-                              cursor: isDragging ? 'grabbing' : 'grab',
+                              height: selectedProject.deviceType === 'mobile' ? '100%' : 'auto', 
+                              overflowY: selectedProject.deviceType === 'mobile' ? 'auto' : 'visible',
+                              cursor: selectedProject.deviceType === 'mobile' ? (isDragging ? 'grabbing' : 'grab') : 'auto',
                               userSelect: isDragging ? 'none' : 'auto'
                             }}
                           >
@@ -782,7 +777,7 @@ export default function Home() {
                                 }
 
                                 return (
-                                  <div style={{ width: '100%', height: '100%', background: '#000' }}>
+                                  <div style={{ width: '100%', aspectRatio: selectedProject.deviceType === 'mobile' ? 'auto' : '16/9', height: selectedProject.deviceType === 'mobile' ? '100%' : 'auto', background: '#000' }}>
                                     <iframe 
                                       src={embedUrl} 
                                       style={{ width: '100%', height: '100%', border: 'none' }}
@@ -875,7 +870,7 @@ export default function Home() {
                     </div>
 
                     {/* Project Info Column */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'sticky', top: '2rem', height: 'max-content' }}>
                       <div>
                         <span style={{ display: 'block', marginBottom: '0.35rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.725rem', fontWeight: 700, textTransform: 'uppercase' }}>
                           {selectedProject.subtitle || (selectedProject.category === 'it' ? 'IT Solution' : 'UI/UX Design')}
