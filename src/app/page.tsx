@@ -3,7 +3,6 @@
 import { client, urlFor } from "@/sanity/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import StravaActivity from "@/components/StravaActivity";
 import MediumArticles from "@/components/MediumArticles";
 import DesignSection from "@/components/DesignSection";
 
@@ -11,7 +10,8 @@ export default function Home() {
   const [data, setData] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [stravaData, setStravaData] = useState<any>(null);
+  const [itViewMode, setItViewMode] = useState<'grid' | 'table'>('grid');
+  const [itFilter, setItFilter] = useState<string>('all');
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -102,29 +102,16 @@ export default function Home() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    async function fetchStrava() {
-      try {
-        const response = await fetch('/api/strava');
-        const res = await response.json();
-        setStravaData(res);
-      } catch (e) {
-        console.error("Failed to fetch Strava data", e);
-      }
-    }
-    fetchStrava();
-  }, []);
-
   const { projects = [], bio = {} } = data || {};
   
   const displayBio = {
     name: bio?.name || "HILMAN ZAHRAWA BUDIARTO",
     headline: bio?.headline || "Transforming Ideas into Impactful Digital Solutions.",
-    about: bio?.about || "Mahasiswa Sistem Informasi Bisnis di Politeknik Negeri Malang dan penerima Djarum Beasiswa Plus dengan minat pada software development, UI/UX design, dan data analysis. Memiliki pengalaman mengembangkan solusi digital sebagai Web Developer dan UI/UX Designer, termasuk membangun platform BrewTech dalam program Innovillage dengan fokus pada arsitektur sistem, pengembangan web, dan optimasi performa aplikasi. Terbiasa merancang produk digital yang scalable, user-centered, dan berbasis kebutuhan sistem.",
-    location: bio?.location || "Malang, Jawa Timur, ID",
+    about: bio?.about || "Business Information Systems student at State Polytechnic of Malang and Djarum Beasiswa Plus awardee with a strong focus on software development, UI/UX design, and data analytics. Experienced in engineering digital solutions as a Web Developer and UI/UX Designer, including architecting the BrewTech platform for the Innovillage program with a focus on system architecture, web development, and performance optimization. Skilled in designing scalable, user-centered digital products aligned with business needs.",
+    location: bio?.location || "Malang, East Java, ID",
     email: bio?.email || "budiarto3788@gmail.com",
     whatsapp: bio?.whatsapp || "6285806003234",
-    address: bio?.address || "Jl. Candi Bajang Ratu No. 3-B, Kota Malang",
+    address: bio?.address || "Jl. Candi Bajang Ratu No. 3-B, Malang City",
     avatarUrl: bio?.avatarUrl,
     socialLinks: bio?.socialLinks || [
       { platform: "LinkedIn", url: "https://linkedin.com/in/hilmanzahrawa" },
@@ -137,11 +124,11 @@ export default function Home() {
   };
 
   const displayProjects = projects?.length > 0 ? projects : [
-    { _id: "1", title: "Brewtech", year: "2026", subtitle: "Innovillage Platform", tags: ["SaaS", "LMS", "IT"], description: "Platform pendidikan vokasi disabilitas. Mencetak talenta barista melalui BREWTECH.", slug: "brewtech", category: 'it', role: 'Full-Stack Lead' },
-    { _id: "2", title: "ProFile+", year: "2025", subtitle: "Profile Image Studio", tags: ["UI/UX", "HR"], description: "Platform manajemen SDM yang mendukung pengelolaan data karyawan, absensi, dan kinerja.", slug: "profile-plus", category: 'design', role: 'UI/UX Designer' },
-    { _id: "3", title: "Disnakertrans Jatim", year: "2025", subtitle: "Government Portal", tags: ["Web", "IT"], description: "Merancang antarmuka website yang modern, aksesibel, dan user-friendly.", slug: "disnakertrans-jatim", category: 'it', role: 'Web Developer' },
-    { _id: "4", title: "NZ Box Laundry", year: "2026", subtitle: "Marketing Strategy", tags: ["Digital Marketing"], description: "Strategi digital marketing berbasis data untuk retensi pelanggan.", slug: "nz-box", category: 'design', role: 'Digital Marketer' },
-    { _id: "5", title: "Mandala Pure Love", year: "2025", subtitle: "Community Web", tags: ["Social"], description: "Pemberdayaan masyarakat dan pengembangan sociopreneurship.", slug: "mandala", category: 'it', role: 'Web Developer' },
+    { _id: "1", title: "Brewtech", year: "2026", subtitle: "Innovillage Platform", tags: ["SaaS", "LMS", "IT"], description: "Vocational education platform empowering disabled individuals into barista talents through BREWTECH.", slug: "brewtech", category: 'it', role: 'Full-Stack Lead' },
+    { _id: "2", title: "ProFile+", year: "2025", subtitle: "Profile Image Studio", tags: ["UI/UX", "HR"], description: "HR management platform supporting employee data management, attendance tracking, and performance analytics.", slug: "profile-plus", category: 'design', role: 'UI/UX Designer' },
+    { _id: "3", title: "Disnakertrans Jatim", year: "2025", subtitle: "Government Portal", tags: ["Web", "IT"], description: "Designing modern, accessible, and user-friendly web interfaces for public government services.", slug: "disnakertrans-jatim", category: 'it', role: 'Web Developer' },
+    { _id: "4", title: "NZ Box Laundry", year: "2026", subtitle: "Marketing Strategy", tags: ["Digital Marketing"], description: "Data-driven digital marketing strategy aimed at driving customer retention and engagement.", slug: "nz-box", category: 'design', role: 'Digital Marketer' },
+    { _id: "5", title: "Mandala Pure Love", year: "2025", subtitle: "Community Web", tags: ["Social"], description: "Community empowerment platform fostering sociopreneurship and local business growth.", slug: "mandala", category: 'it', role: 'Web Developer' },
   ];
 
   const sortedProjects = [...displayProjects].sort((a: any, b: any) => {
@@ -160,6 +147,13 @@ export default function Home() {
   const designProjects = data?.landingPage?.designProjectsOrder?.length > 0 
     ? data.landingPage.designProjectsOrder.filter(Boolean) 
     : sortedProjects.filter((p: any) => p.tags?.some((t: string) => ['UI/UX', 'Creative', 'Design', 'Visual', 'Logo'].includes(t)) || p.category === 'design');
+
+  const filteredItProjects = itProjects.filter((p: any) => {
+    if (itFilter === 'all') return true;
+    if (itFilter === 'saas') return p.tags?.some((t: string) => ['SaaS', 'LMS', 'Platform', 'HR', 'POS'].includes(t));
+    if (itFilter === 'web') return p.tags?.some((t: string) => ['Web', 'Portal', 'Dev', 'Social', 'IT'].includes(t)) || p.category === 'it';
+    return true;
+  });
 
   return (
     <>
@@ -180,10 +174,9 @@ export default function Home() {
                 <a href="#it" className="nav-link">IT Projects</a>
                 <a href="#design" className="nav-link">Design</a>
                 <a href="#about" className="nav-link">About</a>
-                <a href="#strava" className="nav-link">Activities</a>
                 <a href="#medium" className="nav-link">Articles</a>
                 <a 
-                  href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20tertarik%20menggunakan%20jasa%20Anda`}
+                  href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20am%20interested%20in%20working%20with%20you`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-hire"
@@ -219,18 +212,18 @@ export default function Home() {
 
                   <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '2.5rem' }}>
                     <a 
-                      href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20ingin%20konsultasi%20proyek`}
+                      href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.8rem 1.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                     >
-                      Konsultasi Gratis via WhatsApp ↗
+                      Free Consultation via WhatsApp ↗
                     </a>
                     <a 
                       href={`mailto:${displayBio.email}`}
                       style={{ background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.8rem 1.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                     >
-                      Kirim Email ✉
+                      Send Email ✉
                     </a>
                   </div>
                 </div>
@@ -249,8 +242,8 @@ export default function Home() {
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Client Satisfaction</div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>50+</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Proyek Selesai</div>
+                      <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>15+</div>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Projects Completed</div>
                     </div>
                     <div>
                       <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>100%</div>
@@ -258,7 +251,7 @@ export default function Home() {
                     </div>
                     <div>
                       <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>3+ Years</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Pengalaman</div>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Experience</div>
                     </div>
                   </div>
                 </div>
@@ -268,7 +261,7 @@ export default function Home() {
             {/* SEAMLESS SERVICES SECTION */}
             <section id="services" style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Penawaran Jasa & Spesialisasi Proyek</h2>
+                <h2 className="section-title-seamless">Services & Project Specializations</h2>
                 <span className="section-tag">01 / SERVICES</span>
               </div>
 
@@ -288,24 +281,24 @@ export default function Home() {
                     </div>
 
                     <p style={{ marginBottom: '1.5rem' }}>
-                      Pengembangan aplikasi web berkinerja tinggi, sistem informasi bisnis internal, hingga platform SaaS berskala besar.
+                      Engineering high-performance web applications, internal business management systems, and scalable SaaS platforms.
                     </p>
 
                     <ul className="service-checklist" style={{ marginBottom: '1.5rem' }}>
-                      <li><span className="check">✓</span> <span><strong>Platform SaaS & Web App Custom</strong> (LMS, CRM, Portal)</span></li>
-                      <li><span className="check">✓</span> <span><strong>Website Perusahaan & Government Portal</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Sistem Kasir & POS Bisnis</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Landing Page SEO Friendly & Cepat</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Custom SaaS Platforms & Web Apps</strong> (LMS, CRM, Portals)</span></li>
+                      <li><span className="check">✓</span> <span><strong>Corporate Websites & Government Portals</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Point of Sale & Retail Management Systems</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>High-Performance, SEO-Optimized Landing Pages</strong></span></li>
                     </ul>
                   </div>
 
                   <a 
-                    href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20tertarik%20dengan%20Jasa%20Web%20%26%20SaaS%20Development`}
+                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20am%20interested%20in%20Web%20%26%20SaaS%20Development`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="order-btn"
                   >
-                    Pesan Jasa Web Dev ↗
+                    Order Web Development ↗
                   </a>
                 </div>
 
@@ -318,29 +311,29 @@ export default function Home() {
                       </div>
                       <div>
                         <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)' }}>02 / BRANDING & UI/UX</span>
-                        <h3>Desain Branding Usaha & UI/UX</h3>
+                        <h3>Brand Identity & UI/UX Design</h3>
                       </div>
                     </div>
 
                     <p style={{ marginBottom: '1.5rem' }}>
-                      Perancangan identitas visual merek & branding usaha profesional dari logo hingga antarmuka aplikasi.
+                      Designing distinctive brand identities and intuitive UI/UX design systems from logos to full product applications.
                     </p>
 
                     <ul className="service-checklist" style={{ marginBottom: '1.5rem' }}>
-                      <li><span className="check">✓</span> <span><strong>Brand Identity & Logo Usaha/UMKM</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Desain Kemasan & Marketing Asset</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Brand Identity & Professional Logo Design</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Packaging & Marketing Asset Design</strong></span></li>
                       <li><span className="check">✓</span> <span><strong>Web & Mobile App UI/UX Design</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Interactive High-Fidelity Prototype</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Interactive High-Fidelity Prototypes</strong></span></li>
                     </ul>
                   </div>
 
                   <a 
-                    href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20tertarik%20dengan%20Jasa%20Desain%20Branding%20Usaha%20%26%20UI%2FUX`}
+                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20am%20interested%20in%20Brand%20Identity%20%26%20UI%2FUX%20Design`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="order-btn"
                   >
-                    Pesan Jasa Branding ↗
+                    Order Design & Branding ↗
                   </a>
                 </div>
 
@@ -353,97 +346,215 @@ export default function Home() {
                       </div>
                       <div>
                         <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)' }}>03 / AUTOMATION</span>
-                        <h3>Google Apps Script & Automation</h3>
+                        <h3>Workflow Automation & Google Apps Script</h3>
                       </div>
                     </div>
 
                     <p style={{ marginBottom: '1.5rem' }}>
-                      Otomatisasi alur kerja Google Workspace (Sheets, Docs, Gmail, Forms) untuk efisiensi bisnis tanpa server mahal.
+                      Streamlining Google Workspace workflows (Sheets, Docs, Gmail, Forms) to boost operational efficiency without high server costs.
                     </p>
 
                     <ul className="service-checklist" style={{ marginBottom: '1.5rem' }}>
-                      <li><span className="check">✓</span> <span><strong>Otomatisasi Google Sheets & PDF/Email</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Integrasi Bot WhatsApp & Telegram</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Custom Web Form via Apps Script</strong></span></li>
-                      <li><span className="check">✓</span> <span><strong>Pembersihan & Sync Data Otomatis</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Google Sheets, PDF & Email Automation</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>WhatsApp & Telegram Bot Integration</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Custom Web Forms via Apps Script</strong></span></li>
+                      <li><span className="check">✓</span> <span><strong>Automated Data Cleaning & Synchronization</strong></span></li>
                     </ul>
                   </div>
 
                   <a 
-                    href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20tertarik%20dengan%20Jasa%20Google%20Apps%20Script`}
+                    href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20am%20interested%20in%20Automation%20Services`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="order-btn"
                   >
-                    Pesan Jasa Apps Script ↗
+                    Order Automation Services ↗
                   </a>
                 </div>
-
               </div>
             </section>
 
             {/* SEAMLESS IT PROJECTS SECTION */}
             <section id="it" style={{ marginBottom: '5.5rem' }}>
-              <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Proyek Software & Web (IT Projects)</h2>
-                <span className="section-tag">02 / IT PROJECTS ({itProjects.length})</span>
+              <div className="section-header-seamless" style={{ alignItems: 'center' }}>
+                <div>
+                  <h2 className="section-title-seamless">Software & Web Engineering Projects</h2>
+                  <span className="section-tag" style={{ marginTop: '0.25rem', display: 'block' }}>02 / IT PROJECTS ({filteredItProjects.length})</span>
+                </div>
+
+                <div className="view-switcher">
+                  <button 
+                    onClick={() => setItViewMode('grid')}
+                    className={`view-btn ${itViewMode === 'grid' ? 'active' : ''}`}
+                  >
+                    <span>田</span> Grid View
+                  </button>
+                  <button 
+                    onClick={() => setItViewMode('table')}
+                    className={`view-btn ${itViewMode === 'table' ? 'active' : ''}`}
+                  >
+                    <span>☰</span> Executive Table
+                  </button>
+                </div>
               </div>
 
-              <div className="flat-table-container">
-                <table className="flat-table">
-                  <thead>
-                    <tr>
-                      <th>Project Title</th>
-                      <th>Category / Tag</th>
-                      <th>Year</th>
-                      <th>Role</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {itProjects.map((project: any) => (
-                      <tr key={project._id} onClick={() => setSelectedProject(project)}>
-                        <td style={{ fontWeight: 800 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                            <div style={{ width: '38px', height: '38px', borderRadius: '6px', overflow: 'hidden', background: 'var(--bg-tertiary)', flexShrink: 0 }}>
-                              {project.image ? <img src={urlFor(project.image).width(100).url()} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : '⚙️'}
-                            </div>
-                            <div>
-                              <div style={{ fontSize: '0.9rem', fontWeight: 800 }}>{project.title}</div>
-                              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{project.subtitle || project.description}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                          {project.category || (project.tags && project.tags[0]) || 'IT Project'}
-                        </td>
-                        <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{project.year || '2026'}</td>
-                        <td style={{ fontSize: '0.825rem', fontWeight: 600 }}>{project.role || 'Full-Stack Developer'}</td>
-                        <td>
-                          <span className={`status-badge ${project.featured ? 'featured' : 'live'}`}>
-                            {project.featured ? 'Featured' : 'Live'}
-                          </span>
-                        </td>
-                        <td>
-                          <button 
-                            onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }} 
-                            style={{ background: 'var(--text-primary)', color: '#FFFFFF', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)' }}
-                          >
-                            Detail ↗
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {/* Filter Pills */}
+              <div className="filter-pills">
+                <button
+                  onClick={() => setItFilter('all')}
+                  className={`filter-pill ${itFilter === 'all' ? 'active' : ''}`}
+                >
+                  All Projects ({itProjects.length})
+                </button>
+                <button
+                  onClick={() => setItFilter('saas')}
+                  className={`filter-pill ${itFilter === 'saas' ? 'active' : ''}`}
+                >
+                  SaaS & Platforms
+                </button>
+                <button
+                  onClick={() => setItFilter('web')}
+                  className={`filter-pill ${itFilter === 'web' ? 'active' : ''}`}
+                >
+                  Web Apps & Portals
+                </button>
               </div>
+
+              {itViewMode === 'grid' ? (
+                <div className="bento-projects-grid">
+                  {filteredItProjects.map((project: any, index: number) => (
+                    <motion.div
+                      key={project._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      className="project-bento-card"
+                      onClick={() => setSelectedProject(project)}
+                    >
+                      <div className="bento-img-container">
+                        {project.image ? (
+                          <img src={urlFor(project.image).width(800).url()} alt={project.title} loading="lazy" />
+                        ) : (
+                          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>
+                            ⚙️
+                          </div>
+                        )}
+                        
+                        {/* Top floating status badge */}
+                        <div style={{ position: 'absolute', top: '0.85rem', left: '0.85rem', zIndex: 2 }}>
+                          {project.featured ? (
+                            <span className="featured-star-badge">★ Featured</span>
+                          ) : (
+                            <span className="live-pulse-badge">
+                              <span className="pulse-dot" /> Live System
+                            </span>
+                          )}
+                        </div>
+
+                        <div style={{ position: 'absolute', top: '0.85rem', right: '0.85rem', zIndex: 2 }}>
+                          <span style={{ padding: '0.25rem 0.6rem', background: 'rgba(9, 9, 11, 0.8)', color: '#FFFFFF', borderRadius: '4px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, backdropFilter: 'blur(6px)' }}>
+                            {project.year || '2026'}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bento-card-body">
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                            <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                              {project.role || 'Full-Stack Developer'}
+                            </span>
+                          </div>
+                          <h3 className="bento-project-title">{project.title}</h3>
+                          <p className="bento-project-subtitle" style={{ marginTop: '0.4rem' }}>
+                            {project.subtitle || project.description}
+                          </p>
+                        </div>
+
+                        <div>
+                          {project.tags?.length > 0 && (
+                            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                              {project.tags.slice(0, 4).map((tag: string) => (
+                                <span key={tag} className="tech-tag-chip">{tag}</span>
+                              ))}
+                            </div>
+                          )}
+
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.75rem', borderTop: '1px solid var(--border-hairline)' }}>
+                            <span className="bento-action-btn">
+                              Explore Project ↗
+                            </span>
+                            <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)' }}>
+                              {project.category?.toUpperCase() || 'IT'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flat-table-container">
+                  <table className="redesigned-table">
+                    <thead>
+                      <tr>
+                        <th>Project Title</th>
+                        <th>Category / Tag</th>
+                        <th>Year</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th style={{ textAlign: 'right' }}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredItProjects.map((project: any) => (
+                        <tr key={project._id} onClick={() => setSelectedProject(project)}>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                              <div style={{ width: '48px', height: '48px', borderRadius: '8px', overflow: 'hidden', background: 'var(--bg-tertiary)', flexShrink: 0, border: '1px solid var(--border-hairline)' }}>
+                                {project.image ? <img src={urlFor(project.image).width(120).url()} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : '⚙️'}
+                              </div>
+                              <div>
+                                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-primary)' }}>{project.title}</div>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>{project.subtitle || project.description}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                            <span className="tech-tag-chip">{project.category || (project.tags && project.tags[0]) || 'IT Project'}</span>
+                          </td>
+                          <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{project.year || '2026'}</td>
+                          <td style={{ fontSize: '0.85rem', fontWeight: 700 }}>{project.role || 'Full-Stack Developer'}</td>
+                          <td>
+                            {project.featured ? (
+                              <span className="featured-star-badge">★ Featured</span>
+                            ) : (
+                              <span className="live-pulse-badge">
+                                <span className="pulse-dot" /> Live
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }} 
+                              style={{ background: 'var(--text-primary)', color: '#FFFFFF', border: 'none', padding: '0.45rem 0.9rem', borderRadius: '4px', fontSize: '0.725rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)' }}
+                            >
+                              Details ↗
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </section>
 
             {/* SEAMLESS DESIGN SECTION */}
             <section id="design" style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Desain UI/UX & Creative Portfolio</h2>
+                <h2 className="section-title-seamless">UI/UX & Creative Portfolio</h2>
                 <span className="section-tag">03 / CREATIVE & DESIGN</span>
               </div>
 
@@ -456,7 +567,7 @@ export default function Home() {
             {/* SEAMLESS ABOUT SECTION */}
             <section id="about" style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Pengalaman & Kredensial (About)</h2>
+                <h2 className="section-title-seamless">Experience & Credentials</h2>
                 <span className="section-tag">04 / BACKGROUND</span>
               </div>
 
@@ -467,7 +578,7 @@ export default function Home() {
                     {(data.experiences?.length > 0 ? data.experiences : [
                       { _id: "e1", role: "Digital Marketing", company: "NZ Box Smart Laundry", startDate: "2026-02-01" },
                       { _id: "e2", role: "Web Developer", company: "Mandala Pure Love", startDate: "2025-09-01" },
-                      { _id: "e3", role: "UI/UX Designer Magang", company: "Profile Image Studio", startDate: "2025-08-01" },
+                      { _id: "e3", role: "UI/UX Design Intern", company: "Profile Image Studio", startDate: "2025-08-01" },
                     ]).map((exp: any) => (
                       <div key={exp._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{exp.role}</h4>
@@ -479,8 +590,8 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Education</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                     {(data.education?.length > 0 ? data.education : [
-                      { _id: "edu1", school: "Politeknik Negeri Malang", degree: "D4 Sistem Informasi Bisnis", startDate: "2022" },
-                      { _id: "edu2", school: "SMAN 1 Malang", degree: "SMA MIPA", startDate: "2019" },
+                      { _id: "edu1", school: "Politeknik Negeri Malang", degree: "B.A.S. in Business Information Systems", startDate: "2022" },
+                      { _id: "edu2", school: "SMAN 1 Malang", degree: "High School Diploma in Natural Sciences", startDate: "2019" },
                     ]).map((edu: any) => (
                       <div key={edu._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{edu.school}</h4>
@@ -503,7 +614,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     {(data.certificates?.length > 0 ? data.certificates : [
-                      { _id: "cert1", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding Indonesia", date: "2024" },
+                      { _id: "cert1", title: "Python Programming Fundamentals", issuer: "Dicoding Indonesia", date: "2024" },
                     ]).map((cert: any) => (
                       <div key={cert._id} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)' }}>
                         <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
@@ -515,26 +626,11 @@ export default function Home() {
               </div>
             </section>
 
-            {/* SEAMLESS STRAVA SECTION */}
-            <section id="strava" style={{ marginBottom: '5.5rem' }}>
-              <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Aktivitas & Running Log (Strava)</h2>
-                <span className="section-tag">05 / ACTIVITIES</span>
-              </div>
-
-              <StravaActivity 
-                activities={stravaData?.activities || []} 
-                stats={stravaData?.stats} 
-                profile={stravaData?.profile} 
-                clubs={stravaData?.clubs || []} 
-              />
-            </section>
-
             {/* SEAMLESS MEDIUM SECTION */}
             <section id="medium" style={{ marginBottom: '5.5rem' }}>
               <div className="section-header-seamless">
-                <h2 className="section-title-seamless">Artikel & Publikasi (Medium)</h2>
-                <span className="section-tag">06 / ARTICLES</span>
+                <h2 className="section-title-seamless">Articles & Publications</h2>
+                <span className="section-tag">05 / ARTICLES</span>
               </div>
 
               <MediumArticles username={displayBio.mediumUsername} />
@@ -544,22 +640,22 @@ export default function Home() {
             <section id="contact-cta" style={{ padding: '4.5rem 2rem', background: '#09090B', color: '#FFFFFF', borderRadius: '8px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
               <span style={{ fontSize: '0.725rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', color: '#A1A1AA', letterSpacing: '0.12em' }}>INITIATE A PROJECT</span>
               <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', maxWidth: '720px', lineHeight: 1.25 }}>
-                Mari Wujudkan Ide Solusi Digital Anda Bersama Hilman Zahrawa.
+                Let's Bring Your Digital Vision to Life with Hilman Zahrawa.
               </h2>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
                 <a 
-                  href={`https://wa.me/${displayBio.whatsapp}?text=Halo%20Hilman,%20saya%20ingin%20diskusi%20proyek`}
+                  href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20discuss%20a%20project`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ background: '#FFFFFF', color: '#09090B', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                 >
-                  Chat WhatsApp 💬
+                  Chat on WhatsApp 💬
                 </a>
                 <a 
                   href={`mailto:${displayBio.email}`}
                   style={{ background: 'transparent', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.2)', padding: '0.8rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 800, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                 >
-                  Kirim Email ✉️
+                  Send Email ✉️
                 </a>
               </div>
             </section>

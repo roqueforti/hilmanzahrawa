@@ -74,7 +74,7 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
   }
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('id-ID', {
+    return new Date(dateStr).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short',
       year: 'numeric'

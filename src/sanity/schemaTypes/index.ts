@@ -242,7 +242,7 @@ export const landingPageType = {
       name: 'tagline',
       title: 'Site Tagline',
       type: 'string',
-      initialValue: 'Developer / Designer / Walker / Runner'
+      initialValue: 'Software Engineer & Product Designer'
     },
     {
       name: 'sections',
@@ -252,7 +252,6 @@ export const landingPageType = {
       initialValue: [
         { title: 'it', type: 'it' },
         { title: 'design', type: 'design' },
-        { title: 'strava', type: 'strava' },
         { title: 'about', type: 'umum' }
       ],
       of: [
@@ -269,7 +268,6 @@ export const landingPageType = {
                 list: [
                   { title: 'IT Projects', value: 'it' },
                   { title: 'Design Projects', value: 'design' },
-                  { title: 'Strava Activity', value: 'strava' },
                   { title: 'Medium Articles', value: 'medium' },
                   { title: 'About Me', value: 'umum' },
                 ]
@@ -302,7 +300,6 @@ export const landingPageType = {
         { title: 'Education', type: 'education' },
         { title: 'Achievements', type: 'achievements' },
         { title: 'Organizations', type: 'organizations' },
-        { title: 'Strava Activity', type: 'strava' },
         { title: 'Certificates', type: 'certificates' }
       ],
       of: [
@@ -322,7 +319,6 @@ export const landingPageType = {
                   { title: 'Achievements', value: 'achievements' },
                   { title: 'Organizations', value: 'organizations' },
                   { title: 'Certificates', value: 'certificates' },
-                  { title: 'Strava Activity', value: 'strava' },
                   { title: 'Medium Articles', value: 'medium' },
                 ]
               }
