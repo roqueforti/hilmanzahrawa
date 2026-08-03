@@ -142,7 +142,7 @@ const ScrollParallaxDecorations = () => {
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
       {/* Large Hexagon - Top Left */}
-      <motion.div style={{ position: 'absolute', top: '8%', left: '-3%', rotate: rotate1, y: y1, scale: scale1, opacity: 0.06 }}>
+      <motion.div style={{ position: 'absolute', top: '8%', left: '2%', rotate: rotate1, y: y1, scale: scale1, opacity: 0.12 }}>
         <svg width="200" height="200" viewBox="0 0 200 200" fill="none" stroke="var(--accent)" strokeWidth="0.8">
           <path d="M 100 10 L 178 55 L 178 145 L 100 190 L 22 145 L 22 55 Z" />
           <path d="M 100 40 L 152 67.5 L 152 132.5 L 100 160 L 48 132.5 L 48 67.5 Z" />
@@ -154,7 +154,7 @@ const ScrollParallaxDecorations = () => {
       </motion.div>
 
       {/* Large Triangle - Right Side */}
-      <motion.div style={{ position: 'absolute', top: '30%', right: '-2%', rotate: rotate2, y: y2, opacity: 0.05 }}>
+      <motion.div style={{ position: 'absolute', top: '30%', right: '3%', rotate: rotate2, y: y2, opacity: 0.1 }}>
         <svg width="180" height="180" viewBox="0 0 180 180" fill="none" stroke="var(--text-primary)" strokeWidth="0.6">
           <polygon points="90,10 170,160 10,160" />
           <polygon points="90,50 140,135 40,135" />
@@ -164,7 +164,7 @@ const ScrollParallaxDecorations = () => {
       </motion.div>
 
       {/* Large Grid/Square - Bottom Left */}
-      <motion.div style={{ position: 'absolute', top: '55%', left: '-1%', rotate: rotate3, y: y3, scale: scale2, opacity: 0.05 }}>
+      <motion.div style={{ position: 'absolute', top: '55%', left: '3%', rotate: rotate3, y: y3, scale: scale2, opacity: 0.1 }}>
         <svg width="160" height="160" viewBox="0 0 160 160" fill="none" stroke="var(--accent)" strokeWidth="0.5">
           <rect x="10" y="10" width="140" height="140" />
           <rect x="30" y="30" width="100" height="100" transform="rotate(15 80 80)" />
@@ -175,7 +175,7 @@ const ScrollParallaxDecorations = () => {
       </motion.div>
 
       {/* Large Diamond - Right Bottom */}
-      <motion.div style={{ position: 'absolute', top: '72%', right: '-1%', rotate: rotate1, y: y4, opacity: 0.06 }}>
+      <motion.div style={{ position: 'absolute', top: '72%', right: '4%', rotate: rotate1, y: y4, opacity: 0.12 }}>
         <svg width="150" height="150" viewBox="0 0 150 150" fill="none" stroke="var(--text-primary)" strokeWidth="0.6">
           <path d="M 75 5 L 145 75 L 75 145 L 5 75 Z" />
           <path d="M 75 30 L 120 75 L 75 120 L 30 75 Z" />
@@ -187,7 +187,7 @@ const ScrollParallaxDecorations = () => {
       </motion.div>
 
       {/* Large Circle Compass - Mid Center Left */}
-      <motion.div style={{ position: 'absolute', top: '45%', left: '2%', rotate: rotate2, y: y2, opacity: 0.04 }}>
+      <motion.div style={{ position: 'absolute', top: '45%', left: '5%', rotate: rotate2, y: y2, opacity: 0.08 }}>
         <svg width="220" height="220" viewBox="0 0 220 220" fill="none" stroke="var(--accent)" strokeWidth="0.4">
           <circle cx="110" cy="110" r="100" strokeDasharray="8 12" />
           <circle cx="110" cy="110" r="70" />
