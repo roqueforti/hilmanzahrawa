@@ -66,7 +66,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
   const [data, setData] = useState<any>(initialData);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [itViewMode, setItViewMode] = useState<'grid' | 'table'>('grid');
+  const [itViewMode, setItViewMode] = useState<'grid' | 'table' | 'list'>('grid');
   const [itFilter, setItFilter] = useState<string>('all');
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -920,7 +920,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                             { _id: "cert6", title: "Communicating for Community Engagement and Influence", issuer: "Innovillage", date: "2025" },
                             { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
                             { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
-                          ]).map((cert: any, _, arr) => (
+                          ]).map((cert: any, _index: number, arr: any[]) => (
                             <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className={getDynamicItemClass(arr.length)} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)', height: '100%' }}>
                               <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
                               <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.2rem' }}>{cert.issuer} • {cert.date}</p>
