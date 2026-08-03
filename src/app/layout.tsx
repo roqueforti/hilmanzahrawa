@@ -2,7 +2,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Background from '@/components/Background';
 import Cursor from '@/components/Cursor';
-import LenisProvider from '@/components/LenisProvider';
 
 export const metadata: Metadata = {
   title: 'Hilman Zahrawa | Digital Excellence',
@@ -24,9 +23,7 @@ export default function RootLayout({
       <body>
         <Background />
         <Cursor />
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        {children}
       </body>
     </html>
   );
