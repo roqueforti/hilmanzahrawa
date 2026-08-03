@@ -976,8 +976,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                           </motion.div>
                         ))}
                       </motion.div>
-                      </motion.div>
-              </div>
+                  </div>
             </motion.section>
 
             {/* SEAMLESS ARTICLES SECTION */}
