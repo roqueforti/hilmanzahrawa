@@ -35,6 +35,33 @@ const getDynamicItemClass = (len: number, baseClass = '') => {
   return len > 6 ? `${baseClass} dynamic-slider-item`.trim() : baseClass;
 };
 
+const MiniDeco = () => (
+  <motion.div 
+    animate={{ rotate: 360 }}
+    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', opacity: 0.6 }}
+  >
+    <svg viewBox="0 0 50 50" width="18" height="18" style={{ overflow: 'visible' }}>
+      <motion.path
+        animate={{ 
+          d: [
+            "M 25 5 L 45 25 L 25 45 L 5 25 Z",
+            "M 25 15 L 35 25 L 25 35 L 15 25 Z",
+            "M 25 5 L 30 20 L 45 25 L 30 30 L 25 45 L 20 30 L 5 25 L 20 20 Z",
+            "M 25 5 L 45 25 L 25 45 L 5 25 Z"
+          ],
+          rotate: [0, 90, 180, 270, 360]
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="2"
+      />
+      <circle cx="25" cy="25" r="3" fill="var(--accent)" />
+    </svg>
+  </motion.div>
+);
+
 export default function ClientPage({ initialData }: { initialData: any }) {
   const [data, setData] = useState<any>(initialData);
   const [selectedProject, setSelectedProject] = useState<any>(null);
