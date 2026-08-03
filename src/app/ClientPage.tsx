@@ -245,7 +245,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
 
                   <motion.h1 
                     initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }, hidden: {} }}
-                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.8rem, 6.5vw, 5.5rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
                   >
                     {"Engineering Scalable Web Products & Iconic Brand Systems.".split(" ").map((word, idx) => (
                       <span key={idx} style={{ overflow: 'hidden', display: 'inline-block', paddingBottom: '0.15em', marginBottom: '-0.15em' }}>

@@ -227,7 +227,7 @@ body {
 
 .section-title-seamless {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -238,7 +238,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.725rem;
   font-weight: 700;
-  padding: 0.45rem 1rem;
+  padding: 0.3rem 0.7rem;
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 30px;
@@ -259,7 +259,7 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 12px;
-  padding: 1.75rem;
+  padding: 1.25rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   margin-bottom: 1rem;
 }
