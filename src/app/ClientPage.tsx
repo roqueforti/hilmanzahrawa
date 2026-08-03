@@ -190,6 +190,8 @@ export default function ClientPage({ initialData }: { initialData: any }) {
         </div>
       ) : (
         <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
+          {/* Global Noise Overlay */}
+          <div className="global-noise" />
           
           {/* SEAMLESS NAVBAR */}
           <nav className="seamless-nav">
@@ -243,7 +245,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
 
                   <motion.h1 
                     initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }, hidden: {} }}
-                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.8rem, 6.5vw, 5.5rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
                   >
                     {"Engineering Scalable Web Products & Iconic Brand Systems.".split(" ").map((word, idx) => (
                       <span key={idx} style={{ overflow: 'hidden', display: 'inline-block', paddingBottom: '0.15em', marginBottom: '-0.15em' }}>
@@ -287,8 +289,12 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                 {/* RIGHT: FOCAL VISUAL */}
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
-                  transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                  animate={{ opacity: 1, scale: 1, y: [0, -15, 0] }} 
+                  transition={{ 
+                    opacity: { duration: 1, delay: 0.4, ease: "easeOut" },
+                    scale: { duration: 1, delay: 0.4, ease: "easeOut" },
+                    y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                  }}
                   style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', width: '100%', height: '100%' }}
                 >
                   <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1', border: '1px solid var(--border-hairline)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
@@ -305,6 +311,13 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       <path d="M 50 0 L 50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <path d="M 6.7 25 L 93.3 75" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <path d="M 6.7 75 L 93.3 25" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Glowing Nodes */}
+                      <circle cx="50" cy="0" r="1.5" fill="var(--accent)" />
+                      <circle cx="93.3" cy="25" r="1.5" fill="var(--accent)" />
+                      <circle cx="93.3" cy="75" r="1.5" fill="var(--accent)" />
+                      <circle cx="50" cy="100" r="1.5" fill="var(--accent)" />
+                      <circle cx="6.7" cy="75" r="1.5" fill="var(--accent)" />
+                      <circle cx="6.7" cy="25" r="1.5" fill="var(--accent)" />
                       {/* Animated Radar Chart Data Area */}
                       <motion.path 
                         animate={{ 
@@ -804,9 +817,9 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       const SkillGroup = ({ title, skills }: { title: string, skills: string[] }) => skills.length > 0 ? (
                         <div>
                           <div style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.6rem' }}>{title}</div>
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                             {skills.map((skill: string) => (
-                              <span key={skill} style={{ fontSize: '0.725rem', fontWeight: 700, padding: '0.3rem 0.7rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '4px', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
+                              <span key={skill} className="premium-chip">
                                 {skill}
                               </span>
                             ))}
@@ -815,14 +828,68 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       ) : null;
 
                       return (
-                        <>
-                          <SkillGroup title="Engineering" skills={devSkills} />
-                          <SkillGroup title="Design & Creative" skills={designSkills} />
-                          <SkillGroup title="General & Soft Skills" skills={otherSkills} />
-                        </>
-                      );
-                    })()}
-                  </div>
+                              <SkillGroup title="Engineering" skills={devSkills} />
+                              <SkillGroup title="Design & Creative" skills={designSkills} />
+                              <SkillGroup title="General & Soft Skills" skills={otherSkills} />
+                            </>
+                          );
+                        })()}
+                      </div>
+
+                      <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Awards & Achievements</h3>
+                      <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                        variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+                        style={{ marginBottom: '3rem' }}
+                      >
+                        {[
+                          { 
+                            id: "aw1", 
+                            title: "2nd Runner Up IT Poly Debate Cup 2024", 
+                            issuer: "IT Debate Society", 
+                            date: "Jan 2024", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "The I&T Open Debate Competition is a cross-cultural public debating event that draws participants from diverse Asian nations such as Indonesia, Taiwan, the Philippines, China, and more. The Indonesian Student Association (PPI) in Taiwan takes the lead in organizing and launching this competition. Adhering to the format of the British Parliamentary Debate System, the event features representatives from four distinct countries serving as judges."
+                          },
+                          { 
+                            id: "aw2", 
+                            title: "2nd Best Novice Team International I&T Open Debate Competition", 
+                            issuer: "Indonesian Student Association in Taiwan", 
+                            date: "Dec 2023", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "The I&T Open Debate Competition is a cross-cultural public debating event that draws participants from diverse Asian nations such as Indonesia, Taiwan, the Philippines, China, and more. The Indonesian Student Association (PPI) in Taiwan takes the lead in organizing and launching this competition. Adhering to the format of the British Parliamentary Debate System, the event features representatives from four distinct countries serving as judges." 
+                          },
+                          { 
+                            id: "aw3", 
+                            title: "Finalist Poster Infographic Design 4C National Competition", 
+                            issuer: "The Faculty of Computer Science, University of Brawijaya", 
+                            date: "Nov 2023", 
+                            assoc: "Politeknik Negeri Malang", 
+                            desc: "The 4C National Competition is an event at the national level hosted by the Faculty of Computer Science at the University of Brawijaya (FILKOM UB) to celebrate its 12th anniversary. It is specifically crafted for university students seeking to improve their critical thinking, collaboration, creativity, and communication abilities." 
+                          },
+                          { 
+                            id: "aw4", 
+                            title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", 
+                            issuer: "Badan Eksekutif Mahasiswa Politeknik Negeri Malang", 
+                            date: "Aug 2023", 
+                            assoc: "Himpunan Mahasiswa Teknologi Informasi (HMTI) Polinema", 
+                            desc: "The \"Expo Kelembagaan OKi Polinema\" Video Competition is an event organized by the Student Executive Board of Politeknik Negeri Malang to welcome the new students of 2023. This competition is specifically designed to allow the organizations within Politeknik Negeri Malang to introduce themselves in a more engaging and creative manner." 
+                          }
+                        ].map((award) => (
+                          <motion.div key={award.id} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="award-card">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+                              <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.3 }}>{award.title}</h4>
+                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>{award.issuer}</span>
+                                <span style={{ color: 'var(--text-muted)' }}>•</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{award.date}</span>
+                              </div>
+                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>Associated with {award.assoc}</span>
+                            </div>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{award.desc}</p>
+                          </motion.div>
+                        ))}
+                      </motion.div>
 
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
                   <motion.div 
