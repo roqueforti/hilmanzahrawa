@@ -60,7 +60,7 @@ const MiniDeco = () => (
       <circle cx="25" cy="25" r="3" fill="var(--accent)" />
     </svg>
   </motion.div>
-};
+);
 
 export default function ClientPage({ initialData }: { initialData: any }) {
   const [data, setData] = useState<any>(initialData);
