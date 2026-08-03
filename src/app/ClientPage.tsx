@@ -173,7 +173,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={scrollToTop}
-            style={{ position: 'fixed', bottom: '2rem', right: '2rem', width: '3rem', height: '3rem', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', border: '1px solid var(--border-hairline)', color: 'var(--text-primary)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 9000, boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
+            style={{ position: 'fixed', bottom: '2rem', right: '2rem', width: '3rem', height: '3rem', borderRadius: '50%', background: 'var(--bg-secondary)', backdropFilter: 'blur(12px)', border: '1px solid var(--border-hairline)', color: 'var(--text-primary)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 9000, boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
           >
             ↑
           </motion.button>
