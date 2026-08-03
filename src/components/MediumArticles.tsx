@@ -103,38 +103,26 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {articles.map((article, idx) => (
+          {articles.map((article, index) => (
             <motion.a
-              key={idx}
+              key={article.guid}
               href={article.link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              style={{
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-light)',
-                borderRadius: '4px',
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 }}
+              className="article-card"
+              style={{ 
                 padding: '1.5rem',
+                borderRadius: 'var(--radius-md)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 textDecoration: 'none',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 position: 'relative',
                 overflow: 'hidden',
                 minHeight: '180px'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--text-primary)';
-                e.currentTarget.style.transform = 'translateY(-6px)';
-                e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(0, 0, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-light)';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div>
@@ -161,7 +149,7 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-mono)' }}>Read Article</span>
-                <div style={{ flex: 1, height: '1px', background: 'var(--text-primary)', opacity: 0.2 }} />
+                <div className="article-line" style={{ flex: 1, height: '1px', background: 'var(--text-primary)', opacity: 0.2 }} />
               </div>
             </motion.a>
           ))}

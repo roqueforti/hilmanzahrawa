@@ -129,32 +129,15 @@ body {
   letter-spacing: 0.08em;
   color: var(--text-secondary);
   text-decoration: none;
-  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover, .nav-link:focus-visible {
-  color: var(--text-primary);
+  color: var(--bg-primary);
+  background: var(--text-primary);
   opacity: 1;
   outline: none;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: -4px;
-  left: 0;
-  background-color: var(--text-primary);
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-link:hover { color: var(--text-primary); }
-.nav-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
 }
 
 .btn-hire {
@@ -258,9 +241,22 @@ body {
 
 .seamless-service-card:hover, .seamless-service-card:focus-visible {
   border-color: var(--text-primary);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
   outline: none;
+}
+
+.seamless-service-card:hover h3,
+.seamless-service-card:hover p,
+.seamless-service-card:hover .service-card-header span,
+.seamless-service-card:hover .order-btn {
+  color: var(--bg-primary) !important;
+}
+
+.seamless-service-card:hover .order-btn {
+  border-color: var(--bg-primary);
 }
 
 /* -------------------------------------
@@ -332,6 +328,7 @@ body {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   align-items: center;
+  position: relative;
 }
 
 .editorial-project-row:first-child {
@@ -339,12 +336,25 @@ body {
 }
 
 .editorial-project-row:hover, .editorial-project-row:focus-visible {
-  background: var(--bg-secondary);
+  background: var(--text-primary);
+  color: var(--bg-primary);
   padding-left: 2rem;
   padding-right: 2rem;
   margin-left: -2rem;
   margin-right: -2rem;
   outline: none;
+}
+
+.editorial-project-row:hover .editorial-project-title,
+.editorial-project-row:hover .editorial-project-subtitle,
+.editorial-project-row:hover .editorial-meta-role {
+  color: var(--bg-primary);
+}
+
+.editorial-project-row:hover .editorial-tag {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--bg-primary);
 }
 
 .editorial-row-content {
@@ -359,11 +369,11 @@ body {
   font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 1.25;
+  line-height: 1.35;
   margin-bottom: 0.75rem;
   color: var(--text-primary);
   transition: color 0.3s ease;
-  padding-bottom: 0.1em;
+  padding-bottom: 0.25em; /* Prevent descender clipping (g, y, p, j) */
 }
 
 .editorial-project-subtitle {
@@ -431,8 +441,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center; /* Show the top hero section cleanly, avoiding collage crop */
   border-radius: 2px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-project-row:hover .editorial-img-container img {
+  transform: scale(1.05);
 }
 
 /* Mobile adjustments for editorial list */
@@ -975,6 +991,42 @@ body {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+}
+
+/* -------------------------------------
+   MISCELLANEOUS
+   ------------------------------------- */
+.compact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* -------------------------------------
+   ARTICLE CARDS
+   ------------------------------------- */
+.article-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.article-card:hover, .article-card:focus-visible {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.article-card:hover h3,
+.article-card:hover span,
+.article-card:hover svg {
+  color: var(--bg-primary) !important;
+}
+
+.article-card:hover .article-line {
+  background: var(--bg-primary) !important;
 }
 
 /* -------------------------------------
