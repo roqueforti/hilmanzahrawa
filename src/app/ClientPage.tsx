@@ -297,11 +297,13 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                     >
-                      <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Outer Diamond */}
+                      <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Vertical and Horizontal Intersects */}
                       <path d="M50 0 L50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      <path d="M0 25 L100 75" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      <path d="M0 75 L100 25" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M0 50 L100 50" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Inner Circles */}
+                      <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <circle cx="50" cy="50" r="10" fill="currentColor" />
                     </motion.svg>
                     
