@@ -1,7 +1,7 @@
 'use client';
 
 import { client, urlFor } from "@/sanity/client";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import MediumArticles from "@/components/MediumArticles";
 import DesignSection from "@/components/DesignSection";
@@ -16,6 +16,22 @@ export default function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [scrollTopPos, setScrollTopPos] = useState(0);
+
+  const { scrollY, scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setShowBackToTop(latest > 500);
+  });
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!sliderRef.current) return;
@@ -157,7 +173,38 @@ export default function Home() {
 
   return (
     <>
-      {data && (
+      {/* Subtle Noise Texture */}
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999, opacity: 0.35, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+
+      {/* Scroll Progress Bar */}
+      <motion.div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '3px', background: 'var(--text-primary)', originX: 0, scaleX, zIndex: 10000 }} />
+
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={scrollToTop}
+            style={{ position: 'fixed', bottom: '2rem', right: '2rem', width: '3rem', height: '3rem', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', border: '1px solid var(--border-hairline)', color: 'var(--text-primary)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 9000, boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
+          >
+            ↑
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {!data ? (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.8, 0.3] }} 
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--text-primary)' }}
+          />
+        </div>
+      ) : (
         <main style={{ background: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
           
           {/* SEAMLESS NAVBAR */}
@@ -191,7 +238,7 @@ export default function Home() {
             {/* SEAMLESS HERO PROFILE SECTION */}
             <section id="hero" style={{ position: 'relative', marginBottom: '5rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border-hairline)' }}>
               {/* Subtle interactive background glow */}
-              <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(9,9,11,0.02) 0%, rgba(255,255,255,0) 65%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none' }} />
+              <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(9,9,11,0.025) 0%, rgba(255,255,255,0) 65%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', mixBlendMode: 'multiply' }} />
               
               <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '860px', margin: '0 auto' }}>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
@@ -221,18 +268,20 @@ export default function Home() {
                   <motion.a 
                     whileHover={{ scale: 1.05, backgroundColor: 'rgba(9, 9, 11, 0.9)' }}
                     whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     href={`https://wa.me/${displayBio.whatsapp}?text=Hello%20Hilman,%20I%20would%20like%20to%20consult%20about%20a%20project`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', transition: 'background-color 0.2s' }}
+                    style={{ display: 'inline-block', background: 'var(--text-primary)', color: '#FFFFFF', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                   >
                     Free Consultation via WhatsApp ↗
                   </motion.a>
                   <motion.a 
                     whileHover={{ scale: 1.05, borderColor: 'var(--text-primary)', backgroundColor: 'var(--bg-secondary)' }}
                     whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     href={`mailto:${displayBio.email}`}
-                    style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)', transition: 'all 0.2s' }}
+                    style={{ display: 'inline-block', background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-hairline)', padding: '0.9rem 1.8rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', fontFamily: 'var(--font-mono)' }}
                   >
                     Send Email ✉
                   </motion.a>
@@ -268,10 +317,19 @@ export default function Home() {
                 <span className="section-tag">01 / SERVICES</span>
               </div>
 
-              <div className="seamless-service-grid">
+              <motion.div 
+                className="seamless-service-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={{
+                  visible: { transition: { staggerChildren: 0.15 } },
+                  hidden: {}
+                }}
+              >
                 
                 {/* 1. WEB & SAAS */}
-                <div className="seamless-service-card">
+                <motion.div className="seamless-service-card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }}>
                   <div>
                     <div className="service-card-header" style={{ marginBottom: '1.25rem' }}>
                       <div className="service-card-icon">
@@ -303,10 +361,10 @@ export default function Home() {
                   >
                     Order Web Development ↗
                   </a>
-                </div>
+                </motion.div>
 
                 {/* 2. BRANDING & UI/UX */}
-                <div className="seamless-service-card">
+                <motion.div className="seamless-service-card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }}>
                   <div>
                     <div className="service-card-header" style={{ marginBottom: '1.25rem' }}>
                       <div className="service-card-icon">
@@ -338,10 +396,10 @@ export default function Home() {
                   >
                     Order Design & Branding ↗
                   </a>
-                </div>
+                </motion.div>
 
                 {/* 3. AUTOMATION */}
-                <div className="seamless-service-card">
+                <motion.div className="seamless-service-card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }}>
                   <div>
                     <div className="service-card-header" style={{ marginBottom: '1.25rem' }}>
                       <div className="service-card-icon">
@@ -373,8 +431,8 @@ export default function Home() {
                   >
                     Order Automation Services ↗
                   </a>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </section>
 
             {/* SEAMLESS IT PROJECTS SECTION */}
@@ -403,24 +461,30 @@ export default function Home() {
 
               {/* Filter Pills */}
               <div className="filter-pills">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setItFilter('all')}
                   className={`filter-pill ${itFilter === 'all' ? 'active' : ''}`}
                 >
                   All Projects ({itProjects.length})
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setItFilter('saas')}
                   className={`filter-pill ${itFilter === 'saas' ? 'active' : ''}`}
                 >
                   SaaS & Platforms
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setItFilter('web')}
                   className={`filter-pill ${itFilter === 'web' ? 'active' : ''}`}
                 >
                   Web Apps & Portals
-                </button>
+                </motion.button>
               </div>
 
               {itViewMode === 'grid' ? (
@@ -577,7 +641,11 @@ export default function Home() {
               <div className="about-grid">
                 <div>
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Experience</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
+                  <motion.div 
+                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                    variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}
+                  >
                     {(data.experiences?.length > 0 ? data.experiences : [
                       { _id: "e1", role: "HRIS Developer – HCM Division", company: "PT PAL Indonesia (Persero)", startDate: "2026", displayDate: "April 2026 - Present" },
                       { _id: "e2", role: "Creative Strategist", company: "Mandala Pure Love", startDate: "2025", displayDate: "Sept 2025 - Present" },
@@ -588,25 +656,29 @@ export default function Home() {
                       { _id: "e7", role: "Organizing Committee", company: "HMTI Polinema", startDate: "2023", displayDate: "Feb 2023 - Feb 2024" },
                       { _id: "e8", role: "Debate Mentor", company: "IT Dept English Community", startDate: "2023", displayDate: "Dec 2023 - Feb 2025" },
                     ]).map((exp: any) => (
-                      <div key={exp._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
+                      <motion.div key={exp._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{exp.role}</h4>
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{exp.company} • {exp.displayDate || (exp.startDate?.split('-')[0] || 'Present')}</p>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
 
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Education</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <motion.div 
+                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                    variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+                  >
                     {(data.education?.length > 0 ? data.education : [
                       { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
                       { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
                     ]).map((edu: any) => (
-                      <div key={edu._id} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
+                      <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ borderBottom: '1px solid var(--border-hairline)', paddingBottom: '0.85rem' }}>
                         <h4 style={{ fontSize: '0.95rem', fontWeight: 800 }}>{edu.school}</h4>
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>{edu.degree} • {edu.startDate}</p>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div>
@@ -620,7 +692,11 @@ export default function Home() {
                   </div>
 
                   <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Certificates</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <motion.div 
+                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                    variants={{ visible: { transition: { staggerChildren: 0.05 } }, hidden: {} }}
+                    style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}
+                  >
                     {(data.certificates?.length > 0 ? data.certificates : [
                       { _id: "cert1", title: "2nd Best Novice Team International I&T Open Debate Competition", issuer: "Award", date: "2024" },
                       { _id: "cert2", title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", issuer: "Award", date: "2023" },
@@ -631,12 +707,12 @@ export default function Home() {
                       { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
                       { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
                     ]).map((cert: any) => (
-                      <div key={cert._id} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)' }}>
+                      <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)' }}>
                         <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
                         <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.2rem' }}>{cert.issuer} • {cert.date}</p>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </section>
