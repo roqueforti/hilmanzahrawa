@@ -1295,12 +1295,28 @@ body {
   margin: 0 -1.5rem; /* Let it bleed to edges slightly */
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-light) var(--bg-tertiary);
 }
 
 .dynamic-slider-container::-webkit-scrollbar {
-  display: none;
+  height: 6px;
+}
+
+.dynamic-slider-container::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  margin: 0 1.5rem;
+}
+
+.dynamic-slider-container::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+
+.dynamic-slider-container::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 .dynamic-slider-item {
