@@ -18,6 +18,7 @@ interface Project {
   deviceType?: string;
   tags?: string[];
   role?: string;
+  gallery?: any[];
 }
 
 interface DesignSectionProps {
@@ -110,6 +111,11 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-tertiary)', fontSize: '2.5rem' }}>
                     🎨
                   </div>
+                )}
+
+                {/* Geometric Play Overlay for Videos */}
+                {project.mediaType === 'video' && (
+                  <div className="geometric-play-overlay" />
                 )}
 
                 {/* Media Type Floating Pill Badge */}

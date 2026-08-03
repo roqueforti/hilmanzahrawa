@@ -84,14 +84,14 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
   return (
     <div style={{ marginTop: '3rem', width: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '2.5rem' }}>
-        <div style={{ width: '1.8rem', height: '1.8rem', borderRadius: '50%', background: 'rgba(187, 134, 252, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <BookOpen size={16} className="text-accent" />
+        <div style={{ width: '1.8rem', height: '1.8rem', borderRadius: '4px', background: 'var(--text-primary)', color: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <BookOpen size={16} />
         </div>
         <div>
           <h2 className="text-heading-compact" style={{ fontSize: '0.9rem', fontWeight: 900, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             {title || "LATEST WRITINGS"}
           </h2>
-          <p style={{ fontSize: '0.65rem', opacity: 0.5, marginTop: '0.2rem' }}>Articles and insights on Medium</p>
+          <p style={{ fontSize: '0.65rem', opacity: 0.5, marginTop: '0.2rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Articles and insights on Medium</p>
         </div>
       </div>
 
@@ -115,33 +115,34 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
               style={{
                 background: 'var(--bg-secondary)',
                 border: '1px solid var(--border-light)',
-                borderRadius: 'var(--radius-lg)',
+                borderRadius: '4px',
                 padding: '1.5rem',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 textDecoration: 'none',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 position: 'relative',
                 overflow: 'hidden',
                 minHeight: '180px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--accent)';
-                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.borderColor = 'var(--text-primary)';
+                e.currentTarget.style.transform = 'translateY(-6px)';
+                e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(0, 0, 0, 0.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'var(--border-light)';
                 e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.5 }}>
-                    <Calendar size={12} />
-                    <span style={{ fontSize: '0.65rem' }}>{formatDate(article.pubDate)}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.7 }}>
+                    <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{formatDate(article.pubDate)}</span>
                   </div>
-                  <ExternalLink size={14} className="text-accent" style={{ opacity: 0.5 }} />
+                  <ExternalLink size={14} style={{ opacity: 0.5, color: 'var(--text-primary)' }} />
                 </div>
                 <h3 style={{ 
                   fontSize: '1rem', 
@@ -159,20 +160,9 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
               </div>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Read Article</span>
-                <div style={{ flex: 1, height: '1px', background: 'var(--accent)', opacity: 0.2 }} />
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-mono)' }}>Read Article</span>
+                <div style={{ flex: 1, height: '1px', background: 'var(--text-primary)', opacity: 0.2 }} />
               </div>
-
-              {/* Subtle background glow */}
-              <div style={{ 
-                position: 'absolute', 
-                top: '-20%', 
-                right: '-10%', 
-                width: '60%', 
-                height: '60%', 
-                background: 'radial-gradient(circle, rgba(187, 134, 252, 0.03) 0%, transparent 70%)',
-                pointerEvents: 'none'
-              }} />
             </motion.a>
           ))}
         </div>
