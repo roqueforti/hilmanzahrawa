@@ -1336,3 +1336,176 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ====== PREMIUM HOVER ANIMATIONS ====== */
+
+/* Services Card Hover */
+.seamless-service-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.seamless-service-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 12px 35px -5px var(--accent-glow), 0 0 5px var(--border-glow) !important;
+}
+.seamless-service-card:hover .service-card-icon {
+  border-color: var(--accent);
+  background: var(--bg-tint);
+  transform: scale(1.1) rotate(5deg);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Nav Link Animated Underline */
+.nav-link {
+  position: relative;
+  transition: color 0.25s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1px;
+}
+.nav-link:hover {
+  color: var(--accent) !important;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Skill Chips Hover */
+.premium-chip {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: default;
+}
+.premium-chip:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+  transform: translateY(-2px) scale(1.06) !important;
+  box-shadow: 0 6px 18px var(--accent-glow) !important;
+}
+
+/* Award Card Hover */
+.award-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.award-card:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  border-color: var(--accent) !important;
+  background: var(--bg-surface) !important;
+  box-shadow: 0 10px 30px var(--accent-glow) !important;
+}
+
+/* Dynamic Slider Item Hover (Certificates, Portfolio, etc.) */
+.dynamic-slider-item {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.dynamic-slider-item:hover {
+  transform: translateY(-4px) scale(1.03) !important;
+  border-color: var(--accent) !important;
+  background: var(--bg-surface) !important;
+  box-shadow: 0 8px 24px var(--accent-glow) !important;
+}
+
+/* Project Bento Card Hover Enhancement */
+.project-bento-card:hover .bento-img-container img {
+  transform: scale(1.08);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-bento-card:hover {
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow) !important;
+}
+
+/* Compact Card Hover Enhancement */
+.card-compact:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 12px 30px -8px var(--accent-glow) !important;
+}
+.card-compact:hover img {
+  transform: scale(1.08);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Order Button Hover */
+.seamless-service-card a.order-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+.seamless-service-card a.order-btn:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px var(--accent-glow) !important;
+  opacity: 1 !important;
+}
+
+/* Filter Pill Hover Enhancement */
+.filter-pill:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+/* Social Button Hover Enhancement */
+.social-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.social-btn:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+  transform: translateY(-3px) scale(1.1) !important;
+  box-shadow: 0 6px 20px var(--accent-glow) !important;
+}
+
+/* Hire Me Button Glow */
+.btn-hire {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.btn-hire:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(255, 107, 0, 0.15) !important;
+}
+
+/* Table Row Hover */
+.flat-table tr {
+  transition: all 0.2s ease;
+}
+.flat-table tr:hover td {
+  background: var(--bg-tint) !important;
+  border-bottom-color: var(--accent) !important;
+}
+
+/* View Button Hover */
+.view-btn:not(.active) {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.view-btn:not(.active):hover {
+  color: var(--accent);
+  background: var(--bg-tint);
+}
+
+/* Section Title Hover Shimmer */
+.section-title-seamless {
+  transition: all 0.3s ease;
+}
+.section-title-seamless:hover {
+  color: var(--accent);
+}
+
+/* Editorial Project Row Enhanced Hover */
+.editorial-project-row:hover {
+  background: var(--bg-tint) !important;
+}
+.editorial-project-row:hover .editorial-img-container {
+  border-color: var(--accent) !important;
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
