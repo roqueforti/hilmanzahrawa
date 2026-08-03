@@ -9,15 +9,10 @@ interface MediumArticlesProps {
   title?: string;
 }
 
-const getDynamicContainerClass = (len: number, baseClass = '') => {
-  if (len > 6) return `${baseClass} dynamic-slider-container`.trim();
-  if (len >= 4 && len <= 6) return `${baseClass} dynamic-grid-2-rows`.trim();
-  return `${baseClass} dynamic-grid-1-row`.trim();
-};
-
-const getDynamicItemClass = (len: number, baseClass = '') => {
-  return len > 6 ? `${baseClass} dynamic-slider-item`.trim() : baseClass;
-};
+interface MediumArticlesProps {
+  username?: string;
+  title?: string;
+}
 
 export default function MediumArticles({ username, title }: MediumArticlesProps) {
   const [articles, setArticles] = useState<any[]>([]);
@@ -112,7 +107,7 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
           ))}
         </div>
       ) : (
-        <div className={getDynamicContainerClass(articles.length)}>
+        <div className="dynamic-grid-3-cols">
           {articles.map((article, index) => (
             <motion.a
               key={article.guid || article.link || `medium-article-${index}`}
@@ -122,7 +117,7 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              className={`article-card ${getDynamicItemClass(articles.length)}`}
+              className="article-card"
               style={{ 
                 padding: '1.5rem',
                 borderRadius: 'var(--radius-md)',

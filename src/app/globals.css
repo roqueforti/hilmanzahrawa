@@ -77,6 +77,12 @@ body {
   opacity: 0.6;
 }
 
+.dynamic-grid-3-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
 /* Base Container */
 .container {
   width: 100%;
@@ -1317,8 +1323,16 @@ body {
   gap: 1.5rem;
 }
 
+@media (max-width: 1024px) {
+  .dynamic-grid-3-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
 @media (max-width: 768px) {
-  .dynamic-grid-2-rows {
+  .dynamic-grid-2-rows,
+  .dynamic-grid-3-cols {
     grid-template-columns: 1fr;
   }
 }
