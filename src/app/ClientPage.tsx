@@ -849,7 +849,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
 
                       <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Awards & Achievements</h3>
                       <motion.div 
-                        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                        initial="hidden" animate="visible"
                         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
                         className={getDynamicContainerClass(4)}
                         style={{ marginBottom: '3rem' }}
