@@ -303,9 +303,25 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       <path d="M 50 0 L 50 100" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <path d="M 6.7 25 L 93.3 75" fill="none" stroke="currentColor" strokeWidth="0.5" />
                       <path d="M 6.7 75 L 93.3 25" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      {/* Animated Radar Chart Data Area */}
+                      <motion.path 
+                        animate={{ 
+                          d: [
+                            "M 50 20 L 88.97 27.5 L 71.65 62.5 L 50 90 L 32.68 60 L 19.69 32.5 Z",
+                            "M 50 5 L 67.32 40 L 84.64 70 L 50 75 L 11.03 72.5 L 32.68 40 Z",
+                            "M 50 30 L 84.64 30 L 67.32 60 L 50 95 L 28.35 62.5 L 11.03 27.5 Z",
+                            "M 50 20 L 88.97 27.5 L 71.65 62.5 L 50 90 L 32.68 60 L 19.69 32.5 Z"
+                          ] 
+                        }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        fill="currentColor" 
+                        fillOpacity="0.1" 
+                        stroke="currentColor" 
+                        strokeWidth="1" 
+                      />
                       {/* Inner Circles */}
-                      <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      <circle cx="50" cy="50" r="10" fill="currentColor" />
+                      <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
+                      <circle cx="50" cy="50" r="5" fill="currentColor" />
                     </motion.svg>
                     
                     {/* Architectural crosshairs */}
