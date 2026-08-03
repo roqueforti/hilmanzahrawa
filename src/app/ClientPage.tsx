@@ -6,7 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import { CheckCircle, Briefcase, Clock, Star, Terminal, GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
 import MediumArticles from "@/components/MediumArticles";
 import DesignSection from "@/components/DesignSection";
-import Lenis from "lenis";
+
 
 const CountUp = ({ to, suffix = "", duration = 2 }: { to: number, suffix?: string, duration?: number }) => {
   const [count, setCount] = useState(0);
@@ -123,23 +123,6 @@ export default function ClientPage({ initialData }: { initialData: any }) {
       document.body.style.overflow = 'auto';
     }
   }, [selectedProject]);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
 
 
   const { projects = [], bio = {} } = data || {};
