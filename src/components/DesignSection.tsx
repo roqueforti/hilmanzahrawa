@@ -21,16 +21,6 @@ interface Project {
   gallery?: any[];
 }
 
-const getDynamicContainerClass = (len: number, baseClass = '') => {
-  if (len > 6) return `${baseClass} dynamic-slider-container`.trim();
-  if (len >= 4 && len <= 6) return `${baseClass} dynamic-grid-2-rows`.trim();
-  return `${baseClass} dynamic-grid-1-row`.trim();
-};
-
-const getDynamicItemClass = (len: number, baseClass = '') => {
-  return len > 6 ? `${baseClass} dynamic-slider-item`.trim() : baseClass;
-};
-
 interface DesignSectionProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
@@ -96,8 +86,8 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
         ))}
       </div>
 
-      {/* Modern Card Grid */}
-      <motion.div layout className={getDynamicContainerClass(filteredProjects.length, "compact-grid")}>
+      {/* Modern Card Slider */}
+      <motion.div layout className="compact-grid dynamic-slider-container">
         <AnimatePresence>
           {filteredProjects.map((project, index) => (
             <motion.div
@@ -107,7 +97,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.3, delay: index * 0.04 }}
-              className={`card-compact ${getDynamicItemClass(filteredProjects.length)}`}
+              className="card-compact dynamic-slider-item"
               onClick={() => onProjectClick(project)}
             >
               <div className="img-wrapper" style={{ position: 'relative' }}>
