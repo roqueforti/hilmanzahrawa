@@ -107,7 +107,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
   const displayBio = {
     name: bio?.name || "HILMAN ZAHRAWA BUDIARTO",
     headline: bio?.headline || "Fullstack Developer | UI UX Designer",
-    about: bio?.about || "Business Information System student based in Malang and a recipient of the Djarum Beasiswa Plus scholarship. Skilled in software development, UI/UX design, and video editing. Experienced as a Chairman of Information Technology Student Association (HMTI), successfully leading 11 programs and coordinating 5 departments. Accustomed to working in a team, taking initiative, and being adaptive in various situations.",
+    about: "Software Engineer passionate about building scalable web applications, AI-powered solutions, and meaningful digital experiences. I bridge engineering, product thinking, and visual design to create software that performs exceptionally and leaves a lasting impression.",
     location: bio?.location || "Malang, Jawa Timur, Indonesia",
     email: bio?.email || "budiarto3788@gmail.com",
     whatsapp: bio?.whatsapp || "6285806003234",
