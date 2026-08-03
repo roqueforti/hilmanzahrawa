@@ -798,30 +798,6 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                       );
                     })}
                   </motion.div>
-
-                  <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)' }}>Education</h3>
-                  <motion.div 
-                    initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
-                    variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-                    style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}
-                  >
-                    <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '2px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
-                    {(data.education?.length > 0 ? data.education : [
-                      { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
-                      { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
-                    ]).map((edu: any) => {
-                      const monogram = edu.school.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
-                      return (
-                        <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
-                          <div style={{ position: 'absolute', left: '-1.1rem', top: '0.35rem', width: '10px', height: '10px', background: 'var(--bg-primary)', border: '2px solid var(--accent)', borderRadius: '50%', boxShadow: '0 0 8px var(--accent-glow)' }} />
-                          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{edu.school}</h4>
-                          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
-                            {edu.degree} • {edu.startDate}
-                          </p>
-                        </motion.div>
-                      );
-                    })}
-                  </motion.div>
                 </div>
 
                 <div>
@@ -853,6 +829,66 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                         </>
                       );
                         })()}
+                      </div>
+
+                      <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', color: 'var(--text-muted)', marginTop: '3rem' }}>Education</h3>
+                      <motion.div 
+                        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                        variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+                        style={{ position: 'relative', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}
+                      >
+                        <div style={{ position: 'absolute', left: '11px', top: '0', bottom: '0', width: '2px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
+                        {(data.education?.length > 0 ? data.education : [
+                          { _id: "edu1", school: "Politeknik Negeri Malang", degree: "Business Information System", startDate: "Aug 2022 - 2026" },
+                          { _id: "edu2", school: "SMA Negeri 1 Malang", degree: "Mathematics and Natural Science", startDate: "Jul 2019 - May 2022" },
+                        ]).map((edu: any) => {
+                          const monogram = edu.school.split(' ').map((w: string) => w[0]).join('').substring(0, 2).toUpperCase();
+                          return (
+                            <motion.div key={edu._id} variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }} style={{ position: 'relative' }}>
+                              <div style={{ position: 'absolute', left: '-1.1rem', top: '0.35rem', width: '10px', height: '10px', background: 'var(--bg-primary)', border: '2px solid var(--accent)', borderRadius: '50%', boxShadow: '0 0 8px var(--accent-glow)' }} />
+                              <h4 style={{ fontSize: '0.95rem', fontWeight: 800, lineHeight: 1.2 }}>{edu.school}</h4>
+                              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', marginTop: '0.25rem', letterSpacing: '0.02em' }}>
+                                {edu.degree} • {edu.startDate}
+                              </p>
+                            </motion.div>
+                          );
+                        })}
+                      </motion.div>
+
+                      <div style={{ marginTop: '3rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', margin: 0 }}>Certificates</h3>
+                          <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => certsRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                              <ChevronLeft size={16} />
+                            </button>
+                            <button onClick={() => certsRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                              <ChevronRight size={16} />
+                            </button>
+                          </div>
+                        </div>
+                        <motion.div 
+                          ref={certsRef}
+                          initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+                          variants={{ visible: { transition: { staggerChildren: 0.05 } }, hidden: {} }}
+                          className={getDynamicContainerClass(data.certificates?.length || 8)}
+                        >
+                          {(data.certificates?.length > 0 ? data.certificates : [
+                            { _id: "cert1", title: "2nd Best Novice Team International I&T Open Debate Competition", issuer: "Award", date: "2024" },
+                            { _id: "cert2", title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", issuer: "Award", date: "2023" },
+                            { _id: "cert3", title: "Finalist Poster Infographic Design 4C National Competition", issuer: "Award", date: "2023" },
+                            { _id: "cert4", title: "2nd Runner Up IT Poly Debate Cup", issuer: "Award", date: "2024" },
+                            { _id: "cert5", title: "How to Validate Your Social Project Leadership Program", issuer: "Innovillage", date: "2025" },
+                            { _id: "cert6", title: "Communicating for Community Engagement and Influence", issuer: "Innovillage", date: "2025" },
+                            { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
+                            { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
+                          ]).map((cert: any, _, arr) => (
+                            <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className={getDynamicItemClass(arr.length)} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)', height: '100%' }}>
+                              <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
+                              <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.2rem' }}>{cert.issuer} • {cert.date}</p>
+                            </motion.div>
+                          ))}
+                        </motion.div>
                       </div>
                     </div>
                   </div>
@@ -940,42 +976,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
                           </motion.div>
                         ))}
                       </motion.div>
-
-                  <div style={{ marginTop: '4rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                      <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)', margin: 0 }}>Certificates</h3>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button onClick={() => certsRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                          <ChevronLeft size={16} />
-                        </button>
-                        <button onClick={() => certsRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                          <ChevronRight size={16} />
-                        </button>
-                      </div>
-                    </div>
-                    <motion.div 
-                      ref={certsRef}
-                      initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
-                    variants={{ visible: { transition: { staggerChildren: 0.05 } }, hidden: {} }}
-                    className={getDynamicContainerClass(data.certificates?.length || 8)}
-                  >
-                    {(data.certificates?.length > 0 ? data.certificates : [
-                      { _id: "cert1", title: "2nd Best Novice Team International I&T Open Debate Competition", issuer: "Award", date: "2024" },
-                      { _id: "cert2", title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema", issuer: "Award", date: "2023" },
-                      { _id: "cert3", title: "Finalist Poster Infographic Design 4C National Competition", issuer: "Award", date: "2023" },
-                      { _id: "cert4", title: "2nd Runner Up IT Poly Debate Cup", issuer: "Award", date: "2024" },
-                      { _id: "cert5", title: "How to Validate Your Social Project Leadership Program", issuer: "Innovillage", date: "2025" },
-                      { _id: "cert6", title: "Communicating for Community Engagement and Influence", issuer: "Innovillage", date: "2025" },
-                      { _id: "cert7", title: "Memulai Pemrograman dengan Python", issuer: "Dicoding", date: "2024" },
-                      { _id: "cert8", title: "Belajar Dasar AI", issuer: "Dicoding", date: "2024" },
-                    ]).map((cert: any, _, arr) => (
-                      <motion.div key={cert._id} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className={getDynamicItemClass(arr.length)} style={{ border: '1px solid var(--border-light)', borderRadius: '6px', padding: '0.75rem', background: 'var(--bg-secondary)', height: '100%' }}>
-                        <h4 style={{ fontSize: '0.8rem', fontWeight: 800, lineHeight: 1.3 }}>{cert.title}</h4>
-                        <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', marginTop: '0.2rem' }}>{cert.issuer} • {cert.date}</p>
                       </motion.div>
-                    ))}
-                  </motion.div>
-                </div>
               </div>
             </motion.section>
 
