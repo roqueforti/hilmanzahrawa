@@ -185,7 +185,7 @@ body {
 
 .section-title-seamless {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -237,6 +237,14 @@ body {
   gap: 1.5rem;
   transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+}
+
+.seamless-service-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-top: 0.2rem;
+  color: var(--text-primary);
 }
 
 .seamless-service-card:hover, .seamless-service-card:focus-visible {
@@ -322,8 +330,8 @@ body {
 .editorial-project-row {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 3rem;
-  padding: 3.5rem 0;
+  gap: 2rem;
+  padding: 2.5rem 0;
   border-bottom: 1px solid var(--border-hairline);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -366,9 +374,9 @@ body {
 
 .editorial-project-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.01em;
   line-height: 1.35;
   margin-bottom: 0.75rem;
   color: var(--text-primary);
@@ -377,7 +385,7 @@ body {
 }
 
 .editorial-project-subtitle {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.5;
   max-width: 90%;

@@ -241,7 +241,7 @@ export default function ClientPage({ initialData }: { initialData: any }) {
 
                   <motion.h1 
                     initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }, hidden: {} }}
-                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.15em', textAlign: 'left' }}
                   >
                     {"Engineering Scalable Web Products & Iconic Brand Systems.".split(" ").map((word, idx) => (
                       <span key={idx} style={{ overflow: 'hidden', display: 'inline-block', paddingBottom: '0.15em', marginBottom: '-0.15em' }}>
@@ -319,25 +319,25 @@ export default function ClientPage({ initialData }: { initialData: any }) {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} style={{ width: '100%', marginTop: '5rem', maxWidth: '1200px', margin: '5rem auto 0' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', borderTop: '1px solid var(--text-primary)', borderBottom: '1px solid var(--text-primary)' }}>
                   <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
-                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                       <Star size={24} strokeWidth={2.5} /> <CountUp to={100} suffix="%" />
                     </div>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Client Satisfaction</div>
                   </motion.div>
                   <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
-                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                       <Briefcase size={24} strokeWidth={2.5} /> <CountUp to={15} suffix="+" />
                     </div>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Projects Completed</div>
                   </motion.div>
                   <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem', borderRight: '1px solid var(--border-hairline)' }}>
-                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                       <CheckCircle size={24} strokeWidth={2.5} /> <CountUp to={100} suffix="%" />
                     </div>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>On-Time Delivery</div>
                   </motion.div>
                   <motion.div whileHover={{ backgroundColor: 'var(--bg-secondary)' }} style={{ padding: '2rem' }}>
-                    <div style={{ fontSize: '2.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                       <Clock size={24} strokeWidth={2.5} /> <CountUp to={3} suffix="+" />
                     </div>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.05em' }}>Years Experience</div>
