@@ -45,12 +45,20 @@ export interface ThemeColors {
 }
 
 export type LayoutArchetype = 
-  | 'flanked-centered'
+  | 'flanked-balanced'
   | 'asymmetric-split'
-  | 'warrior-vanguard'
-  | 'cyberpunk-hud'
-  | 'dynamic-hero'
-  | 'zen-minimal';
+  | 'zen-minimal-centerfold'
+  | 'vanguard-dynamic'
+  | 'editorial-dual-scroll'
+  | 'cyber-hud-minimal';
+
+export type AnimeParticleMode = 
+  | 'falling-petals'
+  | 'rising-embers'
+  | 'lightning-sparks'
+  | 'wisteria-butterflies'
+  | 'water-droplets'
+  | 'cyber-hex-prisms';
 
 export type AccentAnimationType =
   | 'frieren-aura'
@@ -92,6 +100,7 @@ export interface AnimeTemplate {
   bustUrl: string;
   cardUrl: string;
   layoutArchetype: LayoutArchetype;
+  particle3DMode: AnimeParticleMode;
   accentAnimationType: AccentAnimationType;
   location: string;
   companionAvatars: string[];
@@ -139,7 +148,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/frieren.jpg",
     "bustUrl": "/anime/frieren.jpg",
     "cardUrl": "/anime/frieren.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "flanked-balanced",
+    "particle3DMode": "falling-petals",
     "accentAnimationType": "frieren-aura",
     "location": "Strahl Region, Continental Magic Association",
     "companionAvatars": [
@@ -405,7 +415,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/stark.jpg",
     "bustUrl": "/anime/stark.jpg",
     "cardUrl": "/anime/stark.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "asymmetric-split",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "stark-sparks",
     "location": "Schwer Mountains, Warrior Bastion",
     "companionAvatars": [
@@ -671,7 +682,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/fern.jpg",
     "bustUrl": "/anime/fern.jpg",
     "cardUrl": "/anime/fern.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "zen-minimal-centerfold",
+    "particle3DMode": "falling-petals",
     "accentAnimationType": "fern-zoltraak",
     "location": "Holy City Strahl, First-Class Mage Quarters",
     "companionAvatars": [
@@ -937,7 +949,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/eren.jpg",
     "bustUrl": "/anime/eren.jpg",
     "cardUrl": "/anime/eren.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "vanguard-dynamic",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "eren-steam-embers",
     "location": "Shiganshina District, Wall Maria",
     "companionAvatars": [
@@ -1203,7 +1216,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/levi.jpg",
     "bustUrl": "/anime/levi.jpg",
     "cardUrl": "/anime/levi.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "asymmetric-split",
+    "particle3DMode": "cyber-hex-prisms",
     "accentAnimationType": "levi-blade-slashes",
     "location": "Wall Rose, Survey Corps Headquarters",
     "companionAvatars": [
@@ -1469,7 +1483,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/mikasa.jpg",
     "bustUrl": "/anime/mikasa.jpg",
     "cardUrl": "/anime/mikasa.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "editorial-dual-scroll",
+    "particle3DMode": "cyber-hex-prisms",
     "accentAnimationType": "mikasa-scarf-wind",
     "location": "Trost District, Scout Vanguard Base",
     "companionAvatars": [
@@ -1735,7 +1750,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/naruto.jpg",
     "bustUrl": "/anime/naruto.jpg",
     "cardUrl": "/anime/naruto.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "cyber-hud-minimal",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "naruto-rasengan-chakra",
     "location": "Konohagakure, Fire Country",
     "companionAvatars": [
@@ -2002,7 +2018,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/sasuke.jpg",
     "bustUrl": "/anime/sasuke.jpg",
     "cardUrl": "/anime/sasuke.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "cyber-hud-minimal",
+    "particle3DMode": "lightning-sparks",
     "accentAnimationType": "sasuke-chidori-lightning",
     "location": "Uchiha District, Leaf Shadow Division",
     "companionAvatars": [
@@ -2268,7 +2285,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/sakura.jpg",
     "bustUrl": "/anime/sakura.jpg",
     "cardUrl": "/anime/sakura.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "editorial-dual-scroll",
+    "particle3DMode": "falling-petals",
     "accentAnimationType": "sakura-cherry-byakugou",
     "location": "Konoha Central Medical Hospital",
     "companionAvatars": [
@@ -2534,7 +2552,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/hinata.jpg",
     "bustUrl": "/anime/hinata.jpg",
     "cardUrl": "/anime/hinata.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "zen-minimal-centerfold",
+    "particle3DMode": "falling-petals",
     "accentAnimationType": "hinata-gentle-fist",
     "location": "Hyūga Main Estate, Fire Country",
     "companionAvatars": [
@@ -2800,7 +2819,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/luffy.jpg",
     "bustUrl": "/anime/luffy.jpg",
     "cardUrl": "/anime/luffy.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "flanked-balanced",
+    "particle3DMode": "water-droplets",
     "accentAnimationType": "luffy-nika-clouds",
     "location": "Thousand Sunny, The Grand Line",
     "companionAvatars": [
@@ -3066,7 +3086,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/ace.jpg",
     "bustUrl": "/anime/ace.jpg",
     "cardUrl": "/anime/ace.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "asymmetric-split",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "ace-fire-embers",
     "location": "Moby Dick Flagship, New World",
     "companionAvatars": [
@@ -3332,7 +3353,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/sabo.jpg",
     "bustUrl": "/anime/sabo.jpg",
     "cardUrl": "/anime/sabo.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "vanguard-dynamic",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "sabo-dragon-flames",
     "location": "Baltigo Base, Revolutionary Army HQ",
     "companionAvatars": [
@@ -3598,7 +3620,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/nami.jpg",
     "bustUrl": "/anime/nami.jpg",
     "cardUrl": "/anime/nami.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "editorial-dual-scroll",
+    "particle3DMode": "water-droplets",
     "accentAnimationType": "nami-clima-tact",
     "location": "Navigational Quarterdeck, Weatheria",
     "companionAvatars": [
@@ -3864,7 +3887,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/zero-two.jpg",
     "bustUrl": "/anime/zero-two.jpg",
     "cardUrl": "/anime/zero-two.jpg",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "cyber-hud-minimal",
+    "particle3DMode": "cyber-hex-prisms",
     "accentAnimationType": "zero-two-cyber-hex",
     "location": "Plantation 13, Strelizia Cockpit",
     "companionAvatars": [
@@ -4130,7 +4154,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/tanjiro.png",
     "bustUrl": "/anime/tanjiro.png",
     "cardUrl": "/anime/tanjiro.png",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "flanked-balanced",
+    "particle3DMode": "rising-embers",
     "accentAnimationType": "tanjiro-dual-breathing",
     "location": "Mount Sagiri, Demon Slayer Corps",
     "companionAvatars": [
@@ -4396,7 +4421,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/zenitsu.png",
     "bustUrl": "/anime/zenitsu.png",
     "cardUrl": "/anime/zenitsu.png",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "vanguard-dynamic",
+    "particle3DMode": "lightning-sparks",
     "accentAnimationType": "zenitsu-thunderclap",
     "location": "Mount Kumotori, Thunder Pillar Dojo",
     "companionAvatars": [
@@ -4662,7 +4688,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/inosuke.png",
     "bustUrl": "/anime/inosuke.png",
     "cardUrl": "/anime/inosuke.png",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "asymmetric-split",
+    "particle3DMode": "water-droplets",
     "accentAnimationType": "inosuke-beast-slashes",
     "location": "Mount Okutama, Beast Territory",
     "companionAvatars": [
@@ -4928,7 +4955,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/giyuu.png",
     "bustUrl": "/anime/giyuu.png",
     "cardUrl": "/anime/giyuu.png",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "zen-minimal-centerfold",
+    "particle3DMode": "water-droplets",
     "accentAnimationType": "giyuu-dead-calm",
     "location": "Mount Sagiri, Water Pillar Sanctuary",
     "companionAvatars": [
@@ -5194,7 +5222,8 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     "avatarUrl": "/anime/shinobu.png",
     "bustUrl": "/anime/shinobu.png",
     "cardUrl": "/anime/shinobu.png",
-    "layoutArchetype": "flanked-centered",
+    "layoutArchetype": "cyber-hud-minimal",
+    "particle3DMode": "wisteria-butterflies",
     "accentAnimationType": "shinobu-wisteria-butterflies",
     "location": "Butterfly Mansion, Insect Pillar Clinic",
     "companionAvatars": [

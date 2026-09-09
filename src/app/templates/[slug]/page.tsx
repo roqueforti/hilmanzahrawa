@@ -16,10 +16,12 @@ import {
   Cpu,
   Layers,
   Star,
-  Quote
+  Quote,
+  Activity,
+  Zap
 } from 'lucide-react';
 import { ANIME_TEMPLATES, ProjectItem } from '@/data/animeTemplates';
-import AnimeAccents from '@/components/anime-accents/AnimeAccents';
+import AnimeThreeAccents from '@/components/anime/AnimeThreeAccents';
 import AnimeHeroStage from '@/components/anime/AnimeHeroStage';
 import AnimeProjectModal from '@/components/anime/AnimeProjectModal';
 import TemplateSwitcherBar from '@/components/anime/TemplateSwitcherBar';
@@ -58,7 +60,7 @@ export default function AnimeTemplateLandingPage() {
     );
   }
 
-  const { colors } = template;
+  const { colors, layoutArchetype } = template;
 
   return (
     <div
@@ -79,11 +81,10 @@ export default function AnimeTemplateLandingPage() {
         onDeviceChange={setActiveDevice}
       />
 
-      {/* 2. Signature Ambient Particle Accent Engine (Renders Behind Content) */}
-      <AnimeAccents 
-        type={template.accentAnimationType} 
+      {/* 2. Three.js / React Three Fiber 3D Ambient Particle Engine (Modeled after BlueMoonPetals) */}
+      <AnimeThreeAccents 
+        mode={template.particle3DMode || 'falling-petals'} 
         color={colors.accent} 
-        accentSecondary={colors.accentSecondary}
       />
 
       {/* Viewport Frame Wrapper (If tablet or mobile mode toggled) */}
@@ -214,12 +215,12 @@ export default function AnimeTemplateLandingPage() {
         </AnimatePresence>
 
         {/* =========================================================================
-           3. HERO STAGE (Seamless Himmel Structure with Studio Aura & Free Cutout)
+           3. HERO STAGE (Adapts across 6 distinct layout archetypes)
            ========================================================================= */}
         <AnimeHeroStage template={template} />
 
         {/* =========================================================================
-           4. "I LIKE" / FOCUS PHILOSOPHY SECTION (Exact Match to Himmel sec3_focus)
+           4. "I LIKE" / FOCUS PHILOSOPHY SECTION
            ========================================================================= */}
         <section id="about" className="focus-section-container" style={{
           padding: '5rem 1.5rem',
@@ -319,7 +320,7 @@ export default function AnimeTemplateLandingPage() {
         </section>
 
         {/* =========================================================================
-           5. SELECTED WORKS (2x2 Grid Matching Himmel Standard)
+           5. SELECTED WORKS (Composition adapts to layout archetype)
            ========================================================================= */}
         <section id="works" style={{
           padding: '4rem 1.5rem 6rem 1.5rem',
@@ -363,97 +364,182 @@ export default function AnimeTemplateLandingPage() {
             </p>
           </div>
 
-          {/* 2x2 Showcase Grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '2.5rem'
-          }}>
-            {template.projects.map((work) => (
-              <motion.div
-                key={work.id}
-                whileHover={{ y: -8 }}
-                onClick={() => setSelectedProject(work)}
-                style={{
-                  borderRadius: '24px',
-                  background: '#f8fafc',
-                  border: '1.5px solid #e2e8f0',
-                  padding: '2rem',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  minHeight: '340px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s, box-shadow 0.2s'
-                }}
-              >
-                {/* Accent Top Bar */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: work.color || colors.accent }} />
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                    <span
-                      style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        textTransform: 'uppercase',
-                        padding: '0.25rem 0.75rem',
-                        borderRadius: '9999px',
-                        background: colors.badgeBg,
-                        color: colors.badgeText,
-                      }}
-                    >
-                      {work.category}
-                    </span>
-                    <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent }}>
-                      {work.metrics}
-                    </span>
-                  </div>
-
-                  <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.3 }}>
-                    {work.title}
-                  </h3>
-
-                  <p style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#475569', marginBottom: '1.5rem' }}>
-                    {work.desc}
-                  </p>
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
-                    {work.tags.map((t) => (
-                      <span
-                        key={t}
-                        style={{
-                          fontSize: '0.75rem',
-                          fontWeight: 500,
-                          padding: '0.2rem 0.65rem',
-                          borderRadius: '6px',
-                          background: '#ffffff',
-                          border: '1px solid #e2e8f0',
-                          color: '#334155'
-                        }}
-                      >
-                        {t}
+          {/* Archetype A: Asymmetric Hero Grid (Asymmetric-Split) */}
+          {layoutArchetype === 'asymmetric-split' ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '2rem' }}>
+              {/* Featured Large Project (7 cols) */}
+              {template.projects[0] && (
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  onClick={() => setSelectedProject(template.projects[0])}
+                  style={{
+                    gridColumn: 'span 7',
+                    borderRadius: '24px',
+                    background: '#f8fafc',
+                    border: '1.5px solid #e2e8f0',
+                    padding: '2.5rem',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    minHeight: '420px',
+                    position: 'relative'
+                  }}
+                >
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: template.projects[0].color || colors.accent }} />
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: '9999px', background: colors.badgeBg, color: colors.badgeText }}>
+                        FEATURED // {template.projects[0].category}
                       </span>
-                    ))}
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: colors.accent }}>{template.projects[0].metrics}</span>
+                    </div>
+                    <h3 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#0f172a', marginBottom: '1rem' }}>{template.projects[0].title}</h3>
+                    <p style={{ fontSize: '1.05rem', lineHeight: 1.65, color: '#475569', marginBottom: '2rem' }}>{template.projects[0].desc}</p>
                   </div>
+                  <div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                      {template.projects[0].tags.map((t) => (
+                        <span key={t} style={{ fontSize: '0.78rem', fontWeight: 500, padding: '0.25rem 0.75rem', borderRadius: '6px', background: '#ffffff', border: '1px solid #e2e8f0', color: '#334155' }}>{t}</span>
+                      ))}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', fontWeight: 600, color: colors.accent }}>
+                      <span>Inspect Deep Case Study</span>
+                      <ArrowUpRight size={16} />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, color: colors.accent }}>
-                    <span>Inspect Case Study</span>
-                    <ArrowUpRight size={16} />
+              {/* Stacked 2-Project Column (5 cols) */}
+              <div style={{ gridColumn: 'span 5', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                {template.projects.slice(1, 3).map((work) => (
+                  <motion.div
+                    key={work.id}
+                    whileHover={{ y: -6 }}
+                    onClick={() => setSelectedProject(work)}
+                    style={{
+                      borderRadius: '20px',
+                      background: '#ffffff',
+                      border: '1.5px solid #e2e8f0',
+                      padding: '1.5rem',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.03)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      minHeight: '190px'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <span style={{ fontSize: '0.72rem', fontWeight: 700, color: colors.accent }}>{work.category}</span>
+                        <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{work.metrics}</span>
+                      </div>
+                      <h4 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.5rem 0' }}>{work.title}</h4>
+                      <p style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5, margin: '0 0 1rem 0' }}>{work.desc}</p>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.8rem', fontWeight: 600, color: colors.accent }}>
+                      <span>View Specifications</span>
+                      <ArrowUpRight size={14} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          ) : layoutArchetype === 'zen-minimal-centerfold' ? (
+            /* Archetype B: Horizontal Wide Cards (Zen-Minimal) */
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {template.projects.map((work, idx) => (
+                <motion.div
+                  key={work.id}
+                  whileHover={{ x: 6 }}
+                  onClick={() => setSelectedProject(work)}
+                  style={{
+                    borderRadius: '20px',
+                    background: '#ffffff',
+                    border: '1.5px solid #e2e8f0',
+                    padding: '2rem 2.5rem',
+                    boxShadow: '0 4px 18px rgba(0,0,0,0.02)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '1.5rem'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                    <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif-display)', fontStyle: 'italic', color: '#cbd5e1' }}>0{idx + 1}</div>
+                    <div>
+                      <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: colors.accent, fontWeight: 700, marginBottom: '0.25rem' }}>{work.category} • {work.subtag}</div>
+                      <h3 style={{ fontSize: '1.35rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.4rem 0' }}>{work.title}</h3>
+                      <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0, maxWidth: '580px' }}>{work.desc}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>{work.metrics}</span>
+                    <span style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors.accent }}>
+                      <ArrowUpRight size={16} />
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            /* Archetype C: Standard Symmetrical Grid */
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
+              {template.projects.map((work) => (
+                <motion.div
+                  key={work.id}
+                  whileHover={{ y: -8 }}
+                  onClick={() => setSelectedProject(work)}
+                  style={{
+                    borderRadius: '24px',
+                    background: '#f8fafc',
+                    border: '1.5px solid #e2e8f0',
+                    padding: '2rem',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    minHeight: '340px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: work.color || colors.accent }} />
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: '9999px', background: colors.badgeBg, color: colors.badgeText }}>
+                        {work.category}
+                      </span>
+                      <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent }}>{work.metrics}</span>
+                    </div>
+                    <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.3 }}>{work.title}</h3>
+                    <p style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#475569', marginBottom: '1.5rem' }}>{work.desc}</p>
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+                      {work.tags.map((t) => (
+                        <span key={t} style={{ fontSize: '0.75rem', fontWeight: 500, padding: '0.2rem 0.65rem', borderRadius: '6px', background: '#ffffff', border: '1px solid #e2e8f0', color: '#334155' }}>{t}</span>
+                      ))}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, color: colors.accent }}>
+                      <span>Inspect Case Study</span>
+                      <ArrowUpRight size={16} />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* =========================================================================
-           6. MASTERY / PROCESS (Clean Numbered Steps matching Himmel Standard)
+           6. MASTERY / PROCESS
            ========================================================================= */}
         <section id="mastery" style={{
           padding: '5rem 1.5rem',
@@ -731,7 +817,7 @@ export default function AnimeTemplateLandingPage() {
         </section>
 
         {/* =========================================================================
-           9. CTA BANNER (Radiant Sky-Blue Container Matching Himmel)
+           9. CTA BANNER (Radiant Container Matching Himmel)
            ========================================================================= */}
         <section className="cta-banner-wrapper" style={{
           padding: '3rem 1.5rem 5rem 1.5rem',

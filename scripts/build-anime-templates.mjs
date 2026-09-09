@@ -18,7 +18,8 @@ const characters = [
     featuredTag: 'Bestseller',
     bustUrl: '/anime/frieren.jpg',
     cardUrl: '/anime/frieren.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'flanked-balanced',
+    particle3DMode: 'falling-petals',
     accentAnimationType: 'frieren-aura',
     location: 'Strahl Region, Continental Magic Association',
     companionAvatars: ['/anime/fern.jpg', '/anime/stark.jpg', '/himmel_bust.png'],
@@ -132,7 +133,8 @@ const characters = [
     featuredTag: 'High Impact',
     bustUrl: '/anime/stark.jpg',
     cardUrl: '/anime/stark.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'asymmetric-split',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'stark-sparks',
     location: 'Schwer Mountains, Warrior Bastion',
     companionAvatars: ['/anime/frieren.jpg', '/anime/fern.jpg', '/himmel_bust.png'],
@@ -246,7 +248,8 @@ const characters = [
     featuredTag: 'Prodigy',
     bustUrl: '/anime/fern.jpg',
     cardUrl: '/anime/fern.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'zen-minimal-centerfold',
+    particle3DMode: 'falling-petals',
     accentAnimationType: 'fern-zoltraak',
     location: 'Holy City Strahl, First-Class Mage Quarters',
     companionAvatars: ['/anime/frieren.jpg', '/anime/stark.jpg', '/himmel_bust.png'],
@@ -360,7 +363,8 @@ const characters = [
     featuredTag: 'Revolutionary',
     bustUrl: '/anime/eren.jpg',
     cardUrl: '/anime/eren.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'vanguard-dynamic',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'eren-steam-embers',
     location: 'Shiganshina District, Wall Maria',
     companionAvatars: ['/anime/mikasa.jpg', '/anime/levi.jpg', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop'],
@@ -474,7 +478,8 @@ const characters = [
     featuredTag: 'Signature Elite',
     bustUrl: '/anime/levi.jpg',
     cardUrl: '/anime/levi.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'asymmetric-split',
+    particle3DMode: 'cyber-hex-prisms',
     accentAnimationType: 'levi-blade-slashes',
     location: 'Wall Rose, Survey Corps Headquarters',
     companionAvatars: ['/anime/eren.jpg', '/anime/mikasa.jpg', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop'],
@@ -588,7 +593,8 @@ const characters = [
     featuredTag: 'Elite Guard',
     bustUrl: '/anime/mikasa.jpg',
     cardUrl: '/anime/mikasa.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'editorial-dual-scroll',
+    particle3DMode: 'cyber-hex-prisms',
     accentAnimationType: 'mikasa-scarf-wind',
     location: 'Trost District, Scout Vanguard Base',
     companionAvatars: ['/anime/eren.jpg', '/anime/levi.jpg', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop'],
@@ -702,7 +708,8 @@ const characters = [
     featuredTag: 'Hokage Tier',
     bustUrl: '/anime/naruto.jpg',
     cardUrl: '/anime/naruto.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'cyber-hud-minimal',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'naruto-rasengan-chakra',
     location: 'Konohagakure, Fire Country',
     companionAvatars: ['/anime/sasuke.jpg', '/anime/sakura.jpg', '/anime/hinata.jpg'],
@@ -816,7 +823,8 @@ const characters = [
     featuredTag: 'Shadow Elite',
     bustUrl: '/anime/sasuke.jpg',
     cardUrl: '/anime/sasuke.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'cyber-hud-minimal',
+    particle3DMode: 'lightning-sparks',
     accentAnimationType: 'sasuke-chidori-lightning',
     location: 'Uchiha District, Leaf Shadow Division',
     companionAvatars: ['/anime/naruto.jpg', '/anime/sakura.jpg', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop'],
@@ -930,7 +938,8 @@ const characters = [
     featuredTag: 'Healing & Power',
     bustUrl: '/anime/sakura.jpg',
     cardUrl: '/anime/sakura.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'editorial-dual-scroll',
+    particle3DMode: 'falling-petals',
     accentAnimationType: 'sakura-cherry-byakugou',
     location: 'Konoha Central Medical Hospital',
     companionAvatars: ['/anime/naruto.jpg', '/anime/sasuke.jpg', '/anime/hinata.jpg'],
@@ -1044,7 +1053,8 @@ const characters = [
     featuredTag: 'Byakugan Master',
     bustUrl: '/anime/hinata.jpg',
     cardUrl: '/anime/hinata.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'zen-minimal-centerfold',
+    particle3DMode: 'falling-petals',
     accentAnimationType: 'hinata-gentle-fist',
     location: 'Hyūga Main Estate, Fire Country',
     companionAvatars: ['/anime/naruto.jpg', '/anime/sakura.jpg', '/anime/sasuke.jpg'],
@@ -1158,7 +1168,8 @@ const characters = [
     featuredTag: 'Emperor Tier',
     bustUrl: '/anime/luffy.jpg',
     cardUrl: '/anime/luffy.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'flanked-balanced',
+    particle3DMode: 'water-droplets',
     accentAnimationType: 'luffy-nika-clouds',
     location: 'Thousand Sunny, The Grand Line',
     companionAvatars: ['/anime/ace.jpg', '/anime/sabo.jpg', '/anime/nami.jpg'],
@@ -1272,7 +1283,8 @@ const characters = [
     featuredTag: 'Legendary Flame',
     bustUrl: '/anime/ace.jpg',
     cardUrl: '/anime/ace.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'asymmetric-split',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'ace-fire-embers',
     location: 'Moby Dick Flagship, New World',
     companionAvatars: ['/anime/luffy.jpg', '/anime/sabo.jpg', '/anime/nami.jpg'],
@@ -1386,7 +1398,8 @@ const characters = [
     featuredTag: 'Revolutionary',
     bustUrl: '/anime/sabo.jpg',
     cardUrl: '/anime/sabo.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'vanguard-dynamic',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'sabo-dragon-flames',
     location: 'Baltigo Base, Revolutionary Army HQ',
     companionAvatars: ['/anime/luffy.jpg', '/anime/ace.jpg', '/anime/nami.jpg'],
@@ -1500,7 +1513,8 @@ const characters = [
     featuredTag: 'Master Navigator',
     bustUrl: '/anime/nami.jpg',
     cardUrl: '/anime/nami.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'editorial-dual-scroll',
+    particle3DMode: 'water-droplets',
     accentAnimationType: 'nami-clima-tact',
     location: 'Navigational Quarterdeck, Weatheria',
     companionAvatars: ['/anime/luffy.jpg', '/anime/ace.jpg', '/anime/sabo.jpg'],
@@ -1614,7 +1628,8 @@ const characters = [
     featuredTag: 'Cyber Mecha',
     bustUrl: '/anime/zero-two.jpg',
     cardUrl: '/anime/zero-two.jpg',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'cyber-hud-minimal',
+    particle3DMode: 'cyber-hex-prisms',
     accentAnimationType: 'zero-two-cyber-hex',
     location: 'Plantation 13, Strelizia Cockpit',
     companionAvatars: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop'],
@@ -1728,7 +1743,8 @@ const characters = [
     featuredTag: 'Sun Breathing',
     bustUrl: '/anime/tanjiro.png',
     cardUrl: '/anime/tanjiro.png',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'flanked-balanced',
+    particle3DMode: 'rising-embers',
     accentAnimationType: 'tanjiro-dual-breathing',
     location: 'Mount Sagiri, Demon Slayer Corps',
     companionAvatars: ['/anime/zenitsu.png', '/anime/inosuke.png', '/anime/giyuu.png'],
@@ -1842,7 +1858,8 @@ const characters = [
     featuredTag: 'Lightning Speed',
     bustUrl: '/anime/zenitsu.png',
     cardUrl: '/anime/zenitsu.png',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'vanguard-dynamic',
+    particle3DMode: 'lightning-sparks',
     accentAnimationType: 'zenitsu-thunderclap',
     location: 'Mount Kumotori, Thunder Pillar Dojo',
     companionAvatars: ['/anime/tanjiro.png', '/anime/inosuke.png', '/anime/shinobu.png'],
@@ -1956,7 +1973,8 @@ const characters = [
     featuredTag: 'Wild Beast',
     bustUrl: '/anime/inosuke.png',
     cardUrl: '/anime/inosuke.png',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'asymmetric-split',
+    particle3DMode: 'water-droplets',
     accentAnimationType: 'inosuke-beast-slashes',
     location: 'Mount Okutama, Beast Territory',
     companionAvatars: ['/anime/tanjiro.png', '/anime/zenitsu.png', '/anime/giyuu.png'],
@@ -2070,7 +2088,8 @@ const characters = [
     featuredTag: 'Hashira Tier',
     bustUrl: '/anime/giyuu.png',
     cardUrl: '/anime/giyuu.png',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'zen-minimal-centerfold',
+    particle3DMode: 'water-droplets',
     accentAnimationType: 'giyuu-dead-calm',
     location: 'Mount Sagiri, Water Pillar Sanctuary',
     companionAvatars: ['/anime/tanjiro.png', '/anime/shinobu.png', '/anime/inosuke.png'],
@@ -2184,7 +2203,8 @@ const characters = [
     featuredTag: 'Insect Pillar',
     bustUrl: '/anime/shinobu.png',
     cardUrl: '/anime/shinobu.png',
-    layoutArchetype: 'flanked-centered',
+    layoutArchetype: 'cyber-hud-minimal',
+    particle3DMode: 'wisteria-butterflies',
     accentAnimationType: 'shinobu-wisteria-butterflies',
     location: 'Butterfly Mansion, Insect Pillar Clinic',
     companionAvatars: ['/anime/giyuu.png', '/anime/tanjiro.png', '/anime/zenitsu.png'],
@@ -2332,12 +2352,20 @@ export interface ThemeColors {
 }
 
 export type LayoutArchetype = 
-  | 'flanked-centered'
+  | 'flanked-balanced'
   | 'asymmetric-split'
-  | 'warrior-vanguard'
-  | 'cyberpunk-hud'
-  | 'dynamic-hero'
-  | 'zen-minimal';
+  | 'zen-minimal-centerfold'
+  | 'vanguard-dynamic'
+  | 'editorial-dual-scroll'
+  | 'cyber-hud-minimal';
+
+export type AnimeParticleMode = 
+  | 'falling-petals'
+  | 'rising-embers'
+  | 'lightning-sparks'
+  | 'wisteria-butterflies'
+  | 'water-droplets'
+  | 'cyber-hex-prisms';
 
 export type AccentAnimationType =
   | 'frieren-aura'
@@ -2379,6 +2407,7 @@ export interface AnimeTemplate {
   bustUrl: string;
   cardUrl: string;
   layoutArchetype: LayoutArchetype;
+  particle3DMode: AnimeParticleMode;
   accentAnimationType: AccentAnimationType;
   location: string;
   companionAvatars: string[];
@@ -2397,6 +2426,16 @@ export interface AnimeTemplate {
   testimonials: TestimonialItem[];
   themeTokensCSS: Record<string, string>;
 }
+
+export const ANIME_UNIVERSES = [
+  { id: 'all', name: 'All Universes', count: 20 },
+  { id: 'Sousou no Frieren', name: 'Frieren', count: 3 },
+  { id: 'Attack on Titan', name: 'Attack on Titan', count: 3 },
+  { id: 'Naruto Shippuden', name: 'Naruto', count: 4 },
+  { id: 'One Piece', name: 'One Piece', count: 4 },
+  { id: 'Darling in the Franxx', name: 'Darling in the Franxx', count: 1 },
+  { id: 'Demon Slayer', name: 'Demon Slayer', count: 5 },
+];
 
 export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
 `;
@@ -2450,6 +2489,7 @@ for (const c of characters) {
     bustUrl: c.bustUrl,
     cardUrl: c.cardUrl,
     layoutArchetype: c.layoutArchetype,
+    particle3DMode: c.particle3DMode,
     accentAnimationType: c.accentAnimationType,
     location: c.location,
     companionAvatars: c.companionAvatars,
