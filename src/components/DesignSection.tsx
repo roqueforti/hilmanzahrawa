@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { urlFor } from '@/sanity/client';
+import { getImageUrl } from '@/lib/imageHelper';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Project {
@@ -91,11 +91,11 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
         
         {/* Slider Controls */}
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button onClick={() => sliderRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <ChevronLeft size={16} />
+          <button onClick={() => sliderRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1.5px solid var(--border-hairline)', background: 'var(--bg-surface)', color: 'var(--cerulean)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,129,167,0.1)' }}>
+            <ChevronLeft size={18} />
           </button>
-          <button onClick={() => sliderRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid var(--border-light)', background: 'transparent', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <ChevronRight size={16} />
+          <button onClick={() => sliderRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1.5px solid var(--border-hairline)', background: 'var(--bg-surface)', color: 'var(--cerulean)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,129,167,0.1)' }}>
+            <ChevronRight size={18} />
           </button>
         </div>
       </div>
@@ -117,7 +117,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
               <div className="img-wrapper" style={{ position: 'relative' }}>
                 {project.image ? (
                   <img 
-                    src={urlFor(project.image).width(800).url()} 
+                    src={getImageUrl(project.image)} 
                     alt={project.title} 
                     loading="lazy"
                   />
@@ -139,13 +139,13 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                       position: 'absolute',
                       top: '0.75rem',
                       right: '0.75rem',
-                      background: 'rgba(9, 9, 11, 0.85)',
-                      color: 'var(--text-primary)',
-                      padding: '0.25rem 0.65rem',
+                      background: 'rgba(0, 43, 58, 0.88)',
+                      color: '#fdfcdc',
+                      padding: '0.3rem 0.75rem',
                       borderRadius: '20px',
-                      fontSize: '0.625rem',
+                      fontSize: '0.65rem',
                       fontFamily: 'var(--font-mono)',
-                      fontWeight: 700,
+                      fontWeight: 800,
                       letterSpacing: '0.05em',
                       textTransform: 'uppercase',
                       backdropFilter: 'blur(8px)',
@@ -153,7 +153,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                       alignItems: 'center',
                       gap: '0.35rem',
                       zIndex: 2,
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                     }}
                   >
                     {project.mediaType === 'video' ? '▶ Video' : '🖼 Gallery'}
@@ -175,7 +175,7 @@ const DesignSection: React.FC<DesignSectionProps> = ({ projects, onProjectClick 
                   <span style={{ fontSize: '0.675rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                     {project.role || (project.mediaType === 'video' ? 'Video Producer' : 'UI/UX Designer')} • {project.year || new Date().getFullYear()}
                   </span>
-                  <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--cerulean)' }}>
                     View Work ↗
                   </span>
                 </div>
