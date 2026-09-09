@@ -10,18 +10,13 @@ import {
   CheckCircle2, 
   Mail, 
   MessageCircle, 
-  ArrowRight,
   ExternalLink,
-  Code2,
-  Terminal,
+  Menu,
+  X,
   Cpu,
   Layers,
   Star,
-  Quote,
-  Flame,
-  Zap,
-  Menu,
-  X
+  Quote
 } from 'lucide-react';
 import { ANIME_TEMPLATES, ProjectItem } from '@/data/animeTemplates';
 import AnimeAccents from '@/components/anime-accents/AnimeAccents';
@@ -36,7 +31,7 @@ export default function AnimeTemplateLandingPage() {
 
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [activeDevice, setActiveDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   if (!template) {
     return (
@@ -68,13 +63,13 @@ export default function AnimeTemplateLandingPage() {
   return (
     <div
       style={{
-        background: colors.bgPrimary,
-        color: colors.textPrimary,
+        background: '#ffffff',
+        color: '#0f172a',
+        fontFamily: 'var(--font-sans-display)',
         minHeight: '100vh',
-        fontFamily: "'Urbanist', -apple-system, sans-serif",
-        position: 'relative',
         overflowX: 'hidden',
-        transition: 'background-color 0.4s ease, color 0.4s ease'
+        position: 'relative',
+        transition: 'background-color 0.4s ease'
       }}
     >
       {/* 1. Global Top Sticky Template Switcher Bar */}
@@ -84,7 +79,7 @@ export default function AnimeTemplateLandingPage() {
         onDeviceChange={setActiveDevice}
       />
 
-      {/* 2. Signature Accent Particle Engine */}
+      {/* 2. Signature Ambient Particle Accent Engine (Renders Behind Content) */}
       <AnimeAccents 
         type={template.accentAnimationType} 
         color={colors.accent} 
@@ -97,226 +92,312 @@ export default function AnimeTemplateLandingPage() {
           width: activeDevice === 'desktop' ? '100%' : activeDevice === 'tablet' ? '768px' : '390px',
           margin: '0 auto',
           transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: activeDevice !== 'desktop' ? '0 0 50px rgba(0,0,0,0.5)' : 'none',
+          boxShadow: activeDevice !== 'desktop' ? '0 0 50px rgba(0,0,0,0.18)' : 'none',
           minHeight: '100vh',
-          background: colors.bgPrimary,
+          background: '#ffffff',
           position: 'relative',
           zIndex: 2,
         }}
       >
-        {/* Navigation Bar */}
+        {/* =========================================================================
+           TOP NAVIGATION (Minimalist Himmel Standard)
+           ========================================================================= */}
         <header
+          className="landing-header"
           style={{
-            maxWidth: '1280px',
+            padding: '2rem 2.5rem',
+            maxWidth: '1380px',
             margin: '0 auto',
-            padding: '1.25rem 1.5rem',
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'space-between',
+            alignItems: 'center',
             position: 'relative',
-            zIndex: 10
+            zIndex: 50
           }}
         >
-          {/* Brand Logo */}
-          <Link
-            href={`/templates/${template.slug}`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.65rem',
-              textDecoration: 'none',
-              color: colors.textPrimary,
-            }}
-          >
-            <span
+          {/* Character Name in Editorial Serif Italic */}
+          <Link href={`/templates/${template.slug}`} style={{ textDecoration: 'none', color: '#0f172a' }}>
+            <span 
+              className="editorial-serif-italic landing-logo"
               style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '10px',
-                background: colors.accent,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                fontWeight: 900,
-                fontSize: '1rem',
-                boxShadow: `0 4px 12px ${colors.accentGlow}`
+                fontSize: '2.2rem',
+                letterSpacing: '-0.01em',
+                color: '#0f172a',
+                display: 'inline-block'
               }}
             >
-              {template.name.charAt(0)}
+              {template.name}
             </span>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1.05rem', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
-                {template.name}
-              </div>
-              <div style={{ fontSize: '0.74rem', color: colors.textMuted, fontWeight: 500 }}>
-                {template.universeBadge}
-              </div>
-            </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav
-            className="hidden md:flex"
-            style={{
-              alignItems: 'center',
-              gap: '1.75rem',
-              background: colors.bgGlass,
-              padding: '0.5rem 1.5rem',
-              borderRadius: '9999px',
-              border: `1px solid ${colors.borderSubtle}`,
-              backdropFilter: 'blur(10px)'
-            }}
-          >
-            <a href="#projects" style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>Showcase</a>
-            <a href="#skills" style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>Mastery</a>
-            <a href="#experience" style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>Timeline</a>
-            <a href="#testimonials" style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>Endorsements</a>
-            <a href="#contact" style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>Contact</a>
-          </nav>
-
-          {/* CTA Button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <a
-              href="#contact"
+          {/* Right Navigation & Templates Store Button */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <Link
+              href="/templates"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.45rem',
-                padding: '0.6rem 1.35rem',
+                padding: '0.55rem 1.25rem',
                 borderRadius: '9999px',
                 background: colors.accent,
                 color: '#ffffff',
+                fontSize: '0.85rem',
                 fontWeight: 700,
-                fontSize: '0.88rem',
                 textDecoration: 'none',
-                boxShadow: `0 4px 15px ${colors.accentGlow}`,
+                boxShadow: `0 4px 14px ${colors.accentGlow}`,
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               }}
             >
-              <span>Initiate Contact</span>
-              <ArrowUpRight size={15} />
-            </a>
+              <Sparkles size={14} />
+              <span>All 20 Templates</span>
+            </Link>
 
-            {/* Mobile menu toggle */}
             <button
-              className="md:hidden"
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Navigation"
               style={{
-                padding: '0.5rem',
-                borderRadius: '8px',
-                background: colors.bgSurface,
-                border: `1px solid ${colors.borderSubtle}`,
-                color: colors.textPrimary,
-                cursor: 'pointer'
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                border: '1.5px solid #e2e8f0',
+                background: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#0f172a',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                transition: 'background 0.2s'
               }}
             >
-              {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </header>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Slide-down Menu */}
         <AnimatePresence>
-          {mobileNavOpen && (
+          {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              className="mobile-nav-dropdown"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               style={{
-                background: colors.bgSurface,
-                borderBottom: `1px solid ${colors.borderSubtle}`,
-                padding: '1.25rem 1.5rem',
+                position: 'fixed',
+                top: '85px',
+                right: '2.5rem',
+                background: '#ffffff',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+                border: '1px solid #e2e8f0',
+                zIndex: 100,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1rem',
-                textAlign: 'center',
-                zIndex: 20,
-                position: 'relative'
+                minWidth: '220px'
               }}
             >
-              <a href="#projects" onClick={() => setMobileNavOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontWeight: 600 }}>Showcase</a>
-              <a href="#skills" onClick={() => setMobileNavOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontWeight: 600 }}>Mastery</a>
-              <a href="#experience" onClick={() => setMobileNavOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontWeight: 600 }}>Timeline</a>
-              <a href="#testimonials" onClick={() => setMobileNavOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontWeight: 600 }}>Endorsements</a>
-              <a href="#contact" onClick={() => setMobileNavOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontWeight: 600 }}>Contact</a>
+              <Link href="/templates" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: colors.accent, fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Sparkles size={16} />
+                <span>All 20 Templates</span>
+              </Link>
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About & Philosophy</a>
+              <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Selected Works</a>
+              <a href="#mastery" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Mastery & Process</a>
+              <a href="#testimonials" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Endorsements</a>
+              <a href={`https://wa.me/6285806003234?text=Hi%20${template.name}`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: colors.accent, fontWeight: 600, fontSize: '0.95rem' }}>Transmission (Chat)</a>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* 3. Hero Stage (Adapts to Archetype) */}
+        {/* =========================================================================
+           3. HERO STAGE (Seamless Himmel Structure with Studio Aura & Free Cutout)
+           ========================================================================= */}
         <AnimeHeroStage template={template} />
 
-        {/* 4. Marquee Brand Logos / Partners */}
-        <div 
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto 4rem',
-            padding: '1.5rem',
-            borderTop: `1px solid ${colors.borderSubtle}`,
-            borderBottom: `1px solid ${colors.borderSubtle}`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            flexWrap: 'wrap',
-            gap: '2rem',
-            opacity: 0.75
-          }}
-        >
-          {['Aether Engine', 'Valence Labs', 'Nexus Protocol', 'Astral Architecture', 'Obsidian Forge'].map((brand, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', fontWeight: 700, color: colors.textSecondary }}>
-              <span style={{ color: colors.accent }}>✦</span>
-              <span>{brand}</span>
-            </div>
-          ))}
-        </div>
+        {/* =========================================================================
+           4. "I LIKE" / FOCUS PHILOSOPHY SECTION (Exact Match to Himmel sec3_focus)
+           ========================================================================= */}
+        <section id="about" className="focus-section-container" style={{
+          padding: '5rem 1.5rem',
+          maxWidth: '1240px',
+          margin: '0 auto',
+          textAlign: 'center',
+          position: 'relative'
+        }}>
+          {/* Kicker Italic Serif: I like */}
+          <span 
+            className="editorial-serif-italic"
+            style={{
+              fontSize: '2.4rem',
+              color: '#0f172a',
+              display: 'block',
+              marginBottom: '2.5rem'
+            }}
+          >
+            I like
+          </span>
 
-        {/* 5. Selected Works Showcase (2x2 Grid with Interactive Modal) */}
-        <section id="projects" style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '1.5rem' }}>
+          {/* 3-Column Symmetrical Layout: 3 Pills Left | Statement Center | 3 Pills Right */}
+          <div className="focus-grid-layout" style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(180px, 220px) 1fr minmax(180px, 220px)',
+            gap: '2.5rem',
+            alignItems: 'center'
+          }}>
+            {/* Left Column (3 floating pill badges) */}
+            <div className="focus-left-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-start' }}>
+              {template.focusPillsLeft.map((p, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ scale: 1.04, x: 4 }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.65rem',
+                    padding: '0.55rem 1.25rem',
+                    borderRadius: '9999px',
+                    background: '#ffffff',
+                    border: `1.5px solid ${p.border}`,
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    color: '#0f172a'
+                  }}
+                >
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: p.color }} />
+                  <span>{p.label}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Center Column: Exact Statement Typography */}
+            <blockquote className="focus-center-quote" style={{
+              fontSize: 'clamp(1.9rem, 3.8vw, 3rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.25,
+              color: '#0f172a',
+              margin: 0,
+              textAlign: 'center'
+            }}>
+              {template.focusQuote.main}{' '}
+              <span style={{ color: '#94a3b8' }}>
+                {template.focusQuote.highlight}
+              </span>
+            </blockquote>
+
+            {/* Right Column (3 floating pill badges) */}
+            <div className="focus-right-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-end' }}>
+              {template.focusPillsRight.map((p, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ scale: 1.04, x: -4 }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.65rem',
+                    padding: '0.55rem 1.25rem',
+                    borderRadius: '9999px',
+                    background: '#ffffff',
+                    border: `1.5px solid ${p.border}`,
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    color: '#0f172a'
+                  }}
+                >
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: p.color }} />
+                  <span>{p.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+           5. SELECTED WORKS (2x2 Grid Matching Himmel Standard)
+           ========================================================================= */}
+        <section id="works" style={{
+          padding: '4rem 1.5rem 6rem 1.5rem',
+          maxWidth: '1280px',
+          margin: '0 auto'
+        }}>
+          {/* Header Row */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            marginBottom: '3rem',
+            flexWrap: 'wrap',
+            gap: '1.5rem'
+          }}>
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', color: colors.accent, marginBottom: '0.5rem' }}>
-                <Sparkles size={14} />
-                <span>Curated Portfolio</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', color: colors.textPrimary }}>
-                Featured Engineering & Works
+              <span className="editorial-kicker">
+                ( 2/2 ) Curated Works
+              </span>
+              <h2 style={{
+                fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+                fontWeight: 500,
+                letterSpacing: '-0.025em',
+                margin: 0,
+                color: '#0f172a'
+              }}>
+                Selected Works
+                <span className="editorial-serif-italic" style={{ marginLeft: '0.6rem', color: colors.accent }}>
+                  2021 — 2026
+                </span>
               </h2>
             </div>
-            <p style={{ maxWidth: '420px', fontSize: '0.95rem', color: colors.textMuted, lineHeight: 1.6, margin: 0 }}>
-              Specialized systems, custom algorithms, and high-performance applications crafted to perfection.
+            <p style={{
+              fontSize: '0.95rem',
+              color: '#64748b',
+              maxWidth: '380px',
+              lineHeight: 1.6,
+              margin: 0
+            }}>
+              A curated selection of mission architectures, high-performance systems, and battle-tested deployments.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-            {template.projects.map((proj) => (
+          {/* 2x2 Showcase Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2.5rem'
+          }}>
+            {template.projects.map((work) => (
               <motion.div
-                key={proj.id}
+                key={work.id}
                 whileHover={{ y: -8 }}
-                onClick={() => setSelectedProject(proj)}
+                onClick={() => setSelectedProject(work)}
                 style={{
                   borderRadius: '24px',
-                  background: colors.bgSurface,
-                  border: `1.5px solid ${colors.borderSubtle}`,
+                  background: '#f8fafc',
+                  border: '1.5px solid #e2e8f0',
                   padding: '2rem',
-                  boxShadow: colors.cardShadow,
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '320px',
+                  minHeight: '340px',
                   position: 'relative',
                   overflow: 'hidden',
-                  transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+                  transition: 'border-color 0.2s, box-shadow 0.2s'
                 }}
               >
                 {/* Accent Top Bar */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: proj.color || colors.accent }} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: work.color || colors.accent }} />
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                     <span
                       style={{
-                        fontSize: '0.78rem',
+                        fontSize: '0.75rem',
                         fontWeight: 700,
                         textTransform: 'uppercase',
                         padding: '0.25rem 0.75rem',
@@ -325,25 +406,25 @@ export default function AnimeTemplateLandingPage() {
                         color: colors.badgeText,
                       }}
                     >
-                      {proj.category}
+                      {work.category}
                     </span>
                     <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent }}>
-                      {proj.metrics}
+                      {work.metrics}
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: '1.45rem', fontWeight: 700, color: colors.textPrimary, marginBottom: '0.75rem', lineHeight: 1.3 }}>
-                    {proj.title}
+                  <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.3 }}>
+                    {work.title}
                   </h3>
 
-                  <p style={{ fontSize: '0.92rem', lineHeight: 1.6, color: colors.textSecondary, marginBottom: '1.5rem' }}>
-                    {proj.desc}
+                  <p style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#475569', marginBottom: '1.5rem' }}>
+                    {work.desc}
                   </p>
                 </div>
 
                 <div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
-                    {proj.tags.map((t) => (
+                    {work.tags.map((t) => (
                       <span
                         key={t}
                         style={{
@@ -351,8 +432,9 @@ export default function AnimeTemplateLandingPage() {
                           fontWeight: 500,
                           padding: '0.2rem 0.65rem',
                           borderRadius: '6px',
-                          background: colors.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
-                          color: colors.textPrimary
+                          background: '#ffffff',
+                          border: '1px solid #e2e8f0',
+                          color: '#334155'
                         }}
                       >
                         {t}
@@ -360,7 +442,7 @@ export default function AnimeTemplateLandingPage() {
                     ))}
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 700, color: colors.accent }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, color: colors.accent }}>
                     <span>Inspect Case Study</span>
                     <ArrowUpRight size={16} />
                   </div>
@@ -370,158 +452,277 @@ export default function AnimeTemplateLandingPage() {
           </div>
         </section>
 
-        {/* 6. Skills & Mastery Section */}
-        <section id="skills" style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem' }}>
-          <div style={{ borderRadius: '32px', background: colors.bgSecondary, border: `1.5px solid ${colors.borderSubtle}`, padding: 'clamp(2rem, 4vw, 3.5rem)' }}>
-            <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3rem' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', color: colors.accent, marginBottom: '0.5rem' }}>
-                <Cpu size={14} />
-                <span>Technical Specifications</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, color: colors.textPrimary, marginBottom: '0.75rem' }}>
-                Core Competencies & Mastery
-              </h2>
-              <p style={{ fontSize: '0.95rem', color: colors.textSecondary, lineHeight: 1.6 }}>
-                Disciplines honed across extreme battlefield environments and distributed production networks.
-              </p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem' }}>
-              {template.skills.map((skill, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: '1.5rem',
-                    borderRadius: '20px',
-                    background: colors.bgSurface,
-                    border: `1px solid ${colors.borderSubtle}`
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                    <span style={{ fontWeight: 700, fontSize: '1rem', color: colors.textPrimary }}>{skill.name}</span>
-                    <span style={{ fontWeight: 800, fontSize: '0.95rem', color: colors.accent }}>{skill.level}%</span>
-                  </div>
-                  {/* Progress bar */}
-                  <div style={{ width: '100%', height: '8px', borderRadius: '9999px', background: colors.isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0', overflow: 'hidden' }}>
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: i * 0.1 }}
-                      style={{ height: '100%', borderRadius: '9999px', background: colors.accent }}
-                    />
-                  </div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: colors.textMuted, marginTop: '0.65rem', textTransform: 'uppercase' }}>
-                    Category: {skill.category}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 7. Experience Timeline Section */}
-        <section id="experience" style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem' }}>
-          <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3rem' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', color: colors.accent, marginBottom: '0.5rem' }}>
-              <Layers size={14} />
-              <span>Historical Milestones</span>
-            </div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, color: colors.textPrimary }}>
-              Campaigns & Timeline
+        {/* =========================================================================
+           6. MASTERY / PROCESS (Clean Numbered Steps matching Himmel Standard)
+           ========================================================================= */}
+        <section id="mastery" style={{
+          padding: '5rem 1.5rem',
+          maxWidth: '1240px',
+          margin: '0 auto'
+        }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span className="editorial-kicker">
+              / Mastery & Approach /
+            </span>
+            <h2 style={{
+              fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+              fontWeight: 500,
+              letterSpacing: '-0.025em',
+              margin: 0,
+              color: '#0f172a'
+            }}>
+              Engineered with <span className="editorial-serif-italic" style={{ color: colors.accent }}>Surgical Precision</span>
             </h2>
           </div>
 
-          <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-            {template.experiences.map((exp, i) => (
-              <div
-                key={i}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '2rem'
+          }}>
+            {template.skills.map((skill, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -6 }}
                 style={{
-                  display: 'flex',
-                  gap: '1.5rem',
-                  padding: '1.75rem',
+                  padding: '2rem',
                   borderRadius: '24px',
-                  background: colors.bgSurface,
-                  border: `1.5px solid ${colors.borderSubtle}`,
-                  boxShadow: colors.cardShadow
+                  background: '#ffffff',
+                  border: '1.5px solid #e2e8f0',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.03)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  minHeight: '220px'
                 }}
               >
-                <div
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '14px',
-                    background: colors.badgeBg,
-                    color: colors.badgeText,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 800,
-                    flexShrink: 0
-                  }}
-                >
-                  {i + 1}
-                </div>
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: colors.textPrimary, margin: 0 }}>
-                      {exp.role}
-                    </h3>
-                    <span style={{ fontSize: '0.82rem', fontWeight: 700, color: colors.accent, padding: '0.2rem 0.65rem', borderRadius: '6px', background: colors.badgeBg }}>
-                      {exp.year}
-                    </span>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 400, color: '#cbd5e1', marginBottom: '1rem', fontFamily: 'var(--font-serif-display)', fontStyle: 'italic' }}>
+                    0{idx + 1}
                   </div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: colors.textMuted, marginBottom: '0.75rem' }}>
-                    {exp.organization}
-                  </div>
-                  <p style={{ fontSize: '0.95rem', lineHeight: 1.6, color: colors.textSecondary, margin: 0 }}>
-                    {exp.description}
-                  </p>
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.5rem 0' }}>
+                    {skill.name}
+                  </h4>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 500 }}>
+                    Category: {skill.category}
+                  </span>
                 </div>
-              </div>
+
+                <div style={{ marginTop: '1.5rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.4rem', color: '#475569' }}>
+                    <span>Efficiency Rating</span>
+                    <span style={{ color: colors.accent }}>{skill.level}%</span>
+                  </div>
+                  <div style={{ width: '100%', height: '6px', borderRadius: '3px', background: '#f1f5f9', overflow: 'hidden' }}>
+                    <div style={{ width: `${skill.level}%`, height: '100%', background: colors.accent, borderRadius: '3px' }} />
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
-        {/* 8. Companion Endorsements / Testimonials */}
-        <section id="testimonials" style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem' }}>
-          <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3rem' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', color: colors.accent, marginBottom: '0.5rem' }}>
-              <Quote size={14} />
-              <span>Peer Verification</span>
-            </div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, color: colors.textPrimary }}>
-              Endorsements from the Frontline
+        {/* =========================================================================
+           7. ABOUT & TIMELINE (Exact Match to Himmel sec6_about)
+           ========================================================================= */}
+        <section id="timeline" style={{
+          padding: '5rem 1.5rem',
+          maxWidth: '1240px',
+          margin: '0 auto'
+        }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span className="editorial-kicker">
+              / Proven Pedigree /
+            </span>
+            <h2 style={{
+              fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+              fontWeight: 500,
+              letterSpacing: '-0.025em',
+              margin: 0,
+              color: '#0f172a'
+            }}>
+              Pushing Boundaries <span style={{ fontWeight: 300, color: '#94a3b8' }}>{template.sinceYear}</span>
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+          <div 
+            className="about-2col"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.4fr)',
+              gap: '3.5rem',
+              alignItems: 'center'
+            }}
+          >
+            {/* Left: Dark Portrait Card Matching Himmel */}
+            <div 
+              className="about-portrait-card" 
+              style={{
+                background: '#0f172a',
+                borderRadius: '24px',
+                padding: '1.75rem',
+                color: '#ffffff',
+                boxShadow: '0 20px 50px rgba(15, 23, 42, 0.2)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '380px'
+              }}
+            >
+              <div 
+                className="about-portrait-img-wrap" 
+                style={{
+                  width: '100%',
+                  height: '260px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  background: '#1e293b',
+                  marginBottom: '1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <img 
+                  src={template.bustUrl} 
+                  alt={template.name}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover', 
+                    objectPosition: 'center 15%' 
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div>
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 600, color: '#ffffff', margin: 0 }}>
+                    {template.name}
+                  </h4>
+                  <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                    {template.roleTitle}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.85rem' }}>
+                  <a href={`https://wa.me/6285806003234?text=Hi%20${template.name}`} target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8' }}>
+                    <MessageCircle size={17} />
+                  </a>
+                  <a href="mailto:budiarto3788@gmail.com" style={{ color: '#94a3b8' }}>
+                    <Mail size={17} />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Paragraph + Minimal Experience Rows */}
+            <div>
+              <p style={{
+                fontSize: '1.05rem',
+                color: '#334155',
+                lineHeight: 1.65,
+                fontWeight: 400,
+                margin: '0 0 2.5rem 0'
+              }}>
+                {template.bio}
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {template.experiences.map((exp, i) => (
+                  <div 
+                    key={i} 
+                    className="about-exp-row"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '1.15rem 0',
+                      borderTop: '1px solid #f1f5f9',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    <span className="about-exp-role" style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 35%' }}>{exp.role}</span>
+                    <div className="about-exp-company-period" style={{ display: 'contents' }}>
+                      <span style={{ color: '#64748b', flex: '1 1 35%' }}>{exp.organization}</span>
+                      <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 30%' }}>{exp.year}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+           8. COMPANION ENDORSEMENTS / TESTIMONIALS
+           ========================================================================= */}
+        <section id="testimonials" style={{
+          padding: '5rem 1.5rem',
+          maxWidth: '1240px',
+          margin: '0 auto'
+        }}>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span className="editorial-kicker">
+              / Peer Endorsements /
+            </span>
+            <h2 style={{
+              fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+              fontWeight: 500,
+              letterSpacing: '-0.025em',
+              margin: 0,
+              color: '#0f172a'
+            }}>
+              Endorsements from <span className="editorial-serif-italic" style={{ color: colors.accent }}>Companions</span>
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2rem'
+          }}>
             {template.testimonials.map((t, i) => (
               <div
                 key={i}
                 style={{
                   padding: '2rem',
                   borderRadius: '24px',
-                  background: colors.bgSurface,
-                  border: `1.5px solid ${colors.borderSubtle}`,
-                  boxShadow: colors.cardShadow,
+                  background: '#ffffff',
+                  border: '1.5px solid #e2e8f0',
+                  boxShadow: '0 8px 25px rgba(0,0,0,0.03)',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  minHeight: '260px'
                 }}
               >
-                <p style={{ fontSize: '1.05rem', lineHeight: 1.65, fontStyle: 'italic', color: colors.textSecondary, marginBottom: '2rem' }}>
+                <p style={{
+                  fontSize: '1rem',
+                  lineHeight: 1.65,
+                  fontStyle: 'italic',
+                  color: '#334155',
+                  marginBottom: '2rem'
+                }}>
                   "{t.quote}"
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                   <img
                     src={t.avatar}
                     alt={t.author}
-                    style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: `2px solid ${colors.accent}` }}
+                    style={{
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      border: `2px solid ${colors.accent}`,
+                      background: '#f1f5f9'
+                    }}
                   />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '1rem', color: colors.textPrimary }}>{t.author}</div>
-                    <div style={{ fontSize: '0.82rem', color: colors.textMuted }}>{t.title}</div>
+                    <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#0f172a' }}>{t.author}</div>
+                    <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{t.title}</div>
                   </div>
                 </div>
               </div>
@@ -529,126 +730,151 @@ export default function AnimeTemplateLandingPage() {
           </div>
         </section>
 
-        {/* 9. Contact / Commission Footer CTA */}
-        <section id="contact" style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem 6rem' }}>
-          <div
-            style={{
-              borderRadius: '36px',
-              background: colors.isDark ? colors.bgSecondary : '#ffffff',
-              border: `2px solid ${colors.borderStrong}`,
-              boxShadow: `0 30px 80px -20px ${colors.accentGlow}`,
-              padding: 'clamp(2.5rem, 5vw, 4.5rem)',
-              textAlign: 'center',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ position: 'relative', zIndex: 2, maxWidth: '720px', margin: '0 auto' }}>
-              <div
+        {/* =========================================================================
+           9. CTA BANNER (Radiant Sky-Blue Container Matching Himmel)
+           ========================================================================= */}
+        <section className="cta-banner-wrapper" style={{
+          padding: '3rem 1.5rem 5rem 1.5rem',
+          maxWidth: '1380px',
+          margin: '0 auto'
+        }}>
+          <div className="cta-banner-box" style={{
+            borderRadius: '36px',
+            padding: '5rem 2rem',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+            background: colors.gradientHero,
+            border: '1.5px solid #e2e8f0',
+            boxShadow: `0 30px 60px -15px ${colors.accentGlow}`
+          }}>
+            <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2 className="cta-headline" style={{
+                fontSize: 'clamp(2.8rem, 6.5vw, 4.8rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.03em',
+                margin: 0,
+                color: '#0f172a',
+                lineHeight: 1.05
+              }}>
+                Let’s Make It Happen
+              </h2>
+
+              <p style={{
+                fontSize: '1rem',
+                color: '#334155',
+                maxWidth: '560px',
+                marginTop: '1.25rem',
+                marginBottom: '2.5rem',
+                lineHeight: 1.55,
+                fontWeight: 400
+              }}>
+                always open for new opportunities, collaborations, and creative challenges. Let's work together to bring your ideas to life.
+              </p>
+
+              <a
+                href={`https://wa.me/6285806003234?text=Hi%20${template.name},%20let's%20make%20it%20happen!`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  padding: '0.45rem 1.15rem',
+                  padding: '0.85rem 2.2rem',
                   borderRadius: '9999px',
-                  background: colors.badgeBg,
-                  color: colors.badgeText,
-                  fontWeight: 700,
-                  fontSize: '0.84rem',
-                  textTransform: 'uppercase',
-                  marginBottom: '1.25rem'
+                  background: '#0f172a',
+                  color: '#ffffff',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                  letterSpacing: '0.06em',
+                  textDecoration: 'none',
+                  boxShadow: '0 10px 25px rgba(15, 23, 42, 0.25)',
+                  transition: 'transform 0.2s'
                 }}
               >
-                <Sparkles size={14} />
-                <span>Ready for Collaboration</span>
-              </div>
-
-              <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontWeight: 900, letterSpacing: '-0.02em', color: colors.textPrimary, marginBottom: '1.25rem', lineHeight: 1.15 }}>
-                Let's Build Something Legendary Together
-              </h2>
-
-              <p style={{ fontSize: '1.1rem', lineHeight: 1.65, color: colors.textSecondary, marginBottom: '2.5rem' }}>
-                Whether you need ultra-scalable cloud architectures, precision UI/UX design, or battle-tested codebases, {template.name} is ready for dispatch.
-              </p>
-
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                <a
-                  href={`https://wa.me/6285806003234?text=Hi%20${template.name},%20I%20saw%20your%20portfolio%20template%20and%20would%20love%20to%20connect!`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.65rem',
-                    padding: '1rem 2.25rem',
-                    borderRadius: '9999px',
-                    background: '#22c55e',
-                    color: '#ffffff',
-                    fontWeight: 700,
-                    fontSize: '1rem',
-                    textDecoration: 'none',
-                    boxShadow: '0 10px 30px -5px rgba(34, 197, 94, 0.45)'
-                  }}
-                >
-                  <MessageCircle size={18} />
-                  <span>WhatsApp Transmission</span>
-                </a>
-
-                <a
-                  href="mailto:budiarto3788@gmail.com"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.65rem',
-                    padding: '1rem 2.25rem',
-                    borderRadius: '9999px',
-                    background: colors.bgPrimary,
-                    border: `1.5px solid ${colors.borderStrong}`,
-                    color: colors.textPrimary,
-                    fontWeight: 700,
-                    fontSize: '1rem',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <Mail size={18} />
-                  <span>Direct Dispatch (Email)</span>
-                </a>
-              </div>
+                ✦ DROP A LINE
+              </a>
             </div>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: '2rem 1.5rem',
+        {/* =========================================================================
+           10. FOOTER NAVIGATION & MASSIVE DISPLAY WATERMARK NAME
+           ========================================================================= */}
+        <footer style={{
+          padding: '2.5rem 1.5rem 0 1.5rem',
+          maxWidth: '1380px',
+          margin: '0 auto',
+          overflow: 'hidden'
+        }}>
+          <div className="footer-nav-row" style={{
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'space-between',
-            borderTop: `1px solid ${colors.borderSubtle}`,
+            alignItems: 'center',
             flexWrap: 'wrap',
-            gap: '1rem',
-            fontSize: '0.85rem',
-            color: colors.textMuted
-          }}
-        >
-          <div>
-            © {new Date().getFullYear()} {template.name} Portfolio Template. Part of the Anime Template Collection.
+            gap: '1.5rem',
+            paddingBottom: '3rem',
+            borderBottom: '1px solid #f1f5f9'
+          }}>
+            <div className="footer-links-wrap" style={{ display: 'flex', gap: '2rem' }}>
+              <Link href={`/templates/${template.slug}`} style={{ color: '#0f172a', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Home</Link>
+              <a href="#about" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>About</a>
+              <a href="#works" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Portfolio</a>
+              <a href="#testimonials" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Endorsements</a>
+            </div>
+
+            <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+              © {new Date().getFullYear()} {template.name} Portfolio Template. Part of Anime Portfolio Collection.
+            </span>
+
+            <Link 
+              href="/templates" 
+              style={{ 
+                fontSize: '0.82rem', 
+                color: colors.accent, 
+                textDecoration: 'none', 
+                fontWeight: 600,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem'
+              }}
+            >
+              <Sparkles size={13} />
+              <span>Explore All 20 Templates →</span>
+            </Link>
           </div>
-          <div style={{ display: 'flex', gap: '1.25rem' }}>
-            <Link href="/templates" style={{ color: colors.accent, textDecoration: 'none', fontWeight: 600 }}>
-              All 20 Anime Templates
-            </Link>
-            <Link href="/" style={{ color: colors.textSecondary, textDecoration: 'none' }}>
-              Original Himmel
-            </Link>
+
+          {/* Massive Display Watermark Name Spanning Bottom Edge */}
+          <div className="footer-watermark-wrap" style={{
+            textAlign: 'center',
+            padding: '2.5rem 0 0 0',
+            userSelect: 'none',
+            pointerEvents: 'none',
+            overflow: 'hidden',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <span 
+              className="editorial-serif-italic footer-watermark-text"
+              style={{
+                fontSize: 'clamp(4.2rem, 13vw, 13.5rem)',
+                lineHeight: 0.85,
+                color: '#0f172a',
+                display: 'inline-block',
+                whiteSpace: 'nowrap',
+                letterSpacing: '-0.02em',
+                fontWeight: 400
+              }}
+            >
+              {template.name}
+            </span>
           </div>
         </footer>
       </div>
 
-      {/* Interactive Project Case Study Modal */}
+      {/* Project Detail Modal Overlay */}
       <AnimeProjectModal
         project={selectedProject}
         colors={colors}

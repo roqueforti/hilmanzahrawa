@@ -93,6 +93,15 @@ export interface AnimeTemplate {
   cardUrl: string;
   layoutArchetype: LayoutArchetype;
   accentAnimationType: AccentAnimationType;
+  location: string;
+  companionAvatars: string[];
+  companionTrustText: string;
+  brandPartners: { name: string; icon: string }[];
+  focusPillsLeft: { label: string; color: string; bg: string; border: string }[];
+  focusPillsRight: { label: string; color: string; bg: string; border: string }[];
+  focusQuote: { main: string; highlight: string };
+  sinceYear: string;
+  ctaText?: string;
   colors: ThemeColors;
   stats: { label: string; value: string }[];
   skills: { name: string; level: number; category: string }[];
@@ -102,2543 +111,5336 @@ export interface AnimeTemplate {
   themeTokensCSS: Record<string, string>;
 }
 
-export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
-  frieren: {
-    id: 'frieren',
-    slug: 'frieren',
-    name: 'Frieren',
-    japaneseName: 'フリーレン',
-    series: 'Sousou no Frieren',
-    universeBadge: 'Beyond Journey\'s End',
-    roleTitle: 'Archmage & Ancient Systems Architect',
-    headline: 'Mage of the Century',
-    tagline: 'Deciphering thousand-year grimoires into elegant digital architecture.',
-    statement: 'Magic is about imagination. If you cannot visualize perfection, no code or spell can reach it.',
-    bio: 'An elven mage who defeated the Demon King alongside Himmel\'s party. Now traversing the realm to collect quaint spells and construct immortal, resilient software foundations that outlast generations.',
-    price: 39,
-    featuredTag: 'Bestseller',
-    avatarUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'flanked-centered',
-    accentAnimationType: 'frieren-aura',
-    colors: {
-      isDark: false,
-      bgPrimary: '#f8fafc',
-      bgSecondary: '#f1f5f9',
-      bgSurface: 'rgba(255, 255, 255, 0.94)',
-      bgGlass: 'rgba(248, 250, 252, 0.82)',
-      textPrimary: '#0f172a',
-      textSecondary: '#334155',
-      textMuted: '#64748b',
-      accent: '#0284c7',
-      accentSecondary: '#eab308',
-      accentGlow: 'rgba(2, 132, 199, 0.28)',
-      borderSubtle: '#e2e8f0',
-      borderStrong: 'rgba(2, 132, 199, 0.35)',
-      cardShadow: '0 20px 45px -10px rgba(2, 132, 199, 0.12)',
-      badgeBg: '#e0f2fe',
-      badgeText: '#0369a1',
-      gradientHero: 'radial-gradient(ellipse at 50% 40%, rgba(56, 189, 248, 0.22) 0%, rgba(224, 242, 254, 0.15) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Years of Lore', value: '1,000+' },
-      { label: 'Grimoires Decoded', value: '480+' },
-      { label: 'Code Resilience', value: '99.99%' },
-    ],
-    skills: [
-      { name: 'Mana Core Optimization', level: 98, category: 'Core' },
-      { name: 'Ancient Cryptography', level: 96, category: 'Security' },
-      { name: 'Distributed Grimoires', level: 94, category: 'Architecture' },
-      { name: 'Field Field Theory', level: 92, category: 'Systems' },
-    ],
-    projects: [
-      {
-        id: 'grimoire-compiler',
-        title: 'Grimoire Abstract Machine',
-        category: 'Language Engine',
-        subtag: 'Core Compiler',
-        desc: 'A deterministic compiler mapping ancient high-density runic spells into bytecode with zero runtime overhead.',
-        tags: ['Rust', 'LLVM', 'Runic Spec', 'WebAssembly'],
-        metrics: '12x Faster Spells',
-        color: '#0284c7'
-      },
-      {
-        id: 'mimic-detector',
-        title: 'Chest Mimic Classifier',
-        category: 'Vision & ML',
-        subtag: 'Detection System',
-        desc: 'Computer vision framework analyzing dungeon chests with 99.1% mimic detection accuracy (yet she still opens them anyway).',
-        tags: ['PyTorch', 'Edge Vision', 'OpenCV'],
-        metrics: '99.1% Confidence',
-        color: '#eab308'
-      },
-      {
-        id: 'blue-moon-sanctuary',
-        title: 'Blue Moon Petal Arboretum',
-        category: 'Generative Art',
-        subtag: 'Interactive WebGL',
-        desc: 'A hyper-realistic 3D botanical simulation reproducing Himmel’s beloved blue moon flowers in perpetual gentle wind.',
-        tags: ['Three.js', 'GLSL', 'InstancedMesh'],
-        metrics: '60 FPS Ultra',
-        color: '#38bdf8'
-      },
-      {
-        id: 'centurial-archive',
-        title: 'Centurial Knowledge Mesh',
-        category: 'Database System',
-        subtag: 'Long-term Storage',
-        desc: 'Self-healing decentralized storage network designed to persist civilization data across millennium scale.',
-        tags: ['IPFS', 'Distributed DAG', 'P2P'],
-        metrics: '1000yr Redundancy',
-        color: '#64748b'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Year 80 After Himmel',
-        role: 'Grand Archmage in Residence',
-        organization: 'Ende Continental Expedition',
-        description: 'Mentoring prodigy Fern and warrior Stark while collecting quaint everyday magical algorithms across northern lands.'
-      },
-      {
-        year: 'Hero Era',
-        role: 'Vanguard Sorceress',
-        organization: 'The Hero Party of Himmel',
-        description: 'Defeated the Demon King following a 10-year campaign, liberating the continental software realm.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Frieren-sama spends hours inspecting useless spellbooks, but when it matters, her architectural decisions are flawlessly eternal.',
-        author: 'Fern',
-        title: 'First-Class Mage',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'She taught me that fear is natural in battle. It is the trembling hand that holds the axe firm when confronting terror.',
-        author: 'Stark',
-        title: 'Vanguard Warrior',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#0284c7',
-      '--accent-glow': 'rgba(2, 132, 199, 0.28)',
-      '--bg-primary': '#f8fafc',
-      '--text-primary': '#0f172a'
-    }
-  },
-
-  stark: {
-    id: 'stark',
-    slug: 'stark',
-    name: 'Stark',
-    japaneseName: 'シュタルク',
-    series: 'Sousou no Frieren',
-    universeBadge: 'Beyond Journey\'s End',
-    roleTitle: 'Heavy Vanguard & High-Stress Systems Engineer',
-    headline: 'The Dragon Slayer',
-    tagline: 'When servers buckle under peak load, one clean cleave settles the storm.',
-    statement: 'I run forward even while trembling with fear. That is what makes the strike break mountain stone.',
-    bio: 'Trained by warrior Eisen. The vanguard of Frieren’s expedition who cleaved a solar dragon in half with a single battleaxe strike. Specializes in fault-tolerant infrastructure and high-throughput systems.',
-    price: 35,
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'warrior-vanguard',
-    accentAnimationType: 'stark-sparks',
-    colors: {
-      isDark: true,
-      bgPrimary: '#0f172a',
-      bgSecondary: '#1e293b',
-      bgSurface: 'rgba(30, 41, 59, 0.88)',
-      bgGlass: 'rgba(15, 23, 42, 0.75)',
-      textPrimary: '#f8fafc',
-      textSecondary: '#cbd5e1',
-      textMuted: '#94a3b8',
-      accent: '#ef4444',
-      accentSecondary: '#f97316',
-      accentGlow: 'rgba(239, 68, 68, 0.35)',
-      borderSubtle: '#334155',
-      borderStrong: 'rgba(239, 68, 68, 0.5)',
-      cardShadow: '0 20px 45px -10px rgba(239, 68, 68, 0.2)',
-      badgeBg: 'rgba(239, 68, 68, 0.18)',
-      badgeText: '#fca5a5',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(239, 68, 68, 0.25) 0%, rgba(249, 115, 22, 0.1) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Dragon Strikes', value: '1 Cut' },
-      { label: 'Uptime Cleave', value: '99.999%' },
-      { label: 'Peak TPS Absorbed', value: '250k+' },
-    ],
-    skills: [
-      { name: 'High-Stress Load Balancing', level: 97, category: 'Infra' },
-      { name: 'Lightning Cleave Failover', level: 95, category: 'Resilience' },
-      { name: 'Kubernetes Vanguard', level: 91, category: 'DevOps' },
-      { name: 'Dwarven Heavy Steel Tuning', level: 93, category: 'Hardware' },
-    ],
-    projects: [
-      {
-        id: 'solar-cleave',
-        title: 'Solar Cleave Load Breaker',
-        category: 'Traffic Shaper',
-        subtag: 'DDoS Mitigation',
-        desc: 'Instant high-velocity firewall packet slicer preventing bot inundations within 3ms of origin arrival.',
-        tags: ['eBPF', 'Rust', 'Linux Kernel', 'XDP'],
-        metrics: '1.2 Tbps Sustained',
-        color: '#ef4444'
-      },
-      {
-        id: 'dwarven-forge',
-        title: 'Eisen Dwarven Hardware Monitor',
-        category: 'IoT Telemetry',
-        subtag: 'Hardware Diagnostics',
-        desc: 'Low-level thermal and magnetic flux telemetry daemon monitoring industrial bare-metal server chassis.',
-        tags: ['C++', 'Prometheus', 'Grafana'],
-        metrics: '< 1ms Latency',
-        color: '#f97316'
-      },
-      {
-        id: 'village-shield',
-        title: 'Frontier Bastion VPN',
-        category: 'Network Security',
-        subtag: 'Encrypted Gateway',
-        desc: 'Zero-trust wireguard mesh networking protocol defending border settlements against demonic intrusion.',
-        tags: ['WireGuard', 'Go', 'Zero Trust'],
-        metrics: '0 Breaches',
-        color: '#dc2626'
-      },
-      {
-        id: 'jumbo-parfait',
-        title: 'Jumbo Parfait Reward Tracker',
-        category: 'Gamified Habit App',
-        subtag: 'Fullstack Mobile',
-        desc: 'Wholesome accountability system designed by Fern to reward successful battle completions with colossal berry desserts.',
-        tags: ['React Native', 'Tailwind', 'Node.js'],
-        metrics: '5-Star Rated',
-        color: '#fb7185'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Year 80 After Himmel',
-        role: 'Chief Vanguard',
-        organization: 'Frieren Travel Party',
-        description: 'Guiding through monster-infested canyons and maintaining high morale despite terrifying dragon threats.'
-      },
-      {
-        year: 'Prior Apprentice',
-        role: 'Shield & Axe Disciple',
-        organization: 'Eisen Household Fortress',
-        description: 'Endured dwarven conditioning, developing lightning-fast reflex reactions and unbreakable defensive posture.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Stark is a coward who whimpers before every fight, yet he never once let an ally get touched. A true warrior.',
-        author: 'Frieren',
-        title: 'Archmage',
-        avatar: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Please stop making that terrified face while cleaving monsters in half. It confuses the villagers.',
-        author: 'Fern',
-        title: 'First-Class Mage',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#ef4444',
-      '--accent-glow': 'rgba(239, 68, 68, 0.35)',
-      '--bg-primary': '#0f172a',
-      '--text-primary': '#f8fafc'
-    }
-  },
-
-  fern: {
-    id: 'fern',
-    slug: 'fern',
-    name: 'Fern',
-    japaneseName: 'フェルン',
-    series: 'Sousou no Frieren',
-    universeBadge: 'Beyond Journey\'s End',
-    roleTitle: 'First-Class Mage & Rapid Execution Specialist',
-    headline: 'The Zoltraak Prodigy',
-    tagline: 'Flawless casting velocity, zero wasted motion, absolute code precision.',
-    statement: 'The simplest spell, mastered with blinding cast speed and flawless timing, will always defeat bloated complexities.',
-    bio: 'Orphan raised by priest Heiter and trained from childhood by Frieren. The youngest first-class mage in continental history. Champions microscopic latencies, ultra-clean codebases, and relentless discipline.',
-    price: 39,
-    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'asymmetric-split',
-    accentAnimationType: 'fern-zoltraak',
-    colors: {
-      isDark: true,
-      bgPrimary: '#170f23',
-      bgSecondary: '#24143a',
-      bgSurface: 'rgba(36, 20, 58, 0.88)',
-      bgGlass: 'rgba(23, 15, 35, 0.78)',
-      textPrimary: '#faf5ff',
-      textSecondary: '#e9d5ff',
-      textMuted: '#c084fc',
-      accent: '#a855f7',
-      accentSecondary: '#c084fc',
-      accentGlow: 'rgba(168, 85, 247, 0.38)',
-      borderSubtle: '#3b2063',
-      borderStrong: 'rgba(168, 85, 247, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(168, 85, 247, 0.22)',
-      badgeBg: 'rgba(168, 85, 247, 0.18)',
-      badgeText: '#f3e8ff',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(168, 85, 247, 0.3) 0%, rgba(88, 28, 135, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Casting Latency', value: '0.12 ms' },
-      { label: 'Zoltraak Accuracy', value: '100%' },
-      { label: 'Mage License', value: 'Class 1' },
-    ],
-    skills: [
-      { name: 'Rapid Spell Pipelining', level: 99, category: 'Core' },
-      { name: 'Mana Concealment Steganography', level: 97, category: 'Security' },
-      { name: 'Precision Type Systems', level: 95, category: 'Languages' },
-      { name: 'Laundry Spell Automation', level: 100, category: 'Utilities' },
-    ],
-    projects: [
-      {
-        id: 'zoltraak-fastcast',
-        title: 'Zoltraak Zero-Copy RPC',
-        category: 'Networking',
-        subtag: 'Low-Latency Protocol',
-        desc: 'Standardized offensive soul-strike communication protocol executing bidirectional bursts under sub-millisecond conditions.',
-        tags: ['Rust', 'gRPC', 'eBPF', 'Tokio'],
-        metrics: '0.08ms Roundtrip',
-        color: '#a855f7'
-      },
-      {
-        id: 'mana-mask',
-        title: 'Mana Mask Veil',
-        category: 'Zero Knowledge',
-        subtag: 'Privacy Protocol',
-        desc: 'Advanced ZK cryptographic masking system hiding memory footprints from hostile inspection daemons.',
-        tags: ['Circom', 'ZK-SNARKs', 'Solidity'],
-        metrics: 'Zero Traces',
-        color: '#c084fc'
-      },
-      {
-        id: 'staff-telemetry',
-        title: 'Mage Staff Resonant Frequency Meter',
-        category: 'DSP Audio & Wave',
-        subtag: 'Signal Processing',
-        desc: 'Harmonic wave analyzer tracking atmospheric mana density variations during severe mountain blizzards.',
-        tags: ['TypeScript', 'Web Audio API', 'FFT'],
-        metrics: '48kHz Realtime',
-        color: '#d8b4fe'
-      },
-      {
-        id: 'frieren-wake-schedule',
-        title: 'Archmage Morning Wake Protocol',
-        category: 'Scheduler',
-        subtag: 'Critical Service',
-        desc: 'High-priority persistent alarming service designed to extract master Frieren from hotel bed before midday.',
-        tags: ['Web Push', 'Service Workers', 'CRON'],
-        metrics: '99% Wakeup Rate',
-        color: '#f43f5e'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Current',
-        role: 'First-Class Mage Lead',
-        organization: 'Continental Mage Association',
-        description: 'Certified directly by Serie after out-maneuvering seasoned master mages with pure baseline fundamentals.'
-      },
-      {
-        year: 'Youth',
-        role: 'Apprentice Mage',
-        organization: 'Heiter Hermitage',
-        description: 'Practiced stone-splitting basic spells thousands of times daily until execution became involuntary reflex.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Fern has already surpassed me in spell execution speed. Her Zoltraak is faster than any living mage in this era.',
-        author: 'Frieren',
-        title: 'Archmage',
-        avatar: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'She scary when she gets quiet and pouts, but her magical covering fire has saved my neck dozens of times.',
-        author: 'Stark',
-        title: 'Vanguard',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#a855f7',
-      '--accent-glow': 'rgba(168, 85, 247, 0.38)',
-      '--bg-primary': '#170f23',
-      '--text-primary': '#faf5ff'
-    }
-  },
-
-  eren: {
-    id: 'eren',
-    slug: 'eren',
-    name: 'Eren Yeager',
-    japaneseName: 'エレン・イェーガー',
-    series: 'Attack on Titan',
-    universeBadge: 'Shingeki no Kyojin',
-    roleTitle: 'Attack Titan & Freedom Systems Architect',
-    headline: 'Architect of The Rumbling',
-    tagline: 'I will keep moving forward until all legacy technical debt is destroyed.',
-    statement: 'If we win, we live. If we lose, we die. If we do not fight, we cannot win. Fight. Fight.',
-    bio: 'Bearer of the Founding Titan, Attack Titan, and War Hammer Titan. Driven by an unyielding pursuit of complete freedom, tearing down monolithic walled gardens to establish decentralized self-sovereignty.',
-    price: 39,
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'warrior-vanguard',
-    accentAnimationType: 'eren-steam-embers',
-    colors: {
-      isDark: true,
-      bgPrimary: '#0a0f0d',
-      bgSecondary: '#111d17',
-      bgSurface: 'rgba(17, 29, 23, 0.88)',
-      bgGlass: 'rgba(10, 15, 13, 0.82)',
-      textPrimary: '#f0fdf4',
-      textSecondary: '#bbf7d0',
-      textMuted: '#86efac',
-      accent: '#10b981',
-      accentSecondary: '#f59e0b',
-      accentGlow: 'rgba(16, 185, 129, 0.4)',
-      borderSubtle: '#1b3b2b',
-      borderStrong: 'rgba(16, 185, 129, 0.6)',
-      cardShadow: '0 20px 45px -10px rgba(16, 185, 129, 0.25)',
-      badgeBg: 'rgba(16, 185, 129, 0.2)',
-      badgeText: '#86efac',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(16, 185, 129, 0.28) 0%, rgba(245, 158, 11, 0.12) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Walls Broken', value: '3 / 3' },
-      { label: 'Colossal Nodes', value: '100k+' },
-      { label: 'Freedom Ratio', value: '100%' },
-    ],
-    skills: [
-      { name: 'Distributed Rumbling Orchestration', level: 99, category: 'Scale' },
-      { name: 'War Hammer Hardening Shaders', level: 96, category: 'Graphics' },
-      { name: 'Coordinate Protocol Synapses', level: 98, category: 'Network' },
-      { name: 'Monolith Demolition', level: 100, category: 'Architecture' },
-    ],
-    projects: [
-      {
-        id: 'rumbling-protocol',
-        title: 'Rumbling Distributed Mesh Orchestrator',
-        category: 'Autonomous Systems',
-        subtag: 'Cluster Manager',
-        desc: 'Planetary-scale distributed system controlling thousands of autonomous nodes simultaneously moving in forward march.',
-        tags: ['Rust', 'Raft Consensus', 'Zero Trust', 'P2P'],
-        metrics: '100,000+ Synchronized Nodes',
-        color: '#10b981'
-      },
-      {
-        id: 'coordinate-memory',
-        title: 'Paths Temporal Database',
-        category: 'Temporal DB',
-        subtag: 'Time-Travel Indexing',
-        desc: 'Non-linear quantum memory engine allowing past, present, and future states to be cross-queried instantaneously.',
-        tags: ['C++', 'Temporal B-Tree', 'Zero Latency'],
-        metrics: '2,000yr History Search',
-        color: '#f59e0b'
-      },
-      {
-        id: 'hardening-shield',
-        title: 'War Hammer Structural Hardening',
-        category: 'Defensive Crypto',
-        subtag: 'Crystal Encryption',
-        desc: 'Unbreakable quantum-resistant crystal structure hardening memory buffers against runtime memory injection exploits.',
-        tags: ['Assembly', 'Memory Hardening', 'Crypto'],
-        metrics: 'Zero Penetrations',
-        color: '#34d399'
-      },
-      {
-        id: 'liberty-manifesto',
-        title: 'The Sea Beyond The Walls',
-        category: 'Decentralized Web',
-        subtag: 'Open Protocols',
-        desc: 'Uncensored peer-to-peer publishing node freeing islands from continental information blockades.',
-        tags: ['IPFS', 'Next.js', 'Libp2p'],
-        metrics: 'Uncensorable',
-        color: '#6ee7b7'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Year 854',
-        role: 'Commander of The Rumbling',
-        organization: 'The Yeagerists & Paths Realm',
-        description: 'Initiated the complete teardown of walled architectures to protect sovereignty across all digital dominions.'
-      },
-      {
-        year: 'Year 850',
-        role: 'Special Operations Squad Member',
-        organization: 'Survey Corps (Scout Regiment)',
-        description: 'Reclaimed Wall Rose and Shiganshina district, mastering titan hardening capabilities under extreme combat fire.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'No matter what happens, I will protect you. Eren never backs down when freedom is on the line.',
-        author: 'Mikasa Ackerman',
-        title: 'Survey Corps Vanguard',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Eren is a monster that cannot be caged by rules or traditions. That is precisely why he changes history.',
-        author: 'Levi Ackerman',
-        title: 'Captain, Survey Corps',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#10b981',
-      '--accent-glow': 'rgba(16, 185, 129, 0.4)',
-      '--bg-primary': '#0a0f0d',
-      '--text-primary': '#f0fdf4'
-    }
-  },
-
-  levi: {
-    id: 'levi',
-    slug: 'levi',
-    name: 'Levi Ackerman',
-    japaneseName: 'リヴァイ・アッカーマン',
-    series: 'Attack on Titan',
-    universeBadge: 'Shingeki no Kyojin',
-    roleTitle: 'Humanity\'s Strongest & Zero-Defect Architect',
-    headline: 'Captain of Special Operations',
-    tagline: 'Make the choice that leaves the fewest regrets. Then execute with surgical precision.',
-    statement: 'The only thing we are allowed to do is believe that we won\'t regret the choice we made. Clean your codebase. Leave no dirt behind.',
-    bio: 'Survey Corps Captain and humanity’s greatest soldier. Renowned for hyper-clean work habits, ruthless precision, and ability to eliminate colossal bottlenecks within seconds using high-frequency ODM mechanics.',
-    price: 45,
-    featuredTag: 'Top Pick',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'cyberpunk-hud',
-    accentAnimationType: 'levi-blade-slashes',
-    colors: {
-      isDark: true,
-      bgPrimary: '#060d09',
-      bgSecondary: '#0e1c14',
-      bgSurface: 'rgba(14, 28, 20, 0.9)',
-      bgGlass: 'rgba(6, 13, 9, 0.82)',
-      textPrimary: '#f1f5f9',
-      textSecondary: '#cbd5e1',
-      textMuted: '#94a3b8',
-      accent: '#22c55e',
-      accentSecondary: '#64748b',
-      accentGlow: 'rgba(34, 197, 94, 0.35)',
-      borderSubtle: '#1e3828',
-      borderStrong: 'rgba(34, 197, 94, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(34, 197, 94, 0.2)',
-      badgeBg: 'rgba(34, 197, 94, 0.16)',
-      badgeText: '#86efac',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(34, 197, 94, 0.22) 0%, rgba(100, 116, 139, 0.12) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Titan Cleanses', value: '1,000+' },
-      { label: 'Code Defect Rate', value: '0.000%' },
-      { label: 'Blade Spin RPM', value: '1,800' },
-    ],
-    skills: [
-      { name: 'Ultra-Clean Code Refactoring', level: 100, category: 'Quality' },
-      { name: 'Omni-Directional Mobility Tracers', level: 99, category: 'Physics' },
-      { name: 'Zero-Tolerance Bug Sanitization', level: 100, category: 'Testing' },
-      { name: 'High-Velocity Blade Slicing', level: 98, category: 'Performance' },
-    ],
-    projects: [
-      {
-        id: 'clean-sanitizer',
-        title: 'Ackerman Deep Linter & Sanitizer',
-        category: 'Compiler Tooling',
-        subtag: 'Zero Tolerence Linter',
-        desc: 'Strict AST static analyzer purging lint dust, circular imports, and dead code with ruthless surgical aggression.',
-        tags: ['Rust', 'AST Rewriter', 'Babel', 'ESLint Core'],
-        metrics: 'Zero Grime Permitted',
-        color: '#22c55e'
-      },
-      {
-        id: 'odm-navigation',
-        title: 'Omni-Directional Trajectory Solver',
-        category: 'Spatial Physics',
-        subtag: 'Vector Engine',
-        desc: 'Real-time 3D vector physics calculations computing anchor points and cable tensions in dense urban forests.',
-        tags: ['Three.js', 'WebAssembly', 'SIMD'],
-        metrics: '120 FPS Sub-pixel',
-        color: '#64748b'
-      },
-      {
-        id: 'beast-titan-takedown',
-        title: 'Colossal Beast Titan De-scaler',
-        category: 'Concurrency Engine',
-        subtag: 'Thread Decimator',
-        desc: 'High-frequency task scheduler that slices heavy background threads into 250 micro-slices before they block the event loop.',
-        tags: ['Go', 'Goroutines', 'Thread Slicing'],
-        metrics: 'Sub-millisecond Preempt',
-        color: '#15803d'
-      },
-      {
-        id: 'black-tea-timer',
-        title: 'Artisan Black Tea Steep Calculator',
-        category: 'Micro-App',
-        subtag: 'Thermodynamics',
-        desc: 'Precision water temperature and leaf infusion stopwatch delivering the quintessential English tea cup.',
-        tags: ['React', 'CSS Art', 'PWA'],
-        metrics: 'Perfect 94°C',
-        color: '#a16207'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Year 850 - 854',
-        role: 'Captain, Special Operations Squad',
-        organization: 'Survey Corps',
-        description: 'Handpicked elite team, neutralized dozens of titan threats, and spearheaded humanity’s underground-to-freedom breakthrough.'
-      },
-      {
-        year: 'Underground Era',
-        role: 'Autonomous Syndicate Leader',
-        organization: 'Capital Underground District',
-        description: 'Mastered 3D maneuver gear self-taught in zero-visibility conditions, forging legendary combat agility.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Give up on your dream and die for us. Lead the recruits straight into hell. I trust no one else with this command.',
-        author: 'Erwin Smith',
-        title: '13th Commander, Survey Corps',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'He will kick your teeth in if you show up with messy code, but there is no safer leader on the battlefield.',
-        author: 'Hange Zoë',
-        title: '14th Commander, Survey Corps',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#22c55e',
-      '--accent-glow': 'rgba(34, 197, 94, 0.35)',
-      '--bg-primary': '#060d09',
-      '--text-primary': '#f1f5f9'
-    }
-  },
-
-  mikasa: {
-    id: 'mikasa',
-    slug: 'mikasa',
-    name: 'Mikasa Ackerman',
-    japaneseName: 'ミカサ・アッカーマン',
-    series: 'Attack on Titan',
-    universeBadge: 'Shingeki no Kyojin',
-    roleTitle: 'Elite Guardian & High-Reliability Systems Engineer',
-    headline: 'Unbreakable Vanguard',
-    tagline: 'The world is cruel, yet so beautiful. I will guard what matters with my life.',
-    statement: 'Once I\'m dead, I won\'t even be able to remember you. So I will win, no matter what. I will live, no matter what.',
-    bio: 'Ranked top of the 104th Training Corps. An unparalleled protector combining lethal combat instinct with profound devotion. Specializes in fault tolerance, fail-safe redundancy, and perimeter defenses.',
-    price: 37,
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'asymmetric-split',
-    accentAnimationType: 'mikasa-scarf-wind',
-    colors: {
-      isDark: true,
-      bgPrimary: '#12070a',
-      bgSecondary: '#1f0d13',
-      bgSurface: 'rgba(31, 13, 19, 0.9)',
-      bgGlass: 'rgba(18, 7, 10, 0.8)',
-      textPrimary: '#fff1f2',
-      textSecondary: '#fecdd3',
-      textMuted: '#fda4af',
-      accent: '#e11d48',
-      accentSecondary: '#fb7185',
-      accentGlow: 'rgba(225, 29, 72, 0.38)',
-      borderSubtle: '#4c1221',
-      borderStrong: 'rgba(225, 29, 72, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(225, 29, 72, 0.22)',
-      badgeBg: 'rgba(225, 29, 72, 0.18)',
-      badgeText: '#fecdd3',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(225, 29, 72, 0.28) 0%, rgba(251, 113, 133, 0.12) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Class Rank', value: '#1 Top' },
-      { label: 'Combat Rating', value: '100 Soldiers' },
-      { label: 'Zero Failover', value: '100%' },
-    ],
-    skills: [
-      { name: 'Perimeter Defense Systems', level: 99, category: 'Security' },
-      { name: 'Fail-Safe Circuit Breakers', level: 97, category: 'Reliability' },
-      { name: 'High-G Maneuver Control', level: 96, category: 'Physics' },
-      { name: 'Red Scarf State Persistence', level: 100, category: 'State' },
-    ],
-    projects: [
-      {
-        id: 'red-scarf-vault',
-        title: 'Crimson Scarf Immutable Ledger',
-        category: 'Cryptography',
-        subtag: 'Key Custody Vault',
-        desc: 'Uncompromising hardware security module securing core credentials against all known physical and quantum attacks.',
-        tags: ['Rust', 'HSM', 'Elliptic Curve', 'FIPS-140-3'],
-        metrics: 'Zero Leaks',
-        color: '#e11d48'
-      },
-      {
-        id: 'thunder-spear',
-        title: 'Thunder Spear Reactive Armor Buster',
-        category: 'Penetration Testing',
-        subtag: 'Exploit Tool',
-        desc: 'Targeted zero-day penetration framework testing fortified defenses with extreme kinetic velocity.',
-        tags: ['Python', 'Scapy', 'Raw Sockets'],
-        metrics: '100% Penetration Test',
-        color: '#fb7185'
-      },
-      {
-        id: 'perimeter-guard',
-        title: 'Trost Gate Automated Perimeter',
-        category: 'Surveillance AI',
-        subtag: 'Threat Detection',
-        desc: 'Autonomous multi-camera perimeter watchdog issuing instant lockdown alerts upon breach identification.',
-        tags: ['WebRTC', 'TensorFlow', 'Docker'],
-        metrics: '< 15ms Trigger',
-        color: '#be123c'
-      },
-      {
-        id: 'memory-cabin',
-        title: 'Quiet Cabin Retreat Simulator',
-        category: 'Ambient Web Experience',
-        subtag: 'Audio-Visual Serenity',
-        desc: 'A serene mountain cabin interactive scene with falling leaves, crackling timber fire, and warm memories.',
-        tags: ['Three.js', 'WebAudio', 'GLSL'],
-        metrics: 'Pure Tranquility',
-        color: '#f43f5e'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Year 850 - 854',
-        role: 'Lead Vanguard & Shield',
-        organization: 'Survey Corps Special Ops',
-        description: 'Defended human remnants across multiple battlefronts, proving worth equivalent to 100 average soldiers.'
-      },
-      {
-        year: 'Training Corps',
-        role: 'Top Graduate (Rank 1)',
-        organization: '104th Cadet Corps',
-        description: 'Graduated top of class with exemplary marks in blade lethality, leadership, and crisis management.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Mikasa is a genius of unmatched caliber. Having her guarding your flank is the closest thing to absolute invincibility.',
-        author: 'Armin Arlert',
-        title: '15th Commander, Survey Corps',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Her strength is real, but her devotion to the team is what makes her the most fearsome defender in humanity\'s ranks.',
-        author: 'Levi Ackerman',
-        title: 'Captain',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#e11d48',
-      '--accent-glow': 'rgba(225, 29, 72, 0.38)',
-      '--bg-primary': '#12070a',
-      '--text-primary': '#fff1f2'
-    }
-  },
-
-  naruto: {
-    id: 'naruto',
-    slug: 'naruto',
-    name: 'Naruto Uzumaki',
-    japaneseName: 'うずまきナルト',
-    series: 'Naruto Shippuden',
-    universeBadge: 'Hidden Leaf Village',
-    roleTitle: 'Seventh Hokage & Infinite Concurrency Architect',
-    headline: 'Child of the Prophecy',
-    tagline: 'I never go back on my word. That is my ninja way—and my SLA guarantee.',
-    statement: 'Hard work is worthless for those that don\'t believe in themselves. Scale to thousands of shadow clones and never drop a packet.',
-    bio: 'Seventh Hokage of the Hidden Leaf and Jinchūriki of the Nine Tails. Famed for transforming adversity into boundless energy, scaling distributed shadow-clone worker clusters to conquer impossible workloads.',
-    price: 42,
-    featuredTag: 'Iconic',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'dynamic-hero',
-    accentAnimationType: 'naruto-rasengan-chakra',
-    colors: {
-      isDark: false,
-      bgPrimary: '#fffbf5',
-      bgSecondary: '#fef3c7',
-      bgSurface: 'rgba(255, 255, 255, 0.94)',
-      bgGlass: 'rgba(255, 251, 245, 0.85)',
-      textPrimary: '#451a03',
-      textSecondary: '#78350f',
-      textMuted: '#92400e',
-      accent: '#ea580c',
-      accentSecondary: '#f59e0b',
-      accentGlow: 'rgba(234, 88, 12, 0.35)',
-      borderSubtle: '#fed7aa',
-      borderStrong: 'rgba(234, 88, 12, 0.45)',
-      cardShadow: '0 20px 45px -10px rgba(234, 88, 12, 0.18)',
-      badgeBg: '#ffedd5',
-      badgeText: '#9a3412',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(245, 158, 11, 0.28) 0%, rgba(234, 88, 12, 0.15) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Shadow Clones', value: '10,000+' },
-      { label: 'Kurama Chakra', value: 'Infinite' },
-      { label: 'Talk no Jutsu', value: '100% Rate' },
-    ],
-    skills: [
-      { name: 'Mass Shadow Clone Parallelism', level: 100, category: 'Scale' },
-      { name: 'Rasenshuriken Vortex Compression', level: 98, category: 'Algorithms' },
-      { name: 'Sage Mode Natural Gathering', level: 96, category: 'Green Tech' },
-      { name: 'Talk-no-Jutsu Stakeholder Alignment', level: 100, category: 'Leadership' },
-    ],
-    projects: [
-      {
-        id: 'shadow-clone-orchestrator',
-        title: 'Kage Bunshin Worker Swarm',
-        category: 'Serverless Orchestration',
-        subtag: 'Auto-Scaling Mesh',
-        desc: 'Ultra-elastic serverless swarm that instantly provisions thousands of worker clones to digest spike traffic with zero cold start.',
-        tags: ['Kubernetes', 'Go', 'Knative', 'gRPC'],
-        metrics: '10,000 Workers in 40ms',
-        color: '#ea580c'
-      },
-      {
-        id: 'rasenshuriken-engine',
-        title: 'Rasenshuriken Cellular Compression Engine',
-        category: 'Data Compression',
-        subtag: 'Micro-Slicing Algorithm',
-        desc: 'Hyper-dense lossless file compression algorithm slicing byte payloads at microscopic cellular resolution.',
-        tags: ['Rust', 'SIMD', 'LZ4', 'Zstandard'],
-        metrics: '85% Data Squeezed',
-        color: '#f59e0b'
-      },
-      {
-        id: 'leaf-village-portal',
-        title: 'Konoha Citizen Service SuperApp',
-        category: 'GovTech Web Platform',
-        subtag: 'Citizen Portal',
-        desc: 'Unified municipal platform serving all Hidden Leaf villagers for mission dispatches, academy enrollments, and ramen delivery.',
-        tags: ['Next.js', 'PostgreSQL', 'Tailwind'],
-        metrics: '250k Daily Active Citizens',
-        color: '#d97706'
-      },
-      {
-        id: 'ichiraku-ramen-tracker',
-        title: 'Ichiraku Miso Chashu Hot-Route',
-        category: 'Delivery Route AI',
-        subtag: 'Real-time GPS',
-        desc: 'Instant noodle temperature preservation route planner ensuring boiling broth arrives before noodles soften.',
-        tags: ['TypeScript', 'Mapbox', 'WebSockets'],
-        metrics: 'Broth 95°C Guaranteed',
-        color: '#c2410c'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Fourth Great Ninja War',
-        role: 'Supreme Hero & Alliance Champion',
-        organization: 'Allied Shinobi Forces',
-        description: 'United five great nations, shared Nine-Tails chakra with thousands of comrades, and defeated the celestial Otsutsuki threat.'
-      },
-      {
-        year: 'Youth Era',
-        role: 'Team 7 Shinobi',
-        organization: 'Konohagakure Academy',
-        description: 'Trained under Jiraiya and Kakashi, mastering Sage Mode and the ultimate wind-style shape transformation.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Naruto has this strange power to turn former enemies into brothers. His stubborn conviction moves the entire ninja world.',
-        author: 'Kakashi Hatake',
-        title: 'Sixth Hokage',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'He never gave up on me when I was consumed by darkness. Working alongside him is an honor like no other.',
-        author: 'Sasuke Uchiha',
-        title: 'Shadow Hokage',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#ea580c',
-      '--accent-glow': 'rgba(234, 88, 12, 0.35)',
-      '--bg-primary': '#fffbf5',
-      '--text-primary': '#451a03'
-    }
-  },
-
-  sasuke: {
-    id: 'sasuke',
-    slug: 'sasuke',
-    name: 'Sasuke Uchiha',
-    japaneseName: 'うちはサスケ',
-    series: 'Naruto Shippuden',
-    universeBadge: 'Hidden Leaf Village',
-    roleTitle: 'Shadow Hokage & Deep Threat Hunter',
-    headline: 'Wielder of Rinnegan & Sharingan',
-    tagline: 'Operating in the absolute dark to ensure the digital light continues to shine.',
-    statement: 'I have long since closed my eyes... my only goal is in the darkness. Precision code requires zero unnecessary illumination.',
-    bio: 'Last scion of the Uchiha clan and the Shadow Hokage who protects the leaf village from extra-dimensional threats. Specializes in dark-mode aesthetics, zero-trust penetration testing, and lightning-fast cryptographic execution.',
-    price: 45,
-    featuredTag: 'Dark Mode',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'cyberpunk-hud',
-    accentAnimationType: 'sasuke-chidori-lightning',
-    colors: {
-      isDark: true,
-      bgPrimary: '#050713',
-      bgSecondary: '#0c102b',
-      bgSurface: 'rgba(12, 16, 43, 0.88)',
-      bgGlass: 'rgba(5, 7, 19, 0.8)',
-      textPrimary: '#f8fafc',
-      textSecondary: '#c7d2fe',
-      textMuted: '#818cf8',
-      accent: '#6366f1',
-      accentSecondary: '#8b5cf6',
-      accentGlow: 'rgba(99, 102, 241, 0.42)',
-      borderSubtle: '#1e2554',
-      borderStrong: 'rgba(99, 102, 241, 0.6)',
-      cardShadow: '0 20px 45px -10px rgba(99, 102, 241, 0.25)',
-      badgeBg: 'rgba(99, 102, 241, 0.2)',
-      badgeText: '#c7d2fe',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(99, 102, 241, 0.3) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Chidori Voltage', value: '1.21 GW' },
-      { label: 'Space-Time Portals', value: '6 Dimensions' },
-      { label: 'Threat Intercept', value: '100%' },
-    ],
-    skills: [
-      { name: 'Chidori Lightning Concurrency', level: 99, category: 'Hardware' },
-      { name: 'Rinnegan Dimension Teleportation', level: 98, category: 'Network' },
-      { name: 'Sharingan Predictive Vision', level: 100, category: 'AI/ML' },
-      { name: 'Susano\'o Fortified Security', level: 97, category: 'Defenses' },
-    ],
-    projects: [
-      {
-        id: 'chidori-network',
-        title: 'Chidori High-Voltage Wire Protocol',
-        category: 'High Frequency Trading',
-        subtag: 'Laser Network',
-        desc: 'Sub-nanosecond financial order execution layer using lightning electromagnetic pulses across transatlantic cables.',
-        tags: ['C', 'Kernel Bypass', 'Solarflare OpenOnload', 'FPGA'],
-        metrics: '180 Nanosecond Latency',
-        color: '#6366f1'
-      },
-      {
-        id: 'rinnegan-portal',
-        title: 'Amenotejikara Position Swap Router',
-        category: 'Distributed Routing',
-        subtag: 'Instant Swap Routing',
-        desc: 'Quantum position swap algorithm switching failing server nodes with healthy standby replicas instantaneously without dropped state.',
-        tags: ['Rust', 'BGP Anycast', 'QUIC'],
-        metrics: 'Zero Lost Packets',
-        color: '#8b5cf6'
-      },
-      {
-        id: 'susanoo-vault',
-        title: 'Susano\'o Total Memory Enclave',
-        category: 'Confidential Computing',
-        subtag: 'Secure Enclaves',
-        desc: 'Impenetrable purple ethereal memory barrier shielding cryptographic root keys from hypervisor compromises.',
-        tags: ['Intel SGX', 'AMD SEV', 'Rust'],
-        metrics: 'Military Grade',
-        color: '#4f46e5'
-      },
-      {
-        id: 'amaterasu-burn',
-        title: 'Amaterasu Irrevocable Secure Shredder',
-        category: 'Security Utility',
-        subtag: 'Data Erasure',
-        desc: 'Black-flame storage obliteration utility overwriting sectors 35 times until zero magnetic residue remains.',
-        tags: ['C', 'DoD 5220.22-M', 'NVMe Purge'],
-        metrics: 'Burn for 7 Days',
-        color: '#1e1b4b'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Post-War Era',
-        role: 'Lone Dimensional Investigator',
-        organization: 'Inter-Dimensional Exploration',
-        description: 'Traversed Otsutsuki dimensions alone to uncover extraterrestrial threats before they reach the human realm.'
-      },
-      {
-        year: 'Team Hebi / Taka',
-        role: 'Founder & Swordmaster',
-        organization: 'Independent Vanguard Group',
-        description: 'Defeated Danzo and confronted the Five Kage Summit, pushing lightning-style nature transformation to divine heights.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Sasuke perceives system weaknesses before they even compile. His Sharingan-inspired code review leaves nowhere for vulnerabilities to hide.',
-        author: 'Naruto Uzumaki',
-        title: 'Seventh Hokage',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'He may walk in the dark, but his heart has never wavered in protecting the village.',
-        author: 'Sakura Haruno',
-        title: 'Chief Medical Director',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#6366f1',
-      '--accent-glow': 'rgba(99, 102, 241, 0.42)',
-      '--bg-primary': '#050713',
-      '--text-primary': '#f8fafc'
-    }
-  },
-
-  sakura: {
-    id: 'sakura',
-    slug: 'sakura',
-    name: 'Sakura Haruno',
-    japaneseName: '春野サクラ',
-    series: 'Naruto Shippuden',
-    universeBadge: 'Hidden Leaf Village',
-    roleTitle: 'Chief Medical Ninja & High-Impact Reliability Lead',
-    headline: 'Mistress of Byakugou',
-    tagline: 'Healing broken architectures and punching through performance roadblocks.',
-    statement: 'I will not stay behind anyone\'s back anymore. My healing restores systems, and my fist clears the path.',
-    bio: 'Disciple of Fifth Hokage Tsunade and head of Konoha\'s medical services. Combines microscopic cellular healing precision with monstrous kinetic force that cracks mountains. Master of zero-downtime hot patching.',
-    price: 35,
-    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'flanked-centered',
-    accentAnimationType: 'sakura-cherry-byakugou',
-    colors: {
-      isDark: false,
-      bgPrimary: '#fff1f2',
-      bgSecondary: '#ffe4e6',
-      bgSurface: 'rgba(255, 255, 255, 0.95)',
-      bgGlass: 'rgba(255, 241, 242, 0.85)',
-      textPrimary: '#4c0519',
-      textSecondary: '#881337',
-      textMuted: '#9f1239',
-      accent: '#ec4899',
-      accentSecondary: '#10b981',
-      accentGlow: 'rgba(236, 72, 153, 0.35)',
-      borderSubtle: '#fecdd3',
-      borderStrong: 'rgba(236, 72, 153, 0.45)',
-      cardShadow: '0 20px 45px -10px rgba(236, 72, 153, 0.16)',
-      badgeBg: '#ffe4e6',
-      badgeText: '#be123c',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(236, 72, 153, 0.22) 0%, rgba(16, 185, 129, 0.12) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Byakugou Pool', value: '3 Years Stored' },
-      { label: 'Cellular Recovery', value: 'Instant' },
-      { label: 'Fist Impact Force', value: '10,000 Tons' },
-    ],
-    skills: [
-      { name: 'Self-Healing Fault Recovery', level: 99, category: 'Resilience' },
-      { name: 'Byakugou Chakra Reserves', level: 98, category: 'Capacity' },
-      { name: 'Monster Strike Performance Tuning', level: 96, category: 'Optimization' },
-      { name: 'Medical Telemetry Diagnostics', level: 97, category: 'Health' },
-    ],
-    projects: [
-      {
-        id: 'byakugou-healer',
-        title: 'Byakugou Self-Healing Kubernetes Operator',
-        category: 'DevOps & SRE',
-        subtag: 'Auto-Healing Controller',
-        desc: 'Autonomous SRE operator that monitors crash loops and regenerates broken pods instantly using stored memory chakra pools.',
-        tags: ['Go', 'Kubernetes API', 'Prometheus', 'Chaos Mesh'],
-        metrics: 'Zero Downtime MTTR',
-        color: '#ec4899'
-      },
-      {
-        id: 'cellular-patch',
-        title: 'Katsuyu Distributed Health Mesh',
-        category: 'Healthcare Tech',
-        subtag: 'Tele-Health Routing',
-        desc: 'Slug-summoning distributed healthcare protocol relaying vital diagnostics from 5,000 field shinobi back to central hospital.',
-        tags: ['WebRTC', 'MQTT', 'Node.js'],
-        metrics: 'Sub-second Pulse Sync',
-        color: '#10b981'
-      },
-      {
-        id: 'cherry-blossom-clash',
-        title: 'Cherry Blossom Impact Benchmarker',
-        category: 'Load Testing',
-        subtag: 'Stress Testing Tool',
-        desc: 'Brutal stress-testing engine simulating catastrophic 100,000 RPS punches on web endpoints to expose weak joints.',
-        tags: ['Rust', 'K6', 'Distributed Load'],
-        metrics: 'Cracks Fragile APIs',
-        color: '#fb7185'
-      },
-      {
-        id: 'pediatric-mental-health',
-        title: 'Children\'s Post-War Mental Health Clinic',
-        category: 'Social Impact Web App',
-        subtag: 'Community Platform',
-        desc: 'Digital booking and counseling resource network established for war orphans and recovering young shinobi.',
-        tags: ['React', 'Supabase', 'Tailwind'],
-        metrics: 'Over 12,000 Helped',
-        color: '#f43f5e'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Fourth Great Shinobi War',
-        role: 'Chief Medical Vanguard & Byakugou Master',
-        organization: 'Allied Medical Division',
-        description: 'Unlocked the Strength of a Hundred Seal on the front lines, summoning Katsuyu to heal entire battlefield divisions simultaneously.'
-      },
-      {
-        year: 'Apprenticeship',
-        role: 'Tsunade\'s Prime Disciple',
-        organization: 'Konoha General Hospital',
-        description: 'Underwent grueling chakra control drills and heavy weight physical conditioning, mastering anatomical surgery.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Sakura\'s punch is more terrifying than an S-rank lightning jutsu, but her healing touch has brought half the village back from the brink.',
-        author: 'Naruto Uzumaki',
-        title: 'Seventh Hokage',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Her chakra control and diagnostic intuition have surpassed mine. Konoha’s medical future is in safe hands.',
-        author: 'Tsunade Senju',
-        title: 'Fifth Hokage',
-        avatar: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#ec4899',
-      '--accent-glow': 'rgba(236, 72, 153, 0.35)',
-      '--bg-primary': '#fff1f2',
-      '--text-primary': '#4c0519'
-    }
-  },
-
-  hinata: {
-    id: 'hinata',
-    slug: 'hinata',
-    name: 'Hinata Hyuga',
-    japaneseName: '日向ヒナタ',
-    series: 'Naruto Shippuden',
-    universeBadge: 'Hidden Leaf Village',
-    roleTitle: 'Byakugan Princess & Gentle System Architect',
-    headline: 'Mistress of Gentle Fist',
-    tagline: 'Quiet grace, piercing clarity, and an unshakable gentle resolve.',
-    statement: 'Because when I watch you, I feel strong, like I can do anything... that even someone like me has worth.',
-    bio: 'Heiress of the prestigious Hyuga clan. Master of the Byakugan and the Twin Lion Fists. Specializes in 360-degree observability, non-invasive deep-packet inspections, and serene, compassionate user experience design.',
-    price: 37,
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'zen-minimal',
-    accentAnimationType: 'hinata-gentle-fist',
-    colors: {
-      isDark: false,
-      bgPrimary: '#faf5ff',
-      bgSecondary: '#f3e8ff',
-      bgSurface: 'rgba(255, 255, 255, 0.94)',
-      bgGlass: 'rgba(250, 245, 255, 0.85)',
-      textPrimary: '#3b0764',
-      textSecondary: '#6b21a8',
-      textMuted: '#9333ea',
-      accent: '#8b5cf6',
-      accentSecondary: '#a855f7',
-      accentGlow: 'rgba(139, 92, 246, 0.32)',
-      borderSubtle: '#e9d5ff',
-      borderStrong: 'rgba(139, 92, 246, 0.42)',
-      cardShadow: '0 20px 45px -10px rgba(139, 92, 246, 0.15)',
-      badgeBg: '#f3e8ff',
-      badgeText: '#7e22ce',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.1) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Byakugan Field', value: '360° Vision' },
-      { label: 'Tenketsu Block', value: '64 Palms' },
-      { label: 'Gentle Grace', value: '100%' },
-    ],
-    skills: [
-      { name: '360° Deep Observability', level: 99, category: 'Monitoring' },
-      { name: 'Twin Lion Fist Chakra Weaving', level: 97, category: 'Fluid Mechanics' },
-      { name: 'Non-Invasive Tenketsu Inspection', level: 96, category: 'Diagnostics' },
-      { name: 'Compassionate UX Systems', level: 100, category: 'Design' },
-    ],
-    projects: [
-      {
-        id: 'byakugan-observability',
-        title: 'Byakugan 360 Full-Stack Observability',
-        category: 'Monitoring & APM',
-        subtag: 'Telemetry Suite',
-        desc: 'Omnipresent visual dashboard rendering every microservice tenketsu pathway with 360-degree blind-spot-free clarity.',
-        tags: ['OpenTelemetry', 'ClickHouse', 'React', 'D3.js'],
-        metrics: 'Zero Blind Spots',
-        color: '#8b5cf6'
-      },
-      {
-        id: 'twin-lion-fist',
-        title: 'Twin Lion Fist Energy Harvester',
-        category: 'Chakra Routing',
-        subtag: 'Drain Mitigation',
-        desc: 'Graceful flow-control mechanism draining adversarial bot bandwidth without blocking genuine human visitors.',
-        tags: ['TypeScript', 'Cloudflare Workers', 'Rate Limiting'],
-        metrics: '99.4% Bot Intercept',
-        color: '#a855f7'
-      },
-      {
-        id: 'lavender-threads',
-        title: 'Hand-Knitted Red Scarf Store',
-        category: 'E-Commerce Platform',
-        subtag: 'Craft Marketplace',
-        desc: 'Boutique artisan knitting marketplace designed with tranquil lavender aesthetics and cozy warm micro-interactions.',
-        tags: ['Next.js', 'Stripe', 'Framer Motion'],
-        metrics: 'Warm & Cozy',
-        color: '#c084fc'
-      },
-      {
-        id: 'gentle-mindfulness',
-        title: 'Shinobi Calm Meditation Companion',
-        category: 'Health & Mindfulness',
-        subtag: 'Audio Therapy',
-        desc: 'Interactive ambient breathing app syncing tranquil soundscapes with user breath pacing via camera biometric pulses.',
-        tags: ['WebRTC', 'Canvas', 'Web Audio'],
-        metrics: 'Calms Stress in 2 Min',
-        color: '#7c3aed'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Fourth Shinobi War',
-        role: 'Vanguard Shinobi',
-        organization: 'Second Division',
-        description: 'Stood fearlessly before the Ten-Tails, re-aligning Naruto\'s dislocated shoulder and inspiring the allied front with indomitable will.'
-      },
-      {
-        year: 'Hyuga Clan',
-        role: 'Eldest Heiress & Style Master',
-        organization: 'Hyuga Main Household',
-        description: 'Mastered the secret Gentle Step Twin Lion Fists, blending ancient Hyuga discipline with boundless compassion.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Hinata has always been watching over me, giving me strength whenever I was about to stumble. Her heart is the gentlest in the world.',
-        author: 'Naruto Uzumaki',
-        title: 'Seventh Hokage',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Her mastery of the Byakugan and Gentle Fist embodies the absolute purity of the Hyuga art.',
-        author: 'Neji Hyuga',
-        title: 'Jonin Genius',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#8b5cf6',
-      '--accent-glow': 'rgba(139, 92, 246, 0.32)',
-      '--bg-primary': '#faf5ff',
-      '--text-primary': '#3b0764'
-    }
-  },
-
-  luffy: {
-    id: 'luffy',
-    slug: 'luffy',
-    name: 'Monkey D. Luffy',
-    japaneseName: 'モンキー・D・ルフィ',
-    series: 'One Piece',
-    universeBadge: 'Straw Hat Pirates',
-    roleTitle: 'Emperor of the Sea & Sun God Nika',
-    headline: 'King of the Pirates',
-    tagline: 'I don\'t want to conquer anything. I just think the guy with the most freedom on the whole sea is the Pirate King!',
-    statement: 'If you don\'t take risks, you can\'t create a future! Laugh out loud, stretch the rules, and sail straight into the horizon.',
-    bio: 'Captain of the Straw Hat Pirates and awakened incarnation of Sun God Nika (Gear 5). Known for boundless freedom, elastic creativity, and uniting fierce rivals into unstoppable dream-chasing fleets.',
-    price: 45,
-    featuredTag: 'Legendary',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'dynamic-hero',
-    accentAnimationType: 'luffy-nika-clouds',
-    colors: {
-      isDark: false,
-      bgPrimary: '#ffffff',
-      bgSecondary: '#fef2f2',
-      bgSurface: 'rgba(255, 255, 255, 0.95)',
-      bgGlass: 'rgba(255, 255, 255, 0.88)',
-      textPrimary: '#1c1917',
-      textSecondary: '#44403c',
-      textMuted: '#78716c',
-      accent: '#dc2626',
-      accentSecondary: '#f59e0b',
-      accentGlow: 'rgba(220, 38, 38, 0.32)',
-      borderSubtle: '#fecaca',
-      borderStrong: 'rgba(220, 38, 38, 0.45)',
-      cardShadow: '0 20px 45px -10px rgba(220, 38, 38, 0.18)',
-      badgeBg: '#fee2e2',
-      badgeText: '#991b1b',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(245, 158, 11, 0.25) 0%, rgba(220, 38, 38, 0.12) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Bounty', value: '฿ 3,000,000,000' },
-      { label: 'Freedom Form', value: 'Gear 5 Nika' },
-      { label: 'Fleet Ships', value: '5,600 Men' },
-    ],
-    skills: [
-      { name: 'Gear 5 Reality-Bending UI', level: 100, category: 'Creative' },
-      { name: 'Conqueror\'s Haki Presence', level: 99, category: 'Leadership' },
-      { name: 'Gomu-Gomu Elastic Scalability', level: 98, category: 'Scale' },
-      { name: 'Meat Devouring Concurrency', level: 100, category: 'Consumption' },
-    ],
-    projects: [
-      {
-        id: 'gear-5-physics',
-        title: 'Nika Elastic Physics Engine',
-        category: 'Creative Physics',
-        subtag: 'Toon Shaders & Ragdoll',
-        desc: 'Delightful cartoon-physics web engine turning regular HTML DOM elements into bouncy, rubbery, squishable playground objects.',
-        tags: ['Matter.js', 'React Three Fiber', 'GLSL', 'Framer Motion'],
-        metrics: '100% Joy Factor',
-        color: '#dc2626'
-      },
-      {
-        id: 'grand-fleet-p2p',
-        title: 'Straw Hat Grand Fleet Mesh Network',
-        category: 'Decentralized P2P',
-        subtag: 'Buster Call Resistant',
-        desc: 'Unstoppable peer-to-peer maritime comms array transmitting Vivre Card location beacons across the Grand Line.',
-        tags: ['Libp2p', 'Go', 'WebRTC', 'IPFS'],
-        metrics: '7 Autonomous Divisions',
-        color: '#f59e0b'
-      },
-      {
-        id: 'sunny-go-os',
-        title: 'Thousand Sunny Soldier Dock OS',
-        category: 'Shipboard Robotics',
-        subtag: 'Embedded Controls',
-        desc: 'Automated paddle-wheel and Coup de Burst air-cannon control firmware engineered by Franky and powered by Cola.',
-        tags: ['Rust', 'Embedded C', 'CAN Bus'],
-        metrics: '1-Mile Air Leap',
-        color: '#ea580c'
-      },
-      {
-        id: 'meat-banquet-app',
-        title: 'Sanji All-Blue Banquet Scheduler',
-        category: 'Food Delivery Platform',
-        subtag: 'Grand Line Culinary',
-        desc: 'Instant high-calorie meal order logistics system that serves roast dinosaur steaks within 60 seconds of docking.',
-        tags: ['Next.js', 'Prisma', 'Tailwind'],
-        metrics: 'Endless Portions',
-        color: '#e11d48'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Wano Country Campaign',
-        role: 'Emperor of the Sea (Yonko)',
-        organization: 'Straw Hat Pirates & Ninja-Pirate-Mink-Samurai Alliance',
-        description: 'Awakened the Legendary Sun God Nika fruit, toppled Kaido from Onigashima, and freed the land of Wano.'
-      },
-      {
-        year: 'East Blue Departure',
-        role: 'Captain & Dreamer',
-        organization: 'Going Merry',
-        description: 'Set out in a humble wooden barrel, recruit Zoro, Nami, Usopp, and Sanji, and broke through the Grand Line entrance.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Luffy is the man who will become the King of the Pirates! I swear my swords to his dream.',
-        author: 'Roronoa Zoro',
-        title: 'King of Hell Swordsman',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'No matter what storms lie ahead, Luffy always makes us believe that the dawn will break.',
-        author: 'Nami',
-        title: 'Cat Burglar Navigator',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#dc2626',
-      '--accent-glow': 'rgba(220, 38, 38, 0.32)',
-      '--bg-primary': '#ffffff',
-      '--text-primary': '#1c1917'
-    }
-  },
-
-  ace: {
-    id: 'ace',
-    slug: 'ace',
-    name: 'Portgas D. Ace',
-    japaneseName: 'ポートガス・D・エース',
-    series: 'One Piece',
-    universeBadge: 'Whitebeard Pirates',
-    roleTitle: 'Fire Fist & 2nd Division Commander',
-    headline: 'Commander of the Flame',
-    tagline: 'Thank you for loving someone like me! Burn brightly with no regrets.',
-    statement: 'I don\'t want to live a thousand years. If I just live through today, that will be enough. Flame on!',
-    bio: 'Second Division Commander of the Whitebeard Pirates and son of the Pirate King Gol D. Roger. Wielder of the Mera Mera no Mi flame fruit. Known for blazing charisma, intense loyalty, and unstoppable firestorm bursts.',
-    price: 39,
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'warrior-vanguard',
-    accentAnimationType: 'ace-fire-embers',
-    colors: {
-      isDark: true,
-      bgPrimary: '#100803',
-      bgSecondary: '#1f1006',
-      bgSurface: 'rgba(31, 16, 6, 0.9)',
-      bgGlass: 'rgba(16, 8, 3, 0.8)',
-      textPrimary: '#fff7ed',
-      textSecondary: '#ffedd5',
-      textMuted: '#fdba74',
-      accent: '#f97316',
-      accentSecondary: '#ea580c',
-      accentGlow: 'rgba(249, 115, 22, 0.42)',
-      borderSubtle: '#431407',
-      borderStrong: 'rgba(249, 115, 22, 0.58)',
-      cardShadow: '0 20px 45px -10px rgba(249, 115, 22, 0.28)',
-      badgeBg: 'rgba(249, 115, 22, 0.2)',
-      badgeText: '#fed7aa',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(249, 115, 22, 0.35) 0%, rgba(234, 88, 12, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Bounty', value: '฿ 550,000,000' },
-      { label: 'Hiken Temperature', value: '3,000 °C' },
-      { label: 'Division Ships', value: '1,600 Men' },
-    ],
-    skills: [
-      { name: 'Fire Fist Pyrotechnic Pipelines', level: 99, category: 'Compute' },
-      { name: 'High-Temperature Flame Shaders', level: 98, category: 'Graphics' },
-      { name: 'Striker Boat Propulsion Fueling', level: 94, category: 'Engines' },
-      { name: 'Unshakable Brotherly Devotion', level: 100, category: 'Loyalty' },
-    ],
-    projects: [
-      {
-        id: 'hiken-cluster',
-        title: 'Hiken Molten Cloud Accelerator',
-        category: 'High-Throughput GPU',
-        subtag: 'Molten Compute Cluster',
-        desc: 'Blazing GPU kernel cluster melting large language model inference bottlenecks with intense parallel firestorms.',
-        tags: ['CUDA', 'PyTorch', 'Triton', 'C++'],
-        metrics: '10x Matrix Multiplies',
-        color: '#f97316'
-      },
-      {
-        id: 'striker-boat',
-        title: 'Striker Flame Engine Telemetry',
-        category: 'Thermal Dynamics',
-        subtag: 'Engine Controller',
-        desc: 'Custom propulsion telemetry software powering Ace’s personal flame-driven one-man jet ski across choppy sea waves.',
-        tags: ['Rust', 'CAN Bus', 'IoT'],
-        metrics: '65 Knots Water Speed',
-        color: '#ea580c'
-      },
-      {
-        id: 'whitebeard-armada',
-        title: 'Moby Dick Fleet Coordinate Link',
-        category: 'Fleet Comms',
-        subtag: 'Encrypted Radio',
-        desc: 'Secure fleet tactical radar keeping 16 division commanders synchronized across vast oceans.',
-        tags: ['Go', 'WebSockets', 'Tailwind'],
-        metrics: '16 Divisions Linked',
-        color: '#fb923c'
-      },
-      {
-        id: 'brotherhood-cup',
-        title: 'Sake Cup Oath Smart Contract',
-        category: 'Smart Contracts',
-        subtag: 'Decentralized Oath',
-        desc: 'Immutable multi-sig brotherhood pact binding Luffy, Ace, and Sabo across lifetime horizons.',
-        tags: ['Solidity', 'Foundry', 'Ethereum'],
-        metrics: 'Eternal Bond',
-        color: '#dc2626'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Commander Era',
-        role: '2nd Division Commander',
-        organization: 'Whitebeard Pirates (Yonko)',
-        description: 'Commanded the vanguard fleet under Edward Newgate, protecting territories across the turbulent New World.'
-      },
-      {
-        year: 'Spade Pirates',
-        role: 'Captain & Flame Wielder',
-        organization: 'Spade Pirates',
-        description: 'Formed crew after departing Mt. Colubo, acquired the Flame-Flame fruit, and dueled Jinbe for five consecutive days.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Ace is my son, and whoever touches a hair on his head will answer to the full might of the Whitebeard fleet.',
-        author: 'Edward Newgate',
-        title: 'Whitebeard, Emperor of the Sea',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'He always ran ahead of me, strong and fearless. I will carry his will forever.',
-        author: 'Monkey D. Luffy',
-        title: 'Brother & Pirate King',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#f97316',
-      '--accent-glow': 'rgba(249, 115, 22, 0.42)',
-      '--bg-primary': '#100803',
-      '--text-primary': '#fff7ed'
-    }
-  },
-
-  sabo: {
-    id: 'sabo',
-    slug: 'sabo',
-    name: 'Sabo',
-    japaneseName: 'サボ',
-    series: 'One Piece',
-    universeBadge: 'Revolutionary Army',
-    roleTitle: 'Chief of Staff & Flame Emperor',
-    headline: 'No. 2 of the Revolution',
-    tagline: 'Inheriting the flame to overthrow corrupt world hierarchies.',
-    statement: 'Ace\'s flame will never die. His will lives on in my claws. We will shatter the Celestial Dragons\' stranglehold.',
-    bio: 'Chief of Staff and second-in-command of the Revolutionary Army. Trained by Monkey D. Dragon and successor to the Flame-Flame fruit. Master of Dragon Claw martial arts and strategic undercover operations.',
-    price: 39,
-    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'asymmetric-split',
-    accentAnimationType: 'sabo-dragon-flames',
-    colors: {
-      isDark: true,
-      bgPrimary: '#08111e',
-      bgSecondary: '#0f2038',
-      bgSurface: 'rgba(15, 32, 56, 0.88)',
-      bgGlass: 'rgba(8, 17, 30, 0.8)',
-      textPrimary: '#f8fafc',
-      textSecondary: '#cbd5e1',
-      textMuted: '#94a3b8',
-      accent: '#0284c7',
-      accentSecondary: '#f97316',
-      accentGlow: 'rgba(2, 132, 199, 0.38)',
-      borderSubtle: '#1e3a5f',
-      borderStrong: 'rgba(2, 132, 199, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(2, 132, 199, 0.22)',
-      badgeBg: 'rgba(2, 132, 199, 0.18)',
-      badgeText: '#7dd3fc',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(2, 132, 199, 0.28) 0%, rgba(249, 115, 22, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Bounty', value: '฿ 602,000,000' },
-      { label: 'Rank', value: 'No. 2 Chief of Staff' },
-      { label: 'Dragon Claws', value: 'Steel Shatterer' },
-    ],
-    skills: [
-      { name: 'Ryusoken Dragon Claw Martial Code', level: 98, category: 'Penetration' },
-      { name: 'Flame Emperor Dual Element', level: 97, category: 'Combat' },
-      { name: 'Underground Revolutionary Comms', level: 99, category: 'Network' },
-      { name: 'Stealth Infiltration Tactics', level: 96, category: 'Ops' },
-    ],
-    projects: [
-      {
-        id: 'dragon-breath',
-        title: 'Ryusoken Structural Penetration Tester',
-        category: 'Vulnerability Analysis',
-        subtag: 'Core Fracture Tool',
-        desc: 'Advanced penetration testing suite that identifies the critical focal point in server fortresses and shatters it with clean pressure.',
-        tags: ['Go', 'Raw Sockets', 'Kernel Exploits', 'Zero-Day'],
-        metrics: 'Cracks Hardened Defenses',
-        color: '#0284c7'
-      },
-      {
-        id: 'rev-dispatch',
-        title: 'Revolutionary Army Dispatch Hub',
-        category: 'Encrypted Comms',
-        subtag: 'Decentralized Comms',
-        desc: 'End-to-end encrypted dispatch channel synchronizing Revolutionary Army commanders across all four oceans.',
-        tags: ['Signal Protocol', 'Rust', 'Tauri', 'SQLite'],
-        metrics: 'Zero Celestial Intercepts',
-        color: '#f97316'
-      },
-      {
-        id: 'marijoa-infiltrator',
-        title: 'Holy Land Telemetry Spoof',
-        category: 'Cyber Warfare',
-        subtag: 'Telemetry Cloak',
-        desc: 'Ghost signal generator disguising elite spy drones inside the World Government red-line surveillance grid.',
-        tags: ['C', 'SDR (Software Radio)', 'GNU Radio'],
-        metrics: '100% Stealth Rating',
-        color: '#38bdf8'
-      },
-      {
-        id: 'flame-emperor-hiken',
-        title: 'Mera-Mera Inherited Will Dashboard',
-        category: 'Memorial & Ledger',
-        subtag: 'Interactive Story',
-        desc: 'Living commemorative interactive narrative tracing the shared fire of Ace, Luffy, and Sabo with 3D flame particles.',
-        tags: ['Three.js', 'WebAudio', 'Framer Motion'],
-        metrics: 'Eternal Flame',
-        color: '#ea580c'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Reverie Infiltration',
-        role: 'Flame Emperor & Field Leader',
-        organization: 'Revolutionary Army',
-        description: 'Infiltrated Mary Geoise, declared open war on Celestial Dragons, and liberated former Warlord Bartholomew Kuma.'
-      },
-      {
-        year: 'Dressrosa Arc',
-        role: 'Colosseum Champion & Mera Mera Successor',
-        organization: 'Corrida Colosseum',
-        description: 'Won the Mera Mera no Mi in combat, honoring Ace\'s legacy and shattering Doflamingo\'s underground arms factory.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Sabo has grown into an indispensable leader. His tactical clarity and Dragon Claw technique are unmatched.',
-        author: 'Monkey D. Dragon',
-        title: 'Supreme Commander, Revolutionary Army',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Seeing him use Ace\'s fire made me cry with happiness. Sabo is truly the best big brother!',
-        author: 'Monkey D. Luffy',
-        title: 'Emperor of the Sea',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#0284c7',
-      '--accent-glow': 'rgba(2, 132, 199, 0.38)',
-      '--bg-primary': '#08111e',
-      '--text-primary': '#f8fafc'
-    }
-  },
-
-  nami: {
-    id: 'nami',
-    slug: 'nami',
-    name: 'Nami',
-    japaneseName: 'ナミ',
-    series: 'One Piece',
-    universeBadge: 'Straw Hat Pirates',
-    roleTitle: 'Cat Burglar & Master Climate Cartographer',
-    headline: 'Navigator of the Pirate King',
-    tagline: 'Predicting every typhoon before it forms, collecting every berry along the way.',
-    statement: 'Life is like a pencil that will surely run out, but will leave the beautiful writing of life. Chart your course and never miss the gold.',
-    bio: 'Navigator of the Straw Hat Pirates with an uncanny physiological sensitivity to barometric shifts. Uses the Clima-Tact to manipulate micro-climates, summon thunderclouds, and map the world’s final frontiers.',
-    price: 37,
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'flanked-centered',
-    accentAnimationType: 'nami-clima-tact',
-    colors: {
-      isDark: false,
-      bgPrimary: '#fffbf5',
-      bgSecondary: '#ffedd5',
-      bgSurface: 'rgba(255, 255, 255, 0.95)',
-      bgGlass: 'rgba(255, 251, 245, 0.85)',
-      textPrimary: '#431407',
-      textSecondary: '#7c2d12',
-      textMuted: '#9a3412',
-      accent: '#f97316',
-      accentSecondary: '#06b6d4',
-      accentGlow: 'rgba(249, 115, 22, 0.35)',
-      borderSubtle: '#fed7aa',
-      borderStrong: 'rgba(249, 115, 22, 0.45)',
-      cardShadow: '0 20px 45px -10px rgba(249, 115, 22, 0.16)',
-      badgeBg: '#ffedd5',
-      badgeText: '#9a3412',
-      gradientHero: 'radial-gradient(ellipse at 50% 35%, rgba(249, 115, 22, 0.22) 0%, rgba(6, 182, 212, 0.12) 45%, transparent 70%)',
-    },
-    stats: [
-      { label: 'Bounty', value: '฿ 366,000,000' },
-      { label: 'World Map', value: '85% Charted' },
-      { label: 'Typhoon Prediction', value: '100% Accurate' },
-    ],
-    skills: [
-      { name: 'Clima-Tact Atmospheric Shaping', level: 99, category: 'Weather' },
-      { name: 'Grand Line Barometric Cartography', level: 100, category: 'Navigation' },
-      { name: 'Berry Budget Optimization', level: 100, category: 'Finance' },
-      { name: 'Thunderbolt Tempo Shaders', level: 95, category: 'Graphics' },
-    ],
-    projects: [
-      {
-        id: 'clima-tact-weather',
-        title: 'Clima-Tact Dynamic Weather Simulator',
-        category: 'Atmospheric Physics',
-        subtag: 'Micro-Climate Engine',
-        desc: 'Real-time thermodynamic fluid model simulating heat balls, cool balls, and thunder clouds in realistic wind tunnels.',
-        tags: ['WebGL', 'GLSL', 'Fluid Simulation', 'Three.js'],
-        metrics: 'Realistic Lightning Strike',
-        color: '#06b6d4'
-      },
-      {
-        id: 'grand-line-nav',
-        title: 'Log Pose Multi-Vector Compass',
-        category: 'Geospatial Web',
-        subtag: 'Magnetic Field GIS',
-        desc: 'Triple-needle Log Pose GIS navigation system charting volatile magnetic anomalies across the New World.',
-        tags: ['Mapbox GL', 'GeoJSON', 'TypeScript'],
-        metrics: 'Zero Lost Ships',
-        color: '#f97316'
-      },
-      {
-        id: 'berry-ledger',
-        title: 'Straw Hat Berry Treasury & Escrow',
-        category: 'Fintech & Bookkeeping',
-        subtag: 'Accounting Ledger',
-        desc: 'Ruthless pirate bookkeeping app tracking Franky’s cola expenses, Luffy’s meat budget, and Zoro’s sword repair costs.',
-        tags: ['Next.js', 'PostgreSQL', 'Tailwind', 'Stripe'],
-        metrics: '100% Tax Deductible',
-        color: '#eab308'
-      },
-      {
-        id: 'zeus-cloud-companion',
-        title: 'Zeus Thundercloud Voice AI',
-        category: 'Voice AI & IoT',
-        subtag: 'Smart Weather Cloud',
-        desc: 'Playful voice-enabled thunderstorm assistant that serves tea snacks and zaps intruders upon verbal command.',
-        tags: ['Web Speech API', 'Audio Worklet', 'WebSockets'],
-        metrics: 'Millions of Volts',
-        color: '#3b82f6'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Onigashima Raid',
-        role: 'Navigator & Zeus Commander',
-        organization: 'Straw Hat Pirates',
-        description: 'Tamed Big Mom\'s homie Zeus, unleashed devastating thunderbolts against Ulti, and safely navigated through boiling seas.'
-      },
-      {
-        year: 'Weatheria Island',
-        role: 'Meteorological Scholar',
-        organization: 'Sky Island Weatheria',
-        description: 'Spent two years studying high-altitude atmospheric sciences under weather wizards, developing the Sorcery Clima-Tact.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Without Nami, the Straw Hat ship wouldn\'t have made it three days into the Grand Line. She is the ultimate navigator.',
-        author: 'Monkey D. Luffy',
-        title: 'Captain',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Nami-san is as brilliant as she is stunning! Every tangerine on our deck flourishes under her gentle care.',
-        author: 'Sanji',
-        title: 'Cook of the Straw Hats',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#f97316',
-      '--accent-glow': 'rgba(249, 115, 22, 0.35)',
-      '--bg-primary': '#fffbf5',
-      '--text-primary': '#431407'
-    }
-  },
-
-  'zero-two': {
-    id: 'zero-two',
-    slug: 'zero-two',
-    name: 'Zero Two',
-    japaneseName: 'ゼロツー',
-    series: 'Darling in the Franxx',
-    universeBadge: 'APE Plantation 13',
-    roleTitle: 'Partner Killer & Neural Cybernetic Pilot',
-    headline: 'Code 002: Strelitzia Lead',
-    tagline: 'Will you ride with me, Darling? Or do you fear being consumed by the flames?',
-    statement: 'If you don\'t belong here, then a place like this doesn\'t matter. Let\'s fly together beyond the scorched earth.',
-    bio: 'The red-horned Klaxosaur-human hybrid pilot of Strelitzia. Known for fierce passion, sweet honey-flavored lollipops, and high-octane cybernetic telemetry interfaces that synchronize dual minds into divine mecha combat.',
-    price: 45,
-    featuredTag: 'Cyberpunk',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'cyberpunk-hud',
-    accentAnimationType: 'zero-two-cyber-hex',
-    colors: {
-      isDark: true,
-      bgPrimary: '#0e0508',
-      bgSecondary: '#1c0a12',
-      bgSurface: 'rgba(28, 10, 18, 0.9)',
-      bgGlass: 'rgba(14, 5, 8, 0.82)',
-      textPrimary: '#fff1f2',
-      textSecondary: '#fecdd3',
-      textMuted: '#fda4af',
-      accent: '#f43f5e',
-      accentSecondary: '#fb7185',
-      accentGlow: 'rgba(244, 63, 94, 0.42)',
-      borderSubtle: '#4c0d1e',
-      borderStrong: 'rgba(244, 63, 94, 0.6)',
-      cardShadow: '0 20px 45px -10px rgba(244, 63, 94, 0.28)',
-      badgeBg: 'rgba(244, 63, 94, 0.2)',
-      badgeText: '#fecdd3',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(244, 63, 94, 0.35) 0%, rgba(251, 113, 133, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Pilot Code', value: '002' },
-      { label: 'Synchronization', value: '99.8%' },
-      { label: 'Klaxosaur Kills', value: '500+' },
-    ],
-    skills: [
-      { name: 'Dual Neural Telemetry Sync', level: 99, category: 'BioTech' },
-      { name: 'Strelitzia Cockpit HUD Shaders', level: 98, category: 'Graphics' },
-      { name: 'Klaxosaur Hybrid Resilience', level: 96, category: 'Systems' },
-      { name: 'Sweet Honey Dipping Analytics', level: 100, category: 'Confection' },
-    ],
-    projects: [
-      {
-        id: 'strelitzia-hud',
-        title: 'Strelitzia Iron Maiden Cockpit HUD',
-        category: 'Cybernetic Interface',
-        subtag: 'Real-time Cockpit HUD',
-        desc: 'Futuristic high-DPI holographic HUD rendering bio-pulse telemetry, magma fuel reserves, and Klaxosaur thermal signatures.',
-        tags: ['Three.js', 'React Three Fiber', 'GLSL', 'Tailwind'],
-        metrics: 'Zero Sync Lag',
-        color: '#f43f5e'
-      },
-      {
-        id: 'neural-sync-meter',
-        title: 'Pistil & Stamen Biometric Synapse',
-        category: 'Bio-Signal Processing',
-        subtag: 'EEG Neural Network',
-        desc: 'Deep neural EEG filter that stabilizes heartbeat and blood pressure fluctuations between dual pilots in high-stress combat.',
-        tags: ['Python', 'SciPy', 'FastAPI', 'WebSockets'],
-        metrics: '99.8% Sync Rate',
-        color: '#fb7185'
-      },
-      {
-        id: 'honey-lollipop',
-        title: 'Sugar & Honey Sweetness Regulator',
-        category: 'Micro-Application',
-        subtag: 'Sensory Palette App',
-        desc: 'A vibrant retro candy companion keeping track of sweet honey stocks and darling date reminders.',
-        tags: ['React', 'CSS Gradients', 'PWA'],
-        metrics: '100% Sweetness',
-        color: '#e11d48'
-      },
-      {
-        id: 'golden-bough',
-        title: 'The Beast and the Prince Interactive Book',
-        category: 'Digital Narrative',
-        subtag: 'Fairy Tale Reader',
-        desc: 'Interactive digital storybook with handmade illustrated watercolours and delicate paper-turn micro-interactions.',
-        tags: ['HTML5 Canvas', 'GSAP', 'TypeScript'],
-        metrics: 'Tear-Jerking Story',
-        color: '#be123c'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Space Combat Era',
-        role: 'Strelitzia True Apus Pilot',
-        organization: 'Squad 13 & Earth Resistance',
-        description: 'Piloted Strelitzia across cosmic frontiers to safeguard human emotional heritage from VIRM assimilation.'
-      },
-      {
-        year: 'Special Force',
-        role: 'APE Elite 9\'s Vanguard',
-        organization: 'APE High Command',
-        description: 'Achieved legendary combat score as the solo pilot capable of operating Strelitzia in rampaging beast form.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Zero Two showed me what it truly means to live and fly. With her, I am not afraid of anything in this universe.',
-        author: 'Hiro (Code 016)',
-        title: 'Stamen, Strelitzia',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'She is wild and unpredictable, but her dedication to Hiro is the brightest flame in our plantation.',
-        author: 'Ichigo (Code 015)',
-        title: 'Squad 13 Leader',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#f43f5e',
-      '--accent-glow': 'rgba(244, 63, 94, 0.42)',
-      '--bg-primary': '#0e0508',
-      '--text-primary': '#fff1f2'
-    }
-  },
-
-  tanjiro: {
-    id: 'tanjiro',
-    slug: 'tanjiro',
-    name: 'Tanjiro Kamado',
-    japaneseName: '竈門炭治郎',
-    series: 'Demon Slayer',
-    universeBadge: 'Demon Slayer Corps',
-    roleTitle: 'Sun Breathing Pioneer & Water Breathing Master',
-    headline: 'Wielder of Hinokami Kagura',
-    tagline: 'No matter how many times you fall, stand up again! Set your heart ablaze.',
-    statement: 'Those who regret their own actions, I will never trample over them. Because demons were once human too.',
-    bio: 'Demon Slayer who mastered both traditional Water Breathing and the ancestral Sun Breathing (Hinokami Kagura). Blessed with an extraordinary sense of smell that perceives the "opening thread" to slice through intractable bugs.',
-    price: 42,
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'flanked-centered',
-    accentAnimationType: 'tanjiro-dual-breathing',
-    colors: {
-      isDark: true,
-      bgPrimary: '#08140c',
-      bgSecondary: '#122619',
-      bgSurface: 'rgba(18, 38, 25, 0.88)',
-      bgGlass: 'rgba(8, 20, 12, 0.8)',
-      textPrimary: '#f0fdf4',
-      textSecondary: '#bbf7d0',
-      textMuted: '#86efac',
-      accent: '#16a34a',
-      accentSecondary: '#dc2626',
-      accentGlow: 'rgba(22, 163, 74, 0.38)',
-      borderSubtle: '#1f482d',
-      borderStrong: 'rgba(22, 163, 74, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(22, 163, 74, 0.22)',
-      badgeBg: 'rgba(22, 163, 74, 0.18)',
-      badgeText: '#86efac',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(22, 163, 74, 0.25) 0%, rgba(220, 38, 38, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Sun Forms', value: '13 Dance Steps' },
-      { label: 'Opening Thread', value: '100% Sight' },
-      { label: 'Blade Color', value: 'Jet Black' },
-    ],
-    skills: [
-      { name: 'Hinokami Kagura Flame Shaders', level: 99, category: 'Graphics' },
-      { name: 'Opening Thread Scent Profiler', level: 100, category: 'Diagnostics' },
-      { name: 'Total Concentration Constant', level: 98, category: 'Performance' },
-      { name: 'Unbreakable Compassion Core', level: 100, category: 'Ethics' },
-    ],
-    projects: [
-      {
-        id: 'opening-thread-detector',
-        title: 'Opening Thread Root Cause Profiler',
-        category: 'APM Diagnostics',
-        subtag: 'Anomaly Root-Cause Finder',
-        desc: 'Innovative telemetry engine that sniffs code smells and paints a glowing visual thread pointing straight to the guilty bottleneck.',
-        tags: ['Rust', 'eBPF', 'OpenTelemetry', 'React'],
-        metrics: 'Zero-Guess Diagnostics',
-        color: '#16a34a'
-      },
-      {
-        id: 'dual-breathing-waves',
-        title: 'Dual Breathing Fluid Simulation',
-        category: 'Interactive WebGL',
-        subtag: 'Fluid Ribbon Shaders',
-        desc: 'Breathtaking 3D canvas simulation blending fluid Ukiyo-e water wave ribbons with crackling solar flame ribbons.',
-        tags: ['Three.js', 'GLSL', 'Framer Motion'],
-        metrics: '60 FPS Ultra Fluid',
-        color: '#dc2626'
-      },
-      {
-        id: 'nezuko-box-safe',
-        title: 'Nezuko Mist-Wood Protected Storage',
-        category: 'Cold Storage Vault',
-        subtag: 'Hardware Enclave',
-        desc: 'Ultra-durable, sun-shielded hardware storage vault protecting delicate data structures during daylight hours.',
-        tags: ['Rust', 'EncFS', 'ECC RAM'],
-        metrics: '100% Sunlight Proof',
-        color: '#b91c1c'
-      },
-      {
-        id: 'corps-crow-mesh',
-        title: 'Kasugai Crow P2P Dispatch',
-        category: 'Emergency Comms',
-        subtag: 'Decentralized Radio',
-        desc: 'Autonomous avian mesh networking protocol relaying demonic alert telemetry through mountain passes.',
-        tags: ['LoRaWAN', 'C++', 'Node.js'],
-        metrics: 'Zero Delayed Crows',
-        color: '#15803d'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Infinity Castle Campaign',
-        role: 'Sun Breathing Demon Slayer',
-        organization: 'Demon Slayer Corps',
-        description: 'Connected all 12 forms of Hinokami Kagura into the thirteenth form, facing Muzan Kibutsuji until dawn broke.'
-      },
-      {
-        year: 'Final Selection',
-        role: 'Disciple of Sakonji Urokodaki',
-        organization: 'Mt. Sagiri Training Grounds',
-        description: 'Severed the giant boulder in half with a clean water strike, earning Nichirin blade and passing Mt. Fujikasane.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Kamado, my boy! Set your heart ablaze and keep moving forward! You have the spirit of a true Hashira!',
-        author: 'Kyojuro Rengoku',
-        title: 'Flame Hashira',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Tanjiro taught me that compassion and lethal discipline are not opposites. He returned warmth to my frozen world.',
-        author: 'Kanao Tsuyuri',
-        title: 'Flower Breathing Slayer',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#16a34a',
-      '--accent-glow': 'rgba(22, 163, 74, 0.38)',
-      '--bg-primary': '#08140c',
-      '--text-primary': '#f0fdf4'
-    }
-  },
-
-  zenitsu: {
-    id: 'zenitsu',
-    slug: 'zenitsu',
-    name: 'Zenitsu Agatsuma',
-    japaneseName: '我妻善逸',
-    series: 'Demon Slayer',
-    universeBadge: 'Demon Slayer Corps',
-    roleTitle: 'Thunder Breathing Godspeed & Reflex Architect',
-    headline: 'Master of First Form',
-    tagline: 'If you can only master one thing, hone it to the utmost peak!',
-    statement: 'Don\'t weep, don\'t despair. Hone that single form until it becomes sharper and faster than the lightning itself.',
-    bio: 'Demon Slayer trained under former Thunder Hashira Jigoro Kuwajima. Although prone to paralyzing anxiety while awake, his subconscious Godspeed state strikes with blinding thunderclaps faster than the human eye can perceive.',
-    price: 37,
-    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'dynamic-hero',
-    accentAnimationType: 'zenitsu-thunderclap',
-    colors: {
-      isDark: true,
-      bgPrimary: '#0f0e04',
-      bgSecondary: '#1f1a08',
-      bgSurface: 'rgba(31, 26, 8, 0.9)',
-      bgGlass: 'rgba(15, 14, 4, 0.8)',
-      textPrimary: '#fefce8',
-      textSecondary: '#fef08a',
-      textMuted: '#fde047',
-      accent: '#eab308',
-      accentSecondary: '#f59e0b',
-      accentGlow: 'rgba(234, 179, 8, 0.42)',
-      borderSubtle: '#42330b',
-      borderStrong: 'rgba(234, 179, 8, 0.6)',
-      cardShadow: '0 20px 45px -10px rgba(234, 179, 8, 0.26)',
-      badgeBg: 'rgba(234, 179, 8, 0.2)',
-      badgeText: '#fef08a',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(234, 179, 8, 0.32) 0%, rgba(245, 158, 11, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Godspeed Velocity', value: 'Mach 3.5' },
-      { label: 'Thunderclap Form', value: 'Sixfold / Eightfold' },
-      { label: 'Seventh Form', value: 'Honoikazuchi no Kami' },
-    ],
-    skills: [
-      { name: 'Thunderclap Godspeed Acceleration', level: 100, category: 'Speed' },
-      { name: 'Acute Audio Frequencies Scenting', level: 99, category: 'Audio' },
-      { name: 'Seventh Form Flaming Thunder God', level: 97, category: 'Creation' },
-      { name: 'Subconscious Sleep-Execution', level: 95, category: 'Threading' },
-    ],
-    projects: [
-      {
-        id: 'godspeed-scheduler',
-        title: 'Thunderclap Sixfold Micro-Scheduler',
-        category: 'Kernel Schedulers',
-        subtag: 'Instant Preemption Engine',
-        desc: 'Hyper-responsive task dispatcher preempting long-running computational jobs within single processor clock cycles.',
-        tags: ['Rust', 'Linux CFS', 'Assembly x86_64'],
-        metrics: 'Mach-Speed Preemption',
-        color: '#eab308'
-      },
-      {
-        id: 'acute-hearing',
-        title: 'Auditory Heartbeat Demultiplexer',
-        category: 'Audio DSP',
-        subtag: 'Acoustic Intelligence',
-        desc: 'Advanced microphone array detecting deceit and demonic motives through microscopic heartbeat timbre anomalies.',
-        tags: ['Web Audio API', 'TensorFlow.js', 'FFT'],
-        metrics: 'Sub-Hz Discrimination',
-        color: '#f59e0b'
-      },
-      {
-        id: 'sparrow-telecom',
-        title: 'Chuntaro Sparrow Micro-Telemetry',
-        category: 'Tiny IoT',
-        subtag: 'Featherweight Messaging',
-        desc: 'Ultra-low battery mesh tracker transmitting distress chirps across mountain ridges with zero power draw.',
-        tags: ['Zigbee', 'Embedded Rust', 'Solar Panel'],
-        metrics: 'Infinite Standby',
-        color: '#ca8a04'
-      },
-      {
-        id: 'nezuko-serenade',
-        title: 'Nezuko-chan Flower Delivery Gazette',
-        category: 'Interactive Love Letter',
-        subtag: 'Artisan Web Showcase',
-        desc: 'A charming interactive web greeting packed with blooming dandelions and bashful golden sparks.',
-        tags: ['Next.js', 'Framer Motion', 'Tailwind'],
-        metrics: 'Pure Devotion',
-        color: '#fbbf24'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Infinity Castle Duel',
-        role: 'Creator of Seventh Form',
-        organization: 'Demon Slayer Corps',
-        description: 'Single-handedly defeated Upper Moon Six Kaigaku using his self-invented form, Honoikazuchi no Kami.'
-      },
-      {
-        year: 'Natagumo Mountain',
-        role: 'Godspeed Slayer',
-        organization: 'Demon Slayer Corps',
-        description: 'Overcame paralyzing poison to defeat the brother spider demon with Sixfold Thunderclap and Flash.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Zenitsu is a master who took a single strike and forged it into pure divine lightning. I am honored to fight alongside him.',
-        author: 'Tanjiro Kamado',
-        title: 'Sun Breathing Slayer',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'If you master one form, hone it to the absolute limit. Never forget the sound of your lightning.',
-        author: 'Jigoro Kuwajima',
-        title: 'Former Thunder Hashira',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#eab308',
-      '--accent-glow': 'rgba(234, 179, 8, 0.42)',
-      '--bg-primary': '#0f0e04',
-      '--text-primary': '#fefce8'
-    }
-  },
-
-  inosuke: {
-    id: 'inosuke',
-    slug: 'inosuke',
-    name: 'Inosuke Hashibira',
-    japaneseName: '嘴平伊之助',
-    series: 'Demon Slayer',
-    universeBadge: 'Demon Slayer Corps',
-    roleTitle: 'Beast Breathing Pioneer & Raw Instinct Engineer',
-    headline: 'King of the Mountains',
-    tagline: 'Comin\' through! Charge headfirst into the fire and tear through roadblocks!',
-    statement: 'There are no shortcuts! We clash, we bleed, we grow stronger! Lord Inosuke never cowers before an enemy!',
-    bio: 'Raised by mountain boars and self-taught creator of Beast Breathing. Armed with twin serrated Nichirin katanas, extraordinary spatial perception, and dislocatable joints that allow him to squeeze through impossible network constraints.',
-    price: 35,
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'warrior-vanguard',
-    accentAnimationType: 'inosuke-beast-slashes',
-    colors: {
-      isDark: true,
-      bgPrimary: '#081018',
-      bgSecondary: '#0f1c2b',
-      bgSurface: 'rgba(15, 28, 43, 0.88)',
-      bgGlass: 'rgba(8, 16, 24, 0.8)',
-      textPrimary: '#f0f9ff',
-      textSecondary: '#bae6fd',
-      textMuted: '#7dd3fc',
-      accent: '#0284c7',
-      accentSecondary: '#854d0e',
-      accentGlow: 'rgba(2, 132, 199, 0.38)',
-      borderSubtle: '#1e3852',
-      borderStrong: 'rgba(2, 132, 199, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(2, 132, 199, 0.22)',
-      badgeBg: 'rgba(2, 132, 199, 0.18)',
-      badgeText: '#7dd3fc',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(2, 132, 199, 0.28) 0%, rgba(133, 77, 14, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Spatial Sense', value: 'Entire Mountain' },
-      { label: 'Joint Dislocation', value: 'Any Angle' },
-      { label: 'Boar Charge Force', value: '100% Impact' },
-    ],
-    skills: [
-      { name: 'Spatial Awareness Sonar', level: 99, category: 'Sensing' },
-      { name: 'Twin Serrated Slash Concurrency', level: 97, category: 'Execution' },
-      { name: 'Joint Dislocation Bypassing', level: 96, category: 'Hardware' },
-      { name: 'Boar Mask Intimidation UI', level: 100, category: 'Design' },
-    ],
-    projects: [
-      {
-        id: 'beast-spatial-radar',
-        title: 'Seventh Form Spatial Awareness Radar',
-        category: 'Geospatial Radar',
-        subtag: 'Atmospheric Vibration Radar',
-        desc: 'Skin-vibration atmospheric sonar sensing moving targets up to 5 miles away through solid bedrock.',
-        tags: ['Rust', 'Spatial DSP', 'WebGL', 'Three.js'],
-        metrics: 'Sub-Meter Accuracy',
-        color: '#0284c7'
-      },
-      {
-        id: 'serrated-katana',
-        title: 'Twin Serrated Knife Stream Slicer',
-        category: 'Stream Processing',
-        subtag: 'Serrated Data Carver',
-        desc: 'Aggressive multi-threaded event-stream shredder carving big-data logs into ingestible pieces with ragged tooth efficiency.',
-        tags: ['Go', 'Apache Kafka', 'SIMD'],
-        metrics: '2 Million Events/sec',
-        color: '#38bdf8'
-      },
-      {
-        id: 'boar-charge-benchmark',
-        title: 'Boar Rush Maximum Stress Tester',
-        category: 'Chaos Engineering',
-        subtag: 'Brute Force Attack Simulator',
-        desc: 'Unrelenting brute-force chaos engineer charging headfirst into firewalls to discover where concrete fractures.',
-        tags: ['Python', 'Chaos Monkey', 'Docker'],
-        metrics: 'Uncompromising Impact',
-        color: '#854d0e'
-      },
-      {
-        id: 'tempura-devour',
-        title: 'Fried Tempura Devour Scoreboard',
-        category: 'Culinary Gamification',
-        subtag: 'Competitive Eating',
-        desc: 'Hilarious calorie scoreboard tracking who can eat crispy fried shrimp tempura the fastest without choking.',
-        tags: ['React', 'Framer Motion', 'Tailwind'],
-        metrics: 'Top Score: 48 Tempura',
-        color: '#eab308'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Upper Moon Two Battle',
-        role: 'Vanguard Beast Slayer',
-        organization: 'Demon Slayer Corps',
-        description: 'Fought alongside Kanao to avenge Shinobu Kocho, shredding Doma\'s icy crystalline clones with unpredictable angled strikes.'
-      },
-      {
-        year: 'Mountain Origins',
-        role: 'King of the Wild Mountain',
-        organization: 'Mt. Omoto Wildlife',
-        description: 'Survived the wilderness alone from infancy, wrestling bears and crafting serrated blades from chipped Nichirin ore.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Inosuke\'s spatial awareness saved my life on Mt. Natagumo. His raw instincts are faster than any formal school of swordsmanship.',
-        author: 'Tanjiro Kamado',
-        title: 'Comrade in Arms',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'He may scream like a maniac and mispronounce everyone\'s names, but there is nobody braver when the clash begins.',
-        author: 'Zenitsu Agatsuma',
-        title: 'Thunder Slayer',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#0284c7',
-      '--accent-glow': 'rgba(2, 132, 199, 0.38)',
-      '--bg-primary': '#081018',
-      '--text-primary': '#f0f9ff'
-    }
-  },
-
-  giyuu: {
-    id: 'giyuu',
-    slug: 'giyuu',
-    name: 'Giyuu Tomioka',
-    japaneseName: '冨岡義勇',
-    series: 'Demon Slayer',
-    universeBadge: 'Demon Slayer Corps',
-    roleTitle: 'Water Hashira & Creator of Dead Calm',
-    headline: 'The Stillness of the Deep',
-    tagline: 'When the world is in chaos, become the unmoving water that neutralizes all storms.',
-    statement: 'Don\'t cry. Don\'t surrender to sorrow. Become like calm water—reflecting reality without distortion.',
-    bio: 'The Water Hashira of the Demon Slayer Corps. Creator of the legendary Eleventh Form: Dead Calm (Nagi), an ultimate defensive state where incoming attacks are absorbed into absolute stillness and negated.',
-    price: 45,
-    featuredTag: 'Top Hashira',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'zen-minimal',
-    accentAnimationType: 'giyuu-dead-calm',
-    colors: {
-      isDark: true,
-      bgPrimary: '#040d1a',
-      bgSecondary: '#0a192f',
-      bgSurface: 'rgba(10, 25, 47, 0.88)',
-      bgGlass: 'rgba(4, 13, 26, 0.8)',
-      textPrimary: '#f8fafc',
-      textSecondary: '#cbd5e1',
-      textMuted: '#94a3b8',
-      accent: '#0284c7',
-      accentSecondary: '#b91c1c',
-      accentGlow: 'rgba(2, 132, 199, 0.38)',
-      borderSubtle: '#1e385b',
-      borderStrong: 'rgba(2, 132, 199, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(2, 132, 199, 0.22)',
-      badgeBg: 'rgba(2, 132, 199, 0.18)',
-      badgeText: '#7dd3fc',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(2, 132, 199, 0.28) 0%, rgba(185, 28, 28, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Water Form', value: '11th Form - Dead Calm' },
-      { label: 'Attacks Negated', value: '100%' },
-      { label: 'Demon Kills', value: 'Hashira Rank' },
-    ],
-    skills: [
-      { name: 'Dead Calm Zero-Downtime Defense', level: 100, category: 'Resilience' },
-      { name: 'Water Breathing Fluid Dynamics', level: 99, category: 'Physics' },
-      { name: 'Dual Split Haori Geometrics', level: 97, category: 'Design' },
-      { name: 'Stoic Silence In High Pressure', level: 100, category: 'Mindset' },
-    ],
-    projects: [
-      {
-        id: 'dead-calm-shield',
-        title: 'Nagi (Dead Calm) Zero-Downtime Firewall',
-        category: 'Network Security',
-        subtag: 'Attack Absorber',
-        desc: 'A revolutionary zero-trust packet sink that neutralizes incoming malicious payloads into absolute tranquility without spending CPU spikes.',
-        tags: ['Rust', 'eBPF', 'XDP', 'Zero Latency'],
-        metrics: '100% Attacks Dissolved',
-        color: '#0284c7'
-      },
-      {
-        id: 'split-haori-design',
-        title: 'Split Haori Geometric Design System',
-        category: 'Design Systems',
-        subtag: 'Dual Pattern Tokens',
-        desc: 'Asymmetrical design framework paying homage to Sabito and Tsutako, combining geometric diamonds with solid crimson calm.',
-        tags: ['CSS Architecture', 'Figma Tokens', 'Tailwind'],
-        metrics: 'Surgical Aesthetic Balance',
-        color: '#b91c1c'
-      },
-      {
-        id: 'salmon-daikon',
-        title: 'Simmered Salmon Daikon Gastronomy',
-        category: 'Micro-Experience',
-        subtag: 'Comfort Food App',
-        desc: 'The only culinary experience capable of evoking a faint, rare smile on Giyuu’s stoic countenance.',
-        tags: ['React', 'WebGL Steam', 'Tailwind'],
-        metrics: 'Evokes Rare Smiles',
-        color: '#f97316'
-      },
-      {
-        id: 'water-ripple-canvas',
-        title: 'Tranquil Water Ripple Soundscape',
-        category: 'Ambient Web Experience',
-        subtag: 'Audio-Visual Zen',
-        desc: 'Interactive generative water canvas producing soothing concentric ripples and deep water ambient tones.',
-        tags: ['Three.js', 'WebAudio', 'GLSL'],
-        metrics: '60 FPS Zen Stillness',
-        color: '#38bdf8'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Final Battle vs Akaza',
-        role: 'Water Hashira',
-        organization: 'Demon Slayer Corps',
-        description: 'Unlocked the Demon Slayer Mark and fought Upper Moon Three Akaza alongside Tanjiro, deploying Dead Calm in peak combat.'
-      },
-      {
-        year: 'Mt. Sagiri Mentorship',
-        role: 'Sakonji\'s Successor',
-        organization: 'Water Breathing Lineage',
-        description: 'Inherited the mantle of Water Hashira and spared the Kamado siblings, sending them to master Urokodaki.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Tomioka-san may say he is disliked by everyone, but his quiet sacrifice and absolute defense have saved all of our lives.',
-        author: 'Shinobu Kocho',
-        title: 'Insect Hashira',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'Giyuu-san taught me what it means to hold a sword. When his Eleventh Form activates, the battlefield turns completely silent.',
-        author: 'Tanjiro Kamado',
-        title: 'Demon Slayer',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#0284c7',
-      '--accent-glow': 'rgba(2, 132, 199, 0.38)',
-      '--bg-primary': '#040d1a',
-      '--text-primary': '#f8fafc'
-    }
-  },
-
-  shinobu: {
-    id: 'shinobu',
-    slug: 'shinobu',
-    name: 'Shinobu Kocho',
-    japaneseName: '胡蝶しのぶ',
-    series: 'Demon Slayer',
-    universeBadge: 'Demon Slayer Corps',
-    roleTitle: 'Insect Hashira & Wisteria Pharmaceutical Architect',
-    headline: 'The Butterfly Dancer',
-    tagline: 'Delicate like a butterfly, lethal like a stinger. Elegance is the ultimate poison.',
-    statement: 'I may be the only Hashira who cannot decapitate demons, but a poison that melts a demon’s body in seconds works just as cleanly.',
-    bio: 'The Insect Hashira of the Demon Slayer Corps and mistress of the Butterfly Estate. Renowned for her pharmacology genius, wisteria toxin engineering, and fluttering glassmorphic elegance that masks deadly precision.',
-    price: 42,
-    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=faces',
-    bustUrl: '/himmel_bust.png',
-    cardUrl: '/himmel_card.jpg',
-    layoutArchetype: 'zen-minimal',
-    accentAnimationType: 'shinobu-wisteria-butterflies',
-    colors: {
-      isDark: true,
-      bgPrimary: '#0d0718',
-      bgSecondary: '#1a0e2e',
-      bgSurface: 'rgba(26, 14, 46, 0.88)',
-      bgGlass: 'rgba(13, 7, 24, 0.8)',
-      textPrimary: '#faf5ff',
-      textSecondary: '#e9d5ff',
-      textMuted: '#c084fc',
-      accent: '#8b5cf6',
-      accentSecondary: '#2dd4bf',
-      accentGlow: 'rgba(139, 92, 246, 0.38)',
-      borderSubtle: '#3b1c61',
-      borderStrong: 'rgba(139, 92, 246, 0.55)',
-      cardShadow: '0 20px 45px -10px rgba(139, 92, 246, 0.22)',
-      badgeBg: 'rgba(139, 92, 246, 0.18)',
-      badgeText: '#e9d5ff',
-      gradientHero: 'radial-gradient(ellipse at 50% 30%, rgba(139, 92, 246, 0.28) 0%, rgba(45, 212, 191, 0.15) 50%, transparent 75%)',
-    },
-    stats: [
-      { label: 'Thrust Velocity', value: 'Fastest in Corps' },
-      { label: 'Wisteria Toxins', value: '37 Custom Blends' },
-      { label: 'Butterfly Clinic', value: '1,200 Healed' },
-    ],
-    skills: [
-      { name: 'Wisteria Pharmaceutical Chemistry', level: 100, category: 'Biotech' },
-      { name: 'High-Velocity Needle Thrusts', level: 99, category: 'Combat' },
-      { name: 'Butterfly Estate Rehabilitation', level: 98, category: 'Medical' },
-      { name: 'Delicate Glassmorphic Styling', level: 97, category: 'Design' },
-    ],
-    projects: [
-      {
-        id: 'wisteria-toxin-synthesizer',
-        title: 'Wisteria Toxin Molecular Synthesizer',
-        category: 'Bioinformatics',
-        subtag: 'Molecular Simulator',
-        desc: 'Computational chemistry engine calculating lethal wisteria molecular concentrations tailored to counteract Upper Moon cellular regeneration.',
-        tags: ['Python', 'RDKit', 'Molecular Dynamics', 'C++'],
-        metrics: '37x Molecular Potency',
-        color: '#8b5cf6'
-      },
-      {
-        id: 'butterfly-estate-rehab',
-        title: 'Butterfly Estate Clinical Patient Flow',
-        category: 'Healthcare ERP',
-        subtag: 'Hospital Management',
-        desc: 'Automated bed allocation, medicinal dosing schedule, and physical rehab tracking system for recovering Demon Slayers.',
-        tags: ['Next.js', 'PostgreSQL', 'Tailwind', 'Prisma'],
-        metrics: '3x Faster Rehabilitation',
-        color: '#2dd4bf'
-      },
-      {
-        id: 'butterfly-wings-shader',
-        title: 'Ethereal Butterfly Wing Refraction Shader',
-        category: 'WebGL Graphics',
-        subtag: 'Prismatic Iridescence',
-        desc: 'Hypnotic iridescent butterfly wings shader simulating light dispersion and wisteria petal drift in real-time.',
-        tags: ['Three.js', 'GLSL', 'Custom Shaders'],
-        metrics: 'Sublime Visuals',
-        color: '#a855f7'
-      },
-      {
-        id: 'tamayo-serum-collab',
-        title: 'Tamayo Anti-Kibutsuji Serum Protocol',
-        category: 'Collaborative Biotech',
-        subtag: 'Four-Stage Aging Drug',
-        desc: 'Joint cryptographic research vault developing the quadruple-stage aging and humanizing drug that unseated Muzan.',
-        tags: ['ZK-Proofs', 'Rust', 'Encrypted DAG'],
-        metrics: 'Aging Rate: 50 Yrs/Min',
-        color: '#c084fc'
-      }
-    ],
-    experiences: [
-      {
-        year: 'Infinity Castle Confrontation',
-        role: 'Insect Hashira & Master Strategist',
-        organization: 'Demon Slayer Corps',
-        description: 'Sacrificed her physical body saturated with 37 kilograms of wisteria toxin to poison Upper Moon Two Doma from within.'
-      },
-      {
-        year: 'Butterfly Estate Reign',
-        role: 'Director of Medical Operations',
-        organization: 'Kocho Estate',
-        description: 'Trained Kanao, Aoi, and the medical trio, turning the estate into the premier healing sanctuary for injured slayers.'
-      }
-    ],
-    testimonials: [
-      {
-        quote: 'Shinobu\'s smile never wavered, even when her heart was bleeding. Her brilliance brought about the end of Muzan Kibutsuji.',
-        author: 'Kanao Tsuyuri',
-        title: 'Tsuguko Disciple',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      },
-      {
-        quote: 'She always teased me about people not liking me, but she was the kindest soul in the Hashira ranks.',
-        author: 'Giyuu Tomioka',
-        title: 'Water Hashira',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces'
-      }
-    ],
-    themeTokensCSS: {
-      '--accent': '#8b5cf6',
-      '--accent-glow': 'rgba(139, 92, 246, 0.38)',
-      '--bg-primary': '#0d0718',
-      '--text-primary': '#faf5ff'
-    }
-  }
-};
-
 export const ANIME_UNIVERSES = [
   { id: 'all', name: 'All Universes', count: 20 },
-  { id: 'Sousou no Frieren', name: 'Sousou no Frieren', count: 3 },
+  { id: 'Sousou no Frieren', name: 'Frieren', count: 3 },
   { id: 'Attack on Titan', name: 'Attack on Titan', count: 3 },
-  { id: 'Naruto Shippuden', name: 'Naruto Shippuden', count: 4 },
+  { id: 'Naruto Shippuden', name: 'Naruto', count: 4 },
   { id: 'One Piece', name: 'One Piece', count: 4 },
   { id: 'Darling in the Franxx', name: 'Darling in the Franxx', count: 1 },
-  { id: 'Demon Slayer', name: 'Demon Slayer', count: 5 }
+  { id: 'Demon Slayer', name: 'Demon Slayer', count: 5 },
 ];
 
-export const TEMPLATE_SLUGS = Object.keys(ANIME_TEMPLATES);
+export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
+  'frieren': {
+    "id": "frieren",
+    "slug": "frieren",
+    "name": "Frieren",
+    "japaneseName": "フリーレン",
+    "series": "Sousou no Frieren",
+    "universeBadge": "Beyond Journey's End",
+    "roleTitle": "Archmage & Ancient Systems Architect",
+    "headline": "Mage of the Century",
+    "tagline": "Deciphering thousand-year grimoires into elegant digital architecture.",
+    "statement": "passionate about deciphering forgotten spells and discovering what Himmel saw in humanity.",
+    "bio": "An elven mage who defeated the Demon King alongside Himmel's party. Now traversing the realm to collect quaint spells and construct immortal, resilient software foundations that outlast generations.",
+    "price": 39,
+    "featuredTag": "Bestseller",
+    "avatarUrl": "/anime/frieren.jpg",
+    "bustUrl": "/anime/frieren.jpg",
+    "cardUrl": "/anime/frieren.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "frieren-aura",
+    "location": "Strahl Region, Continental Magic Association",
+    "companionAvatars": [
+        "/anime/fern.jpg",
+        "/anime/stark.jpg",
+        "/himmel_bust.png"
+    ],
+    "companionTrustText": "Trusted by 100+ adventuring guilds across the continent for peerless magic architecture.",
+    "brandPartners": [
+        {
+            "name": "Hero Himmel Archive",
+            "icon": "✦"
+        },
+        {
+            "name": "Continental Magic Association",
+            "icon": "◬"
+        },
+        {
+            "name": "Northern Guild of Vanguards",
+            "icon": "⬡"
+        },
+        {
+            "name": "Holy City Grimoires",
+            "icon": "◌"
+        },
+        {
+            "name": "Strahl Mage Council",
+            "icon": "⊚"
+        },
+        {
+            "name": "Flamme Research Lab",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Ancient Magic",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Mana Concealment",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        },
+        {
+            "label": "Zoltraak Tuning",
+            "color": "#0ea5e9",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Party Tactics",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Grimoire Archival",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Field Resilience",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on deciphering ancient spells, collecting quaint magic, and",
+        "highlight": "understanding the human heart through centuries of time."
+    },
+    "sinceYear": "since the Hero Era",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#0284c7",
+        "accentSecondary": "#38bdf8",
+        "accentGlow": "rgba(2, 132, 199, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(2, 132, 199, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(2, 132, 199, 0.08)",
+        "badgeBg": "#e0f2fe",
+        "badgeText": "#0369a1",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(2, 132, 199, 0.32) 0%, rgba(56, 189, 248, 0.18) 35%, rgba(2, 132, 199, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Years of Lore",
+            "value": "1,000+"
+        },
+        {
+            "label": "Grimoires Decoded",
+            "value": "480+"
+        },
+        {
+            "label": "Code Resilience",
+            "value": "99.99%"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Mana Core Optimization",
+            "level": 98,
+            "category": "Core"
+        },
+        {
+            "name": "Ancient Protocol Translation",
+            "level": 95,
+            "category": "Architecture"
+        },
+        {
+            "name": "Zoltraak Defensive Sharding",
+            "level": 92,
+            "category": "Security"
+        },
+        {
+            "name": "Autonomous Field Diagnostics",
+            "level": 88,
+            "category": "Operations"
+        }
+    ],
+    "projects": [
+        {
+            "id": "grimoire-engine",
+            "title": "Grimoire Index Engine",
+            "category": "Spells",
+            "subtag": "Archival System",
+            "desc": "Decentralized spell repository enabling real-time classification, historical provenance tracking, and zero-loss mana indexing.",
+            "tags": [
+                "TypeScript",
+                "GraphQL",
+                "ManaDB"
+            ],
+            "metrics": "10x Faster Query",
+            "color": "#0284c7"
+        },
+        {
+            "id": "barrier-nullifier",
+            "title": "Barrier Nullification Suite",
+            "category": "Security",
+            "subtag": "Defense Protocol",
+            "desc": "Autonomous analysis framework that inspects demon spell barriers and derives mathematical deconstruction algorithms.",
+            "tags": [
+                "Rust",
+                "WebAssembly",
+                "Cryptography"
+            ],
+            "metrics": "99.8% Bypass Rate",
+            "color": "#38bdf8"
+        },
+        {
+            "id": "mimic-detector",
+            "title": "Mimic Probability Radar",
+            "category": "Sensors",
+            "subtag": "Spatial Detection",
+            "desc": "Computer vision model designed to distinguish authentic dungeon treasure chests from ravenous mimic entities.",
+            "tags": [
+                "Python",
+                "PyTorch",
+                "Edge AI"
+            ],
+            "metrics": "99.9% Accuracy",
+            "color": "#eab308"
+        },
+        {
+            "id": "botanical-preservation",
+            "title": "Blue Moon Weed Synthesizer",
+            "category": "BioTech",
+            "subtag": "Botanical Restoration",
+            "desc": "Automated greenhouse telemetry platform reviving extinct highland flora through micro-climate atmospheric emulation.",
+            "tags": [
+                "Next.js",
+                "TailwindCSS",
+                "IoT Telemetry"
+            ],
+            "metrics": "10,000+ Seeds Cultivated",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Hero Era",
+            "role": "Chief Mage",
+            "organization": "Hero Party (Himmel, Eisen, Heiter)",
+            "description": "Decisive tactical architect in the ten-year campaign to eliminate the Demon King."
+        },
+        {
+            "year": "Decade 50",
+            "role": "Traveling Researcher",
+            "organization": "Northern Plateau Survey",
+            "description": "Cataloged rare folklore, indigenous incantations, and folk magic across border towns."
+        },
+        {
+            "year": "Decade 80",
+            "role": "Mentor & Architect",
+            "organization": "Fern Apprenticeship Program",
+            "description": "Trained first-class mages and implemented modern defensive arithmetic."
+        },
+        {
+            "year": "Era Present",
+            "role": "First-Class Mage",
+            "organization": "Continental Magic Association",
+            "description": "Leading expeditionary initiatives toward Aureole at the world's northern edge."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Frieren-sama never acts rashly. Every line of code and every incantation is executed with thousand-year precision.",
+            "author": "Fern",
+            "title": "First-Class Mage",
+            "avatar": "/anime/fern.jpg"
+        },
+        {
+            "quote": "When the vanguard takes heavy damage, Frieren's defensive wards hold the line without a flicker of panic.",
+            "author": "Stark",
+            "title": "Vanguard Warrior",
+            "avatar": "/anime/stark.jpg"
+        },
+        {
+            "quote": "She taught me that magic is about what you can imagine. Her vision reaches further than any mortal hero.",
+            "author": "Himmel the Hero",
+            "title": "Hero of the Realm",
+            "avatar": "/himmel_bust.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#0284c7",
+        "--accent-secondary": "#38bdf8",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'stark': {
+    "id": "stark",
+    "slug": "stark",
+    "name": "Stark",
+    "japaneseName": "シュタルク",
+    "series": "Sousou no Frieren",
+    "universeBadge": "Beyond Journey's End",
+    "roleTitle": "Vanguard Warrior & Resilient Systems Engineer",
+    "headline": "Shield of the Northern Vanguard",
+    "tagline": "Absorbing catastrophic stress spikes and turning raw impact into decisive triumphs.",
+    "statement": "dedicated to holding the front line and facing every fear with unflinching resolve.",
+    "bio": "Disciple of the legendary warrior Eisen. A frontline vanguard who overcomes shivering dread to deliver earth-shattering strikes, safeguarding party members from critical failures.",
+    "price": 35,
+    "featuredTag": "High Impact",
+    "avatarUrl": "/anime/stark.jpg",
+    "bustUrl": "/anime/stark.jpg",
+    "cardUrl": "/anime/stark.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "stark-sparks",
+    "location": "Schwer Mountains, Warrior Bastion",
+    "companionAvatars": [
+        "/anime/frieren.jpg",
+        "/anime/fern.jpg",
+        "/himmel_bust.png"
+    ],
+    "companionTrustText": "Vetted by Eisen Vanguard Bastions and Northern Plateau frontier garrisons.",
+    "brandPartners": [
+        {
+            "name": "Eisen Heavy Forge",
+            "icon": "✦"
+        },
+        {
+            "name": "Northern Vanguard Bastion",
+            "icon": "◬"
+        },
+        {
+            "name": "Schwer Armorworks",
+            "icon": "⬡"
+        },
+        {
+            "name": "Dragon Slayer Guild",
+            "icon": "◌"
+        },
+        {
+            "name": "Continental Frontier Patrol",
+            "icon": "⊚"
+        },
+        {
+            "name": "War Axe Guild",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Heavy Axework",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Stamina Surge",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Frontline Anchor",
+            "color": "#d97706",
+            "bg": "#fffbeb",
+            "border": "#fde68a"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Impact Absorption",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Dragon Slaying",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Vanguard Duty",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on absorbing heavy impact, anchoring the front line, and",
+        "highlight": "turning sheer terror into unstoppable courage."
+    },
+    "sinceYear": "since the Eisen Guild era",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#dc2626",
+        "accentSecondary": "#f97316",
+        "accentGlow": "rgba(220, 38, 38, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(220, 38, 38, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(220, 38, 38, 0.08)",
+        "badgeBg": "#fee2e2",
+        "badgeText": "#991b1b",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(220, 38, 38, 0.32) 0%, rgba(249, 115, 22, 0.18) 35%, rgba(220, 38, 38, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Solar Dragon Slayed",
+            "value": "1 Solo"
+        },
+        {
+            "label": "Impact Absorption",
+            "value": "100k kN"
+        },
+        {
+            "label": "System Uptime",
+            "value": "99.98%"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Heavy Cleave Synchronization",
+            "level": 96,
+            "category": "Combat"
+        },
+        {
+            "name": "High-Load Stress Absorption",
+            "level": 94,
+            "category": "Resilience"
+        },
+        {
+            "name": "Rapid Threat Aggro Interception",
+            "level": 90,
+            "category": "Strategy"
+        },
+        {
+            "name": "Endurance Pipelining",
+            "level": 88,
+            "category": "Operations"
+        }
+    ],
+    "projects": [
+        {
+            "id": "solar-dragon-breach",
+            "title": "Solar Dragon Defense Wall",
+            "category": "Infrastructure",
+            "subtag": "High Stress",
+            "desc": "Distributed load-balancing shield built to absorb thermal dragon breaths and redirect kinetic energy without system failure.",
+            "tags": [
+                "Go",
+                "Kubernetes",
+                "Chaos Engineering"
+            ],
+            "metrics": "0 Dropped Packets",
+            "color": "#dc2626"
+        },
+        {
+            "id": "cleave-pipeline",
+            "title": "Earth-Cleaver CI/CD",
+            "category": "DevOps",
+            "subtag": "Build Pipeline",
+            "desc": "Blazing-fast deployment automation that cuts down release bottlenecks in half with raw physical efficiency.",
+            "tags": [
+                "GitHub Actions",
+                "Docker",
+                "Linux Kernel"
+            ],
+            "metrics": "4x Build Speedup",
+            "color": "#ea580c"
+        },
+        {
+            "id": "shiver-sensor",
+            "title": "Fear-to-Focus Reflex Buffer",
+            "category": "Algorithms",
+            "subtag": "Stress Mitigation",
+            "desc": "Real-time adrenaline routing kernel that translates system anxiety and latency alerts into immediate high-priority executions.",
+            "tags": [
+                "Rust",
+                "Async Runtime",
+                "Telemetry"
+            ],
+            "metrics": "Sub-millisecond Reflex",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "vanguard-telemetry",
+            "title": "Frontline Vitality Radar",
+            "category": "Monitoring",
+            "subtag": "Telemetry",
+            "desc": "Edge sensor mesh broadcasting squad armor integrity, stamina reserves, and threat vectors across battlefield networks.",
+            "tags": [
+                "WebSockets",
+                "Next.js",
+                "Grafana"
+            ],
+            "metrics": "Live Squad Feeds",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Apprentice Warrior",
+            "organization": "Eisen Mountain Dojo",
+            "description": "Underwent brutal physical conditioning, axe fundamentals, and high-impact resilience drills."
+        },
+        {
+            "year": "Year 28",
+            "role": "Town Guardian",
+            "organization": "Riegel Village Defense",
+            "description": "Single-handedly held off the Solar Dragon, preserving commercial caravans and civil infrastructure."
+        },
+        {
+            "year": "Year 29",
+            "role": "Vanguard Lead",
+            "organization": "Frieren Expedition Party",
+            "description": "Took charge of frontline engagements, securing mages and neutralizing high-tier demon warlords."
+        },
+        {
+            "year": "Year 30",
+            "role": "First-Class Companion",
+            "organization": "Northern Expedition Corps",
+            "description": "Traversing the Golden Land and frontier fortresses with unmatched tenacity."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "He acts terrified before every battle, but he has never once abandoned his post or let an attack reach me.",
+            "author": "Fern",
+            "title": "First-Class Mage",
+            "avatar": "/anime/fern.jpg"
+        },
+        {
+            "quote": "My master Eisen chose well. Stark's axe has the weight of a true protector.",
+            "author": "Frieren",
+            "title": "Archmage",
+            "avatar": "/anime/frieren.jpg"
+        },
+        {
+            "quote": "A warrior who knows fear and still steps forward is the only kind of warrior you can trust.",
+            "author": "Eisen the Iron",
+            "title": "Legendary Dwarf Warrior",
+            "avatar": "/himmel_bust.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#dc2626",
+        "--accent-secondary": "#f97316",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'fern': {
+    "id": "fern",
+    "slug": "fern",
+    "name": "Fern",
+    "japaneseName": "フェルン",
+    "series": "Sousou no Frieren",
+    "universeBadge": "Beyond Journey's End",
+    "roleTitle": "First-Class Mage & High-Speed Execution Specialist",
+    "headline": "High-Precision Prodigy",
+    "tagline": "Ultra-low latency execution and surgical spellcraft with zero wasted motion.",
+    "statement": "focused on lightning-fast spell execution and immaculate mana efficiency under pressure.",
+    "bio": "War orphan raised by Priest Heiter and trained by Frieren. The youngest mage in history to pass the First-Class exam, famed for rapid-fire offensive spells and flawless operational discipline.",
+    "price": 37,
+    "featuredTag": "Prodigy",
+    "avatarUrl": "/anime/fern.jpg",
+    "bustUrl": "/anime/fern.jpg",
+    "cardUrl": "/anime/fern.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "fern-zoltraak",
+    "location": "Holy City Strahl, First-Class Mage Quarters",
+    "companionAvatars": [
+        "/anime/frieren.jpg",
+        "/anime/stark.jpg",
+        "/himmel_bust.png"
+    ],
+    "companionTrustText": "Certified with perfect marks by the Continental First-Class Examination Board.",
+    "brandPartners": [
+        {
+            "name": "Continental Mage Board",
+            "icon": "✦"
+        },
+        {
+            "name": "Heiter Sanctuary Archive",
+            "icon": "◬"
+        },
+        {
+            "name": "Holy City Quarters",
+            "icon": "⬡"
+        },
+        {
+            "name": "Zoltraak Speed Lab",
+            "icon": "◌"
+        },
+        {
+            "name": "First-Class Council",
+            "icon": "⊚"
+        },
+        {
+            "name": "Staff Artificers",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Fast Zoltraak",
+            "color": "#a855f7",
+            "bg": "#faf5ff",
+            "border": "#e9d5ff"
+        },
+        {
+            "label": "Offensive Shielding",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        },
+        {
+            "label": "Mana Detection",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Staff Mastery",
+            "color": "#ec4899",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        },
+        {
+            "label": "Tactical Economy",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Rapid Casting",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on high-speed spell release, zero wasted motion, and",
+        "highlight": "executing every task with surgical precision."
+    },
+    "sinceYear": "since the First-Class Exam",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#9333ea",
+        "accentSecondary": "#c084fc",
+        "accentGlow": "rgba(147, 51, 234, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(147, 51, 234, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(147, 51, 234, 0.08)",
+        "badgeBg": "#f3e8ff",
+        "badgeText": "#6b21a8",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(147, 51, 234, 0.32) 0%, rgba(192, 132, 252, 0.18) 35%, rgba(147, 51, 234, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Exam Rank",
+            "value": "#1 Youngest"
+        },
+        {
+            "label": "Cast Latency",
+            "value": "<12ms"
+        },
+        {
+            "label": "Mana Efficiency",
+            "value": "99.4%"
+        }
+    ],
+    "skills": [
+        {
+            "name": "High-Frequency Zoltraak Burst",
+            "level": 97,
+            "category": "Offense"
+        },
+        {
+            "name": "Mana Concealment Suppression",
+            "level": 94,
+            "category": "Stealth"
+        },
+        {
+            "name": "Hexagonal Barrier Defense",
+            "level": 91,
+            "category": "Protection"
+        },
+        {
+            "name": "Budget & Resource Management",
+            "level": 99,
+            "category": "Operations"
+        }
+    ],
+    "projects": [
+        {
+            "id": "zoltraak-rapid-api",
+            "title": "Zoltraak Rapid-Fire API",
+            "category": "Networking",
+            "subtag": "Low-Latency",
+            "desc": "High-throughput microservices architecture processing 50,000 requests/sec with minimal memory allocation.",
+            "tags": [
+                "Golang",
+                "gRPC",
+                "Protobuf"
+            ],
+            "metrics": "Sub-millisecond SLA",
+            "color": "#9333ea"
+        },
+        {
+            "id": "mana-radar-ui",
+            "title": "Passive Mana Detection Radar",
+            "category": "Sensors",
+            "subtag": "Real-time UI",
+            "desc": "Sleek radar visualizer scanning for faint hostile mana fluctuations across a 10km mountain radius.",
+            "tags": [
+                "React",
+                "Three.js",
+                "WebSockets"
+            ],
+            "metrics": "360° Scanning",
+            "color": "#c084fc"
+        },
+        {
+            "id": "party-ledger",
+            "title": "Party Resource Ledger",
+            "category": "Fintech",
+            "subtag": "Budget Optimizer",
+            "desc": "Strict expense and copper-coin audit system ensuring the adventuring squad never runs out of emergency rations.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "TailwindCSS"
+            ],
+            "metrics": "Zero Waste Balance",
+            "color": "#10b981"
+        },
+        {
+            "id": "barrier-geometry",
+            "title": "Hexagonal Shield Matrix",
+            "category": "Security",
+            "subtag": "Vector Math",
+            "desc": "Mathematical barrier projection tool that calculates impact vectors and reinforces stress points in real time.",
+            "tags": [
+                "TypeScript",
+                "WebGL",
+                "Linear Algebra"
+            ],
+            "metrics": "Zero Penetration",
+            "color": "#3b82f6"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Childhood",
+            "role": "Ward of Priest Heiter",
+            "organization": "Holy Hermitage",
+            "description": "Mastered basic spell theory, clerical meditation, and daily precision drills under Heiter's guidance."
+        },
+        {
+            "year": "Year 20",
+            "role": "Apprentice Mage",
+            "organization": "Frieren Training Group",
+            "description": "Trained to conceal mana down to ordinary human levels, mastering high-frequency offensive spells."
+        },
+        {
+            "year": "Year 29",
+            "role": "First-Class Mage",
+            "organization": "Continental Magic Association",
+            "description": "Passed the prestigious First-Class exam with unanimous endorsement from Serie and exam proctors."
+        },
+        {
+            "year": "Year 30",
+            "role": "Operations & Combat Lead",
+            "organization": "Northern Journey Vanguard",
+            "description": "Serving as the strategic backbone and primary offensive artillery of the expedition party."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Fern's casting speed surpasses even mages of the mythical era. She strikes before opponents realize the battle has begun.",
+            "author": "Frieren",
+            "title": "Archmage",
+            "avatar": "/anime/frieren.jpg"
+        },
+        {
+            "quote": "She keeps our entire expedition running on schedule and scolds us when we slack off. I wouldn't have made it this far without her.",
+            "author": "Stark",
+            "title": "Vanguard Warrior",
+            "avatar": "/anime/stark.jpg"
+        },
+        {
+            "quote": "My beloved ward has grown into a magnificent mage. Himmel and I could not be prouder.",
+            "author": "Priest Heiter",
+            "title": "Holy Bishop",
+            "avatar": "/himmel_bust.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#9333ea",
+        "--accent-secondary": "#c084fc",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'eren': {
+    "id": "eren",
+    "slug": "eren",
+    "name": "Eren Yeager",
+    "japaneseName": "エレン・イェーガー",
+    "series": "Attack on Titan",
+    "universeBadge": "Survey Corps Special Ops",
+    "roleTitle": "Vanguard Breaker & Foundational Architect",
+    "headline": "Breaker of Walls",
+    "tagline": "Shattering legacy barriers and engineering relentless forward momentum.",
+    "statement": "relentlessly driving forward to dismantle boundaries and secure freedom for what lies ahead.",
+    "bio": "Bearer of the Attack, Founding, and War Hammer Titans. A driven strategist who refuses complacency, tearing down archaic walls and constructing unyielding autonomous foundations for the future.",
+    "price": 45,
+    "featuredTag": "Revolutionary",
+    "avatarUrl": "/anime/eren.jpg",
+    "bustUrl": "/anime/eren.jpg",
+    "cardUrl": "/anime/eren.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "eren-steam-embers",
+    "location": "Shiganshina District, Wall Maria",
+    "companionAvatars": [
+        "/anime/mikasa.jpg",
+        "/anime/levi.jpg",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+    ],
+    "companionTrustText": "Endorsed by the 104th Cadet Corps and Scout Special Operations Command.",
+    "brandPartners": [
+        {
+            "name": "Survey Corps Vanguard",
+            "icon": "✦"
+        },
+        {
+            "name": "Special Operations Squad",
+            "icon": "◬"
+        },
+        {
+            "name": "Wall Maria Engineers",
+            "icon": "⬡"
+        },
+        {
+            "name": "Paradis Research Hub",
+            "icon": "◌"
+        },
+        {
+            "name": "Scout Vanguard Unit",
+            "icon": "⊚"
+        },
+        {
+            "name": "Founding Network",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Vanguard Assault",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Hardening Protocol",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Titan Dynamics",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Direct Action",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Siege Breaker",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Strategic Will",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on breaking through impossible walls, defying stagnation, and",
+        "highlight": "fighting relentlessly for absolute freedom."
+    },
+    "sinceYear": "since the 104th Cadets",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#15803d",
+        "accentSecondary": "#f97316",
+        "accentGlow": "rgba(21, 128, 61, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(21, 128, 61, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(21, 128, 61, 0.08)",
+        "badgeBg": "#dcfce7",
+        "badgeText": "#166534",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(21, 128, 61, 0.32) 0%, rgba(249, 115, 22, 0.18) 35%, rgba(21, 128, 61, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Walls Breached",
+            "value": "3 Major"
+        },
+        {
+            "label": "Titans Controlled",
+            "value": "Founding"
+        },
+        {
+            "label": "Path Velocity",
+            "value": "Infinite"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Hardening Structural Integrity",
+            "level": 96,
+            "category": "Engineering"
+        },
+        {
+            "name": "Path Coordinate Pipelining",
+            "level": 99,
+            "category": "Distributed"
+        },
+        {
+            "name": "High-Impact Threat Demolition",
+            "level": 95,
+            "category": "Combat"
+        },
+        {
+            "name": "War Hammer Morphing Logic",
+            "level": 92,
+            "category": "Systems"
+        }
+    ],
+    "projects": [
+        {
+            "id": "rumbling-pipeline",
+            "title": "Coordinate Mesh Protocol",
+            "category": "Distributed",
+            "subtag": "Path System",
+            "desc": "Ultra-scale event streaming platform interconnecting millions of autonomous nodes with zero-latency synchronization.",
+            "tags": [
+                "Apache Kafka",
+                "Rust",
+                "Raft Consensus"
+            ],
+            "metrics": "Millions of Nodes",
+            "color": "#15803d"
+        },
+        {
+            "id": "hardening-reinforcement",
+            "title": "Titan Crystal Hardening Shield",
+            "category": "Materials",
+            "subtag": "Infrastructure",
+            "desc": "Subterranean seal synthesis architecture that plugged the breach at Wall Rose and constructed armored fortification perimeters.",
+            "tags": [
+                "C++",
+                "OpenGL",
+                "Structural FEA"
+            ],
+            "metrics": "Indestructible Seal",
+            "color": "#0284c7"
+        },
+        {
+            "id": "shiganshina-rebuild",
+            "title": "Shiganshina Reclamation Grid",
+            "category": "Urban Planning",
+            "subtag": "Resource Grid",
+            "desc": "Modernized telemetry and supply distribution system restoring energy and defense lines across reclaimed frontier districts.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "GIS Mapping"
+            ],
+            "metrics": "100% Territory Restored",
+            "color": "#ea580c"
+        },
+        {
+            "id": "freedom-ledger",
+            "title": "Autonomous Freedom Protocol",
+            "category": "Security",
+            "subtag": "Decentralized Ops",
+            "desc": "Cryptographic identity framework providing uncensorable communication across besieged territories beyond the sea.",
+            "tags": [
+                "Solidity",
+                "Zero-Knowledge Proofs",
+                "IPFS"
+            ],
+            "metrics": "Uncensorable Comms",
+            "color": "#dc2626"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "850",
+            "role": "Top 5 Graduate",
+            "organization": "104th Training Corps",
+            "description": "Mastered ODM maneuverability, hand-to-hand combat, and tactical situational awareness."
+        },
+        {
+            "year": "850",
+            "role": "Key Operative",
+            "organization": "Survey Corps Special Operations",
+            "description": "Sealed Trost District gate and uncovered infiltration networks within the wall garrison."
+        },
+        {
+            "year": "851",
+            "role": "Reconnaissance Commander",
+            "organization": "Wall Maria Retake Taskforce",
+            "description": "Defeated the Colossal and Armored Titans to recover humanity's lost ancestral ground."
+        },
+        {
+            "year": "854",
+            "role": "Vanguard Sovereign",
+            "organization": "Paradis Defense Coalition",
+            "description": "Directing overarching strategic campaigns across Marley and overseas territories."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Eren will always move forward. It is my duty to ensure he stays alive to see the freedom he fights for.",
+            "author": "Mikasa Ackerman",
+            "title": "Top Graduate & Elite Soldier",
+            "avatar": "/anime/mikasa.jpg"
+        },
+        {
+            "quote": "He is an uncontrollable beast, but when the gate must be sealed, there is no one else who can get it done.",
+            "author": "Captain Levi",
+            "title": "Humanity's Strongest Soldier",
+            "avatar": "/anime/levi.jpg"
+        },
+        {
+            "quote": "Eren's resolve inspires millions. He looked beyond the ocean when the rest of us were trapped inside the cage.",
+            "author": "Armin Arlert",
+            "title": "Survey Corps Commander",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#15803d",
+        "--accent-secondary": "#f97316",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'levi': {
+    "id": "levi",
+    "slug": "levi",
+    "name": "Levi Ackerman",
+    "japaneseName": "リヴァイ・アッカーマン",
+    "series": "Attack on Titan",
+    "universeBadge": "Humanity's Strongest",
+    "roleTitle": "Captain & Precision Tactical Engineer",
+    "headline": "Humanity's Strongest",
+    "tagline": "Zero-latency execution, surgical blade precision, and immaculate operational hygiene.",
+    "statement": "committed to making the choices with the least regrets and clearing every obstacle in our path.",
+    "bio": "Captain of the Special Operations Squad in the Survey Corps. Famed worldwide for peerless combat reflexes, strict cleanliness standards, and executing impossible missions with minimal collateral loss.",
+    "price": 49,
+    "featuredTag": "Signature Elite",
+    "avatarUrl": "/anime/levi.jpg",
+    "bustUrl": "/anime/levi.jpg",
+    "cardUrl": "/anime/levi.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "levi-blade-slashes",
+    "location": "Wall Rose, Survey Corps Headquarters",
+    "companionAvatars": [
+        "/anime/eren.jpg",
+        "/anime/mikasa.jpg",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+    ],
+    "companionTrustText": "Certified by Survey Corps Command and Commander Erwin Smith.",
+    "brandPartners": [
+        {
+            "name": "Survey Corps High Command",
+            "icon": "✦"
+        },
+        {
+            "name": "Special Operations Squad",
+            "icon": "◬"
+        },
+        {
+            "name": "ODM Precision Workshop",
+            "icon": "⬡"
+        },
+        {
+            "name": "Wall Rose Garrison",
+            "icon": "◌"
+        },
+        {
+            "name": "Erwin Strategic Archive",
+            "icon": "⊚"
+        },
+        {
+            "name": "Cleanliness Standards Bureau",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "ODM Acrobatics",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        },
+        {
+            "label": "Titan Elimination",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Squad Command",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Tactical Cleanliness",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Zero-Latency Reflex",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Stealth Infiltration",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on razor-sharp blade precision, absolute discipline, and",
+        "highlight": "executing critical decisions with zero regrets."
+    },
+    "sinceYear": "since the Underground Squad era",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#334155",
+        "accentSecondary": "#0284c7",
+        "accentGlow": "rgba(51, 65, 85, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(51, 65, 85, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(51, 65, 85, 0.08)",
+        "badgeBg": "#e2e8f0",
+        "badgeText": "#0f172a",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(51, 65, 85, 0.32) 0%, rgba(2, 132, 199, 0.18) 35%, rgba(51, 65, 85, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Titan Takedowns",
+            "value": "100+ Solo"
+        },
+        {
+            "label": "Blade Precision",
+            "value": "99.99%"
+        },
+        {
+            "label": "Sanitation Score",
+            "value": "100/100"
+        }
+    ],
+    "skills": [
+        {
+            "name": "High-Velocity 3D Maneuver",
+            "level": 99,
+            "category": "Mobility"
+        },
+        {
+            "name": "Surgical Weak-Point Extraction",
+            "level": 98,
+            "category": "Precision"
+        },
+        {
+            "name": "Tactical Squad Command",
+            "level": 95,
+            "category": "Leadership"
+        },
+        {
+            "name": "Codebase Sanitation & Refactoring",
+            "level": 100,
+            "category": "Quality"
+        }
+    ],
+    "projects": [
+        {
+            "id": "odm-blade-optimizer",
+            "title": "ODM Flight Vector Optimizer",
+            "category": "Aviation",
+            "subtag": "Physics Engine",
+            "desc": "Gas pressure regulation algorithm maximizing acceleration angles while minimizing blade wear during aerial combat.",
+            "tags": [
+                "C++",
+                "CUDA",
+                "Physics Simulation"
+            ],
+            "metrics": "3x Gas Longevity",
+            "color": "#334155"
+        },
+        {
+            "id": "code-cleanliness-linter",
+            "title": "Ackerman Pure Hygiene Linter",
+            "category": "DevTools",
+            "subtag": "Static Analysis",
+            "desc": "Ruthless code review automation that obliterates technical debt, memory leaks, and messy formatting without mercy.",
+            "tags": [
+                "Rust",
+                "AST Parsing",
+                "CLI Tool"
+            ],
+            "metrics": "Zero Dust Guarantee",
+            "color": "#0284c7"
+        },
+        {
+            "id": "beast-titan-takedown",
+            "title": "Smoke Screen Tactical Router",
+            "category": "Tactics",
+            "subtag": "Stealth Pathing",
+            "desc": "Autonomous battlefield smoke routing mesh masking squad trajectories from long-range artillery bombardment.",
+            "tags": [
+                "Python",
+                "Pathfinding",
+                "GIS"
+            ],
+            "metrics": "100% Concealment",
+            "color": "#dc2626"
+        },
+        {
+            "id": "squad-telemetry-hud",
+            "title": "Special Ops Tactical HUD",
+            "category": "Interface",
+            "subtag": "Field HUD",
+            "desc": "Ultra-minimalist heads-up display delivering real-time blade counts, gas reserves, and acoustic Titan sonar pings.",
+            "tags": [
+                "Next.js",
+                "Canvas API",
+                "TailwindCSS"
+            ],
+            "metrics": "Zero Distraction UI",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Underground Operative",
+            "organization": "Capital Subterranean District",
+            "description": "Mastered self-taught vertical maneuvering and surviving hostile urban environments."
+        },
+        {
+            "year": "844",
+            "role": "Survey Corps Scout",
+            "organization": "Scouting Legion",
+            "description": "Recruited by Erwin Smith; restructured Scout expedition tactics for rapid survival."
+        },
+        {
+            "year": "850",
+            "role": "Captain",
+            "organization": "Special Operations Squad",
+            "description": "Protected the Founding Titan key asset and neutralized the Female Titan threat in the Giant Forest."
+        },
+        {
+            "year": "854",
+            "role": "Field Commander",
+            "organization": "Allied Liberio Incursion",
+            "description": "Spearheaded the extraction operation in Liberio, securing high-value strategic targets."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Give up on your dreams and die for us. Levi will make sure your sacrifice is never wasted.",
+            "author": "Erwin Smith",
+            "title": "13th Commander of Survey Corps",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "The captain's blades are faster than sound. Before a titan even senses danger, the nape is already severed.",
+            "author": "Hange Zoë",
+            "title": "14th Commander & Chief Scientist",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "He taught me what it means to hold discipline when the world falls apart. His standards never drop.",
+            "author": "Mikasa Ackerman",
+            "title": "Elite Scout Soldier",
+            "avatar": "/anime/mikasa.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#334155",
+        "--accent-secondary": "#0284c7",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'mikasa': {
+    "id": "mikasa",
+    "slug": "mikasa",
+    "name": "Mikasa Ackerman",
+    "japaneseName": "ミカサ・アッカーマン",
+    "series": "Attack on Titan",
+    "universeBadge": "Valued at 100 Soldiers",
+    "roleTitle": "Elite Guardian & High-Speed Vanguard",
+    "headline": "Unwavering Vanguard",
+    "tagline": "Flawless martial execution, lethal combat agility, and unshakable defensive devotion.",
+    "statement": "unwavering loyalty to the mission, defending the vanguard with peerless martial precision.",
+    "bio": "Top graduate of the 104th Training Corps, endowed with awakened Ackerman ancestral reflexes. Rated as worth a hundred ordinary soldiers, providing impenetrable perimeter defense and decisive offense.",
+    "price": 38,
+    "featuredTag": "Elite Guard",
+    "avatarUrl": "/anime/mikasa.jpg",
+    "bustUrl": "/anime/mikasa.jpg",
+    "cardUrl": "/anime/mikasa.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "mikasa-scarf-wind",
+    "location": "Trost District, Scout Vanguard Base",
+    "companionAvatars": [
+        "/anime/eren.jpg",
+        "/anime/levi.jpg",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+    ],
+    "companionTrustText": "Graduated Rank 1 in the 104th Cadet Corps; Scout Legion Elite.",
+    "brandPartners": [
+        {
+            "name": "104th Cadet Elite",
+            "icon": "✦"
+        },
+        {
+            "name": "Survey Corps Vanguard",
+            "icon": "◬"
+        },
+        {
+            "name": "Thunder Spear Artificers",
+            "icon": "⬡"
+        },
+        {
+            "name": "Trost Memorial Command",
+            "icon": "◌"
+        },
+        {
+            "name": "Ackerman Clan Registry",
+            "icon": "⊚"
+        },
+        {
+            "name": "Scout Perimeter Defense",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Dual Thunder Spears",
+            "color": "#be123c",
+            "bg": "#fff1f2",
+            "border": "#fecdd3"
+        },
+        {
+            "label": "Acrobatic Traversal",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Protective Perimeter",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Combat Reflexes",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Tactical Composure",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        },
+        {
+            "label": "Target Interception",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on unmatched combat speed, absolute situational awareness, and",
+        "highlight": "protecting the foundation at all costs."
+    },
+    "sinceYear": "since the 104th Top Class",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#be123c",
+        "accentSecondary": "#e11d48",
+        "accentGlow": "rgba(190, 18, 60, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(190, 18, 60, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(190, 18, 60, 0.08)",
+        "badgeBg": "#ffe4e6",
+        "badgeText": "#9f1239",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(190, 18, 60, 0.32) 0%, rgba(225, 29, 72, 0.18) 35%, rgba(190, 18, 60, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Cadet Rank",
+            "value": "#1 Overall"
+        },
+        {
+            "label": "Combat Rating",
+            "value": "100 Soldiers"
+        },
+        {
+            "label": "Reflex Latency",
+            "value": "<5ms"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Thunder Spear Blast Vectoring",
+            "level": 98,
+            "category": "Artillery"
+        },
+        {
+            "name": "Acrobatic Trajectory Planning",
+            "level": 96,
+            "category": "Mobility"
+        },
+        {
+            "name": "VIP Perimeter Shielding",
+            "level": 99,
+            "category": "Defense"
+        },
+        {
+            "name": "Crisis Decisiveness",
+            "level": 94,
+            "category": "Tactics"
+        }
+    ],
+    "projects": [
+        {
+            "id": "thunder-spear-guidance",
+            "title": "Thunder Spear Ballistic System",
+            "category": "Artillery",
+            "subtag": "Weapon Control",
+            "desc": "Precision detonation timer and guidance wire interface penetrating reinforced titan armor plates.",
+            "tags": [
+                "Embedded C",
+                "RTOS",
+                "Ballistics"
+            ],
+            "metrics": "100% Armor Penetration",
+            "color": "#be123c"
+        },
+        {
+            "id": "perimeter-sentry-mesh",
+            "title": "Perimeter Overwatch Mesh",
+            "category": "Security",
+            "subtag": "Sentinel Hub",
+            "desc": "High-speed monitoring perimeter flagging perimeter intrusions and deploying automated countermeasures.",
+            "tags": [
+                "Go",
+                "WebRTC",
+                "Computer Vision"
+            ],
+            "metrics": "360° Sentry Coverage",
+            "color": "#0284c7"
+        },
+        {
+            "id": "scarf-thermal-regulator",
+            "title": "Thermal Scarf Comfort Telemetry",
+            "category": "Wearables",
+            "subtag": "Bio-Telemetry",
+            "desc": "Subtle micro-weave thermal stabilizer maintaining ideal body temperature in freezing high-altitude Scout drops.",
+            "tags": [
+                "IoT",
+                "MicroPython",
+                "Bluetooth LE"
+            ],
+            "metrics": "Constant 37°C Warmth",
+            "color": "#e11d48"
+        },
+        {
+            "id": "interception-radar",
+            "title": "Aerial Interception Radar",
+            "category": "Algorithms",
+            "subtag": "Predictive Math",
+            "desc": "Calculates hostile flight arcs in mid-air to place intercepting strikes directly into the opponent's blind spot.",
+            "tags": [
+                "Rust",
+                "Vector Math",
+                "WebGL"
+            ],
+            "metrics": "Sub-5ms Interception",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "850",
+            "role": "Rank 1 Graduate",
+            "organization": "104th Training Corps",
+            "description": "Graduated at the very pinnacle of the class with unprecedented scores across all disciplines."
+        },
+        {
+            "year": "850",
+            "role": "Vanguard Elite",
+            "organization": "Battle of Trost District",
+            "description": "Held the rear guard for retreating citizens and escorted the rogue Titan boulder to seal the breach."
+        },
+        {
+            "year": "851",
+            "role": "Special Operations Vanguard",
+            "organization": "Survey Corps Retake Mission",
+            "description": "Spearheaded the frontline deployment of Thunder Spears against the Armored Titan."
+        },
+        {
+            "year": "854",
+            "role": "Elite Scout Leader",
+            "organization": "Liberio & Shiganshina Defense",
+            "description": "Coordinated joint urban aerial suppression, neutralizing elite hostile warriors."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Mikasa is an irreplaceable treasure of humanity. Her skill is worth an entire regiment of elite soldiers.",
+            "author": "Ian Dietrich",
+            "title": "Elite Garrison Commander",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Her blade never wavers. When everything turns to blood and chaos, Mikasa brings calm and certainty.",
+            "author": "Armin Arlert",
+            "title": "Survey Corps Strategist",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "As long as I am with you, I can do anything. The world is cruel, but it is also very beautiful.",
+            "author": "Eren Yeager",
+            "title": "Attack Titan Vanguard",
+            "avatar": "/anime/eren.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#be123c",
+        "--accent-secondary": "#e11d48",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'naruto': {
+    "id": "naruto",
+    "slug": "naruto",
+    "name": "Naruto Uzumaki",
+    "japaneseName": "うずまきナルト",
+    "series": "Naruto Shippuden",
+    "universeBadge": "Seventh Hokage",
+    "roleTitle": "Seventh Hokage & High-Availability Distributed Architect",
+    "headline": "Child of Prophecy",
+    "tagline": "Infinite endurance, massive multi-node scaling, and uniting complex ecosystems.",
+    "statement": "dedicated to never going back on my word and building systems that connect everyone together.",
+    "bio": "Seventh Hokage of the Hidden Leaf and Jinchūriki of the Nine Tails. Famed for limitless chakra scaling, multi-shadow clone orchestration, and building harmonious alliances across rival factions.",
+    "price": 49,
+    "featuredTag": "Hokage Tier",
+    "avatarUrl": "/anime/naruto.jpg",
+    "bustUrl": "/anime/naruto.jpg",
+    "cardUrl": "/anime/naruto.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "naruto-rasengan-chakra",
+    "location": "Konohagakure, Fire Country",
+    "companionAvatars": [
+        "/anime/sasuke.jpg",
+        "/anime/sakura.jpg",
+        "/anime/hinata.jpg"
+    ],
+    "companionTrustText": "Endorsed by the Five Kage and Allied Shinobi Supreme Headquarters.",
+    "brandPartners": [
+        {
+            "name": "Konoha Hokage Bureau",
+            "icon": "✦"
+        },
+        {
+            "name": "Uzumaki Seal Archive",
+            "icon": "◬"
+        },
+        {
+            "name": "Mount Myoboku Sage Dojo",
+            "icon": "⬡"
+        },
+        {
+            "name": "Allied Shinobi Forces",
+            "icon": "◌"
+        },
+        {
+            "name": "Ichiraku Ramen Guild",
+            "icon": "⊚"
+        },
+        {
+            "name": "Leaf Ninja Academy",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Rasengan Engine",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Multi-Shadow Clones",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Sage Sensing",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Chakra Distribution",
+            "color": "#f59e0b",
+            "bg": "#fef3c7",
+            "border": "#fde68a"
+        },
+        {
+            "label": "Diplomatic Empathy",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Kurama Synergy",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on infinite endurance, connecting diverse people, and",
+        "highlight": "never giving up on any impossible dream."
+    },
+    "sinceYear": "since the Genin Graduation 2002",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#ea580c",
+        "accentSecondary": "#f59e0b",
+        "accentGlow": "rgba(234, 88, 12, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(234, 88, 12, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(234, 88, 12, 0.08)",
+        "badgeBg": "#ffedd5",
+        "badgeText": "#9a3412",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(234, 88, 12, 0.32) 0%, rgba(245, 158, 11, 0.18) 35%, rgba(234, 88, 12, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Chakra Capacity",
+            "value": "Bijuu Tier"
+        },
+        {
+            "label": "Clone Workers",
+            "value": "1,000+ Async"
+        },
+        {
+            "label": "Promises Kept",
+            "value": "100%"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Multi-Shadow Clone Concurrency",
+            "level": 99,
+            "category": "Concurrency"
+        },
+        {
+            "name": "Rasenshuriken Flow State",
+            "level": 97,
+            "category": "Architecture"
+        },
+        {
+            "name": "Sage Chakra Telemetry",
+            "level": 95,
+            "category": "Observability"
+        },
+        {
+            "name": "Cross-Domain Diplomacy & Empathy",
+            "level": 100,
+            "category": "Leadership"
+        }
+    ],
+    "projects": [
+        {
+            "id": "shadow-clone-cluster",
+            "title": "Multi-Shadow Clone Cluster (Kage-K8s)",
+            "category": "Cloud",
+            "subtag": "Autoscaling Mesh",
+            "desc": "High-concurrency cluster orchestration deploying 10,000 identical container replicas with shared memory knowledge ingestion.",
+            "tags": [
+                "Kubernetes",
+                "Go",
+                "Docker",
+                "Redis"
+            ],
+            "metrics": "Instant 10k Clones",
+            "color": "#ea580c"
+        },
+        {
+            "id": "rasenshuriken-compiler",
+            "title": "Rasenshuriken Code Optimizer",
+            "category": "Compilers",
+            "subtag": "Cellular Compiler",
+            "desc": "High-frequency AST optimization engine that slices execution overhead at a microscopic, cellular level.",
+            "tags": [
+                "Rust",
+                "LLVM",
+                "WebAssembly"
+            ],
+            "metrics": "Micro-Cellular Precision",
+            "color": "#0284c7"
+        },
+        {
+            "id": "sage-telemetry",
+            "title": "Senjutsu Planetary Observability",
+            "category": "Monitoring",
+            "subtag": "Chakra Radar",
+            "desc": "Natural energy sensor network detecting distant anomalies and latency spikes across global server regions.",
+            "tags": [
+                "Prometheus",
+                "Grafana",
+                "TypeScript"
+            ],
+            "metrics": "Planetary Range Sensing",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "leaf-village-smart-grid",
+            "title": "Konoha Smart City Modernization",
+            "category": "IoT",
+            "subtag": "Civic Infrastructure",
+            "desc": "Next-generation municipal intranet modernizing public services, ninja task dispatch, and emergency siren arrays.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "TailwindCSS"
+            ],
+            "metrics": "100% Civic Coverage",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Genin",
+            "organization": "Team 7 (Kakashi, Sasuke, Sakura)",
+            "description": "Completed perilous Land of Waves bridge defense and advanced through the Chunin Exams."
+        },
+        {
+            "year": "Shippuden",
+            "role": "Sage of Mount Myoboku",
+            "organization": "Leaf Defense Vanguard",
+            "description": "Mastered Senjutsu and defended Konoha against the Six Paths of Pain."
+        },
+        {
+            "year": "Fourth War",
+            "role": "Supreme Alliance Hero",
+            "organization": "Allied Shinobi Forces",
+            "description": "Distributed Kurama cloak buffering millions of shinobi, uniting the ninja world."
+        },
+        {
+            "year": "Present",
+            "role": "Seventh Hokage",
+            "organization": "Hidden Leaf Village Command",
+            "description": "Presiding over unprecedented technological advancement, peace treaties, and scientific ninja tools."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "You are the only person in this world who understands my pain and pulled me out of the abyss.",
+            "author": "Sasuke Uchiha",
+            "title": "Shadow Hokage",
+            "avatar": "/anime/sasuke.jpg"
+        },
+        {
+            "quote": "Watching your back has always been my greatest strength. You showed me that destiny can be rewritten.",
+            "author": "Hinata Hyūga",
+            "title": "Head of Hyūga Clan",
+            "avatar": "/anime/hinata.jpg"
+        },
+        {
+            "quote": "He never gave up, not once. When the village was in ruins, Naruto brought everyone home.",
+            "author": "Sakura Haruno",
+            "title": "Chief Medical Ninja",
+            "avatar": "/anime/sakura.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#ea580c",
+        "--accent-secondary": "#f59e0b",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'sasuke': {
+    "id": "sasuke",
+    "slug": "sasuke",
+    "name": "Sasuke Uchiha",
+    "japaneseName": "うちはサスケ",
+    "series": "Naruto Shippuden",
+    "universeBadge": "Shadow Hokage",
+    "roleTitle": "Shadow Operative & Deep Threat Specialist",
+    "headline": "Avenger in the Shadows",
+    "tagline": "Chidori lightning latency, dimensional threat neutralization, and lone-wolf precision.",
+    "statement": "channeling lightning precision and profound insight to safeguard what matters from the shadows.",
+    "bio": "The sole surviving prodigy of the Uchiha clan and Shadow Hokage of the Leaf. Wields the Eternal Mangekyō Sharingan and Rinnegan to traverse alternate dimensions and neutralize extraterrestrial threats.",
+    "price": 48,
+    "featuredTag": "Shadow Elite",
+    "avatarUrl": "/anime/sasuke.jpg",
+    "bustUrl": "/anime/sasuke.jpg",
+    "cardUrl": "/anime/sasuke.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "sasuke-chidori-lightning",
+    "location": "Uchiha District, Leaf Shadow Division",
+    "companionAvatars": [
+        "/anime/naruto.jpg",
+        "/anime/sakura.jpg",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+    ],
+    "companionTrustText": "Trusted by the Seventh Hokage with the village's deepest extraterrestrial missions.",
+    "brandPartners": [
+        {
+            "name": "Shadow Shinobi Division",
+            "icon": "✦"
+        },
+        {
+            "name": "Uchiha Clan Shrine",
+            "icon": "◬"
+        },
+        {
+            "name": "Rinnegan Spatial Bureau",
+            "icon": "⬡"
+        },
+        {
+            "name": "Five Kage Intelligence",
+            "icon": "◌"
+        },
+        {
+            "name": "Kusanagi Blacksmiths",
+            "icon": "⊚"
+        },
+        {
+            "name": "Hawk Recon Network",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Chidori Current",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        },
+        {
+            "label": "Sharingan Analytics",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Flame Control",
+            "color": "#4338ca",
+            "bg": "#e0e7ff",
+            "border": "#c7d2fe"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Kusanagi Kenjutsu",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        },
+        {
+            "label": "Dimensional Traversal",
+            "color": "#7c3aed",
+            "bg": "#f5f3ff",
+            "border": "#ddd6fe"
+        },
+        {
+            "label": "Tactical Solitude",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on surgical Chidori accuracy, pattern recognition, and",
+        "highlight": "delivering decisive impact from the shadows."
+    },
+    "sinceYear": "since the Valley of the End",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#4f46e5",
+        "accentSecondary": "#6366f1",
+        "accentGlow": "rgba(79, 70, 229, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(79, 70, 229, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(79, 70, 229, 0.08)",
+        "badgeBg": "#e0e7ff",
+        "badgeText": "#3730a3",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(79, 70, 229, 0.32) 0%, rgba(99, 102, 241, 0.18) 35%, rgba(79, 70, 229, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Dojutsu",
+            "value": "Rinne-Sharingan"
+        },
+        {
+            "label": "Lightning Velocity",
+            "value": "Chidori Sub-ms"
+        },
+        {
+            "label": "Dimensions Traversed",
+            "value": "6 Otsutsuki"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Spatial Amenotejikara Swapping",
+            "level": 99,
+            "category": "Spatial"
+        },
+        {
+            "name": "Amaterasu Enton Control",
+            "level": 96,
+            "category": "Pyrotechnics"
+        },
+        {
+            "name": "Susanoo Armor Hardening",
+            "level": 98,
+            "category": "Defense"
+        },
+        {
+            "name": "Sub-Zero Threat Profiling",
+            "level": 95,
+            "category": "Intel"
+        }
+    ],
+    "projects": [
+        {
+            "id": "amenotejikara-routing",
+            "title": "Amenotejikara Position Swap Proxy",
+            "category": "Networking",
+            "subtag": "Zero-Latency Swap",
+            "desc": "Instantaneous socket swap routing that swaps server loads with zero connection drops across distributed nodes.",
+            "tags": [
+                "Rust",
+                "eBPF",
+                "Linux Kernel"
+            ],
+            "metrics": "Zero-Latency Relocation",
+            "color": "#4f46e5"
+        },
+        {
+            "id": "sharingan-vision",
+            "title": "Sharingan Predictive Vision Engine",
+            "category": "AI / CV",
+            "subtag": "Trajectory Prediction",
+            "desc": "Real-time video trajectory predictor mapping hostile attacks 3 steps in advance based on subtle muscle micro-tensions.",
+            "tags": [
+                "PyTorch",
+                "TensorRT",
+                "CUDA"
+            ],
+            "metrics": "Predicts 3 Steps Ahead",
+            "color": "#dc2626"
+        },
+        {
+            "id": "otsutsuki-dimensional-tracer",
+            "title": "Otsutsuki Dimensional Wormhole Radar",
+            "category": "Astronomy",
+            "subtag": "Space-Time Tracker",
+            "desc": "Quantum telemetry tracker identifying dimensional rifts and chakra tears across parallel planetary dimensions.",
+            "tags": [
+                "Next.js",
+                "Three.js",
+                "WebSockets"
+            ],
+            "metrics": "Cross-Dimensional Tracking",
+            "color": "#7c3aed"
+        },
+        {
+            "id": "chidori-pulse",
+            "title": "Chidori Voltage Controller",
+            "category": "Hardware",
+            "subtag": "Pulse Modulator",
+            "desc": "Microsecond electrical impulse firmware regulating high-voltage discharges with scalpel surgical focus.",
+            "tags": [
+                "C",
+                "Embedded ARM",
+                "Oscilloscopes"
+            ],
+            "metrics": "Microsecond Precision",
+            "color": "#0284c7"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Genin Era",
+            "role": "Leaf Academy Rookie #1",
+            "organization": "Team 7",
+            "description": "Awakened Sharingan during the Zabuza bridge encounter; mastered basic Chidori."
+        },
+        {
+            "year": "Shippuden",
+            "role": "Leader of Taka",
+            "organization": "Independent Recon Team",
+            "description": "Uncovered the truth of the Uchiha clan; fought the Five Kage Summit."
+        },
+        {
+            "year": "Fourth War",
+            "role": "Key Savior",
+            "organization": "Allied Coalition",
+            "description": "Co-sealed Kaguya Otsutsuki alongside Naruto; reconciled at the Valley of the End."
+        },
+        {
+            "year": "Adult Era",
+            "role": "Shadow Hokage",
+            "organization": "Hidden Leaf Global Intelligence",
+            "description": "Operating solo beyond global borders to safeguard the shinobi world from celestial threats."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Sasuke protects the world from the shadows while I protect it in the light. He is the other half of Konoha.",
+            "author": "Naruto Uzumaki",
+            "title": "Seventh Hokage",
+            "avatar": "/anime/naruto.jpg"
+        },
+        {
+            "quote": "No matter how far he wanders into the dark, I will always prepare a home for his return.",
+            "author": "Sakura Haruno",
+            "title": "Head of Konoha Hospital",
+            "avatar": "/anime/sakura.jpg"
+        },
+        {
+            "quote": "Sasuke-sensei taught me what it means to be a true shinobi: someone who endures in silence.",
+            "author": "Boruto Uzumaki",
+            "title": "Shinobi Prodigy",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#4f46e5",
+        "--accent-secondary": "#6366f1",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'sakura': {
+    "id": "sakura",
+    "slug": "sakura",
+    "name": "Sakura Haruno",
+    "japaneseName": "春野サクラ",
+    "series": "Naruto Shippuden",
+    "universeBadge": "Supreme Medical Director",
+    "roleTitle": "Head of Medical Operations & Heavy-Impact Specialist",
+    "headline": "Strength of a Hundred",
+    "tagline": "Precision cellular recovery, disaster triage mastery, and shattering monstrous bottlenecks.",
+    "statement": "combining monstrous destructive impact with cellular regeneration and compassionate care.",
+    "bio": "Disciple of Fifth Hokage Tsunade and the foremost medical ninja in existence. Wields the Byakugou Strength of a Hundred seal, providing infinite stamina recovery and ground-shattering martial power.",
+    "price": 38,
+    "featuredTag": "Healing & Power",
+    "avatarUrl": "/anime/sakura.jpg",
+    "bustUrl": "/anime/sakura.jpg",
+    "cardUrl": "/anime/sakura.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "sakura-cherry-byakugou",
+    "location": "Konoha Central Medical Hospital",
+    "companionAvatars": [
+        "/anime/naruto.jpg",
+        "/anime/sasuke.jpg",
+        "/anime/hinata.jpg"
+    ],
+    "companionTrustText": "Certified Chief Medical Director of the Allied Shinobi Medical Corps.",
+    "brandPartners": [
+        {
+            "name": "Konoha Central Hospital",
+            "icon": "✦"
+        },
+        {
+            "name": "Byakugou Institute",
+            "icon": "◬"
+        },
+        {
+            "name": "Tsunade Medical Academy",
+            "icon": "⬡"
+        },
+        {
+            "name": "Katsuyu Healing Sanctuary",
+            "icon": "◌"
+        },
+        {
+            "name": "Leaf Pediatric Clinic",
+            "icon": "⊚"
+        },
+        {
+            "name": "Allied Triage Council",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Chakra Scalpel",
+            "color": "#ec4899",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        },
+        {
+            "label": "Byakugou Seal",
+            "color": "#be185d",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        },
+        {
+            "label": "Cellular Healing",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Heavy Impact Strike",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Antidote Synthesis",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Triage Leadership",
+            "color": "#7c3aed",
+            "bg": "#f5f3ff",
+            "border": "#ddd6fe"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on precise chakra scalpel work, cellular healing, and",
+        "highlight": "unleashing game-changing strength when it matters."
+    },
+    "sinceYear": "since the Tsunade Apprenticeship",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#ec4899",
+        "accentSecondary": "#f43f5e",
+        "accentGlow": "rgba(236, 72, 153, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(236, 72, 153, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(236, 72, 153, 0.08)",
+        "badgeBg": "#fce7f3",
+        "badgeText": "#9d174d",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(236, 72, 153, 0.32) 0%, rgba(244, 63, 94, 0.18) 35%, rgba(236, 72, 153, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Medical Rank",
+            "value": "Director Tier"
+        },
+        {
+            "label": "Punch Impact",
+            "value": "1,000 Tons"
+        },
+        {
+            "label": "Heal Speed",
+            "value": "Cellular"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Byakugou Cellular Regeneration",
+            "level": 98,
+            "category": "Medical"
+        },
+        {
+            "name": "Chakra Scalpel Micro-Surgery",
+            "level": 97,
+            "category": "Surgery"
+        },
+        {
+            "name": "Seismic Impact Demolition",
+            "level": 95,
+            "category": "Combat"
+        },
+        {
+            "name": "Crisis Triage Infrastructure",
+            "level": 99,
+            "category": "Operations"
+        }
+    ],
+    "projects": [
+        {
+            "id": "triage-telemetry",
+            "title": "Konoha Central Hospital Triage System",
+            "category": "HealthTech",
+            "subtag": "Emergency Ops",
+            "desc": "Real-time patient monitoring tracking thousands of wounded shinobi simultaneously with predictive healing schedules.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "WebSockets"
+            ],
+            "metrics": "Zero Triage Delays",
+            "color": "#ec4899"
+        },
+        {
+            "id": "antidote-synthesis",
+            "title": "Sasori Poison Rapid Counter-Synthesizer",
+            "category": "BioTech",
+            "subtag": "Molecular Chemistry",
+            "desc": "Automated chemical compound analyzer decoding lethal multi-toxin poisons and generating antidotes in under 3 minutes.",
+            "tags": [
+                "Python",
+                "Biopython",
+                "Molecular FEA"
+            ],
+            "metrics": "Decoded in 180s",
+            "color": "#0284c7"
+        },
+        {
+            "id": "katsuyu-slug-network",
+            "title": "Katsuyu Telepathic Tele-Health Mesh",
+            "category": "Telehealth",
+            "subtag": "Remote Care",
+            "desc": "Distributed healing network deploying remote micro-clones providing instant cellular blood transfusions across frontlines.",
+            "tags": [
+                "Distributed Systems",
+                "Go",
+                "gRPC"
+            ],
+            "metrics": "10,000 Simultaneous Heals",
+            "color": "#10b981"
+        },
+        {
+            "id": "cherry-blossom-crash",
+            "title": "Seismic Impact Simulator",
+            "category": "Civil Engineering",
+            "subtag": "Demolition Calc",
+            "desc": "Structural stress calculator calculating shockwave fracture vectors to shatter bedrock obstacles without causing civilian collapses.",
+            "tags": [
+                "C++",
+                "OpenGL",
+                "Physics Engines"
+            ],
+            "metrics": "Controlled Demolition",
+            "color": "#f43f5e"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Part I",
+            "role": "Genin Shinobi",
+            "organization": "Team 7 (Kakashi Unit)",
+            "description": "Demonstrated exceptional chakra control and textbook analytical intelligence."
+        },
+        {
+            "year": "Shippuden",
+            "role": "Tsunade Elite Disciple",
+            "organization": "Leaf Medical Unit",
+            "description": "Defeated Akatsuki member Sasori; developed antidotes saving Kankuro's life."
+        },
+        {
+            "year": "Fourth War",
+            "role": "Supreme Triage Commander",
+            "organization": "Allied Medical Division",
+            "description": "Unlocked the Strength of a Hundred Seal, summoned Lady Katsuyu, and healed entire armies."
+        },
+        {
+            "year": "Present",
+            "role": "Head of Medical Infrastructure",
+            "organization": "Konoha Central Medical Bureau",
+            "description": "Pioneering children's mental health clinics and revolutionary surgical procedures."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Sakura's medical intuition matches Tsunade-sama. When she is in the hospital, no patient is lost.",
+            "author": "Shizune",
+            "title": "Senior Medical Ninja",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Her punch can shatter mountain plateaus, but her hands are gentle enough to stitch a beating heart.",
+            "author": "Naruto Uzumaki",
+            "title": "Seventh Hokage",
+            "avatar": "/anime/naruto.jpg"
+        },
+        {
+            "quote": "I am proud of the woman and mother she has become. Our home stands strong because of her.",
+            "author": "Sasuke Uchiha",
+            "title": "Shadow Hokage",
+            "avatar": "/anime/sasuke.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#ec4899",
+        "--accent-secondary": "#f43f5e",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'hinata': {
+    "id": "hinata",
+    "slug": "hinata",
+    "name": "Hinata Hyūga",
+    "japaneseName": "日向ヒナタ",
+    "series": "Naruto Shippuden",
+    "universeBadge": "Byakugan Princess",
+    "roleTitle": "Gentle Fist Master & 360° Observability Lead",
+    "headline": "Gentle Fist Harmony",
+    "tagline": "360° all-seeing observability, delicate chakra alignment, and quiet, unbreakable courage.",
+    "statement": "quiet determination guided by clear sight, striking with gentle fist grace and unyielding heart.",
+    "bio": "Heiress of the Hyūga Clan and master of the Byakugan. Renowned for all-seeing tenketsu vision, Twin Lion Fists chakra mastery, and a quiet, steadfast heart that faced Pain without stepping back.",
+    "price": 36,
+    "featuredTag": "Byakugan Master",
+    "avatarUrl": "/anime/hinata.jpg",
+    "bustUrl": "/anime/hinata.jpg",
+    "cardUrl": "/anime/hinata.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "hinata-gentle-fist",
+    "location": "Hyūga Main Estate, Fire Country",
+    "companionAvatars": [
+        "/anime/naruto.jpg",
+        "/anime/sakura.jpg",
+        "/anime/sasuke.jpg"
+    ],
+    "companionTrustText": "Venerated Byakugan Princess of the noble Hyūga Clan and Hamura lineage.",
+    "brandPartners": [
+        {
+            "name": "Hyūga Main Chamber",
+            "icon": "✦"
+        },
+        {
+            "name": "Byakugan Observability Lab",
+            "icon": "◬"
+        },
+        {
+            "name": "Twin Lion Dojo",
+            "icon": "⬡"
+        },
+        {
+            "name": "Leaf Recon Division",
+            "icon": "◌"
+        },
+        {
+            "name": "Hamura Celestial Archive",
+            "icon": "⊚"
+        },
+        {
+            "name": "Gentle Fist Guild",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Byakugan Vision",
+            "color": "#818cf8",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        },
+        {
+            "label": "Twin Lion Fists",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        },
+        {
+            "label": "Chakra Needles",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Eight Trigrams Palm",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Protective Empathy",
+            "color": "#ec4899",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        },
+        {
+            "label": "Support Harmony",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on 360-degree clarity, gentle chakra alignment, and",
+        "highlight": "walking forward with quiet, unwavering courage."
+    },
+    "sinceYear": "since the Chunin Exam Awakening",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#6366f1",
+        "accentSecondary": "#818cf8",
+        "accentGlow": "rgba(99, 102, 241, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(99, 102, 241, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(99, 102, 241, 0.08)",
+        "badgeBg": "#e0e7ff",
+        "badgeText": "#3730a3",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(99, 102, 241, 0.32) 0%, rgba(129, 140, 248, 0.18) 35%, rgba(99, 102, 241, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Visual Range",
+            "value": "10km 360°"
+        },
+        {
+            "label": "Tenketsu Blocked",
+            "value": "64 Palms"
+        },
+        {
+            "label": "Chakra Purity",
+            "value": "Hamura Tier"
+        }
+    ],
+    "skills": [
+        {
+            "name": "360-Degree Tenketsu Sight",
+            "level": 98,
+            "category": "Observability"
+        },
+        {
+            "name": "Twin Lion Fists Chakra Drain",
+            "level": 95,
+            "category": "Combat"
+        },
+        {
+            "name": "Eight Trigrams Protective Palm",
+            "level": 93,
+            "category": "Defense"
+        },
+        {
+            "name": "Team Harmony & Quiet Leadership",
+            "level": 97,
+            "category": "Synergy"
+        }
+    ],
+    "projects": [
+        {
+            "id": "byakugan-telemetry",
+            "title": "Byakugan 360° Observability APM",
+            "category": "APM",
+            "subtag": "Observability",
+            "desc": "Complete stack tracing suite eliminating blind spots and tracking every micro-operation across distributed clusters.",
+            "tags": [
+                "OpenTelemetry",
+                "Rust",
+                "Grafana"
+            ],
+            "metrics": "Zero Blind Spots",
+            "color": "#6366f1"
+        },
+        {
+            "id": "twin-lion-security",
+            "title": "Twin Lion Threat Depletion Firewall",
+            "category": "Cybersecurity",
+            "subtag": "WAF",
+            "desc": "Advanced web application firewall draining malicious bot traffic and neutralizing DDoS attacks before reaching databases.",
+            "tags": [
+                "Go",
+                "eBPF",
+                "Linux"
+            ],
+            "metrics": "99.9% Malice Absorbed",
+            "color": "#818cf8"
+        },
+        {
+            "id": "chakra-network-debugger",
+            "title": "Tenketsu System Call Debugger",
+            "category": "DevTools",
+            "subtag": "Memory Profiler",
+            "desc": "Interactive memory and thread debugger identifying deadlocks and chakra blockages inside high-speed compiled binaries.",
+            "tags": [
+                "C",
+                "GDB",
+                "Electron UI"
+            ],
+            "metrics": "Pinpoint 361 Nodes",
+            "color": "#0284c7"
+        },
+        {
+            "id": "celestial-harmony-portal",
+            "title": "Hamura Heritage Sanctuary Portal",
+            "category": "Cultural",
+            "subtag": "Archives",
+            "desc": "High-definition digital repository preserving ancient Hyūga scrolls, meditative martial katas, and celestial star maps.",
+            "tags": [
+                "Next.js",
+                "Three.js",
+                "TailwindCSS"
+            ],
+            "metrics": "Decoded Star Lore",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Genin Era",
+            "role": "Kunoichi of Team 8",
+            "organization": "Kurenai Recon Unit",
+            "description": "Advanced reconnaissance, tracking, and survival alongside Kiba and Shino."
+        },
+        {
+            "year": "Shippuden",
+            "role": "Heroic Defender",
+            "organization": "Battle of the Leaf (Pain Invasion)",
+            "description": "Stepped into the crater alone against Pain to defend Naruto, changing the course of the village."
+        },
+        {
+            "year": "Fourth War",
+            "role": "Frontline Diviner",
+            "organization": "Allied Recon & Vanguard",
+            "description": "Used Byakugan to guide the Allied Shinobi Forces and protected the fallen with Neji's spirit."
+        },
+        {
+            "year": "The Last Era",
+            "role": "Byakugan Princess",
+            "organization": "Hamura Moon Campaign",
+            "description": "Awakened Hamura's celestial chakra and deactivated the Tenseigan altar to preserve Earth."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Hinata gave me the courage to stand up when I was completely beaten down. Her heart is stronger than anyone knows.",
+            "author": "Naruto Uzumaki",
+            "title": "Seventh Hokage",
+            "avatar": "/anime/naruto.jpg"
+        },
+        {
+            "quote": "Her Twin Lion Fists possess unmatched purity. She represents the true nobility of the Hyūga.",
+            "author": "Hiashi Hyūga",
+            "title": "Hyūga Clan Elder",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Hinata is our gentle anchor. In any storm, her vision cuts straight through the noise.",
+            "author": "Sakura Haruno",
+            "title": "Chief Medical Ninja",
+            "avatar": "/anime/sakura.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#6366f1",
+        "--accent-secondary": "#818cf8",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'luffy': {
+    "id": "luffy",
+    "slug": "luffy",
+    "name": "Monkey D. Luffy",
+    "japaneseName": "モンキー・D・ルフィ",
+    "series": "One Piece",
+    "universeBadge": "Fifth Emperor / Sun God",
+    "roleTitle": "Emperor of the Sea & Radical Freedom Architect",
+    "headline": "King of the Pirates",
+    "tagline": "Infinite elasticity, Sun God Nika joy, and breaking every cage on the open ocean.",
+    "statement": "living with absolute freedom on the open seas, connecting comrades and chasing the horizon.",
+    "bio": "Captain of the Straw Hat Pirates and Emperor of the Sea. Awakened the Mythical Zoan Sun God Nika fruit, laughing through impossible battles and bending reality to ensure everyone around him can feast and live in freedom.",
+    "price": 49,
+    "featuredTag": "Emperor Tier",
+    "avatarUrl": "/anime/luffy.jpg",
+    "bustUrl": "/anime/luffy.jpg",
+    "cardUrl": "/anime/luffy.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "luffy-nika-clouds",
+    "location": "Thousand Sunny, The Grand Line",
+    "companionAvatars": [
+        "/anime/ace.jpg",
+        "/anime/sabo.jpg",
+        "/anime/nami.jpg"
+    ],
+    "companionTrustText": "Commanding the Straw Hat Grand Fleet of 5,600 warriors across the New World.",
+    "brandPartners": [
+        {
+            "name": "Straw Hat Grand Fleet",
+            "icon": "✦"
+        },
+        {
+            "name": "Sunny Shipwright Guild",
+            "icon": "◬"
+        },
+        {
+            "name": "Wano Liberation Front",
+            "icon": "⬡"
+        },
+        {
+            "name": "Red-Haired Allies",
+            "icon": "◌"
+        },
+        {
+            "name": "Baratie Culinary Fleet",
+            "icon": "⊚"
+        },
+        {
+            "name": "Sun God Festival",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Gear Fifth Dynamics",
+            "color": "#ef4444",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Advanced Conqueror",
+            "color": "#f59e0b",
+            "bg": "#fef3c7",
+            "border": "#fde68a"
+        },
+        {
+            "label": "Rubber Elasticity",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Crew Camaraderie",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Horizon Sailing",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Feast Organizing",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on unbounded imagination, relentless cheer, and",
+        "highlight": "carving a path where everyone can eat and smile freely."
+    },
+    "sinceYear": "since Setting Sail from Foosha Village",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#ef4444",
+        "accentSecondary": "#f59e0b",
+        "accentGlow": "rgba(239, 68, 68, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(239, 68, 68, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(239, 68, 68, 0.08)",
+        "badgeBg": "#fee2e2",
+        "badgeText": "#991b1b",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.32) 0%, rgba(245, 158, 11, 0.18) 35%, rgba(239, 68, 68, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Bounty",
+            "value": "3,000,000,000฿"
+        },
+        {
+            "label": "Grand Fleet",
+            "value": "5,600 Strong"
+        },
+        {
+            "label": "Heartbeat Rhythm",
+            "value": "Drums of Liberation"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Gear 5 Reality-Bending Physics",
+            "level": 99,
+            "category": "Mythical"
+        },
+        {
+            "name": "Advanced Conqueror Haki Infusion",
+            "level": 98,
+            "category": "Haki"
+        },
+        {
+            "name": "Future-Sight Observation Haki",
+            "level": 94,
+            "category": "Perception"
+        },
+        {
+            "name": "Global Feast Community Organizing",
+            "level": 100,
+            "category": "Culture"
+        }
+    ],
+    "projects": [
+        {
+            "id": "drums-of-liberation-mesh",
+            "title": "Drums of Liberation Elastic Engine",
+            "category": "Animation",
+            "subtag": "Physics Shader",
+            "desc": "Unshackled physics engine bending 3D models into cartoon rubber geometries with whimsical joy and zero frame drops.",
+            "tags": [
+                "Three.js",
+                "GLSL",
+                "WebGL"
+            ],
+            "metrics": "120 FPS Uncapped Joy",
+            "color": "#ef4444"
+        },
+        {
+            "id": "grand-fleet-fleetops",
+            "title": "Straw Hat Grand Fleet Coordination Hub",
+            "category": "Logistics",
+            "subtag": "Fleet Network",
+            "desc": "Vessel tracking platform communicating via Vivre Card pings across Grand Line magnetic interference zones.",
+            "tags": [
+                "Go",
+                "WebSockets",
+                "GIS"
+            ],
+            "metrics": "5,600 Ships Linked",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "meat-tracker-portal",
+            "title": "Sanji All-You-Can-Eat Meat Logistics",
+            "category": "FoodTech",
+            "subtag": "Inventory Grid",
+            "desc": "Automated galley inventory monitoring ensuring meat, sea king barrels, and banquet supplies are always replenished.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "TailwindCSS"
+            ],
+            "metrics": "Zero Starvation",
+            "color": "#ea580c"
+        },
+        {
+            "id": "wano-reclamation",
+            "title": "Wano Clean Water Environmental Grid",
+            "category": "Ecology",
+            "subtag": "Water Grid",
+            "desc": "River purification and clean food supply restoration telemetry across all six provinces of Wano Country.",
+            "tags": [
+                "IoT",
+                "Python",
+                "Grafana"
+            ],
+            "metrics": "100% Pure Clean Water",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "East Blue",
+            "role": "Captain",
+            "organization": "Straw Hat Pirates",
+            "description": "Gathered core crew: Zoro, Nami, Usopp, Sanji; defeated Arlong to enter the Grand Line."
+        },
+        {
+            "year": "Paradise",
+            "role": "Warlord Slayer",
+            "organization": "Straw Hat Crew",
+            "description": "Toppled Crocodile in Alabasta, rang the golden bell in Skypiea, and declared war on the World Government at Enies Lobby."
+        },
+        {
+            "year": "New World",
+            "role": "Yonko Challenger",
+            "organization": "Ninja-Pirate-Mink-Samurai Alliance",
+            "description": "Formed grand alliance in Dressrosa; infiltrated Whole Cake Island; awakened Sun God Nika in Wano."
+        },
+        {
+            "year": "Present",
+            "role": "Emperor of the Sea",
+            "organization": "Straw Hat Grand Fleet",
+            "description": "Claiming territory, liberating island nations, and racing toward the final island of Laugh Tale."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Luffy is the man who will become the King of the Pirates! I will never yield my blades until his dream is reality.",
+            "author": "Roronoa Zoro",
+            "title": "King of Hell Swordsman",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "My little brother has always been reckless, but wherever he walks, smiles and sunrise always follow.",
+            "author": "Portgas D. Ace",
+            "title": "Second Division Commander",
+            "avatar": "/anime/ace.jpg"
+        },
+        {
+            "quote": "He drew me out of the darkness and charted a map of freedom for us all. The Sunny will carry him to the end of the world.",
+            "author": "Nami",
+            "title": "Cat Burglar Navigator",
+            "avatar": "/anime/nami.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#ef4444",
+        "--accent-secondary": "#f59e0b",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'ace': {
+    "id": "ace",
+    "slug": "ace",
+    "name": "Portgas D. Ace",
+    "japaneseName": "ポートガス・D・エース",
+    "series": "One Piece",
+    "universeBadge": "Fire Fist",
+    "roleTitle": "Second Division Commander & Thermal Power Architect",
+    "headline": "Fire Fist of Whitebeard",
+    "tagline": "Blazing logia firestorms, sworn brotherhood, and living a life without a single regret.",
+    "statement": "blazing brightly without a single regret, illuminating the path for those who follow behind.",
+    "bio": "Son of the Pirate King Gol D. Roger and beloved Second Division Commander of the Whitebeard Pirates. Wielded the Mera Mera no Mi, illuminating the oceans with devastating Fire Fist cannons and unbending loyalty to his family.",
+    "price": 44,
+    "featuredTag": "Legendary Flame",
+    "avatarUrl": "/anime/ace.jpg",
+    "bustUrl": "/anime/ace.jpg",
+    "cardUrl": "/anime/ace.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "ace-fire-embers",
+    "location": "Moby Dick Flagship, New World",
+    "companionAvatars": [
+        "/anime/luffy.jpg",
+        "/anime/sabo.jpg",
+        "/anime/nami.jpg"
+    ],
+    "companionTrustText": "Beloved Commander of the Whitebeard Pirates and elder brother to Luffy.",
+    "brandPartners": [
+        {
+            "name": "Whitebeard Grand Fleet",
+            "icon": "✦"
+        },
+        {
+            "name": "Spade Pirates Archive",
+            "icon": "◬"
+        },
+        {
+            "name": "Moby Dick Flagship",
+            "icon": "⬡"
+        },
+        {
+            "name": "Brotherhood Sake Oath",
+            "icon": "◌"
+        },
+        {
+            "name": "Fire Fist Forge",
+            "icon": "⊚"
+        },
+        {
+            "name": "Striker Skiff Navigators",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Fire Fist Cannon",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Flame Pillar Barrier",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Logia Dispersion",
+            "color": "#f59e0b",
+            "bg": "#fef3c7",
+            "border": "#fde68a"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Brotherhood Oath",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Ocean Navigation",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Commander Strategy",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on fierce loyalty, roaring flame architecture, and",
+        "highlight": "living a life of blazing honor with zero regrets."
+    },
+    "sinceYear": "since the Spade Pirates Era",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#ea580c",
+        "accentSecondary": "#dc2626",
+        "accentGlow": "rgba(234, 88, 12, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(234, 88, 12, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(234, 88, 12, 0.08)",
+        "badgeBg": "#ffedd5",
+        "badgeText": "#9a3412",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(234, 88, 12, 0.32) 0%, rgba(220, 38, 38, 0.18) 35%, rgba(234, 88, 12, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Bounty",
+            "value": "550,000,000฿"
+        },
+        {
+            "label": "Thermal Power",
+            "value": "Hiken 5,000°C"
+        },
+        {
+            "label": "Regrets in Life",
+            "value": "Zero"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Hiken Fire Fist Blast",
+            "level": 98,
+            "category": "Thermal"
+        },
+        {
+            "name": "Logia Flame Dispersion & Flight",
+            "level": 95,
+            "category": "Mobility"
+        },
+        {
+            "name": "Striker Skiff Thermal Propulsion",
+            "level": 92,
+            "category": "Maritime"
+        },
+        {
+            "name": "Loyalty & Vanguard Sacrifice",
+            "level": 100,
+            "category": "Character"
+        }
+    ],
+    "projects": [
+        {
+            "id": "hiken-thermal-reactor",
+            "title": "Hiken High-Thermal Blast Engine",
+            "category": "Energy",
+            "subtag": "Combustion Simulator",
+            "desc": "Combustion modeling engine simulating 5,000°C concentrated thermal shockwaves across naval fleet formations.",
+            "tags": [
+                "C++",
+                "CUDA",
+                "CFD Simulation"
+            ],
+            "metrics": "Single Shot Fleet Wipe",
+            "color": "#ea580c"
+        },
+        {
+            "id": "striker-propulsion",
+            "title": "Striker Personal Skiff Propulsion",
+            "category": "Mobility",
+            "subtag": "Thermal Drive",
+            "desc": "Single-pilot hydro-glider powered directly by rear foot flame propulsion, outrunning galleons across calm belts.",
+            "tags": [
+                "Embedded Systems",
+                "IoT",
+                "Telemetry"
+            ],
+            "metrics": "60 Knots Ocean Speed",
+            "color": "#dc2626"
+        },
+        {
+            "id": "brotherhood-sake-network",
+            "title": "ASL Brotherhood Memorial Registry",
+            "category": "Archives",
+            "subtag": "Encrypted Legacy",
+            "desc": "Encrypted peer-to-peer memorial vault preserving childhood memories, treehouse logs, and eternal oaths between Ace, Sabo, and Luffy.",
+            "tags": [
+                "Next.js",
+                "Web3",
+                "IPFS"
+            ],
+            "metrics": "Eternal Bond Encrypted",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "flame-emperor-defense",
+            "title": "Dai Enkai Flame Emperor Barrier",
+            "category": "Defense",
+            "subtag": "Thermal Dome",
+            "desc": "Solar-scale spherical plasma shield absorbing incoming orbital artillery shells and converting blast shock into radiant heat.",
+            "tags": [
+                "Rust",
+                "Vector Math",
+                "WebGL"
+            ],
+            "metrics": "Solar Plasma Shield",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Childhood",
+            "role": "Sworn Elder Brother",
+            "organization": "ASL Treehouse (Mt. Colubo)",
+            "description": "Hunted mountain tigers, hoarded treasure, and exchanged the cup of sake with Sabo and Luffy."
+        },
+        {
+            "year": "Spade Era",
+            "role": "Captain",
+            "organization": "Spade Pirates",
+            "description": "Formed crew in the East Blue, sailed to the New World, and earned a 500M+ bounty within months."
+        },
+        {
+            "year": "Whitebeard",
+            "role": "Second Division Commander",
+            "organization": "Whitebeard Pirates",
+            "description": "Commanded the second fleet, earning the eternal fatherly love of Edward Newgate."
+        },
+        {
+            "year": "Marineford",
+            "role": "Legendary Flame",
+            "organization": "Summit War",
+            "description": "Protected Luffy until his final breath, thanking his brothers and family for loving him."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Thank you for loving someone like me, who had the blood of a demon in his veins... until this very day!",
+            "author": "Portgas D. Ace",
+            "title": "Fire Fist",
+            "avatar": "/anime/ace.jpg"
+        },
+        {
+            "quote": "He was my son, and I would tear down the entire Marine headquarters to keep him safe.",
+            "author": "Edward Newgate",
+            "title": "Whitebeard / Emperor of the Sea",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Ace's will did not die that day. It burns inside my flames and inside Luffy's journey toward the horizon.",
+            "author": "Sabo",
+            "title": "Chief of Staff, Revolutionary Army",
+            "avatar": "/anime/sabo.jpg"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#ea580c",
+        "--accent-secondary": "#dc2626",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'sabo': {
+    "id": "sabo",
+    "slug": "sabo",
+    "name": "Sabo",
+    "japaneseName": "サボ",
+    "series": "One Piece",
+    "universeBadge": "Flame Emperor / Chief of Staff",
+    "roleTitle": "Chief of Staff & Revolutionary Systems Architect",
+    "headline": "Flame Emperor",
+    "tagline": "Dragon Claw martial leverage, revolutionary decentralization, and inheritance of the flame.",
+    "statement": "channeling dragon claw martial power and revolutionary fire to overthrow corrupt structures.",
+    "bio": "Chief of Staff of the Revolutionary Army and sworn brother to Ace and Luffy. Master of the Ryusoken Dragon Claw style, now inherited with Ace's Mera Mera no Mi to spearhead the global campaign against the World Nobles.",
+    "price": 42,
+    "featuredTag": "Revolutionary",
+    "avatarUrl": "/anime/sabo.jpg",
+    "bustUrl": "/anime/sabo.jpg",
+    "cardUrl": "/anime/sabo.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "sabo-dragon-flames",
+    "location": "Baltigo Base, Revolutionary Army HQ",
+    "companionAvatars": [
+        "/anime/luffy.jpg",
+        "/anime/ace.jpg",
+        "/anime/nami.jpg"
+    ],
+    "companionTrustText": "Second-in-command of the Revolutionary Army behind Supreme Commander Monkey D. Dragon.",
+    "brandPartners": [
+        {
+            "name": "Revolutionary Army Command",
+            "icon": "✦"
+        },
+        {
+            "name": "Dragon Claw Academy",
+            "icon": "◬"
+        },
+        {
+            "name": "Baltigo Strategic Archives",
+            "icon": "⬡"
+        },
+        {
+            "name": "Kamabakka Haven Hub",
+            "icon": "◌"
+        },
+        {
+            "name": "Underground Liberation Net",
+            "icon": "⊚"
+        },
+        {
+            "name": "Inherited Flame Forge",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Dragon Talon Style",
+            "color": "#2563eb",
+            "bg": "#eff6ff",
+            "border": "#bfdbfe"
+        },
+        {
+            "label": "Mera Mera Synthesis",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Pipe Combat",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Underground Logistics",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Revolutionary Intel",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Strategic Infiltration",
+            "color": "#7c3aed",
+            "bg": "#f5f3ff",
+            "border": "#ddd6fe"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on dismantling oppressive systems, dragon fist precision, and",
+        "highlight": "igniting global change for a freer world."
+    },
+    "sinceYear": "since the Baltigo Training Era",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#2563eb",
+        "accentSecondary": "#ea580c",
+        "accentGlow": "rgba(37, 99, 235, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(37, 99, 235, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(37, 99, 235, 0.08)",
+        "badgeBg": "#dbeafe",
+        "badgeText": "#1e40af",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(37, 99, 235, 0.32) 0%, rgba(234, 88, 12, 0.18) 35%, rgba(37, 99, 235, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Rank",
+            "value": "Chief of Staff #2"
+        },
+        {
+            "label": "Dragon Grip Power",
+            "value": "Shatters Steel"
+        },
+        {
+            "label": "Infiltrations",
+            "value": "Mariejois Level"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Ryusoken Core Destruction",
+            "level": 98,
+            "category": "Combat"
+        },
+        {
+            "name": "Flame Fist Integration",
+            "level": 96,
+            "category": "Logia"
+        },
+        {
+            "name": "Global Underground Intelligence",
+            "level": 97,
+            "category": "Ops"
+        },
+        {
+            "name": "Asymmetrical Infiltration",
+            "level": 95,
+            "category": "Tactics"
+        }
+    ],
+    "projects": [
+        {
+            "id": "ryusoken-core-shatter",
+            "title": "Dragon Claw Structural Core Analyzer",
+            "category": "Physics",
+            "subtag": "Stress Concentration",
+            "desc": "Identifies the central structural focal point of armored battleships or fortresses, shattering them with fingers alone.",
+            "tags": [
+                "C++",
+                "FEA Analysis",
+                "Vibration Dynamics"
+            ],
+            "metrics": "Single-Tap Structural Fracture",
+            "color": "#2563eb"
+        },
+        {
+            "id": "liberation-comms-net",
+            "title": "Den Den Mushi Ghost Encryption",
+            "category": "Cybersecurity",
+            "subtag": "Encrypted Comms",
+            "desc": "End-to-end encrypted snail mesh network transmitting intelligence between revolutionary cells without interception.",
+            "tags": [
+                "Rust",
+                "Zero-Knowledge",
+                "P2P Mesh"
+            ],
+            "metrics": "Unbreakable Transmissions",
+            "color": "#ea580c"
+        },
+        {
+            "id": "mariejois-stealth-map",
+            "title": "Holy Land Infiltration Topology",
+            "category": "Mapping",
+            "subtag": "Subterranean GIS",
+            "desc": "3D architectural blueprint of the Red Line plateau, uncovering slave conveyor shafts and emergency extraction routes.",
+            "tags": [
+                "Next.js",
+                "Three.js",
+                "TailwindCSS"
+            ],
+            "metrics": "Full Red Line Topology",
+            "color": "#10b981"
+        },
+        {
+            "id": "flame-fist-heritage",
+            "title": "Ace Flame Inheritance Simulator",
+            "category": "Analytics",
+            "subtag": "Technique Library",
+            "desc": "Interactive archive cross-referencing Ace's battle records to synthesize Dragon Claw martial arts with fire logia attacks.",
+            "tags": [
+                "TypeScript",
+                "WebGL",
+                "React"
+            ],
+            "metrics": "Seamless Martial Blend",
+            "color": "#f59e0b"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Childhood",
+            "role": "Sworn Brother",
+            "organization": "Mt. Colubo ASL Brothers",
+            "description": "Rebelled against noble aristocracy; survived celestial dragon cannon attack."
+        },
+        {
+            "year": "Youth",
+            "role": "Apprentice Revolutionary",
+            "organization": "Revolutionary Army Command",
+            "description": "Rescued and mentored by Monkey D. Dragon; trained with Hack and Koala in hand-to-hand combat."
+        },
+        {
+            "year": "Dressrosa",
+            "role": "Chief of Staff",
+            "organization": "Corrida Colosseum Operation",
+            "description": "Reunited with Luffy; won the Mera Mera no Mi and inherited Ace's blazing will."
+        },
+        {
+            "year": "Reverie",
+            "role": "Flame Emperor",
+            "organization": "Mariejois Infiltration",
+            "description": "Rescued Bartholomew Kuma, witnessed the Empty Throne, and ignited revolutions across 8 nations."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Sabo is Dragon-san's proudest protégé. His Dragon Claw technique doesn't leave a single brick intact.",
+            "author": "Koala",
+            "title": "Assistant Revolutionary Officer",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "I thought I lost both of them... but Sabo is alive, and he has Ace's fire! There is no one I trust more!",
+            "author": "Monkey D. Luffy",
+            "title": "Straw Hat Captain",
+            "avatar": "/anime/luffy.jpg"
+        },
+        {
+            "quote": "The flame will never be extinguished. As long as injustice exists, the Flame Emperor will strike.",
+            "author": "Monkey D. Dragon",
+            "title": "Supreme Commander",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#2563eb",
+        "--accent-secondary": "#ea580c",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'nami': {
+    "id": "nami",
+    "slug": "nami",
+    "name": "Nami",
+    "japaneseName": "ナミ",
+    "series": "One Piece",
+    "universeBadge": "Cat Burglar / Master Navigator",
+    "roleTitle": "Master Navigator & Atmospheric Systems Engineer",
+    "headline": "Weather Witch",
+    "tagline": "Grand Line meteorology, micro-climate weather manipulation, and precision charting.",
+    "statement": "mapping every ocean wave and commanding the weather to guide our dreams to safe harbor.",
+    "bio": "Navigator of the Straw Hat Pirates. A genius cartographer and meteorologist who can predict ocean storms through subtle barometric skin sensations, commanding Zeus and the Sorcery Clima-Tact to unleash lightning strikes.",
+    "price": 37,
+    "featuredTag": "Master Navigator",
+    "avatarUrl": "/anime/nami.jpg",
+    "bustUrl": "/anime/nami.jpg",
+    "cardUrl": "/anime/nami.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "nami-clima-tact",
+    "location": "Navigational Quarterdeck, Weatheria",
+    "companionAvatars": [
+        "/anime/luffy.jpg",
+        "/anime/ace.jpg",
+        "/anime/sabo.jpg"
+    ],
+    "companionTrustText": "Guided the Thousand Sunny safely through every cyclone across the Grand Line.",
+    "brandPartners": [
+        {
+            "name": "Weatheria Science Institute",
+            "icon": "✦"
+        },
+        {
+            "name": "Straw Hat Navigator Deck",
+            "icon": "◬"
+        },
+        {
+            "name": "Grand Line Cartography Guild",
+            "icon": "⬡"
+        },
+        {
+            "name": "Zeus Thunder Cloud Core",
+            "icon": "◌"
+        },
+        {
+            "name": "Cocoyashi Orange Groves",
+            "icon": "⊚"
+        },
+        {
+            "name": "Log Pose Calibration Lab",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Clima-Tact Weather",
+            "color": "#06b6d4",
+            "bg": "#ecfeff",
+            "border": "#a5f3fc"
+        },
+        {
+            "label": "Cartography & Mapping",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Thunderbolt Tempo",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Treasury Management",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Log Pose Trajectory",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Tide Optimization",
+            "color": "#6366f1",
+            "bg": "#eef2ff",
+            "border": "#c7d2fe"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on navigating treacherous currents, reading the atmosphere, and",
+        "highlight": "steering the ship safely toward uncharted dreams."
+    },
+    "sinceYear": "since Arlong Park Liberation",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#06b6d4",
+        "accentSecondary": "#f59e0b",
+        "accentGlow": "rgba(6, 182, 212, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(6, 182, 212, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(6, 182, 212, 0.08)",
+        "badgeBg": "#cffafe",
+        "badgeText": "#155e75",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(6, 182, 212, 0.32) 0%, rgba(245, 158, 11, 0.18) 35%, rgba(6, 182, 212, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "World Map",
+            "value": "80% Charted"
+        },
+        {
+            "label": "Storm Prediction",
+            "value": "100% Accuracy"
+        },
+        {
+            "label": "Zeus Thunder",
+            "value": "100k Volts"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Micro-Atmospheric Climate Manipulation",
+            "level": 98,
+            "category": "Meteorology"
+        },
+        {
+            "name": "Grand Line Triple Log Pose Navigation",
+            "level": 99,
+            "category": "Cartography"
+        },
+        {
+            "name": "Zeus Lightning Discharge Artillery",
+            "level": 95,
+            "category": "Combat"
+        },
+        {
+            "name": "Financial Asset & Treasury Control",
+            "level": 100,
+            "category": "Finance"
+        }
+    ],
+    "projects": [
+        {
+            "id": "weatheria-atmospheric-model",
+            "title": "Weatheria Global Climate Telemetry",
+            "category": "Meteorology",
+            "subtag": "Predictive Climate",
+            "desc": "Advanced atmospheric simulator anticipating Knock Up Streams, cyclone funnels, and oceanic pressure drops.",
+            "tags": [
+                "Python",
+                "SciPy",
+                "GIS Mapping"
+            ],
+            "metrics": "100% Storm Prediction",
+            "color": "#06b6d4"
+        },
+        {
+            "id": "zeus-thunderbolt-tempo",
+            "title": "Zeus Cloud Pulse Accelerator",
+            "category": "Artillery",
+            "subtag": "Lightning Controller",
+            "desc": "Sorcery Clima-Tact interface directing hungry thundercloud soul entities to discharge directional high-voltage lightning.",
+            "tags": [
+                "C",
+                "Embedded Sensors",
+                "PWM"
+            ],
+            "metrics": "100,000 Volts Precision",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "world-ocean-cartography",
+            "title": "Grand Line Interactive World Map",
+            "category": "Mapping",
+            "subtag": "Vector GIS",
+            "desc": "Ultra-high-definition interactive nautical map documenting ocean depths, reef hazards, and magnetic compass alignments.",
+            "tags": [
+                "Next.js",
+                "Mapbox GL",
+                "TailwindCSS"
+            ],
+            "metrics": "Uncharted Horizons Mapped",
+            "color": "#0284c7"
+        },
+        {
+            "id": "straw-hat-treasury",
+            "title": "Straw Hat Berry Treasury Dashboard",
+            "category": "Fintech",
+            "subtag": "Budget Ledger",
+            "desc": "Iron-fisted financial analytics dashboard preventing Luffy from blowing the ship maintenance fund on party banquets.",
+            "tags": [
+                "React",
+                "Chart.js",
+                "PostgreSQL"
+            ],
+            "metrics": "Zero Berries Leaked",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Cat Burglar Cartographer",
+            "organization": "Cocoyashi Village",
+            "description": "Secretly amassed 100 million berries while mapping dangerous sea routes under Arlong."
+        },
+        {
+            "year": "East Blue",
+            "role": "Official Navigator",
+            "organization": "Straw Hat Pirates",
+            "description": "Joined Luffy; steered the Going Merry safely through Reverse Mountain into the Grand Line."
+        },
+        {
+            "year": "Timeskip",
+            "role": "Atmospheric Researcher",
+            "organization": "Weatheria Sky Island",
+            "description": "Studied wind knots, weather balls, and micro-cloud dynamics under Professor Haredas."
+        },
+        {
+            "year": "Wano / Egghead",
+            "role": "Zeus Master & Lead Navigator",
+            "organization": "Yonko Straw Hat Fleet",
+            "description": "Tamed Big Mom's homie Zeus, outmaneuvering marine admiral armadas in the New World."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "If Nami says the sea is going to rise, you turn the helm immediately. She reads the weather like breathing.",
+            "author": "Monkey D. Luffy",
+            "title": "Straw Hat Captain",
+            "avatar": "/anime/luffy.jpg"
+        },
+        {
+            "quote": "Her weather knowledge surpasses even veteran marine vice-admirals. She is an indispensable treasure.",
+            "author": "Nico Robin",
+            "title": "Archaeologist",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Our orange groves in Cocoyashi will always bloom because of her courage and genius.",
+            "author": "Nojiko",
+            "title": "Beloved Sister",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#06b6d4",
+        "--accent-secondary": "#f59e0b",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'zero-two': {
+    "id": "zero-two",
+    "slug": "zero-two",
+    "name": "Zero Two",
+    "japaneseName": "ゼロツー",
+    "series": "Darling in the Franxx",
+    "universeBadge": "Partner Killer / Code:002",
+    "roleTitle": "Elite Parasite & Strelizia Flight Commander",
+    "headline": "Partner Killer",
+    "tagline": "Untamed klaxosaur hybrid power, high-G cockpit dynamics, and soaring to the stars.",
+    "statement": "defying fate alongside my darling, soaring through mechanical skies with untamed passion.",
+    "bio": "Elite pilot of the humanoid mech Strelizia, Code:002. A fierce red-horned klaxosaur hybrid who defied dystopian genetic mandates, finding her wings alongside Hiro to pilot through cosmic battlefields.",
+    "price": 46,
+    "featuredTag": "Cyber Mecha",
+    "avatarUrl": "/anime/zero-two.jpg",
+    "bustUrl": "/anime/zero-two.jpg",
+    "cardUrl": "/anime/zero-two.jpg",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "zero-two-cyber-hex",
+    "location": "Plantation 13, Strelizia Cockpit",
+    "companionAvatars": [
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+    ],
+    "companionTrustText": "Highest combat score in APE Special Forces history; Strelizia Ace.",
+    "brandPartners": [
+        {
+            "name": "Plantation 13 Mobile Unit",
+            "icon": "✦"
+        },
+        {
+            "name": "Strelizia Core Command",
+            "icon": "◬"
+        },
+        {
+            "name": "APE Special Defense",
+            "icon": "⬡"
+        },
+        {
+            "name": "Birdcage Specimen Lab",
+            "icon": "◌"
+        },
+        {
+            "name": "Mistilteinn Living Hub",
+            "icon": "⊚"
+        },
+        {
+            "name": "Klaxosaur Research Wing",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Strelizia Piloting",
+            "color": "#f43f5e",
+            "bg": "#fff1f2",
+            "border": "#fecdd3"
+        },
+        {
+            "label": "Klaxosaur Instinct",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "High-G Dynamics",
+            "color": "#ec4899",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Sweet Flavor Tasting",
+            "color": "#f59e0b",
+            "bg": "#fef3c7",
+            "border": "#fde68a"
+        },
+        {
+            "label": "Combat Synergy",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Symbiotic Bond",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on breaking through mechanical constraints, fierce passion, and",
+        "highlight": "flying together as one toward the eternal sky."
+    },
+    "sinceYear": "since Code:002 Awakening",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#f43f5e",
+        "accentSecondary": "#ec4899",
+        "accentGlow": "rgba(244, 63, 94, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(244, 63, 94, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(244, 63, 94, 0.08)",
+        "badgeBg": "#ffe4e6",
+        "badgeText": "#be123c",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(244, 63, 94, 0.32) 0%, rgba(236, 72, 153, 0.18) 35%, rgba(244, 63, 94, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Code",
+            "value": "002"
+        },
+        {
+            "label": "Mecha Synergy",
+            "value": "100% True Apus"
+        },
+        {
+            "label": "Flight Envelope",
+            "value": "Cosmic Edge"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Strelizia Cockpit Neuro-Link",
+            "level": 99,
+            "category": "Mecha"
+        },
+        {
+            "name": "Klaxosaur High-G Maneuvering",
+            "level": 97,
+            "category": "Flight"
+        },
+        {
+            "name": "Stampede Mode Survival & Recovery",
+            "level": 95,
+            "category": "Endurance"
+        },
+        {
+            "name": "Sweet Confectionery Taste Testing",
+            "level": 100,
+            "category": "Culture"
+        }
+    ],
+    "projects": [
+        {
+            "id": "strelizia-cockpit-hud",
+            "title": "Strelizia Neuro-Link Telemetry HUD",
+            "category": "Interface",
+            "subtag": "Cybernetics",
+            "desc": "High-frequency pilot neural interface rendering fuel pressure, magma energy reserves, and target lock vectors.",
+            "tags": [
+                "Next.js",
+                "Three.js",
+                "Canvas 2D"
+            ],
+            "metrics": "Zero-Latency Neuro Sync",
+            "color": "#f43f5e"
+        },
+        {
+            "id": "klaxosaur-genome-mapper",
+            "title": "Klaxosaur Biomass Genetic Decoder",
+            "category": "BioTech",
+            "subtag": "Genome Analysis",
+            "desc": "Real-time bio-scanner classifying subterranean klaxosaur core structures and calculating thermal puncture weaknesses.",
+            "tags": [
+                "Python",
+                "PyTorch",
+                "Bioinformatics"
+            ],
+            "metrics": "Instant Weakpoint Scan",
+            "color": "#dc2626"
+        },
+        {
+            "id": "jian-bird-synergy",
+            "title": "Jian Bird Symbiotic Cockpit Balancer",
+            "category": "Aerospace",
+            "subtag": "Dual Pilot Link",
+            "desc": "Algorithmic flight stabilizer balancing stamina burn between pistil and stamen pilots for infinite flight endurance.",
+            "tags": [
+                "Rust",
+                "RTOS",
+                "Control Systems"
+            ],
+            "metrics": "50/50 Perfect Load Balance",
+            "color": "#ec4899"
+        },
+        {
+            "id": "honey-sweet-indexer",
+            "title": "Honey & Confectionery Catalog",
+            "category": "Lifestyle",
+            "subtag": "Tasting Index",
+            "desc": "Whimsical taste database documenting candy varieties, lollipop textures, and sweet syrup viscosity across plantations.",
+            "tags": [
+                "React",
+                "TailwindCSS",
+                "IndexedDB"
+            ],
+            "metrics": "1,000 Sweets Rated",
+            "color": "#f59e0b"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Experimental Subject",
+            "organization": "APE Special Research Division",
+            "description": "Underwent grueling hybridization testing; formed childhood memory pledge with Hiro."
+        },
+        {
+            "year": "Military",
+            "role": "Elite Ace Parasite",
+            "organization": "APE 1st Division",
+            "description": "Piloted Strelizia across dozens of high-casualty frontline deployments with unrivaled lethality."
+        },
+        {
+            "year": "Plantation 13",
+            "role": "Partner to Code:016",
+            "organization": "Squad 13",
+            "description": "Reunited with Hiro; unlocked True Strelizia form, protecting Plantation 13 from destruction."
+        },
+        {
+            "year": "Cosmic Era",
+            "role": "Strelizia True Apus Commander",
+            "organization": "Earth Defense Vanguard",
+            "description": "Traversed deep space alongside Hiro to secure humanity's future across the stars."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "If you don't belong anywhere, we can create a world of our own. You are my darling, forever.",
+            "author": "Hiro (Code:016)",
+            "title": "Strelizia Co-Pilot",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Zero Two taught Squad 13 what it means to have a soul. Without her, we would still be trapped in cages.",
+            "author": "Ichigo (Code:015)",
+            "title": "Squad 13 Leader",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Her fighting spirit burns hotter than magma energy. There is no one like her in all of creation.",
+            "author": "Goro (Code:056)",
+            "title": "Delphinium Co-Pilot",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#f43f5e",
+        "--accent-secondary": "#ec4899",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'tanjiro': {
+    "id": "tanjiro",
+    "slug": "tanjiro",
+    "name": "Tanjiro Kamado",
+    "japaneseName": "竈門炭治郎",
+    "series": "Demon Slayer",
+    "universeBadge": "Sun & Water Dual Breathing",
+    "roleTitle": "Demon Slayer & Dual-Breathing Architect",
+    "headline": "Bearer of the Hinokami Kagura",
+    "tagline": "Mastering flowing water, dancing with the sun, and perceiving the opening thread.",
+    "statement": "breathing in harmony with water and sun, cutting through despair with pure empathetic heart.",
+    "bio": "Demon Slayer who mastered both Water Breathing and the legendary Sun Breathing (Hinokami Kagura). Guided by an extraordinary sense of smell that detects the \"opening thread\" of truth, fighting tirelessly to protect his sister Nezuko and liberate humanity.",
+    "price": 46,
+    "featuredTag": "Sun Breathing",
+    "avatarUrl": "/anime/tanjiro.png",
+    "bustUrl": "/anime/tanjiro.png",
+    "cardUrl": "/anime/tanjiro.png",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "tanjiro-dual-breathing",
+    "location": "Mount Sagiri, Demon Slayer Corps",
+    "companionAvatars": [
+        "/anime/zenitsu.png",
+        "/anime/inosuke.png",
+        "/anime/giyuu.png"
+    ],
+    "companionTrustText": "Certified by Water Pillar Urokodaki and Hashira Headquarters.",
+    "brandPartners": [
+        {
+            "name": "Demon Slayer Corps HQ",
+            "icon": "✦"
+        },
+        {
+            "name": "Butterfly Mansion Clinic",
+            "icon": "◬"
+        },
+        {
+            "name": "Swordsmith Village Forge",
+            "icon": "⬡"
+        },
+        {
+            "name": "Mount Sagiri Dojo",
+            "icon": "◌"
+        },
+        {
+            "name": "Hinokami Sun Clan Archive",
+            "icon": "⊚"
+        },
+        {
+            "name": "Kasugai Crow Network",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Sun Breathing / Hinokami",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        },
+        {
+            "label": "Water Flowing Kata",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Olfactory Scent Thread",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Total Concentration",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Nichirin Precision",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        },
+        {
+            "label": "Unbroken Empathy",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on mastering water and sun breath, detecting scent openings, and",
+        "highlight": "extending compassion even to fallen adversaries."
+    },
+    "sinceYear": "since the Mount Sagiri Boulder Slash",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#059669",
+        "accentSecondary": "#dc2626",
+        "accentGlow": "rgba(5, 150, 105, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(5, 150, 105, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(5, 150, 105, 0.08)",
+        "badgeBg": "#d1fae5",
+        "badgeText": "#065f46",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(5, 150, 105, 0.32) 0%, rgba(220, 38, 38, 0.18) 35%, rgba(5, 150, 105, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Breathing Style",
+            "value": "Sun & Water"
+        },
+        {
+            "label": "Scent Sensitivity",
+            "value": "Microscopic"
+        },
+        {
+            "label": "Demon Slayer Mark",
+            "value": "Awakened"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Hinokami Kagura Sun Dance",
+            "level": 98,
+            "category": "Breathing"
+        },
+        {
+            "name": "Opening Thread Scent Detection",
+            "level": 99,
+            "category": "Perception"
+        },
+        {
+            "name": "Total Concentration: Constant",
+            "level": 96,
+            "category": "Endurance"
+        },
+        {
+            "name": "Empathic De-escalation & Resolve",
+            "level": 100,
+            "category": "Leadership"
+        }
+    ],
+    "projects": [
+        {
+            "id": "opening-thread-detector",
+            "title": "Opening Thread Latency Profiler",
+            "category": "DevTools",
+            "subtag": "Trace Engine",
+            "desc": "Olfactory-inspired distributed profiler tracing execution bottlenecks and visualizing the exact path to critical resolution.",
+            "tags": [
+                "Rust",
+                "eBPF",
+                "OpenTelemetry"
+            ],
+            "metrics": "Instant Opening Thread Detection",
+            "color": "#059669"
+        },
+        {
+            "id": "hinokami-dance-renderer",
+            "title": "Sun Breathing Flame Particle Canvas",
+            "category": "Graphics",
+            "subtag": "WebGL Shader",
+            "desc": "60fps GPU fluid-dynamics simulation illustrating circular Hinokami Kagura solar trails with zero CPU overhead.",
+            "tags": [
+                "Three.js",
+                "GLSL",
+                "WebGL"
+            ],
+            "metrics": "Ultra-Fluid Solar Trails",
+            "color": "#dc2626"
+        },
+        {
+            "id": "nichirin-blade-catalog",
+            "title": "Swordsmith Village Nichirin Forge Registry",
+            "category": "Craftsmanship",
+            "subtag": "Metallurgy Database",
+            "desc": "Comprehensive materials ledger logging scarlet ore purity, sword temper curves, and custom handguard designs.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "TailwindCSS"
+            ],
+            "metrics": "1,000 Blades Cataloged",
+            "color": "#ea580c"
+        },
+        {
+            "id": "nezuko-safety-box",
+            "title": "Daylight Shield Box Telemetry",
+            "category": "Hardware",
+            "subtag": "Thermal Protection",
+            "desc": "Reinforced cedar wood box sensor array ensuring optimal humidity, darkness, and structural integrity for sleeping Nezuko.",
+            "tags": [
+                "IoT",
+                "MicroPython",
+                "Sensors"
+            ],
+            "metrics": "100% Light Tight",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Charcoal Seller",
+            "organization": "Mount Kumotori Family",
+            "description": "Developed acute sense of smell and quiet filial devotion to support mother and five siblings."
+        },
+        {
+            "year": "Training",
+            "role": "Apprentice Slayer",
+            "organization": "Urokodaki Mount Sagiri Dojo",
+            "description": "Split the giant boulder with Nichirin blade; mastered all 10 forms of Water Breathing."
+        },
+        {
+            "year": "Corps Career",
+            "role": "Demon Slayer Operative",
+            "organization": "Demon Slayer Corps",
+            "description": "Awakened Hinokami Kagura at Natagumo Mountain; protected 200 passengers on the Mugen Train."
+        },
+        {
+            "year": "Final Battle",
+            "role": "Sun Breathing Vanguard",
+            "organization": "Infinity Castle Campaign",
+            "description": "Awakened the Transparent World and Demon Slayer Mark, ending the thousand-year reign of demons."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Tanjiro is the most sincere human I have ever known. His kindness pierces through the darkness like morning light.",
+            "author": "Giyuu Tomioka",
+            "title": "Water Pillar",
+            "avatar": "/anime/giyuu.png"
+        },
+        {
+            "quote": "He never mocks me when I am scared out of my mind! He pulls me forward and protects everyone around him!",
+            "author": "Zenitsu Agatsuma",
+            "title": "Thunder Breaker",
+            "avatar": "/anime/zenitsu.png"
+        },
+        {
+            "quote": "Gonpachiro is my rival and my underling! I will never let anyone take him down except me, Inosuke-sama!",
+            "author": "Inosuke Hashibira",
+            "title": "Beast Warrior",
+            "avatar": "/anime/inosuke.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#059669",
+        "--accent-secondary": "#dc2626",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'zenitsu': {
+    "id": "zenitsu",
+    "slug": "zenitsu",
+    "name": "Zenitsu Agatsuma",
+    "japaneseName": "我妻善逸",
+    "series": "Demon Slayer",
+    "universeBadge": "Thunderclap and Flash / God Speed",
+    "roleTitle": "Thunder Breaker & Single-Strike Execution Specialist",
+    "headline": "Thunderclap and Flash",
+    "tagline": "Honing one single technique to godly perfection, striking with lightning while the world sleeps.",
+    "statement": "honing a single strike to divine perfection, striking like lightning when all else is asleep.",
+    "bio": "Demon Slayer who mastered Thunder Breathing First Form: Thunderclap and Flash. Despite perpetual anxiety and panic, his sub-conscious awakening unleashes blinding God-Speed velocity, creating the ultimate Seventh Form: Honoikazuchi no Kami.",
+    "price": 40,
+    "featuredTag": "Lightning Speed",
+    "avatarUrl": "/anime/zenitsu.png",
+    "bustUrl": "/anime/zenitsu.png",
+    "cardUrl": "/anime/zenitsu.png",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "zenitsu-thunderclap",
+    "location": "Mount Kumotori, Thunder Pillar Dojo",
+    "companionAvatars": [
+        "/anime/tanjiro.png",
+        "/anime/inosuke.png",
+        "/anime/shinobu.png"
+    ],
+    "companionTrustText": "Trained by Former Thunder Pillar Jigoro Kuwajima.",
+    "brandPartners": [
+        {
+            "name": "Thunder Pillar Dojo",
+            "icon": "✦"
+        },
+        {
+            "name": "Demon Slayer Corps HQ",
+            "icon": "◬"
+        },
+        {
+            "name": "Butterfly Recovery Ward",
+            "icon": "⬡"
+        },
+        {
+            "name": "Sparrow Messenger Post",
+            "icon": "◌"
+        },
+        {
+            "name": "God Speed Lightning Forge",
+            "icon": "⊚"
+        },
+        {
+            "name": "Seventh Form Sanctuary",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Thunderclap & Flash",
+            "color": "#eab308",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Sixfold God Speed",
+            "color": "#f59e0b",
+            "bg": "#fef3c7",
+            "border": "#fde68a"
+        },
+        {
+            "label": "Acoustic Hearing",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Honing One Thing",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Defensive Reaction",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Inner Awakening",
+            "color": "#7c3aed",
+            "bg": "#f5f3ff",
+            "border": "#ddd6fe"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on perfecting a single technique until it becomes lightning, and",
+        "highlight": "protecting what matters even while trembling."
+    },
+    "sinceYear": "since the Peach Tree Lightning Strike",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#eab308",
+        "accentSecondary": "#f59e0b",
+        "accentGlow": "rgba(234, 179, 8, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(234, 179, 8, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(234, 179, 8, 0.08)",
+        "badgeBg": "#fef9c3",
+        "badgeText": "#854d0e",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(234, 179, 8, 0.32) 0%, rgba(245, 158, 11, 0.18) 35%, rgba(234, 179, 8, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Strike Velocity",
+            "value": "God Speed (Mach 5)"
+        },
+        {
+            "label": "Hearing Range",
+            "value": "Heartbeat Radar"
+        },
+        {
+            "label": "Technique Count",
+            "value": "1 Perfected"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Thunderclap and Flash: Sixfold",
+            "level": 99,
+            "category": "Combat"
+        },
+        {
+            "name": "Acoustic Sonar Heartbeat Hearing",
+            "level": 98,
+            "category": "Sensors"
+        },
+        {
+            "name": "Seventh Form: Honoikazuchi no Kami",
+            "level": 100,
+            "category": "Mastery"
+        },
+        {
+            "name": "High-Anxiety Self-Preservation",
+            "level": 96,
+            "category": "Survival"
+        }
+    ],
+    "projects": [
+        {
+            "id": "godspeed-execution",
+            "title": "God Speed Sub-Nanosecond Executor",
+            "category": "Runtimes",
+            "subtag": "Low-Latency Engine",
+            "desc": "Specialized low-latency compilation pipeline executing single, highly optimized binary branches in under 12 nanoseconds.",
+            "tags": [
+                "Rust",
+                "x86-64 Assembly",
+                "SIMD"
+            ],
+            "metrics": "Sub-12ns Execution",
+            "color": "#eab308"
+        },
+        {
+            "id": "acoustic-heartbeat-sonar",
+            "title": "Acoustic Heartbeat Lie Detector",
+            "category": "AudioTech",
+            "subtag": "Frequency Analysis",
+            "desc": "Hyper-sensitive audio analysis framework identifying human emotional state, deceit, and demon presence via ambient frequencies.",
+            "tags": [
+                "Web Audio API",
+                "FFT",
+                "DSP"
+            ],
+            "metrics": "Detects Heartbeat Flutter",
+            "color": "#0284c7"
+        },
+        {
+            "id": "sparrow-messenger-sync",
+            "title": "Chuntaro Sparrow Mesh Dispatch",
+            "category": "Networking",
+            "subtag": "Micro-Packet Net",
+            "desc": "Ultra-compact lightweight messaging daemon routing distress chirps and status updates across mountain ranges.",
+            "tags": [
+                "Go",
+                "MQTT",
+                "Low Power IoT"
+            ],
+            "metrics": "99.99% Chirp Delivery",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "seventh-form-flame-god",
+            "title": "Honoikazuchi Lightning Dragon Shader",
+            "category": "Graphics",
+            "subtag": "Electric Shader",
+            "desc": "Visual simulation of golden lightning dragons coiling around the user's blade before striking with thunderous impact.",
+            "tags": [
+                "WebGL",
+                "GLSL Shaders",
+                "Three.js"
+            ],
+            "metrics": "Golden Dragon Lightning",
+            "color": "#ca8a04"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Early Years",
+            "role": "Reluctant Student",
+            "organization": "Gramps Thunder Mountain Dojo",
+            "description": "Surviving lightning strike tree incident; repeatedly disciplined into mastering the First Form."
+        },
+        {
+            "year": "Selection",
+            "role": "Survivor",
+            "organization": "Final Selection (Mount Fujikasane)",
+            "description": "Passed final selection unconsciously while dispatching demons in sleep mode."
+        },
+        {
+            "year": "Spider Mountain",
+            "role": "Poison Survivor",
+            "organization": "Natagumo Mountain Battle",
+            "description": "Defeated the Spider Demon Brother; held off lethal spider venom with breathing control."
+        },
+        {
+            "year": "Infinity Castle",
+            "role": "Thunder Pioneer",
+            "organization": "Upper Moon Battle",
+            "description": "Created and unleashed the Seventh Form Honoikazuchi no Kami to defeat Upper Rank Kaigaku alone."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "If you can only do one thing, hone it to the ultimate extreme. Polish it until it becomes a divine blade!",
+            "author": "Jigoro Kuwajima",
+            "title": "Former Thunder Pillar (Gramps)",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Zenitsu’s sound is pure and gentle. Even when he is screaming in terror, his heart never betrays a comrade.",
+            "author": "Tanjiro Kamado",
+            "title": "Demon Slayer Companion",
+            "avatar": "/anime/tanjiro.png"
+        },
+        {
+            "quote": "Monitsu is lightning fast! When he falls asleep, he becomes completely terrifying!",
+            "author": "Inosuke Hashibira",
+            "title": "Beast Warrior",
+            "avatar": "/anime/inosuke.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#eab308",
+        "--accent-secondary": "#f59e0b",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'inosuke': {
+    "id": "inosuke",
+    "slug": "inosuke",
+    "name": "Inosuke Hashibira",
+    "japaneseName": "嘴平伊之助",
+    "series": "Demon Slayer",
+    "universeBadge": "Beast Breathing / Mountain Lord",
+    "roleTitle": "Beast Breathing Pioneer & Spatial Sensing Specialist",
+    "headline": "King of the Mountains",
+    "tagline": "Raw feral intuition, serrated dual-wielding, and 360° spatial skin perception.",
+    "statement": "roaring through the wilderness with dual serrated swords and primal spatial perception.",
+    "bio": "Self-taught mountain warrior who created Beast Breathing. Wields dual chipped Nichirin blades and wears a wild boar mask. His hypersensitive skin can feel subtle vibrations in the air, locating enemies miles away.",
+    "price": 38,
+    "featuredTag": "Wild Beast",
+    "avatarUrl": "/anime/inosuke.png",
+    "bustUrl": "/anime/inosuke.png",
+    "cardUrl": "/anime/inosuke.png",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "inosuke-beast-slashes",
+    "location": "Mount Okutama, Beast Territory",
+    "companionAvatars": [
+        "/anime/tanjiro.png",
+        "/anime/zenitsu.png",
+        "/anime/giyuu.png"
+    ],
+    "companionTrustText": "Proclaimed King of the Mountains and self-taught Demon Slayer prodigy.",
+    "brandPartners": [
+        {
+            "name": "King of Mountains Domain",
+            "icon": "✦"
+        },
+        {
+            "name": "Boar Mask Artificers",
+            "icon": "◬"
+        },
+        {
+            "name": "Serrated Blade Smithy",
+            "icon": "⬡"
+        },
+        {
+            "name": "Demon Slayer Corps HQ",
+            "icon": "◌"
+        },
+        {
+            "name": "Butterfly Mansion Recovery",
+            "icon": "⊚"
+        },
+        {
+            "name": "Wild Instinct Guild",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Beast Breathing Fangs",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Spatial Air Perception",
+            "color": "#0ea5e9",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Dual Serrated Blades",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Wild Flexibility",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Boar Head Masking",
+            "color": "#ea580c",
+            "bg": "#fff7ed",
+            "border": "#fed7aa"
+        },
+        {
+            "label": "Frontal Assault",
+            "color": "#dc2626",
+            "bg": "#fef2f2",
+            "border": "#fecaca"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on uninhibited wild instinct, spatial air perception, and",
+        "highlight": "charging forward headfirst without ever slowing down."
+    },
+    "sinceYear": "since Descending from the Mountain",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#0284c7",
+        "accentSecondary": "#38bdf8",
+        "accentGlow": "rgba(2, 132, 199, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(2, 132, 199, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(2, 132, 199, 0.08)",
+        "badgeBg": "#e0f2fe",
+        "badgeText": "#0369a1",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(2, 132, 199, 0.32) 0%, rgba(56, 189, 248, 0.18) 35%, rgba(2, 132, 199, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Breathing Style",
+            "value": "Self-Taught Beast"
+        },
+        {
+            "label": "Spatial Sensing",
+            "value": "Mountain Wide"
+        },
+        {
+            "label": "Joint Dislocation",
+            "value": "100% Flexible"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Seventh Fang: Spatial Awareness",
+            "level": 98,
+            "category": "Perception"
+        },
+        {
+            "name": "Dual Serrated Flesh Ripper",
+            "level": 95,
+            "category": "Combat"
+        },
+        {
+            "name": "Complete Joint & Organ Relocation",
+            "level": 97,
+            "category": "Flexibility"
+        },
+        {
+            "name": "Fearless Frontline Charge",
+            "level": 100,
+            "category": "Aggression"
+        }
+    ],
+    "projects": [
+        {
+            "id": "spatial-skin-radar",
+            "title": "Spatial Skin Air-Vibration Radar",
+            "category": "Sensors",
+            "subtag": "Atmospheric Sonar",
+            "desc": "Barometric skin sensor framework mapping enemy coordinates across mountain forests through minute wind disturbances.",
+            "tags": [
+                "Rust",
+                "DSP",
+                "Kinetic Sensors"
+            ],
+            "metrics": "5km Forest Range",
+            "color": "#0284c7"
+        },
+        {
+            "id": "serrated-dual-edge",
+            "title": "Serrated Cleave Physics Engine",
+            "category": "Physics",
+            "subtag": "Tearing Dynamics",
+            "desc": "Calculates jagged cutting force distributions that maximize tearing friction across tough demon hide membranes.",
+            "tags": [
+                "C++",
+                "OpenGL",
+                "FEA"
+            ],
+            "metrics": "2x Tearing Friction",
+            "color": "#38bdf8"
+        },
+        {
+            "id": "joint-dislocation-rig",
+            "title": "Full-Body Skeletal Deformation Rig",
+            "category": "3D Graphics",
+            "subtag": "Anatomical Mesh",
+            "desc": "Dynamic 3D skeleton permitting full joint dislocation and organ shifting to slip through crawlspaces and evade fatal blows.",
+            "tags": [
+                "Three.js",
+                "Blender API",
+                "WebGL"
+            ],
+            "metrics": "Slip Through 30cm Openings",
+            "color": "#ea580c"
+        },
+        {
+            "id": "boar-head-telemetry",
+            "title": "Boar Mask Thermal Insulator",
+            "category": "Gear",
+            "subtag": "Wearable Tech",
+            "desc": "Natural fur ventilation mesh maintaining optimal airflow and intimidation factor across sub-zero blizzard peaks.",
+            "tags": [
+                "Next.js",
+                "IoT",
+                "TailwindCSS"
+            ],
+            "metrics": "100% Intimidation",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Wild Youth",
+            "role": "Lord of the Mountain",
+            "organization": "Okutama Boar Pack",
+            "description": "Raised by wild boars; developed animalistic reflexes, mountain pathfinding, and self-taught katas."
+        },
+        {
+            "year": "Selection",
+            "role": "Unregistered Challenger",
+            "organization": "Mount Fujikasane",
+            "description": "Wrestled a Demon Slayer to take his swords and passed final selection ahead of everyone else."
+        },
+        {
+            "year": "Mansion Battle",
+            "role": "Drum House Vanguard",
+            "organization": "Tsuzumi Demon Hunt",
+            "description": "Charged through rotating rooms to slice demons; teamed up with Tanjiro and Zenitsu."
+        },
+        {
+            "year": "Entertainment",
+            "role": "Undercover Operative Inoko",
+            "organization": "Yoshiwara District Raid",
+            "description": "Dislocated all joints to infiltrate subterranean worm tunnels, decapitating Daki with dual fangs."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Inosuke’s spatial awareness saved our lives multiple times. He feels attacks in the air before they even happen.",
+            "author": "Tanjiro Kamado",
+            "title": "Demon Slayer Brother",
+            "avatar": "/anime/tanjiro.png"
+        },
+        {
+            "quote": "He is completely insane and charges straight into danger, but I am glad he is on our side!",
+            "author": "Zenitsu Agatsuma",
+            "title": "Thunder Breaker",
+            "avatar": "/anime/zenitsu.png"
+        },
+        {
+            "quote": "Inosuke-san, please stop jumping on the hospital beds! But thank you for eating all your medicine.",
+            "author": "Aoi Kanzaki",
+            "title": "Butterfly Mansion Caretaker",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#0284c7",
+        "--accent-secondary": "#38bdf8",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'giyuu': {
+    "id": "giyuu",
+    "slug": "giyuu",
+    "name": "Giyu Tomioka",
+    "japaneseName": "冨岡義勇",
+    "series": "Demon Slayer",
+    "universeBadge": "Water Pillar (Hashira)",
+    "roleTitle": "Water Pillar & Eleventh Form Architect",
+    "headline": "Silent Stream of Water",
+    "tagline": "Absolute calmness, fluid adaptation, and the stillness of Dead Calm.",
+    "statement": "stilling the raging tempest into absolute serenity, standing calm as the deep quiet sea.",
+    "bio": "The Water Pillar of the Demon Slayer Corps. Creator of the legendary Eleventh Form: Dead Calm (Nagi), capable of neutralizing any attack into absolute stillness. A solitary protector whose silent dedication guides the next generation.",
+    "price": 48,
+    "featuredTag": "Hashira Tier",
+    "avatarUrl": "/anime/giyuu.png",
+    "bustUrl": "/anime/giyuu.png",
+    "cardUrl": "/anime/giyuu.png",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "giyuu-dead-calm",
+    "location": "Mount Sagiri, Water Pillar Sanctuary",
+    "companionAvatars": [
+        "/anime/tanjiro.png",
+        "/anime/shinobu.png",
+        "/anime/inosuke.png"
+    ],
+    "companionTrustText": "Water Pillar of the Demon Slayer Corps High Council.",
+    "brandPartners": [
+        {
+            "name": "Water Pillar Sanctuary",
+            "icon": "✦"
+        },
+        {
+            "name": "Demon Slayer Corps HQ",
+            "icon": "◬"
+        },
+        {
+            "name": "Urokodaki Heritage Clan",
+            "icon": "⬡"
+        },
+        {
+            "name": "Hashira High Council",
+            "icon": "◌"
+        },
+        {
+            "name": "Swordsmith Village Forge",
+            "icon": "⊚"
+        },
+        {
+            "name": "Kasugai Raven Post",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Dead Calm (Nagi)",
+            "color": "#0369a1",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Water Breathing Mastery",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        },
+        {
+            "label": "Hashira Swordsmanship",
+            "color": "#0f172a",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Silent Vigilance",
+            "color": "#475569",
+            "bg": "#f8fafc",
+            "border": "#e2e8f0"
+        },
+        {
+            "label": "Tactical Restraint",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        },
+        {
+            "label": "Unyielding Honor",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on Eleventh Form Dead Calm, absolute mental tranquility, and",
+        "highlight": "letting the storm wash away without disturbing the core."
+    },
+    "sinceYear": "since the Water Pillar Succession",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#0369a1",
+        "accentSecondary": "#0284c7",
+        "accentGlow": "rgba(3, 105, 161, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(3, 105, 161, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(3, 105, 161, 0.08)",
+        "badgeBg": "#e0f2fe",
+        "badgeText": "#0369a1",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(3, 105, 161, 0.32) 0%, rgba(2, 132, 199, 0.18) 35%, rgba(3, 105, 161, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Pillar Rank",
+            "value": "Water Hashira"
+        },
+        {
+            "label": "Nagi Nullification",
+            "value": "100% Absorbed"
+        },
+        {
+            "label": "Forms Mastered",
+            "value": "11 Forms"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Eleventh Form: Dead Calm (Nagi)",
+            "level": 100,
+            "category": "Mastery"
+        },
+        {
+            "name": "Water Breathing Kata 1-10",
+            "level": 98,
+            "category": "Combat"
+        },
+        {
+            "name": "Demon Slayer Mark Awakening",
+            "level": 96,
+            "category": "Power"
+        },
+        {
+            "name": "Silent Tactical Restraint",
+            "level": 99,
+            "category": "Mindset"
+        }
+    ],
+    "projects": [
+        {
+            "id": "dead-calm-nullifier",
+            "title": "Eleventh Form Dead Calm (Nagi) Nullifier",
+            "category": "Security",
+            "subtag": "Packet Drop WAF",
+            "desc": "Advanced threat dissipation protocol that stills all incoming volumetric attack vectors into absolute silence without consuming CPU cycles.",
+            "tags": [
+                "Rust",
+                "eBPF",
+                "Kernel Bypass"
+            ],
+            "metrics": "100% Volumetric Drop",
+            "color": "#0369a1"
+        },
+        {
+            "id": "water-breathing-fluids",
+            "title": "Water Breathing Fluid Dynamics Engine",
+            "category": "Graphics",
+            "subtag": "Fluid Simulation",
+            "desc": "Ultra-clean blue water particle shader visualizing flowing kata arcs, water wheels, and whirlpool strikes in real-time WebGL.",
+            "tags": [
+                "Three.js",
+                "GLSL",
+                "WebGL"
+            ],
+            "metrics": "60 FPS Flow State",
+            "color": "#0284c7"
+        },
+        {
+            "id": "split-haori-archive",
+            "title": "Split-Pattern Haori Memorial Ledger",
+            "category": "Archives",
+            "subtag": "Memory Preservation",
+            "desc": "Digital tribute preserving the legacy of Sabito and Tsutako, honoring those who sacrificed everything to forge a protector.",
+            "tags": [
+                "Next.js",
+                "TailwindCSS",
+                "PostgreSQL"
+            ],
+            "metrics": "Memorial Preserved",
+            "color": "#475569"
+        },
+        {
+            "id": "hashira-training-matrix",
+            "title": "Hashira Swordsmanship Drill Matrix",
+            "category": "Education",
+            "subtag": "Cadet Drills",
+            "desc": "Rigorous swordsmanship training schedule calibrating reaction times, footwork balance, and endurance under extreme fatigue.",
+            "tags": [
+                "TypeScript",
+                "React",
+                "IndexedDB"
+            ],
+            "metrics": "Hashira Precision Calibration",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Youth",
+            "role": "Apprentice to Urokodaki",
+            "organization": "Mount Sagiri Water Dojo",
+            "description": "Trained alongside Sabito; survived final selection while carrying Sabito's grief and resolve."
+        },
+        {
+            "year": "Succession",
+            "role": "Water Pillar",
+            "organization": "Demon Slayer Corps Hashira",
+            "description": "Invented the Eleventh Form: Dead Calm; claimed position as the Water Pillar."
+        },
+        {
+            "year": "Mount Natagumo",
+            "role": "Pillar Vanguard",
+            "organization": "Lower Moon Extermination",
+            "description": "Decapitated Lower Moon Five Rui with a single strike of Dead Calm; spared Tanjiro and Nezuko."
+        },
+        {
+            "year": "Infinity Castle",
+            "role": "Hashira Co-Commander",
+            "organization": "Battle Against Akaza",
+            "description": "Awakened Demon Slayer Mark; fought alongside Tanjiro to defeat Upper Rank Three."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Tomioka-san... people don't actually dislike you, you know. But your Dead Calm is truly breathtaking.",
+            "author": "Shinobu Kocho",
+            "title": "Insect Pillar",
+            "avatar": "/anime/shinobu.png"
+        },
+        {
+            "quote": "Giyuu-san taught me to never let an adversary hold my sister's life in their hands. He gave us a future.",
+            "author": "Tanjiro Kamado",
+            "title": "Demon Slayer Protégé",
+            "avatar": "/anime/tanjiro.png"
+        },
+        {
+            "quote": "He carries the haori of two souls he loved. His water is deeper and stiller than any ocean.",
+            "author": "Sakonji Urokodaki",
+            "title": "Former Water Pillar",
+            "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#0369a1",
+        "--accent-secondary": "#0284c7",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+  'shinobu': {
+    "id": "shinobu",
+    "slug": "shinobu",
+    "name": "Shinobu Kocho",
+    "japaneseName": "胡蝶しのぶ",
+    "series": "Demon Slayer",
+    "universeBadge": "Insect Pillar (Hashira)",
+    "roleTitle": "Insect Pillar & Pharmacology Specialist",
+    "headline": "Dance of the Butterfly",
+    "tagline": "High-speed stings, wisteria pharmacology, and a gentle smile masking lethal precision.",
+    "statement": "dancing like a gentle butterfly, delivering decisive wisteria poison with graceful speed.",
+    "bio": "The Insect Pillar of the Demon Slayer Corps. Lacking the physical arm strength to behead demons, she developed lethal wisteria poisons and a customized thrusting blade to inject toxins with blinding, acrobatic speed.",
+    "price": 45,
+    "featuredTag": "Insect Pillar",
+    "avatarUrl": "/anime/shinobu.png",
+    "bustUrl": "/anime/shinobu.png",
+    "cardUrl": "/anime/shinobu.png",
+    "layoutArchetype": "flanked-centered",
+    "accentAnimationType": "shinobu-wisteria-butterflies",
+    "location": "Butterfly Mansion, Insect Pillar Clinic",
+    "companionAvatars": [
+        "/anime/giyuu.png",
+        "/anime/tanjiro.png",
+        "/anime/zenitsu.png"
+    ],
+    "companionTrustText": "Insect Pillar and Chief Pharmacologist of the Demon Slayer Corps.",
+    "brandPartners": [
+        {
+            "name": "Butterfly Mansion Clinic",
+            "icon": "✦"
+        },
+        {
+            "name": "Wisteria Poison Laboratory",
+            "icon": "◬"
+        },
+        {
+            "name": "Demon Slayer Corps HQ",
+            "icon": "⬡"
+        },
+        {
+            "name": "Hashira High Council",
+            "icon": "◌"
+        },
+        {
+            "name": "Kocho Estate Herbarium",
+            "icon": "⊚"
+        },
+        {
+            "name": "Kasugai Butterfly Courier",
+            "icon": "❖"
+        }
+    ],
+    "focusPillsLeft": [
+        {
+            "label": "Insect Breathing Stings",
+            "color": "#9333ea",
+            "bg": "#faf5ff",
+            "border": "#e9d5ff"
+        },
+        {
+            "label": "Wisteria Pharmacology",
+            "color": "#a855f7",
+            "bg": "#faf5ff",
+            "border": "#e9d5ff"
+        },
+        {
+            "label": "High-Velocity Thrust",
+            "color": "#0284c7",
+            "bg": "#f0f9ff",
+            "border": "#bae6fd"
+        }
+    ],
+    "focusPillsRight": [
+        {
+            "label": "Butterfly Dance",
+            "color": "#ec4899",
+            "bg": "#fdf2f8",
+            "border": "#fbcfe8"
+        },
+        {
+            "label": "Medical Rehabilitation",
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0"
+        },
+        {
+            "label": "Smiling Composure",
+            "color": "#ca8a04",
+            "bg": "#fefce8",
+            "border": "#fef08a"
+        }
+    ],
+    "focusQuote": {
+        "main": "focus is on agile butterfly maneuvers, wisteria poison chemistry, and",
+        "highlight": "smiling gracefully while delivering surgical precision."
+    },
+    "sinceYear": "since the Butterfly Mansion Founding",
+    "ctaText": "Let's Talk",
+    "colors": {
+        "isDark": false,
+        "bgPrimary": "#ffffff",
+        "bgSecondary": "#f8fafc",
+        "bgSurface": "#ffffff",
+        "bgGlass": "rgba(255, 255, 255, 0.85)",
+        "textPrimary": "#0f172a",
+        "textSecondary": "#334155",
+        "textMuted": "#64748b",
+        "accent": "#9333ea",
+        "accentSecondary": "#06b6d4",
+        "accentGlow": "rgba(147, 51, 234, 0.25)",
+        "borderSubtle": "#e2e8f0",
+        "borderStrong": "rgba(147, 51, 234, 0.25)",
+        "cardShadow": "0 20px 40px -10px rgba(147, 51, 234, 0.08)",
+        "badgeBg": "#f3e8ff",
+        "badgeText": "#6b21a8",
+        "gradientHero": "radial-gradient(ellipse at center, rgba(147, 51, 234, 0.32) 0%, rgba(6, 182, 212, 0.18) 35%, rgba(147, 51, 234, 0.06) 55%, transparent 72%)"
+    },
+    "stats": [
+        {
+            "label": "Pillar Rank",
+            "value": "Insect Hashira"
+        },
+        {
+            "label": "Wisteria Toxins",
+            "value": "37g Lethal Core"
+        },
+        {
+            "label": "Thrust Speed",
+            "value": "Faster than Water"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Wisteria Molecular Pharmacology",
+            "level": 100,
+            "category": "Science"
+        },
+        {
+            "name": "Caprice Dance Butterfly Stings",
+            "level": 97,
+            "category": "Combat"
+        },
+        {
+            "name": "Acrobatic High-Velocity Thrusts",
+            "level": 98,
+            "category": "Agility"
+        },
+        {
+            "name": "Patient Rehabilitation & Triage",
+            "level": 96,
+            "category": "Medicine"
+        }
+    ],
+    "projects": [
+        {
+            "id": "wisteria-synthesis-lab",
+            "title": "Wisteria Molecular Toxin Synthesizer",
+            "category": "BioTech",
+            "subtag": "Toxin Chemistry",
+            "desc": "Bio-chemical synthesizer modifying molecular chains of wisteria poison inside the scabbard to bypass demon immunities.",
+            "tags": [
+                "Python",
+                "Biopython",
+                "Chemical Informatics"
+            ],
+            "metrics": "Dynamic Toxin Mutation",
+            "color": "#9333ea"
+        },
+        {
+            "id": "butterfly-mansion-ehr",
+            "title": "Butterfly Mansion Rehabilitation EHR",
+            "category": "HealthTech",
+            "subtag": "Clinical Records",
+            "desc": "Comprehensive hospital management suite tracking demon venom recovery, reflex cup-splashing drills, and physical rehab.",
+            "tags": [
+                "Next.js",
+                "PostgreSQL",
+                "TailwindCSS"
+            ],
+            "metrics": "100% Recovery Rate",
+            "color": "#06b6d4"
+        },
+        {
+            "id": "centipede-thrust-physics",
+            "title": "Hundred-Legged Zigzag Thrust Engine",
+            "category": "Physics",
+            "subtag": "Acrobatic Physics",
+            "desc": "Calculates high-velocity ground ricochet angles to build explosive thrust momentum that pierces wooden bridge structures.",
+            "tags": [
+                "C++",
+                "OpenGL",
+                "Kinematics"
+            ],
+            "metrics": "Explosive Multi-Angle Thrust",
+            "color": "#ec4899"
+        },
+        {
+            "id": "tamayo-joint-cure",
+            "title": "Tamayo-Kocho Anti-Kibutsuji Drug Protocol",
+            "category": "Research",
+            "subtag": "Anti-Demon Serum",
+            "desc": "Four-stage cocktail combining humanization, aging acceleration, regeneration suppression, and cellular destruction.",
+            "tags": [
+                "Bioinformatics",
+                "Data Analysis",
+                "Rust"
+            ],
+            "metrics": "Muzan Neutralized",
+            "color": "#10b981"
+        }
+    ],
+    "experiences": [
+        {
+            "year": "Youth",
+            "role": "Co-Founder",
+            "organization": "Kocho Estate",
+            "description": "Rescued by Gyomei Himejima; co-founded Butterfly Mansion with elder sister Kanae."
+        },
+        {
+            "year": "Succession",
+            "role": "Insect Pillar",
+            "organization": "Demon Slayer Corps Hashira",
+            "description": "Inherited Kanae's butterfly haori and engineered customized thrusting needle blades."
+        },
+        {
+            "year": "Mount Natagumo",
+            "role": "Support Hashira",
+            "organization": "Demon Extermination",
+            "description": "Cured Zenitsu and dozens of infected slayers from lethal spider poison."
+        },
+        {
+            "year": "Infinity Castle",
+            "role": "Key Martyr & Architect",
+            "organization": "Battle Against Doma",
+            "description": "Sacrificed her body loaded with 37 kilograms of wisteria poison, enabling Kanao and Inosuke to decapitate Upper Rank Two."
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Shinobu's wisteria research made the impossible possible. Without her, Muzan would never have been defeated.",
+            "author": "Lady Tamayo",
+            "title": "Demon Doctor & Ally",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "Master Shinobu smiled every day even though her heart was burning with anger. She gave everything to protect us.",
+            "author": "Kanao Tsuyuri",
+            "title": "Tsuguko Prodigy",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop"
+        },
+        {
+            "quote": "She saved my life at Mount Natagumo. When her purple butterfly wings descended, I knew I was going to survive.",
+            "author": "Zenitsu Agatsuma",
+            "title": "Thunder Breaker",
+            "avatar": "/anime/zenitsu.png"
+        }
+    ],
+    "themeTokensCSS": {
+        "--accent": "#9333ea",
+        "--accent-secondary": "#06b6d4",
+        "--bg-primary": "#ffffff",
+        "--bg-secondary": "#f8fafc",
+        "--text-primary": "#0f172a",
+        "--text-secondary": "#334155"
+    }
+},
+};
