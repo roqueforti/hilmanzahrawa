@@ -460,7 +460,7 @@ export default function AdminCMSPage() {
       </AnimatePresence>
 
       {/* TOP STICKY HEADER */}
-      <header style={{
+      <header className="admin-header" style={{
         background: 'rgba(255, 255, 255, 0.88)',
         backdropFilter: 'blur(20px)',
         borderBottom: '1px solid #e2e8f0',
@@ -579,7 +579,7 @@ export default function AdminCMSPage() {
       </header>
 
       {/* SUB-NAV HORIZONTAL PILL TABS */}
-      <nav style={{
+      <nav className="admin-subnav" style={{
         background: '#ffffff',
         borderBottom: '1px solid #e2e8f0',
         padding: '0.65rem 2.25rem',
@@ -642,7 +642,7 @@ export default function AdminCMSPage() {
       </nav>
 
       {/* MAIN CONTENT AREA */}
-      <main style={{ flex: 1, padding: '2.5rem 2.25rem', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
+      <main className="admin-main" style={{ flex: 1, padding: '2.5rem 2.25rem', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
 
         {/* =========================================================================
            TAB 1: PROJECTS
@@ -770,7 +770,7 @@ export default function AdminCMSPage() {
             {/* Project Grid Cards */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
               gap: '1.75rem'
             }}>
               {filteredProjects.map((p, idx) => (
@@ -959,7 +959,7 @@ export default function AdminCMSPage() {
                 e.preventDefault();
                 handleSaveItem('bio', bio, () => {});
               }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Nama Lengkap
@@ -1018,7 +1018,7 @@ export default function AdminCMSPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Email
@@ -1379,7 +1379,7 @@ export default function AdminCMSPage() {
             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem', letterSpacing: '-0.01em' }}>
               Sertifikasi &amp; Lisensi
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
               {certificates.map((cert, idx) => (
                 <div
                   key={cert.id || idx}
@@ -1572,6 +1572,7 @@ export default function AdminCMSPage() {
             padding: '1.5rem'
           }}>
             <motion.div
+              className="admin-modal-box"
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
@@ -1614,7 +1615,7 @@ export default function AdminCMSPage() {
                 e.preventDefault();
                 handleSaveItem('projects', editingProject, () => setEditingProject(null));
               }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Judul Proyek
@@ -1654,7 +1655,7 @@ export default function AdminCMSPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
                   <div>
                     <label style={labelStyle}>
                       URL Slug
@@ -1685,7 +1686,7 @@ export default function AdminCMSPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Peran / Role Anda
@@ -1912,6 +1913,7 @@ export default function AdminCMSPage() {
             padding: '1.5rem'
           }}>
             <motion.div
+              className="admin-modal-box"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -1975,7 +1977,7 @@ export default function AdminCMSPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Tanggal Mulai
@@ -2063,6 +2065,7 @@ export default function AdminCMSPage() {
             padding: '1.5rem'
           }}>
             <motion.div
+              className="admin-modal-box"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -2107,7 +2110,7 @@ export default function AdminCMSPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Penerbit (Issuer)
@@ -2195,6 +2198,7 @@ export default function AdminCMSPage() {
             padding: '1.5rem'
           }}>
             <motion.div
+              className="admin-modal-box"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -2254,7 +2258,7 @@ export default function AdminCMSPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                <div className="admin-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
                   <div>
                     <label style={labelStyle}>
                       Tahun Mulai

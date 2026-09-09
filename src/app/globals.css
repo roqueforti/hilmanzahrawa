@@ -1366,25 +1366,55 @@ body {
   display: block;
 }
 
+/* =========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVE DESIGN SYSTEM
+   ========================================================================= */
+
+/* Viewport overflow protection */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .desktop-badge {
     display: inline-flex !important;
   }
 }
 
-@media (max-width: 860px) {
-  .about-2col {
-    grid-template-columns: 1fr !important;
+/* 1. Header & Mobile Navigation */
+@media (max-width: 768px) {
+  .landing-header {
+    padding: 1.25rem 1.25rem !important;
+  }
+  .landing-logo {
+    font-size: 1.85rem !important;
+  }
+  .mobile-nav-dropdown {
+    top: 75px !important;
+    right: 1.25rem !important;
+    left: 1.25rem !important;
+    min-width: auto !important;
+    width: auto !important;
+    padding: 1.25rem !important;
   }
 }
 
+/* 2. Hero Section */
 @media (max-width: 960px) {
+  .hero-section-wrapper {
+    padding: 1rem 1rem 3rem 1rem !important;
+  }
+  .hero-headline {
+    font-size: clamp(2.3rem, 7vw, 4.5rem) !important;
+  }
   .hero-stage-container {
     flex-direction: column !important;
     align-items: center !important;
     min-height: auto !important;
-    margin-top: 2rem !important;
-    gap: 2.25rem !important;
+    margin-top: 1.75rem !important;
+    gap: 1.75rem !important;
   }
   .hero-flank-left,
   .hero-flank-right {
@@ -1392,23 +1422,266 @@ body {
     max-width: 100% !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 1.75rem !important;
-  }
-  .hero-portrait-wrap {
-    max-width: 320px !important;
-    order: 2 !important;
+    gap: 1.25rem !important;
+    margin: 0 !important;
+    width: 100% !important;
   }
   .hero-flank-left {
     order: 1 !important;
   }
+  .hero-portrait-wrap {
+    max-width: 290px !important;
+    order: 2 !important;
+  }
   .hero-flank-right {
     order: 3 !important;
   }
+  .hero-badge-available {
+    margin-top: 0 !important;
+  }
+  .hero-statement-right {
+    margin-top: 0 !important;
+    max-width: 360px !important;
+    text-align: center !important;
+  }
+  .hero-trusted-avatars {
+    justify-content: center !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    text-align: left !important;
+  }
+  .hero-cta-btn {
+    margin: 0 auto !important;
+  }
 }
 
+@media (max-width: 480px) {
+  .hero-portrait-wrap {
+    max-width: 250px !important;
+  }
+  .hero-headline {
+    font-size: clamp(2.1rem, 7.5vw, 3rem) !important;
+  }
+  .hero-marquee-strip {
+    gap: 1.75rem !important;
+    margin-top: 2rem !important;
+  }
+}
+
+/* 3. Bento Showcase */
+@media (max-width: 960px) {
+  .bento-section-wrapper {
+    padding: 1.5rem 1rem 3.5rem 1rem !important;
+  }
+  .bento-container-box {
+    padding: 1.5rem !important;
+    border-radius: 28px !important;
+  }
+  .bento-grid {
+    gap: 1.25rem !important;
+  }
+  .bento-col-span-7,
+  .bento-col-span-5 {
+    grid-column: span 12 !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .bento-container-box {
+    padding: 1.15rem !important;
+    border-radius: 22px !important;
+  }
+  .bento-metrics-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+  }
+  .bento-card-furniture {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  .bento-furniture-img-wrap {
+    width: 100% !important;
+    height: 160px !important;
+    flex: none !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .bento-metrics-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 4. Focus Section ("I like") */
+@media (max-width: 900px) {
+  .focus-section-container {
+    padding: 3.5rem 1.25rem !important;
+  }
+  .focus-grid-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    align-items: center !important;
+  }
+  .focus-left-pills,
+  .focus-right-pills {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    max-width: 100% !important;
+  }
+  .focus-center-quote {
+    order: -1 !important;
+  }
+}
+
+/* 5. Process Section ("Here's how it works") */
 @media (max-width: 900px) {
   .desktop-connector {
     display: none !important;
   }
+  .process-card {
+    transform: none !important;
+    min-height: auto !important;
+    padding: 2rem 1.75rem !important;
+    border-radius: 22px !important;
+  }
+  .process-testimonials-grid {
+    margin: 3.5rem auto 0 auto !important;
+    gap: 1.5rem !important;
+  }
+  .process-testimonial-staggered {
+    margin-top: 0 !important;
+  }
 }
+
+/* 6. Selected Works */
+@media (max-width: 860px) {
+  .works-section {
+    padding: 3.5rem 1.25rem !important;
+  }
+  .works-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .work-preview-window {
+    height: 270px !important;
+    padding: 1.15rem !important;
+    border-radius: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-preview-window {
+    height: 240px !important;
+  }
+  .telehealth-mockup-wrap {
+    transform: scale(0.82) !important;
+    transform-origin: center center;
+  }
+  .work-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.4rem !important;
+  }
+}
+
+/* 7. About & Timeline */
+@media (max-width: 860px) {
+  .about-2col {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .about-portrait-card {
+    min-height: auto !important;
+    padding: 1.5rem !important;
+    border-radius: 20px !important;
+  }
+  .about-portrait-img-wrap {
+    height: 220px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .about-exp-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.35rem !important;
+    padding: 0.95rem 0 !important;
+  }
+  .about-exp-role {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+  }
+  .about-exp-company-period {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* 8. CTA Banner */
+@media (max-width: 768px) {
+  .cta-banner-wrapper {
+    padding: 2rem 1rem !important;
+  }
+  .cta-banner-box {
+    padding: 3.5rem 1.25rem !important;
+    border-radius: 24px !important;
+  }
+  .cta-headline {
+    font-size: clamp(2rem, 7vw, 3.5rem) !important;
+  }
+}
+
+/* 9. Footer */
+@media (max-width: 640px) {
+  .footer-nav-row {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1.25rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .footer-links-wrap {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 1.5rem !important;
+  }
+  .footer-watermark-wrap {
+    padding-top: 1.5rem !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+  }
+  .footer-watermark-text {
+    font-size: clamp(2.4rem, 11.5vw, 6rem) !important;
+    letter-spacing: -0.01em !important;
+  }
+}
+
+/* 10. CMS Admin Dashboard Responsive */
+@media (max-width: 768px) {
+  .admin-header {
+    padding: 1rem 1.25rem !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+  }
+  .admin-subnav {
+    padding: 0.5rem 1.25rem !important;
+  }
+  .admin-main {
+    padding: 1.5rem 1rem !important;
+  }
+  .admin-modal-box {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 22px !important;
+    max-height: 92vh !important;
+  }
+  .admin-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 

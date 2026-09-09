@@ -38,6 +38,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [processHovered, setProcessHovered] = useState(false);
   const [hoveredProcessCard, setHoveredProcessCard] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const bio = initialData?.bio || {};
   const rawName = bio?.name || "Hilman Zahrawa";
@@ -109,7 +117,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       {/* =========================================================================
          1. TOP NAVIGATION (Exact Match: Logo left, Hamburger right)
          ========================================================================= */}
-      <header style={{
+      <header className="landing-header" style={{
         padding: '2rem 2.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
@@ -122,7 +130,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         {/* Brand Logo in Italic Editorial Serif */}
         <Link href="/" style={{ textDecoration: 'none', color: '#0f172a' }}>
           <span 
-            className="editorial-serif-italic"
+            className="editorial-serif-italic landing-logo"
             style={{
               fontSize: '2.2rem',
               letterSpacing: '-0.01em',
@@ -163,6 +171,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            className="mobile-nav-dropdown"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -220,7 +229,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </div>
 
           {/* Hero Main Headline (Urbanist + Instrument Serif Italic) */}
-          <h1 style={{
+          <h1 className="hero-headline" style={{
             fontSize: 'clamp(3.5rem, 7.5vw, 6.2rem)',
             fontWeight: 500,
             letterSpacing: '-0.035em',
@@ -268,6 +277,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <div className="hero-flank-left">
               {/* Available for new opportunities */}
               <motion.div
+                className="hero-badge-available"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -299,6 +309,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
               {/* Bottom: Trusted Avatars + Text */}
               <motion.div
+                className="hero-trusted-avatars"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -346,6 +357,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <div className="hero-flank-right">
               {/* Statement */}
               <motion.p
+                className="hero-statement-right"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
@@ -364,6 +376,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
               {/* Let's Talk Pill Button (Matching exact reference format) */}
               <motion.a
+                className="hero-cta-btn"
                 href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -393,7 +406,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </div>
 
           {/* Client / Partner Logo Marquee Strip */}
-          <div style={{
+          <div className="hero-marquee-strip" style={{
             width: '100%',
             maxWidth: '1100px',
             margin: '2.5rem auto 0 auto',
@@ -420,12 +433,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       {/* =========================================================================
          3. BENTO SHOWCASE (Large Radiant Sky-Blue Container matching sec2_bento.png)
          ========================================================================= */}
-      <section style={{
+      <section className="bento-section-wrapper" style={{
         padding: '2rem 1.5rem 5rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto'
       }}>
-        <div style={{
+        <div className="bento-container-box" style={{
           borderRadius: '36px',
           padding: '2.5rem',
           background: 'radial-gradient(ellipse at 50% 40%, #7dd3fc 0%, #38bdf8 35%, #0ea5e9 75%, #0284c7 100%)',
@@ -434,7 +447,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           overflow: 'hidden'
         }}>
           {/* Bento Asymmetrical 4-Card Grid */}
-          <div style={{
+          <div className="bento-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
             gap: '1.75rem',
@@ -442,6 +455,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           }}>
             {/* 1. Top-Left: Analytics & Financial Dashboard UI Mockup (7 cols) */}
             <motion.div
+              className="bento-col-span-7"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
               style={{
@@ -473,7 +487,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               </div>
 
               {/* Metrics Row */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
+              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
                 <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '14px' }}>
                   <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>Total Volume</span>
                   <span style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0f172a' }}>$128,450.00</span>
@@ -507,6 +521,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             {/* 2. Top-Right: Architecture & Real Estate Website (5 cols) */}
             <motion.div
+              className="bento-col-span-5"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
               style={{
@@ -540,6 +555,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             {/* 3. Bottom-Left: Telemedicine / Healthcare Portal (5 cols) */}
             <motion.div
+              className="bento-col-span-5"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
               style={{
@@ -585,6 +601,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             {/* 4. Bottom-Right: Scandinavian Furniture & Interior Design (7 cols) */}
             <motion.div
+              className="bento-col-span-7 bento-card-furniture"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
               style={{
@@ -600,7 +617,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 alignItems: 'center'
               }}
             >
-              <div style={{ flex: '1 1 50%', height: '180px', borderRadius: '16px', overflow: 'hidden' }}>
+              <div className="bento-furniture-img-wrap" style={{ flex: '1 1 50%', height: '180px', borderRadius: '16px', overflow: 'hidden' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop" 
                   alt="Living Room"
@@ -626,7 +643,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       {/* =========================================================================
          4. STATEMENT & FLANKING PILL BADGES ("I like" / Exact Match to sec3_focus.png)
          ========================================================================= */}
-      <section id="about" style={{
+      <section id="about" className="focus-section-container" style={{
         padding: '5rem 1.5rem',
         maxWidth: '1240px',
         margin: '0 auto',
@@ -647,14 +664,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </span>
 
         {/* 3-Column Symmetrical Layout: 3 Pills Left | Statement Center | 3 Pills Right */}
-        <div style={{
+        <div className="focus-grid-layout" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(180px, 220px) 1fr minmax(180px, 220px)',
           gap: '2.5rem',
           alignItems: 'center'
         }}>
           {/* Left Column (3 floating pill badges) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-start' }}>
+          <div className="focus-left-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-start' }}>
             {[
               { label: "Mobile Design", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa" },
               { label: "UX Design", color: "#0284c7", bg: "#f0f9ff", border: "#bae6fd" },
@@ -684,7 +701,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </div>
 
           {/* Center Column: Exact Statement Typography */}
-          <blockquote style={{
+          <blockquote className="focus-center-quote" style={{
             fontSize: 'clamp(1.9rem, 3.8vw, 3rem)',
             fontWeight: 400,
             letterSpacing: '-0.025em',
@@ -700,7 +717,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </blockquote>
 
           {/* Right Column (3 floating pill badges) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-end' }}>
+          <div className="focus-right-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-end' }}>
             {[
               { label: "Design Systems", color: "#ca8a04", bg: "#fefce8", border: "#fef08a" },
               { label: "Website Tuning", color: "#db2777", bg: "#fdf2f8", border: "#fbcfe8" },
@@ -757,6 +774,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         {/* 3 Interactive Process Cards (Tilts by default, straightens in unison on hover) */}
         <div 
+          className="process-cards-grid"
           onMouseEnter={() => setProcessHovered(true)}
           onMouseLeave={() => {
             setProcessHovered(false);
@@ -834,9 +852,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
           {/* Card 01: Discover */}
           <motion.div
+            className="process-card"
             animate={{
-              rotate: processHovered ? 0 : -5,
-              y: processHovered ? (hoveredProcessCard === 1 ? -8 : 0) : 12,
+              rotate: isMobile ? 0 : (processHovered ? 0 : -5),
+              y: isMobile ? 0 : (processHovered ? (hoveredProcessCard === 1 ? -8 : 0) : 12),
               scale: hoveredProcessCard === 1 ? 1.015 : 1
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22, mass: 0.8 }}
@@ -888,9 +907,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
           {/* Card 02: Design */}
           <motion.div
+            className="process-card"
             animate={{
-              rotate: processHovered ? 0 : 2.5,
-              y: processHovered ? (hoveredProcessCard === 2 ? -8 : 0) : -26,
+              rotate: isMobile ? 0 : (processHovered ? 0 : 2.5),
+              y: isMobile ? 0 : (processHovered ? (hoveredProcessCard === 2 ? -8 : 0) : -26),
               scale: hoveredProcessCard === 2 ? 1.015 : 1
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22, mass: 0.8 }}
@@ -943,9 +963,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
           {/* Card 03: Deliver */}
           <motion.div
+            className="process-card"
             animate={{
-              rotate: processHovered ? 0 : -2.5,
-              y: processHovered ? (hoveredProcessCard === 3 ? -8 : 0) : 28,
+              rotate: isMobile ? 0 : (processHovered ? 0 : -2.5),
+              y: isMobile ? 0 : (processHovered ? (hoveredProcessCard === 3 ? -8 : 0) : 28),
               scale: hoveredProcessCard === 3 ? 1.015 : 1
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22, mass: 0.8 }}
@@ -997,7 +1018,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
 
         {/* 2 Staggered Testimonials Underneath (Matching sec4_process.png) */}
-        <div style={{
+        <div className="process-testimonials-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
           gap: '4rem',
@@ -1034,7 +1055,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </div>
 
           {/* Testimonial 2 (Right, shifted down for staggered editorial rhythm) */}
-          <div style={{
+          <div className="process-testimonial-staggered" style={{
             background: '#ffffff',
             borderRadius: '20px',
             padding: '1.75rem',
@@ -1067,7 +1088,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       {/* =========================================================================
          6. SELECTED WORKS (2x2 Grid Matching sec5_works.png)
          ========================================================================= */}
-      <section id="works" style={{
+      <section id="works" className="works-section" style={{
         padding: '5rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto'
@@ -1087,7 +1108,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </h2>
         </div>
 
-        <div style={{
+        <div className="works-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))',
           gap: '2.5rem'
@@ -1106,7 +1127,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               {/* Project Preview Window Mockup */}
-              <div style={{
+              <div className="work-preview-window" style={{
                 height: '320px',
                 borderRadius: '24px',
                 background: '#f8fafc',
@@ -1170,7 +1191,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 )}
 
                 {work.previewType === 'health' && (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
+                  <div className="telehealth-mockup-wrap" style={{ width: '100%', height: '100%', display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ width: '90px', height: '180px', borderRadius: '18px', background: '#ffffff', border: '3px solid #0f172a', padding: '0.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
                       <div style={{ width: '30px', height: '4px', background: '#e2e8f0', borderRadius: '2px', margin: '0 auto' }} />
                       <div style={{ width: '100%', height: '50px', background: '#e0f2fe', borderRadius: '8px' }} />
@@ -1191,7 +1212,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               </div>
 
               {/* Title & Tags Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 0.5rem' }}>
+              <div className="work-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 0.5rem' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
                   {work.title}
                 </h3>
@@ -1239,7 +1260,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           alignItems: 'center'
         }} className="about-2col">
           {/* Left: Dark Portrait Card Matching Reference */}
-          <div style={{
+          <div className="about-portrait-card" style={{
             background: '#0f172a',
             borderRadius: '24px',
             padding: '1.75rem',
@@ -1250,7 +1271,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             justifyContent: 'space-between',
             minHeight: '380px'
           }}>
-            <div style={{
+            <div className="about-portrait-img-wrap" style={{
               width: '100%',
               height: '260px',
               borderRadius: '16px',
@@ -1309,6 +1330,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               ].map((exp, i) => (
                 <div 
                   key={i} 
+                  className="about-exp-row"
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -1318,9 +1340,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     fontSize: '0.9rem'
                   }}
                 >
-                  <span style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 35%' }}>{exp.role}</span>
-                  <span style={{ color: '#64748b', flex: '1 1 35%' }}>{exp.company}</span>
-                  <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 30%' }}>{exp.period}</span>
+                  <span className="about-exp-role" style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 35%' }}>{exp.role}</span>
+                  <div className="about-exp-company-period" style={{ display: 'contents' }}>
+                    <span style={{ color: '#64748b', flex: '1 1 35%' }}>{exp.company}</span>
+                    <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 30%' }}>{exp.period}</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1331,12 +1355,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       {/* =========================================================================
          8. CTA BANNER WITH 3D WAVES (Exact Match: "Let's Make It Happen")
          ========================================================================= */}
-      <section style={{
+      <section className="cta-banner-wrapper" style={{
         padding: '3rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto'
       }}>
-        <div style={{
+        <div className="cta-banner-box" style={{
           borderRadius: '36px',
           padding: '5rem 2rem',
           textAlign: 'center',
@@ -1349,7 +1373,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <SkyWaves3D />
 
           <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{
+            <h2 className="cta-headline" style={{
               fontSize: 'clamp(2.8rem, 6.5vw, 4.8rem)',
               fontWeight: 400,
               letterSpacing: '-0.03em',
@@ -1407,7 +1431,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         margin: '0 auto',
         overflow: 'hidden'
       }}>
-        <div style={{
+        <div className="footer-nav-row" style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -1416,7 +1440,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           paddingBottom: '3rem',
           borderBottom: '1px solid #f1f5f9'
         }}>
-          <div style={{ display: 'flex', gap: '2rem' }}>
+          <div className="footer-links-wrap" style={{ display: 'flex', gap: '2rem' }}>
             <Link href="/" style={{ color: '#0f172a', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Home</Link>
             <a href="#about" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>About</a>
             <a href="#works" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Portfolio</a>
@@ -1429,7 +1453,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
 
         {/* Massive Display Watermark Name Spanning Bottom Edge */}
-        <div style={{
+        <div className="footer-watermark-wrap" style={{
           textAlign: 'center',
           padding: '2.5rem 0 0 0',
           userSelect: 'none',
@@ -1441,7 +1465,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           alignItems: 'center'
         }}>
           <span 
-            className="editorial-serif-italic"
+            className="editorial-serif-italic footer-watermark-text"
             style={{
               fontSize: 'clamp(4.2rem, 13vw, 13.5rem)',
               lineHeight: 0.85,
@@ -1478,6 +1502,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
+              className="project-modal-box"
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
