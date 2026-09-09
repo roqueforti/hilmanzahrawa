@@ -753,22 +753,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             padding: '1.5rem 0'
           }}
         >
-          {/* SVG Squiggle Connector 1 (Card 01 -> Card 02, matching user_sq1.png) */}
+          {/* SVG Squiggle Connector 1 (Card 01 -> Card 02) */}
           <motion.svg
             width="100"
-            height="52"
-            viewBox="0 0 100 52"
+            height="56"
+            viewBox="0 0 100 56"
             fill="none"
             animate={{
-              y: processHovered ? 0 : -10,
-              rotate: processHovered ? 0 : -2
+              x: '-50%',
+              y: processHovered ? 0 : 20,
+              rotate: processHovered ? 0 : -15
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
             style={{
               position: 'absolute',
               top: '4px',
-              left: '32%',
-              transform: 'translateX(-50%)',
+              left: '32.8%',
               zIndex: 15,
               pointerEvents: 'none'
             }}
@@ -784,22 +784,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <circle cx="88" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
-          {/* SVG Squiggle Connector 2 (Card 02 -> Card 03 Loop-the-loop, matching user_sq2.png) */}
+          {/* SVG Squiggle Connector 2 (Card 02 -> Card 03 Loop-the-loop) */}
           <motion.svg
             width="100"
-            height="72"
-            viewBox="0 0 100 72"
+            height="74"
+            viewBox="0 0 100 74"
             fill="none"
             animate={{
-              y: processHovered ? 0 : 10,
-              rotate: processHovered ? 0 : 2
+              x: '-50%',
+              y: processHovered ? 0 : 31,
+              rotate: processHovered ? 0 : 30
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
             style={{
               position: 'absolute',
               bottom: '22px',
-              left: '65.5%',
-              transform: 'translateX(-50%)',
+              left: '66%',
               zIndex: 15,
               pointerEvents: 'none'
             }}
