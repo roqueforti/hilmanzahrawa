@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Cpu, Radio, Terminal, Zap, Shield, Activity, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Cpu, Radio, Terminal, Zap } from 'lucide-react';
 import { AnimeTemplate, ProjectItem } from '@/data/animeTemplates';
 
 interface ArchetypeProps {
@@ -20,8 +20,8 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
       {/* 1. TOP TELEMETRY STATUS BAR */}
       <div style={{
         maxWidth: '1360px',
-        margin: '0 auto 1.5rem auto',
-        padding: '0.65rem 1.5rem',
+        margin: '0 1.25rem 1.5rem 1.25rem',
+        padding: '0.6rem 1.25rem',
         background: '#f8fafc',
         border: '1px solid #e2e8f0',
         borderRadius: '12px',
@@ -29,35 +29,31 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '1rem',
+        gap: '0.75rem',
         fontFamily: 'monospace',
-        fontSize: '0.75rem',
+        fontSize: '0.74rem',
         color: '#64748b'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#16a34a', fontWeight: 700 }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
             [ SYSTEM: ONLINE // SYNC 100% ]
           </span>
           <span>// LOC: {template.location.toUpperCase()}</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
           <span>CORE: {template.japaneseName}</span>
-          <span style={{ color: colors.accent, fontWeight: 700 }}>VER: 2026.4.0</span>
+          <span style={{ color: colors.accent, fontWeight: 700 }}>VER: 2026.4</span>
           <span>LATENCY: 0.84ms</span>
         </div>
       </div>
 
       {/* 2. CYBER-RETICLE HERO */}
-      <section style={{ position: 'relative', width: '100%', padding: '2rem 2rem 5rem 2rem' }}>
-        <div style={{
+      <section style={{ position: 'relative', width: '100%', padding: '1.5rem 1.5rem 4rem 1.5rem' }}>
+        <div className="cyber-hero-grid" style={{
           maxWidth: '1360px',
           margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr minmax(340px, 480px) 1fr',
-          gap: '2.5rem',
-          alignItems: 'center',
           position: 'relative',
           zIndex: 10
         }}>
@@ -67,12 +63,12 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
-              padding: '0.35rem 0.9rem',
+              padding: '0.35rem 0.85rem',
               borderRadius: '6px',
               background: colors.badgeBg,
               color: colors.badgeText,
               fontFamily: 'monospace',
-              fontSize: '0.78rem',
+              fontSize: '0.76rem',
               fontWeight: 700,
               marginBottom: '1.25rem'
             }}>
@@ -81,7 +77,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             </div>
 
             <h1 style={{
-              fontSize: 'clamp(2.8rem, 5.5vw, 4.8rem)',
+              fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
               fontWeight: 800,
               letterSpacing: '-0.04em',
               lineHeight: 1.02,
@@ -141,13 +137,13 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            minHeight: '480px'
+            minHeight: '440px'
           }}>
-            {/* Outer Rotating HUD Reticle Ring */}
-            <div style={{
+            {/* Outer Rotating HUD Reticle Ring (Responsive) */}
+            <div className="cyber-reticle-ring" style={{
               position: 'absolute',
-              width: '440px',
-              height: '440px',
+              width: 'min(420px, 85vw)',
+              height: 'min(420px, 85vw)',
               borderRadius: '50%',
               border: `1.5px dashed ${colors.accent}`,
               opacity: 0.35,
@@ -157,8 +153,8 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             {/* Inner Glowing Aura */}
             <div style={{
               position: 'absolute',
-              width: '380px',
-              height: '380px',
+              width: 'min(360px, 75vw)',
+              height: 'min(360px, 75vw)',
               borderRadius: '50%',
               background: colors.gradientHero,
               filter: 'blur(30px)',
@@ -170,7 +166,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
               position: 'relative',
               zIndex: 10,
               width: '100%',
-              maxWidth: '380px'
+              maxWidth: '360px'
             }}>
               <img
                 src={template.bustUrl}
@@ -178,7 +174,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxHeight: '460px',
+                  maxHeight: '440px',
                   objectFit: 'contain',
                   mixBlendMode: isPng ? 'normal' : 'multiply',
                   maskImage: 'linear-gradient(to bottom, black 0%, black 85%, transparent 100%)',
@@ -193,17 +189,18 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
               bottom: '5%',
               left: '50%',
               transform: 'translateX(-50%)',
-              background: 'rgba(255, 255, 255, 0.92)',
+              background: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(8px)',
-              border: '1.5px solid #e2e8f0',
-              padding: '0.35rem 1rem',
+              border: '1px solid #e2e8f0',
+              padding: '0.35rem 0.95rem',
               borderRadius: '9999px',
               fontFamily: 'monospace',
               fontSize: '0.72rem',
               fontWeight: 700,
               color: '#0f172a',
               boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
-              zIndex: 20
+              zIndex: 20,
+              whiteSpace: 'nowrap'
             }}>
               [ TARGET: {template.slug.toUpperCase()} // LOCKED ]
             </div>
@@ -214,8 +211,9 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             <div style={{
               padding: '1.25rem',
               borderRadius: '16px',
-              background: '#f8fafc',
-              border: '1.5px solid #e2e8f0'
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 01</span>
@@ -228,8 +226,9 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             <div style={{
               padding: '1.25rem',
               borderRadius: '16px',
-              background: '#f8fafc',
-              border: '1.5px solid #e2e8f0'
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 02</span>
@@ -242,8 +241,9 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             <div style={{
               padding: '1.25rem',
               borderRadius: '16px',
-              background: '#f8fafc',
-              border: '1.5px solid #e2e8f0'
+              background: '#ffffff',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 03</span>
@@ -256,8 +256,8 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
         </div>
       </section>
 
-      {/* 3. TELEMETRY DIRECTIVES / SELECTED PROJECTS */}
-      <section id="works" style={{ padding: '4rem 2rem 6rem 2rem', maxWidth: '1360px', margin: '0 auto' }}>
+      {/* 3. TELEMETRY DIRECTIVES / SELECTED PROJECTS (Clean Design) */}
+      <section id="works" style={{ padding: '4rem 1.5rem 5rem 1.5rem', maxWidth: '1360px', margin: '0 auto' }}>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -272,46 +272,48 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
             <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
               [ SECTION: DIRECTIVES // TELEMETRY_SUITE ]
             </span>
-            <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 800, letterSpacing: '-0.035em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+            <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 800, letterSpacing: '-0.035em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
               Operational Modules & Protocols
             </h2>
           </div>
-          <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#64748b' }}>
-            STATUS: 4/4 DEPLOYED // READY FOR INGESTION
+          <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#64748b' }}>
+            STATUS: 4/4 DEPLOYED
           </span>
         </div>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+          gap: '1.75rem'
         }}>
           {template.projects.map((work, idx) => (
             <motion.div
               key={work.id}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -6, boxShadow: '0 20px 40px -10px rgba(0,0,0,0.06)' }}
               onClick={() => onSelectProject(work)}
               style={{
-                borderRadius: '20px',
+                borderRadius: '22px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
+                border: '1px solid #e2e8f0',
                 padding: '2rem',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '340px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.03)',
-                position: 'relative'
+                minHeight: '330px',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.02)',
+                position: 'relative',
+                transition: 'all 0.25s ease'
               }}
             >
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: work.color || colors.accent }} />
-
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', fontWeight: 700, color: colors.accent }}>
-                    NODE_0{idx + 1} // {work.category.toUpperCase()}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
+                    <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', fontWeight: 700, color: colors.accent }}>
+                      NODE_0{idx + 1} // {work.category.toUpperCase()}
+                    </span>
+                  </div>
                   <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', fontWeight: 700, color: '#16a34a' }}>
                     {work.metrics}
                   </span>
@@ -320,7 +322,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
                 <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.75rem 0' }}>
                   {work.title}
                 </h3>
-                <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
+                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
                   {work.desc}
                 </p>
               </div>
@@ -328,14 +330,14 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
               <div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
                   {work.tags.map((t) => (
-                    <span key={t} style={{ fontFamily: 'monospace', fontSize: '0.72rem', padding: '0.2rem 0.55rem', borderRadius: '4px', background: '#f8fafc', border: '1px solid #e2e8f0', color: '#334155' }}>
+                    <span key={t} style={{ fontFamily: 'monospace', fontSize: '0.72rem', padding: '0.2rem 0.55rem', borderRadius: '4px', background: '#f8fafc', color: '#334155' }}>
                       {t}
                     </span>
                   ))}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
-                  <span>&gt; ACCESS_SPECIFICATIONS</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
+                  <span>&gt; ACCESS_SPEC</span>
                   <ArrowUpRight size={15} />
                 </div>
               </div>
@@ -345,29 +347,29 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
       </section>
 
       {/* 4. KERNEL DIAGNOSTICS (MASTERY) */}
-      <section id="mastery" style={{ padding: '4rem 2rem 5rem 2rem', maxWidth: '1240px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '3rem', textAlign: 'center' }}>
+      <section id="mastery" style={{ padding: '3.5rem 1.5rem 4.5rem 1.5rem', maxWidth: '1240px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
           <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
             [ SUBSYSTEM DIAGNOSTICS & EFFICIENCY ]
           </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+          <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
             Kernel Mastery & Telemetry
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.5rem' }}>
           {template.skills.map((s, idx) => (
             <div
               key={idx}
               style={{
                 padding: '1.75rem',
                 borderRadius: '16px',
-                background: '#f8fafc',
-                border: '1.5px solid #e2e8f0',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '190px'
+                minHeight: '180px'
               }}
             >
               <div>
@@ -375,7 +377,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
                   <span>SUBROUTINE_{idx + 1}</span>
                   <span style={{ color: colors.accent, fontWeight: 700 }}>[ ACTIVE ]</span>
                 </div>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.25rem 0' }}>{s.name}</h4>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.25rem 0' }}>{s.name}</h4>
                 <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Domain: {s.category}</span>
               </div>
 
@@ -384,7 +386,7 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
                   <span>EFFICIENCY</span>
                   <span style={{ color: colors.accent }}>{s.level}%</span>
                 </div>
-                <div style={{ width: '100%', height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '5px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{ width: `${s.level}%`, height: '100%', background: colors.accent, borderRadius: '3px' }} />
                 </div>
               </div>
@@ -394,12 +396,12 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
       </section>
 
       {/* 5. MISSION LOG & TIMELINE */}
-      <section id="timeline" style={{ padding: '4rem 2rem 5rem 2rem', maxWidth: '1240px', margin: '0 auto' }}>
+      <section id="timeline" style={{ padding: '3.5rem 1.5rem 4.5rem 1.5rem', maxWidth: '1240px', margin: '0 auto' }}>
         <div style={{ marginBottom: '2.5rem' }}>
           <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
             [ SYSTEM LOGS // FIELD REPUTATION ]
           </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+          <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
             Mission Execution History
           </h2>
         </div>
@@ -408,23 +410,20 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
           {template.experiences.map((exp, i) => (
             <div
               key={i}
+              className="cyber-timeline-row"
               style={{
-                padding: '1.5rem 2rem',
+                padding: '1.5rem 1.75rem',
                 borderRadius: '16px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
-                display: 'grid',
-                gridTemplateColumns: '140px 1fr 2fr',
-                gap: '1.5rem',
-                alignItems: 'center'
+                border: '1px solid #e2e8f0'
               }}
             >
               <div style={{ fontFamily: 'monospace', fontSize: '1.05rem', fontWeight: 800, color: colors.accent }}>
                 &gt; {exp.year}
               </div>
               <div>
-                <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '1rem' }}>{exp.role}</div>
-                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{exp.organization}</div>
+                <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.98rem' }}>{exp.role}</div>
+                <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{exp.organization}</div>
               </div>
               <p style={{ fontSize: '0.88rem', color: '#475569', margin: 0, lineHeight: 1.55 }}>
                 {exp.description}
@@ -435,37 +434,37 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
       </section>
 
       {/* 6. DECRYPTED TRANSMISSIONS (TESTIMONIALS) */}
-      <section id="testimonials" style={{ padding: '4rem 2rem 6rem 2rem', maxWidth: '1360px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+      <section id="testimonials" style={{ padding: '3.5rem 1.5rem 5rem 1.5rem', maxWidth: '1360px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', fontWeight: 700, color: colors.accent }}>
             [ DECRYPTED SENDER TRANSMISSIONS ]
           </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+          <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
             Network Endorsements
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.75rem' }}>
           {template.testimonials.map((t, i) => (
             <div
               key={i}
               style={{
-                padding: '2rem',
+                padding: '1.75rem',
                 borderRadius: '20px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
+                border: '1px solid #e2e8f0',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '240px',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.02)'
+                minHeight: '220px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.02)'
               }}
             >
               <div>
-                <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '1rem' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.75rem' }}>
                   // TRANSMISSION_PAYLOAD_{i + 1}
                 </div>
-                <p style={{ fontSize: '0.98rem', lineHeight: 1.65, fontStyle: 'italic', color: '#334155', margin: '0 0 1.5rem 0' }}>
+                <p style={{ fontSize: '0.96rem', lineHeight: 1.65, fontStyle: 'italic', color: '#334155', margin: '0 0 1.25rem 0' }}>
                   "{t.quote}"
                 </p>
               </div>
@@ -475,16 +474,16 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
                   src={t.avatar}
                   alt={t.author}
                   style={{
-                    width: '42px',
-                    height: '42px',
+                    width: '40px',
+                    height: '40px',
                     borderRadius: '50%',
                     objectFit: 'cover',
                     border: `2px solid ${colors.accent}`
                   }}
                 />
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.92rem', color: '#0f172a' }}>{t.author}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{t.title}</div>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{t.author}</div>
+                  <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{t.title}</div>
                 </div>
               </div>
             </div>
@@ -493,16 +492,16 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
       </section>
 
       {/* 7. CYBER FOOTER */}
-      <footer style={{ padding: '3rem 2rem 1.5rem 2rem', maxWidth: '1360px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', fontFamily: 'monospace', fontSize: '0.82rem', color: '#64748b' }}>
+      <footer style={{ padding: '3rem 1.5rem 1.5rem 1.5rem', maxWidth: '1360px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', fontFamily: 'monospace', fontSize: '0.8rem', color: '#64748b', paddingBottom: '1.5rem' }}>
           <div>© {new Date().getFullYear()} {template.name}. CYBER-HUD TELEMETRY INTERFACE.</div>
           <Link href="/templates" style={{ color: colors.accent, fontWeight: 700, textDecoration: 'none' }}>
             &gt; VIEW_ALL_20_ARCHETYPES
           </Link>
         </div>
-        <div style={{ textAlign: 'center', padding: '2rem 0 0 0', overflow: 'hidden' }}>
+        <div style={{ textAlign: 'center', padding: '1rem 0 0 0', overflow: 'hidden' }}>
           <span style={{
-            fontSize: 'clamp(3.5rem, 11vw, 10.5rem)',
+            fontSize: 'clamp(3rem, 11vw, 10rem)',
             lineHeight: 0.85,
             color: 'rgba(15, 23, 42, 0.04)',
             fontFamily: 'monospace',

@@ -1684,4 +1684,267 @@ html, body {
   }
 }
 
+/* =========================================================================
+   ANIME PORTFOLIO ARCHETYPES - COMPREHENSIVE RESPONSIVE SYSTEM
+   ========================================================================= */
+
+/* Archetype Grid Systems - Desktop Defaults */
+.asym-hero-grid,
+.asym-works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+.asym-span-7 {
+  grid-column: span 7;
+}
+.asym-span-5 {
+  grid-column: span 5;
+}
+.asym-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.asym-timeline-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 2fr;
+  gap: 2rem;
+  align-items: center;
+}
+.asym-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.vanguard-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3rem;
+  align-items: center;
+}
+.vanguard-directive-card {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+.vanguard-timeline-row {
+  display: grid;
+  grid-template-columns: 120px 1.5fr 2fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.editorial-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+.editorial-timeline-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.cyber-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(340px, 460px) 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+.cyber-timeline-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 2fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Tablet & Mobile Breakpoints (Browser Viewport) */
+@media (max-width: 900px) {
+  .asym-hero-grid,
+  .asym-works-grid,
+  .vanguard-hero-grid,
+  .editorial-hero-grid,
+  .cyber-hero-grid,
+  .editorial-timeline-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+  .asym-span-7,
+  .asym-span-5 {
+    grid-column: span 12 !important;
+    width: 100% !important;
+  }
+  .vanguard-directive-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1.5rem !important;
+  }
+  .asym-timeline-row,
+  .vanguard-timeline-row,
+  .cyber-timeline-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+  .asym-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  .hero-flank-left,
+  .hero-flank-right {
+    position: static !important;
+    max-width: 100% !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.25rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .hero-stage-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    min-height: auto !important;
+    margin-top: 1.75rem !important;
+    gap: 1.75rem !important;
+  }
+  .zen-work-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 1.5rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .asym-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .zen-ribbon-pill {
+    border-radius: 20px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
+    gap: 1rem !important;
+    padding: 1.25rem !important;
+  }
+  .zen-work-strip {
+    padding: 1.25rem 1rem !important;
+  }
+  .cyber-reticle-ring {
+    width: min(320px, 88vw) !important;
+    height: min(320px, 88vw) !important;
+  }
+}
+
+/* Container Queries for Interactive Device Preview Frame (390px / 768px) */
+@container (max-width: 900px) {
+  .asym-hero-grid,
+  .asym-works-grid,
+  .vanguard-hero-grid,
+  .editorial-hero-grid,
+  .cyber-hero-grid,
+  .editorial-timeline-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+  .asym-span-7,
+  .asym-span-5 {
+    grid-column: span 12 !important;
+    width: 100% !important;
+  }
+  .vanguard-directive-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1.5rem !important;
+  }
+  .asym-timeline-row,
+  .vanguard-timeline-row,
+  .cyber-timeline-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+  .asym-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  .hero-flank-left,
+  .hero-flank-right {
+    position: static !important;
+    max-width: 100% !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.25rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .hero-stage-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    min-height: auto !important;
+    margin-top: 1.75rem !important;
+    gap: 1.75rem !important;
+  }
+  .focus-grid-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    align-items: center !important;
+  }
+  .focus-left-pills,
+  .focus-right-pills {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    max-width: 100% !important;
+  }
+  .focus-center-quote {
+    order: -1 !important;
+  }
+  .about-2col {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .zen-work-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 1.5rem !important;
+  }
+}
+
+@container (max-width: 640px) {
+  .asym-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .zen-ribbon-pill {
+    border-radius: 20px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
+    gap: 1rem !important;
+    padding: 1.25rem !important;
+  }
+  .zen-work-strip {
+    padding: 1.25rem 1rem !important;
+  }
+  .cyber-reticle-ring {
+    width: min(300px, 85vw) !important;
+    height: min(300px, 85vw) !important;
+  }
+}
+
+
 

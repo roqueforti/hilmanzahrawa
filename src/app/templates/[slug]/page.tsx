@@ -81,8 +81,10 @@ export default function AnimeTemplateLandingPage() {
 
       {/* Viewport Frame Wrapper (If tablet or mobile mode toggled) */}
       <div
+        className="template-viewport-frame"
         style={{
           width: activeDevice === 'desktop' ? '100%' : activeDevice === 'tablet' ? '768px' : '390px',
+          maxWidth: '100vw',
           margin: '0 auto',
           transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           boxShadow: activeDevice !== 'desktop' ? '0 0 50px rgba(0,0,0,0.18)' : 'none',
@@ -90,6 +92,8 @@ export default function AnimeTemplateLandingPage() {
           background: '#ffffff',
           position: 'relative',
           zIndex: 2,
+          containerType: 'inline-size',
+          overflowX: 'hidden'
         }}
       >
         {/* =========================================================================

@@ -121,27 +121,66 @@ export default function FlankedBalancedLayout({ template, onSelectProject }: Arc
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '2rem' }}>
           {template.projects.map((work) => (
-            <motion.div key={work.id} whileHover={{ y: -8 }} onClick={() => onSelectProject(work)} style={{ borderRadius: '24px', background: '#f8fafc', border: '1.5px solid #e2e8f0', padding: '2rem', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '340px', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: work.color || colors.accent }} />
+            <motion.div
+              key={work.id}
+              whileHover={{ y: -6, boxShadow: '0 20px 40px -10px rgba(0,0,0,0.06)' }}
+              onClick={() => onSelectProject(work)}
+              style={{
+                borderRadius: '24px',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                padding: '2rem',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '330px',
+                position: 'relative',
+                transition: 'all 0.25s ease'
+              }}
+            >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: '9999px', background: colors.badgeBg, color: colors.badgeText }}>{work.category}</span>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent }}>{work.metrics}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
+                    <span style={{ fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+                      {work.category}
+                    </span>
+                  </div>
+                  {work.metrics && (
+                    <span style={{ fontSize: '0.78rem', fontWeight: 600, color: colors.accent, background: colors.badgeBg, padding: '0.25rem 0.7rem', borderRadius: '9999px' }}>
+                      {work.metrics}
+                    </span>
+                  )}
                 </div>
-                <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.3 }}>{work.title}</h3>
-                <p style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#475569', marginBottom: '1.5rem' }}>{work.desc}</p>
+
+                <h3 style={{ fontSize: '1.38rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.35, letterSpacing: '-0.02em' }}>
+                  {work.title}
+                </h3>
+                <p style={{ fontSize: '0.9rem', lineHeight: 1.65, color: '#64748b', marginBottom: '1.5rem', fontWeight: 400 }}>
+                  {work.desc}
+                </p>
               </div>
+
               <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1.5rem' }}>
                   {work.tags.map((t) => (
-                    <span key={t} style={{ fontSize: '0.75rem', fontWeight: 500, padding: '0.2rem 0.65rem', borderRadius: '6px', background: '#ffffff', border: '1px solid #e2e8f0', color: '#334155' }}>{t}</span>
+                    <span key={t} style={{ fontSize: '0.74rem', fontWeight: 500, padding: '0.25rem 0.65rem', borderRadius: '8px', background: '#f8fafc', color: '#475569' }}>
+                      {t}
+                    </span>
                   ))}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 600, color: colors.accent }}>
-                  <span>Inspect Case Study</span>
-                  <ArrowUpRight size={16} />
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
+                    Case Study
+                  </span>
+                  <span style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors.accent }}>
+                    <ArrowUpRight size={15} />
+                  </span>
                 </div>
               </div>
             </motion.div>

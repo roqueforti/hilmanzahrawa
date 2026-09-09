@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Sparkles, MessageCircle, Mail, Bookmark, Compass } from 'lucide-react';
+import { ArrowUpRight, Sparkles, MessageCircle, Mail } from 'lucide-react';
 import { AnimeTemplate, ProjectItem } from '@/data/animeTemplates';
 
 interface ArchetypeProps {
@@ -18,14 +18,13 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
   return (
     <div style={{ position: 'relative', zIndex: 10, color: '#0f172a' }}>
       {/* 1. EDITORIAL LOOKBOOK HERO */}
-      <section style={{ position: 'relative', width: '100%', padding: '1.5rem 2rem 4.5rem 2rem' }}>
-        {/* Subtle background magazine issue imprint watermark */}
+      <section style={{ position: 'relative', width: '100%', padding: '1.5rem 1.5rem 4rem 1.5rem' }}>
         <div style={{
           position: 'absolute',
           top: '15%',
           right: '5%',
           fontFamily: 'var(--font-serif-display)',
-          fontSize: 'clamp(6rem, 14vw, 15rem)',
+          fontSize: 'clamp(5rem, 14vw, 15rem)',
           fontStyle: 'italic',
           color: 'rgba(15, 23, 42, 0.02)',
           pointerEvents: 'none',
@@ -35,13 +34,9 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
           N°26
         </div>
 
-        <div style={{
+        <div className="editorial-hero-grid" style={{
           maxWidth: '1360px',
           margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'minmax(320px, 460px) 1fr',
-          gap: '3.5rem',
-          alignItems: 'center',
           position: 'relative',
           zIndex: 10
         }}>
@@ -57,7 +52,8 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               padding: '1.5rem',
               boxShadow: `0 25px 60px -15px ${colors.accentGlow || 'rgba(0,0,0,0.08)'}`,
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              width: '100%'
             }}
           >
             {/* Catalog Serial Header */}
@@ -65,10 +61,10 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              paddingBottom: '1rem',
+              paddingBottom: '0.85rem',
               marginBottom: '1rem',
               borderBottom: '1px solid #f1f5f9',
-              fontSize: '0.75rem',
+              fontSize: '0.74rem',
               letterSpacing: '0.12em',
               fontWeight: 700,
               textTransform: 'uppercase',
@@ -84,7 +80,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               borderRadius: '16px',
               overflow: 'hidden',
               background: '#f8fafc',
-              height: '420px',
+              height: '380px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -145,10 +141,10 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
           </motion.div>
 
           {/* Right: Editorial Narrative & Haute Couture Typography */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+          <div style={{ width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
               <span style={{
-                fontSize: '0.78rem',
+                fontSize: '0.76rem',
                 fontWeight: 800,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
@@ -156,14 +152,14 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               }}>
                 EDITION // {template.series.toUpperCase()}
               </span>
-              <span style={{ width: '40px', height: '1px', background: '#cbd5e1' }} />
-              <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontStyle: 'italic' }}>
+              <span style={{ width: '30px', height: '1px', background: '#cbd5e1' }} />
+              <span style={{ fontSize: '0.76rem', color: '#94a3b8', fontStyle: 'italic' }}>
                 {template.location}
               </span>
             </div>
 
             <h1 style={{
-              fontSize: 'clamp(3.2rem, 6.5vw, 5.6rem)',
+              fontSize: 'clamp(2.8rem, 6vw, 5.2rem)',
               fontWeight: 400,
               letterSpacing: '-0.035em',
               lineHeight: 1.02,
@@ -186,7 +182,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
             </h1>
 
             <p style={{
-              fontSize: '1.12rem',
+              fontSize: '1.08rem',
               lineHeight: 1.7,
               color: '#334155',
               maxWidth: '560px',
@@ -197,7 +193,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
             </p>
 
             {/* 3 Luxury Lookbook Focus Pills */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2.5rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginBottom: '2.5rem' }}>
               {template.focusPillsLeft.map((p, i) => (
                 <div
                   key={i}
@@ -205,24 +201,24 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    padding: '0.55rem 1.2rem',
+                    padding: '0.5rem 1.15rem',
                     borderRadius: '9999px',
                     background: '#ffffff',
-                    border: `1.5px solid ${p.border || '#e2e8f0'}`,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-                    fontSize: '0.85rem',
+                    border: `1px solid ${p.border || '#e2e8f0'}`,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
+                    fontSize: '0.82rem',
                     fontWeight: 600,
                     color: '#0f172a'
                   }}
                 >
-                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: p.color }} />
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: p.color }} />
                   <span>{p.label}</span>
                 </div>
               ))}
             </div>
 
             {/* Companion Trust Bar & CTA */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
               <a
                 href={`https://wa.me/6285806003234?text=Hi%20${template.name},%20requesting%20editorial%20collaboration`}
                 target="_blank"
@@ -231,23 +227,22 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  padding: '0.95rem 2.25rem',
+                  padding: '0.9rem 2.2rem',
                   borderRadius: '9999px',
                   background: '#0f172a',
                   color: '#ffffff',
-                  fontSize: '0.9rem',
+                  fontSize: '0.88rem',
                   fontWeight: 600,
                   letterSpacing: '0.04em',
                   textDecoration: 'none',
-                  boxShadow: '0 12px 30px rgba(15, 23, 42, 0.22)',
-                  transition: 'transform 0.2s ease'
+                  boxShadow: '0 12px 30px rgba(15, 23, 42, 0.22)'
                 }}
               >
                 <span>Request Lookbook Consultation</span>
                 <ArrowUpRight size={16} />
               </a>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                 <div style={{ display: 'flex' }}>
                   {template.companionAvatars.map((src, i) => (
                     <img
@@ -255,8 +250,8 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                       src={src}
                       alt="Companion"
                       style={{
-                        width: '32px',
-                        height: '32px',
+                        width: '30px',
+                        height: '30px',
                         borderRadius: '50%',
                         border: '2px solid #ffffff',
                         marginLeft: i === 0 ? 0 : '-8px',
@@ -265,15 +260,15 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                     />
                   ))}
                 </div>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Curated for elite maisons</span>
+                <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Curated for elite maisons</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. EDITORIAL LOOKBOOK CATALOG (4-COLUMN GALLERY GRID) */}
-      <section id="works" style={{ padding: '4rem 2rem 6rem 2rem', maxWidth: '1360px', margin: '0 auto' }}>
+      {/* 2. EDITORIAL LOOKBOOK CATALOG (Clean 4-Col Grid) */}
+      <section id="works" style={{ padding: '4rem 1.5rem 5rem 1.5rem', maxWidth: '1360px', margin: '0 auto' }}>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -286,7 +281,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
         }}>
           <div>
             <span style={{
-              fontSize: '0.8rem',
+              fontSize: '0.78rem',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               fontWeight: 800,
@@ -295,7 +290,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               CURATED LOOKBOOK CATALOG
             </span>
             <h2 style={{
-              fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+              fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
               fontWeight: 400,
               letterSpacing: '-0.025em',
               margin: '0.4rem 0 0 0',
@@ -305,7 +300,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
             </h2>
           </div>
           <p style={{
-            fontSize: '0.95rem',
+            fontSize: '0.92rem',
             color: '#64748b',
             maxWidth: '420px',
             lineHeight: 1.6,
@@ -315,36 +310,35 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
           </p>
         </div>
 
-        {/* 4-Column Lookbook Grid */}
+        {/* Clean Lookbook Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '2rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          gap: '1.75rem'
         }}>
           {template.projects.map((work, idx) => (
             <motion.div
               key={work.id}
-              whileHover={{ y: -8 }}
+              whileHover={{ y: -6, boxShadow: '0 20px 40px -10px rgba(0,0,0,0.06)' }}
               onClick={() => onSelectProject(work)}
               style={{
-                borderRadius: '20px',
+                borderRadius: '22px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
+                border: '1px solid #e2e8f0',
                 padding: '2rem',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '340px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                position: 'relative'
+                minHeight: '320px',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.02)',
+                position: 'relative',
+                transition: 'all 0.25s ease'
               }}
             >
-              <div style={{ position: 'absolute', top: 0, left: '2rem', right: '2rem', height: '3px', background: work.color || colors.accent }} />
-
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <span className="editorial-serif-italic" style={{ fontSize: '1.8rem', color: '#cbd5e1', fontWeight: 400 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <span className="editorial-serif-italic" style={{ fontSize: '1.6rem', color: '#cbd5e1', fontWeight: 400 }}>
                     N° 0{idx + 1}
                   </span>
                   <span style={{
@@ -352,7 +346,7 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     letterSpacing: '0.08em',
-                    padding: '0.25rem 0.75rem',
+                    padding: '0.2rem 0.65rem',
                     borderRadius: '9999px',
                     background: colors.badgeBg,
                     color: colors.badgeText
@@ -361,10 +355,10 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.6rem 0', lineHeight: 1.3 }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.5rem 0', lineHeight: 1.35 }}>
                   {work.title}
                 </h3>
-                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
+                <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.6, margin: '0 0 1.25rem 0' }}>
                   {work.desc}
                 </p>
               </div>
@@ -372,18 +366,17 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
               <div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
                   {work.tags.map((t) => (
-                    <span key={t} style={{ fontSize: '0.74rem', padding: '0.2rem 0.6rem', borderRadius: '6px', background: '#f8fafc', border: '1px solid #e2e8f0', color: '#334155' }}>
+                    <span key={t} style={{ fontSize: '0.74rem', padding: '0.2rem 0.6rem', borderRadius: '6px', background: '#f8fafc', color: '#334155' }}>
                       {t}
                     </span>
                   ))}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', fontWeight: 600 }}>
-                  <span style={{ color: colors.accent }}>{work.metrics}</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#0f172a' }}>
-                    <span>View Atelier File</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent }}>{work.metrics}</span>
+                  <span style={{ width: '34px', height: '34px', borderRadius: '50%', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors.accent }}>
                     <ArrowUpRight size={15} />
-                  </div>
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -392,41 +385,41 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
       </section>
 
       {/* 3. ATELIER DISCIPLINES / CRAFTSMANSHIP */}
-      <section id="mastery" style={{ padding: '4rem 2rem 5rem 2rem', maxWidth: '1280px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+      <section id="mastery" style={{ padding: '3.5rem 1.5rem 4.5rem 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <span style={{ fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 800, color: colors.accent }}>
             HAUTE CRAFTSMANSHIP & DISCIPLINES
           </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+          <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
             Refined with <span className="editorial-serif-italic" style={{ color: colors.accent }}>Meticulous Rigor</span>
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.5rem' }}>
           {template.skills.map((sk, idx) => (
             <div
               key={idx}
               style={{
-                padding: '2rem',
+                padding: '1.75rem',
                 borderRadius: '20px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.02)',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.02)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '200px'
+                minHeight: '190px'
               }}
             >
               <div>
-                <span className="editorial-serif-italic" style={{ fontSize: '1.6rem', color: '#cbd5e1' }}>
+                <span className="editorial-serif-italic" style={{ fontSize: '1.5rem', color: '#cbd5e1' }}>
                   0{idx + 1}
                 </span>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0f172a', margin: '0.5rem 0 0.3rem 0' }}>{sk.name}</h4>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a', margin: '0.4rem 0 0.25rem 0' }}>{sk.name}</h4>
                 <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Category: {sk.category}</span>
               </div>
 
-              <div style={{ marginTop: '1.5rem' }}>
+              <div style={{ marginTop: '1.25rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.4rem' }}>
                   <span style={{ color: '#475569' }}>Standard Rating</span>
                   <span style={{ color: colors.accent }}>{sk.level}%</span>
@@ -441,30 +434,25 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
       </section>
 
       {/* 4. PROVEN RUNWAYS & RETROSPECTIVE (TIMELINE) */}
-      <section id="timeline" style={{ padding: '4rem 2rem 5rem 2rem', maxWidth: '1240px', margin: '0 auto' }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.4fr)',
-          gap: '3.5rem',
-          alignItems: 'center'
-        }}>
+      <section id="timeline" style={{ padding: '3.5rem 1.5rem 4.5rem 1.5rem', maxWidth: '1240px', margin: '0 auto' }}>
+        <div className="editorial-timeline-grid">
           <div>
             <span style={{ fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 800, color: colors.accent }}>
               ARCHIVE RETROSPECTIVE
             </span>
-            <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.5rem 0 1.5rem 0', color: '#0f172a' }}>
+            <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.4rem 0 1.25rem 0', color: '#0f172a' }}>
               Historical <span className="editorial-serif-italic" style={{ color: colors.accent }}>Milestones</span>
             </h2>
-            <p style={{ fontSize: '1.02rem', lineHeight: 1.65, color: '#475569', margin: '0 0 2rem 0' }}>
+            <p style={{ fontSize: '0.98rem', lineHeight: 1.65, color: '#475569', margin: '0 0 2rem 0' }}>
               {template.bio}
             </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <a href={`https://wa.me/6285806003234?text=Hi%20${template.name}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: colors.accent, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
-                <MessageCircle size={16} />
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <a href={`https://wa.me/6285806003234?text=Hi%20${template.name}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: colors.accent, fontWeight: 600, textDecoration: 'none', fontSize: '0.88rem' }}>
+                <MessageCircle size={15} />
                 <span>Instant Consultation</span>
               </a>
-              <a href="mailto:budiarto3788@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#64748b', fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
-                <Mail size={16} />
+              <a href="mailto:budiarto3788@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#64748b', fontWeight: 600, textDecoration: 'none', fontSize: '0.88rem' }}>
+                <Mail size={15} />
                 <span>Private Correspondence</span>
               </a>
             </div>
@@ -480,14 +468,16 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                   alignItems: 'center',
                   padding: '1.25rem 0',
                   borderTop: '1px solid #f1f5f9',
-                  fontSize: '0.92rem'
+                  fontSize: '0.92rem',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem'
                 }}
               >
-                <div style={{ flex: '1 1 40%' }}>
+                <div>
                   <div style={{ fontWeight: 600, color: '#0f172a' }}>{exp.role}</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{exp.organization}</div>
                 </div>
-                <div style={{ color: colors.accent, fontWeight: 700, textAlign: 'right', flex: '1 1 20%' }}>
+                <div style={{ color: colors.accent, fontWeight: 700 }}>
                   {exp.year}
                 </div>
               </div>
@@ -497,33 +487,33 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
       </section>
 
       {/* 5. FRONT-ROW ENDORSEMENTS */}
-      <section id="testimonials" style={{ padding: '4rem 2rem 6rem 2rem', maxWidth: '1360px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+      <section id="testimonials" style={{ padding: '3.5rem 1.5rem 5rem 1.5rem', maxWidth: '1360px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <span style={{ fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 800, color: colors.accent }}>
             CRITICAL ACCLAIM & ENDORSEMENTS
           </span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
+          <h2 style={{ fontSize: 'clamp(2.1rem, 4.5vw, 3.2rem)', fontWeight: 400, letterSpacing: '-0.025em', margin: '0.4rem 0 0 0', color: '#0f172a' }}>
             Words from <span className="editorial-serif-italic" style={{ color: colors.accent }}>Front-Row Peers</span>
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.75rem' }}>
           {template.testimonials.map((t, i) => (
             <div
               key={i}
               style={{
-                padding: '2.25rem',
-                borderRadius: '24px',
+                padding: '2rem',
+                borderRadius: '22px',
                 background: '#ffffff',
-                border: '1.5px solid #e2e8f0',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.02)',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.02)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '260px'
+                minHeight: '230px'
               }}
             >
-              <p style={{ fontSize: '1.02rem', lineHeight: 1.7, fontStyle: 'italic', color: '#334155', margin: '0 0 2rem 0' }}>
+              <p style={{ fontSize: '0.98rem', lineHeight: 1.7, fontStyle: 'italic', color: '#334155', margin: '0 0 1.5rem 0' }}>
                 "{t.quote}"
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
@@ -531,16 +521,16 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
                   src={t.avatar}
                   alt={t.author}
                   style={{
-                    width: '44px',
-                    height: '44px',
+                    width: '40px',
+                    height: '40px',
                     borderRadius: '50%',
                     objectFit: 'cover',
                     border: `2px solid ${colors.accent}`
                   }}
                 />
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#0f172a' }}>{t.author}</div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{t.title}</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.92rem', color: '#0f172a' }}>{t.author}</div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{t.title}</div>
                 </div>
               </div>
             </div>
@@ -549,21 +539,21 @@ export default function EditorialLookbookLayout({ template, onSelectProject }: A
       </section>
 
       {/* 6. EDITORIAL FOOTER */}
-      <footer style={{ padding: '3rem 2rem 1rem 2rem', maxWidth: '1360px', margin: '0 auto', borderTop: '1px solid #f1f5f9' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', paddingBottom: '2.5rem' }}>
-          <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+      <footer style={{ padding: '3rem 1.5rem 1rem 1.5rem', maxWidth: '1360px', margin: '0 auto', borderTop: '1px solid #f1f5f9' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', paddingBottom: '2rem' }}>
+          <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
             © {new Date().getFullYear()} {template.name} Lookbook Edition. Part of Anime Portfolio Collection.
           </div>
-          <Link href="/templates" style={{ fontSize: '0.85rem', color: colors.accent, fontWeight: 700, textDecoration: 'none' }}>
+          <Link href="/templates" style={{ fontSize: '0.82rem', color: colors.accent, fontWeight: 700, textDecoration: 'none' }}>
             Explore All 20 Portfolio Archetypes →
           </Link>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '2rem 0 0 0', overflow: 'hidden' }}>
+        <div style={{ textAlign: 'center', padding: '1.5rem 0 0 0', overflow: 'hidden' }}>
           <span
             className="editorial-serif-italic"
             style={{
-              fontSize: 'clamp(4rem, 12vw, 12rem)',
+              fontSize: 'clamp(3.5rem, 12vw, 11rem)',
               lineHeight: 0.85,
               color: 'rgba(15, 23, 42, 0.05)',
               display: 'inline-block',

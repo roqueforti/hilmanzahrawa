@@ -108,7 +108,7 @@ export default function TemplateSwitcherBar({
             >
               <Sparkles size={14} />
               <span>{currentTemplate.name}</span>
-              <span style={{ opacity: 0.75, fontSize: '0.74rem', fontWeight: 500 }}>
+              <span style={{ opacity: 0.75, fontSize: '0.74rem', fontWeight: 500 }} className="hidden sm:inline">
                 ({currentTemplate.series})
               </span>
               <ChevronDown 
@@ -132,7 +132,7 @@ export default function TemplateSwitcherBar({
                     position: 'absolute',
                     top: 'calc(100% + 8px)',
                     left: 0,
-                    width: '340px',
+                    width: 'min(340px, calc(100vw - 2rem))',
                     maxHeight: '440px',
                     overflowY: 'auto',
                     background: '#0f172a',
@@ -191,11 +191,11 @@ export default function TemplateSwitcherBar({
           </div>
         </div>
 
-        {/* Center: Device Simulation Viewport Toggles */}
+        {/* Center: Device Simulation Viewport Toggles (Hidden on small screens) */}
         {onDeviceChange && (
           <div 
+            className="hidden md:flex"
             style={{ 
-              display: 'flex', 
               alignItems: 'center', 
               gap: '0.25rem',
               background: 'rgba(0, 0, 0, 0.35)',
@@ -222,7 +222,7 @@ export default function TemplateSwitcherBar({
               }}
             >
               <Monitor size={14} />
-              <span className="hidden sm:inline">Desktop</span>
+              <span>Desktop</span>
             </button>
             <button
               onClick={() => onDeviceChange('tablet')}
@@ -242,7 +242,7 @@ export default function TemplateSwitcherBar({
               }}
             >
               <Tablet size={14} />
-              <span className="hidden sm:inline">Tablet</span>
+              <span>Tablet</span>
             </button>
             <button
               onClick={() => onDeviceChange('mobile')}
@@ -262,7 +262,7 @@ export default function TemplateSwitcherBar({
               }}
             >
               <Smartphone size={14} />
-              <span className="hidden sm:inline">Mobile</span>
+              <span>Mobile</span>
             </button>
           </div>
         )}
@@ -279,17 +279,18 @@ export default function TemplateSwitcherBar({
               gap: '0.45rem',
               padding: '0.45rem 1.15rem',
               borderRadius: '9999px',
-              background: '#22c55e',
-              color: '#ffffff',
-              fontWeight: 700,
-              fontSize: '0.82rem',
+              background: '#ffffff',
+              color: '#0f172a',
               textDecoration: 'none',
-              boxShadow: '0 4px 14px rgba(34, 197, 94, 0.35)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              boxShadow: '0 4px 14px rgba(255, 255, 255, 0.15)',
               whiteSpace: 'nowrap',
+              transition: 'transform 0.15s ease',
             }}
           >
             <ShoppingBag size={14} />
-            <span>Use Template (${currentTemplate.price})</span>
+            <span><span className="hidden sm:inline">Use Template </span>${currentTemplate.price}</span>
           </a>
 
           <button
