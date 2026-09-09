@@ -142,8 +142,29 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </span>
         </Link>
 
-        {/* Right Hamburger Circular Button (Clean Minimalist matching reference) */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        {/* Right Navigation & Templates Store Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <Link
+            href="/templates"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.55rem 1.25rem',
+              borderRadius: '9999px',
+              background: '#0ea5e9',
+              color: '#ffffff',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(14, 165, 233, 0.35)',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+            }}
+          >
+            <Sparkles size={14} />
+            <span>Anime Templates (20)</span>
+          </Link>
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation"
@@ -191,6 +212,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               minWidth: '220px'
             }}
           >
+            <Link href="/templates" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0ea5e9', fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Sparkles size={16} />
+              <span>Anime Templates (20)</span>
+            </Link>
             <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About</a>
             <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Process</a>
             <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Selected Works</a>
@@ -1450,6 +1475,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
             © {new Date().getFullYear()} Hilman Zahrawa. All rights reserved.
           </span>
+          <Link 
+            href="/templates" 
+            style={{ 
+              fontSize: '0.82rem', 
+              color: '#0ea5e9', 
+              textDecoration: 'none', 
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}
+          >
+            <Sparkles size={13} />
+            <span>Explore 20 Anime Portfolio Templates →</span>
+          </Link>
         </div>
 
         {/* Massive Display Watermark Name Spanning Bottom Edge */}
