@@ -772,9 +772,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         >
           {/* SVG Squiggle Connector 1 (Card 01 -> Card 02) */}
           <motion.svg
-            width="124"
+            width="144"
             height="56"
-            viewBox="0 0 124 56"
+            viewBox="0 0 144 56"
             fill="none"
             animate={{
               x: '-50%',
@@ -793,19 +793,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           >
             <circle cx="14" cy="36" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
             <path 
-              d="M 18 34 C 42 14, 82 8, 106 15" 
+              d="M 18 34 C 48 14, 96 8, 126 15" 
               stroke="#0ea5e9" 
               strokeWidth="2" 
               strokeLinecap="round" 
             />
-            <circle cx="110" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
+            <circle cx="130" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
           {/* SVG Squiggle Connector 2 (Card 02 -> Card 03 Loop-the-loop) */}
           <motion.svg
-            width="128"
-            height="74"
-            viewBox="0 0 128 74"
+            width="152"
+            height="76"
+            viewBox="0 0 152 76"
             fill="none"
             animate={{
               x: '-50%',
@@ -824,12 +824,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           >
             <circle cx="14" cy="34" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
             <path
-              d="M 18 34 C 36 34, 52 22, 62 8 C 68 2, 74 6, 70 22 C 62 42, 54 62, 70 64 C 84 66, 98 54, 108 46"
+              d="M 18 34 C 40 34, 58 22, 70 8 C 76 2, 82 6, 78 22 C 70 42, 62 62, 78 64 C 94 66, 122 54, 134 46"
               stroke="#0ea5e9"
               strokeWidth="2"
               strokeLinecap="round"
             />
-            <circle cx="112" cy="46" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
+            <circle cx="138" cy="46" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
           {/* Card 01: Discover */}
