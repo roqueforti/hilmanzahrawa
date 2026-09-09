@@ -247,6 +247,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
           {/* Central Hero Stage (Himmel Cutout Centered, Flanked Perfectly) */}
           <div className="hero-stage-container">
+            {/* Radiant Studio Glow Aura (Completely smooth Gaussian falloff, zero cropped edges) */}
+            <div 
+              style={{
+                position: 'absolute',
+                top: '42%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 'min(960px, 95vw)',
+                height: 'min(580px, 80vw)',
+                background: 'radial-gradient(ellipse at center, rgba(56, 189, 248, 0.35) 0%, rgba(125, 211, 252, 0.22) 32%, rgba(186, 230, 253, 0.08) 55%, transparent 72%)',
+                filter: 'blur(35px)',
+                pointerEvents: 'none',
+                zIndex: 1,
+                borderRadius: '50%'
+              }} 
+            />
+
             {/* Left Flank: Badge at Mid-Height + Avatars at Bottom */}
             <div className="hero-flank-left">
               {/* Available for new opportunities */}

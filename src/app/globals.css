@@ -1277,9 +1277,9 @@ body {
    ========================================================================= */
 .hero-section-wrapper {
   position: relative;
-  background: radial-gradient(ellipse 75% 65% at 50% 36%, rgba(56, 189, 248, 0.22) 0%, rgba(186, 230, 253, 0.12) 42%, rgba(255, 255, 255, 0) 75%), #ffffff;
+  background: #ffffff;
   padding: 1.5rem 1.5rem 3.5rem 1.5rem;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 }
 
