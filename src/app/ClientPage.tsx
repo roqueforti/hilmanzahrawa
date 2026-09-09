@@ -772,14 +772,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         >
           {/* SVG Squiggle Connector 1 (Card 01 -> Card 02) */}
           <motion.svg
-            width="100"
+            width="124"
             height="56"
-            viewBox="0 0 100 56"
+            viewBox="0 0 124 56"
             fill="none"
             animate={{
               x: '-50%',
-              y: processHovered ? 0 : 20,
-              rotate: processHovered ? 0 : -15
+              y: processHovered ? 0 : 16,
+              rotate: processHovered ? 0 : -14
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
             style={{
@@ -793,43 +793,43 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           >
             <circle cx="14" cy="36" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
             <path 
-              d="M 18 34 C 34 16, 64 10, 84 14" 
+              d="M 18 34 C 42 14, 82 8, 106 15" 
               stroke="#0ea5e9" 
               strokeWidth="2" 
               strokeLinecap="round" 
             />
-            <circle cx="88" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
+            <circle cx="110" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
           {/* SVG Squiggle Connector 2 (Card 02 -> Card 03 Loop-the-loop) */}
           <motion.svg
-            width="100"
+            width="128"
             height="74"
-            viewBox="0 0 100 74"
+            viewBox="0 0 128 74"
             fill="none"
             animate={{
               x: '-50%',
-              y: processHovered ? 0 : 31,
-              rotate: processHovered ? 0 : 30
+              y: processHovered ? 0 : 28,
+              rotate: processHovered ? 0 : 28
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
             style={{
               position: 'absolute',
               bottom: '22px',
-              left: '66%',
+              left: '67%',
               zIndex: 15,
               pointerEvents: 'none'
             }}
             className="desktop-connector"
           >
-            <circle cx="12" cy="34" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
+            <circle cx="14" cy="34" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
             <path
-              d="M 16 34 C 30 34, 42 24, 50 10 C 55 4, 60 7, 56 22 C 50 40, 44 58, 56 62 C 66 64, 78 52, 84 44"
+              d="M 18 34 C 36 34, 52 22, 62 8 C 68 2, 74 6, 70 22 C 62 42, 54 62, 70 64 C 84 66, 98 54, 108 46"
               stroke="#0ea5e9"
               strokeWidth="2"
               strokeLinecap="round"
             />
-            <circle cx="88" cy="44" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
+            <circle cx="112" cy="46" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
           {/* Card 01: Discover */}
