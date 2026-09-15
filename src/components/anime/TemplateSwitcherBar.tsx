@@ -6,14 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, 
   ChevronDown, 
-  Layers, 
   Smartphone, 
   Monitor, 
   Tablet, 
   ArrowLeft, 
   ShoppingBag, 
   Check, 
-  ExternalLink,
   ChevronUp
 } from 'lucide-react';
 import { ANIME_TEMPLATES, AnimeTemplate } from '@/data/animeTemplates';
@@ -46,9 +44,10 @@ export default function TemplateSwitcherBar({
         left: 0,
         right: 0,
         zIndex: 90,
-        background: 'rgba(15, 23, 42, 0.88)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        background: 'rgba(15, 23, 42, 0.92)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         color: '#ffffff',
         fontSize: '0.85rem',
         transition: 'all 0.3s ease',
@@ -58,39 +57,42 @@ export default function TemplateSwitcherBar({
         style={{
           maxWidth: '1440px',
           margin: '0 auto',
-          padding: collapsed ? '0.35rem 1.25rem' : '0.65rem 1.25rem',
+          padding: collapsed ? '0.35rem 1.25rem' : '0.55rem 1.25rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '1rem',
-          flexWrap: 'nowrap',
+          position: 'relative',
+          minHeight: collapsed ? '44px' : '54px',
         }}
       >
-        {/* Left: Back to Marketplace Hub & Current Template Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
+        {/* =========================================================================
+           LEFT: Back to Store Hub + Anime Character Selector Dropdown
+           ========================================================================= */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           <Link
             href="/templates"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.4rem 0.85rem',
+              padding: '0.38rem 0.85rem',
               borderRadius: '9999px',
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#ffffff',
+              background: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.14)',
+              color: '#f1f5f9',
               textDecoration: 'none',
               fontWeight: 600,
               fontSize: '0.78rem',
               whiteSpace: 'nowrap',
-              transition: 'background 0.2s ease',
+              transition: 'background 0.15s ease',
             }}
           >
-            <ArrowLeft size={14} />
+            <ArrowLeft size={13} />
             <span>Store Hub</span>
           </Link>
 
-          {/* Quick Switcher Dropdown Button */}
+          {/* Current Template Dropdown Pill */}
           <div style={{ position: 'relative' }}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -98,25 +100,26 @@ export default function TemplateSwitcherBar({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                padding: '0.4rem 0.95rem',
+                padding: '0.38rem 0.95rem',
                 borderRadius: '9999px',
                 background: currentTemplate.colors.accent,
                 border: 'none',
                 color: '#ffffff',
                 fontWeight: 700,
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 cursor: 'pointer',
-                boxShadow: `0 4px 14px ${currentTemplate.colors.accentGlow}`,
+                boxShadow: `0 2px 10px ${currentTemplate.colors.accentGlow}`,
                 whiteSpace: 'nowrap',
+                transition: 'transform 0.15s ease',
               }}
             >
-              <Sparkles size={14} />
+              <Sparkles size={13} />
               <span>{currentTemplate.name}</span>
-              <span style={{ opacity: 0.75, fontSize: '0.74rem', fontWeight: 500 }} className="hidden sm:inline">
+              <span style={{ opacity: 0.85, fontWeight: 500, fontSize: '0.74rem' }}>
                 ({currentTemplate.series})
               </span>
               <ChevronDown 
-                size={14} 
+                size={13} 
                 style={{ 
                   transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)',
                   transition: 'transform 0.2s ease'
@@ -195,84 +198,99 @@ export default function TemplateSwitcherBar({
           </div>
         </div>
 
-        {/* Center: Device Simulation Viewport Toggles (Hidden on small screens) */}
+        {/* =========================================================================
+           CENTER: Perfectly Horizontal Segmented Viewport Toggles
+           ========================================================================= */}
         {onDeviceChange && (
           <div 
-            className="hidden md:flex"
             style={{ 
+              display: 'flex',
+              flexDirection: 'row',
               alignItems: 'center', 
-              gap: '0.25rem',
-              background: 'rgba(0, 0, 0, 0.35)',
-              padding: '0.2rem',
+              gap: '0.2rem',
+              background: 'rgba(0, 0, 0, 0.45)',
+              padding: '0.22rem 0.3rem',
               borderRadius: '9999px',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
             }}
           >
             <button
               onClick={() => onDeviceChange('desktop')}
               title="Desktop View"
               style={{
-                padding: '0.35rem 0.65rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.32rem 0.7rem',
                 borderRadius: '9999px',
                 border: 'none',
-                background: activeDevice === 'desktop' ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                background: activeDevice === 'desktop' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
                 color: activeDevice === 'desktop' ? '#ffffff' : '#94a3b8',
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
                 fontSize: '0.75rem',
-                fontWeight: 600
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease',
               }}
             >
-              <Monitor size={14} />
+              <Monitor size={13} />
               <span>Desktop</span>
             </button>
+
             <button
               onClick={() => onDeviceChange('tablet')}
               title="Tablet View"
               style={{
-                padding: '0.35rem 0.65rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.32rem 0.7rem',
                 borderRadius: '9999px',
                 border: 'none',
-                background: activeDevice === 'tablet' ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                background: activeDevice === 'tablet' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
                 color: activeDevice === 'tablet' ? '#ffffff' : '#94a3b8',
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
                 fontSize: '0.75rem',
-                fontWeight: 600
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease',
               }}
             >
-              <Tablet size={14} />
+              <Tablet size={13} />
               <span>Tablet</span>
             </button>
+
             <button
               onClick={() => onDeviceChange('mobile')}
               title="Mobile View"
               style={{
-                padding: '0.35rem 0.65rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.32rem 0.7rem',
                 borderRadius: '9999px',
                 border: 'none',
-                background: activeDevice === 'mobile' ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                background: activeDevice === 'mobile' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
                 color: activeDevice === 'mobile' ? '#ffffff' : '#94a3b8',
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
                 fontSize: '0.75rem',
-                fontWeight: 600
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease',
               }}
             >
-              <Smartphone size={14} />
+              <Smartphone size={13} />
               <span>Mobile</span>
             </button>
           </div>
         )}
 
-        {/* Right: Customizer Button + Buy Template CTA & Collapse Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        {/* =========================================================================
+           RIGHT: Customize Sections Button + Buy Template CTA + Collapse
+           ========================================================================= */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           {onOpenCustomizer && (
             <button
               onClick={onOpenCustomizer}
@@ -280,9 +298,9 @@ export default function TemplateSwitcherBar({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.45rem',
-                padding: '0.42rem 0.85rem',
+                padding: '0.38rem 0.85rem',
                 borderRadius: '9999px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'rgba(255, 255, 255, 0.08)',
                 border: `1.5px solid ${currentTemplate.colors.accent}`,
                 color: '#ffffff',
                 fontSize: '0.78rem',
@@ -295,12 +313,23 @@ export default function TemplateSwitcherBar({
               title="Customize Section Order & 20 Presets"
             >
               <Sparkles size={13} color={currentTemplate.colors.accent} />
-              <span>Gaya #{currentTemplate.styleId || 1}: <span className="hidden sm:inline">{currentTemplate.styleName || 'Custom'}</span></span>
-              <span style={{ fontSize: '0.68rem', padding: '0.1rem 0.4rem', borderRadius: '6px', background: currentTemplate.colors.accent, color: '#ffffff', fontWeight: 800 }}>
+              <span>Gaya #{currentTemplate.styleId || 1}: {currentTemplate.styleName || 'Custom'}</span>
+              <span 
+                style={{ 
+                  fontSize: '0.68rem', 
+                  padding: '0.12rem 0.45rem', 
+                  borderRadius: '9999px', 
+                  background: currentTemplate.colors.accent, 
+                  color: '#ffffff', 
+                  fontWeight: 800,
+                  marginLeft: '0.15rem'
+                }}
+              >
                 {activeSectionCount || currentTemplate.defaultSections?.length || 7} Sec
               </span>
             </button>
           )}
+
           <a
             href={`https://wa.me/6285806003234?text=Hi!%20I%20want%20to%20purchase%20the%20${currentTemplate.name}%20Anime%20Portfolio%20Template%20($${currentTemplate.price})`}
             target="_blank"
@@ -309,35 +338,37 @@ export default function TemplateSwitcherBar({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.45rem',
-              padding: '0.45rem 1.15rem',
+              padding: '0.42rem 1.15rem',
               borderRadius: '9999px',
               background: '#ffffff',
               color: '#0f172a',
               textDecoration: 'none',
               fontWeight: 700,
-              fontSize: '0.8rem',
+              fontSize: '0.78rem',
               boxShadow: '0 4px 14px rgba(255, 255, 255, 0.15)',
               whiteSpace: 'nowrap',
               transition: 'transform 0.15s ease',
             }}
           >
-            <ShoppingBag size={14} />
-            <span><span className="hidden sm:inline">Use Template </span>${currentTemplate.price}</span>
+            <ShoppingBag size={13} />
+            <span>Use Template ${currentTemplate.price}</span>
           </a>
 
           <button
             onClick={() => setCollapsed(!collapsed)}
             aria-label="Toggle switcher bar size"
             style={{
-              padding: '0.35rem',
+              width: '32px',
+              height: '32px',
               borderRadius: '50%',
               background: 'rgba(255, 255, 255, 0.1)',
               border: 'none',
               color: '#ffffff',
               cursor: 'pointer',
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
             {collapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
