@@ -198,16 +198,7 @@ export async function getPortfolioData() {
   }
 
   try {
-    const [
-      { data: projects, error: pErr },
-      { data: bioList, error: bErr },
-      { data: experiences, error: expErr },
-      { data: education, error: eduErr },
-      { data: honors, error: hErr },
-      { data: certificates, error: cErr },
-      { data: organizations, error: oErr },
-      { data: landingPageList, error: lErr },
-    ] = await Promise.all([
+    const fetchPromise = Promise.all([
       supabase.from('projects').select('*').order('sort_order', { ascending: true }),
       supabase.from('bio').select('*').limit(1),
       supabase.from('experiences').select('*').order('sort_order', { ascending: true }),
@@ -217,6 +208,28 @@ export async function getPortfolioData() {
       supabase.from('organizations').select('*').order('sort_order', { ascending: true }),
       supabase.from('landing_page').select('*').limit(1),
     ]);
+
+    // Fast 1200ms timeout guard: prevents slow Supabase cold-starts or network latency from stalling TTFB
+    const timeoutPromise = new Promise<null>((resolve) =>
+      setTimeout(() => resolve(null), 1200)
+    );
+
+    const result = await Promise.race([fetchPromise, timeoutPromise]);
+    if (!result) {
+      console.warn("Supabase fetch exceeded 1.2s timeout, rendering instant fallback data for optimal TTFB.");
+      return fallbackPortfolioData;
+    }
+
+    const [
+      { data: projects, error: pErr },
+      { data: bioList, error: bErr },
+      { data: experiences, error: expErr },
+      { data: education, error: eduErr },
+      { data: honors, error: hErr },
+      { data: certificates, error: cErr },
+      { data: organizations, error: oErr },
+      { data: landingPageList, error: lErr },
+    ] = result;
 
     if (pErr || bErr) {
       console.warn("Supabase query warning, falling back to defaults:", pErr || bErr);

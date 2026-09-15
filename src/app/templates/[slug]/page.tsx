@@ -11,7 +11,13 @@ import {
   SectionKey, 
   getTemplateSections 
 } from '@/data/animeTemplates';
-import AnimeThreeAccents from '@/components/anime/AnimeThreeAccents';
+import dynamic from 'next/dynamic';
+
+// Code-split 3D WebGL particle engine to load asynchronously after DOM paint
+const AnimeThreeAccents = dynamic(() => import('@/components/anime/AnimeThreeAccents'), {
+  ssr: false,
+  loading: () => null
+});
 import AnimeProjectModal from '@/components/anime/AnimeProjectModal';
 import TemplateSwitcherBar from '@/components/anime/TemplateSwitcherBar';
 import SectionCustomizerDrawer from '@/components/anime/SectionCustomizerDrawer';

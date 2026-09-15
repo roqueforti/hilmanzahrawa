@@ -510,10 +510,14 @@ export default function TemplatesMarketplacePage() {
                     }}
                   />
 
-                  {/* Character Bust */}
+                  {/* Character Bust (Lazy loaded & async decoded for ultra-fast initial paint) */}
                   <img
                     src={tmpl.bustUrl}
                     alt={tmpl.name}
+                    loading="lazy"
+                    decoding="async"
+                    width={160}
+                    height={200}
                     style={{
                       width: '160px',
                       height: '200px',

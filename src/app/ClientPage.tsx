@@ -25,9 +25,18 @@ import {
   Layers,
   Sparkle
 } from 'lucide-react';
-import SkyOrbCanvas from '@/components/SkyOrbCanvas';
-import SkyWaves3D from '@/components/SkyWaves3D';
-import BlueMoonPetals from '@/components/BlueMoonPetals';
+import dynamic from 'next/dynamic';
+
+// Code-split heavy 3D WebGL canvases to keep initial page bundle ultra-light and fast
+const SkyWaves3D = dynamic(() => import('@/components/SkyWaves3D'), { 
+  ssr: false, 
+  loading: () => null 
+});
+
+const BlueMoonPetals = dynamic(() => import('@/components/BlueMoonPetals'), { 
+  ssr: false, 
+  loading: () => null 
+});
 
 interface ClientPageProps {
   initialData?: any;
