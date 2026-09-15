@@ -82,6 +82,106 @@ export type AccentAnimationType =
   | 'giyuu-dead-calm'
   | 'shinobu-wisteria-butterflies';
 
+export type SectionKey = 
+  | 'hero'
+  | 'about'
+  | 'skills'
+  | 'projects'
+  | 'experience'
+  | 'education'
+  | 'contact'
+  | 'tech-stack'
+  | 'github'
+  | 'selected-works'
+  | 'process'
+  | 'selected-projects'
+  | 'featured-projects'
+  | 'all-projects'
+  | 'about-me'
+  | 'what-i-do'
+  | 'testimonials'
+  | 'manifesto'
+  | 'featured-work'
+  | 'journey'
+  | 'case-study'
+  | 'other-projects'
+  | 'research'
+  | 'organization'
+  | 'certificates'
+  | 'internship'
+  | 'backend'
+  | 'frontend'
+  | 'certifications'
+  | 'my-story'
+  | 'achievements'
+  | 'highlights'
+  | 'services'
+  | 'portfolio'
+  | 'stats'
+  | 'interactive-projects'
+  | 'timeline'
+  | 'introduction'
+  | 'articles'
+  | 'selected-work'
+  | 'expertise';
+
+export interface PortfolioStyle {
+  id: number;
+  name: string;
+  badge: string;
+  sections: SectionKey[];
+  description: string;
+}
+
+export interface EducationItem {
+  institution: string;
+  degree: string;
+  year: string;
+  description: string;
+}
+
+export interface ResearchItem {
+  title: string;
+  field: string;
+  year: string;
+  summary: string;
+}
+
+export interface ServiceItem {
+  title: string;
+  category: string;
+  description: string;
+  deliverables: string[];
+}
+
+export interface CertificateItem {
+  name: string;
+  issuer: string;
+  year: string;
+  id: string;
+}
+
+export interface ArticleItem {
+  title: string;
+  readTime: string;
+  date: string;
+  platform: string;
+}
+
+export interface AchievementItem {
+  title: string;
+  metric: string;
+  year: string;
+  description: string;
+}
+
+export interface OrganizationItem {
+  name: string;
+  role: string;
+  period: string;
+  impact: string;
+}
+
 export interface AnimeTemplate {
   id: string;
   slug: string;
@@ -117,7 +217,19 @@ export interface AnimeTemplate {
   projects: ProjectItem[];
   experiences: ExperienceItem[];
   testimonials: TestimonialItem[];
-  themeTokensCSS: Record<string, string>;
+    themeTokensCSS: Record<string, string>;
+  styleId?: number;
+  styleName?: string;
+  defaultSections?: SectionKey[];
+  education?: EducationItem[];
+  research?: ResearchItem[];
+  services?: ServiceItem[];
+  achievements?: AchievementItem[];
+  articles?: ArticleItem[];
+  organization?: OrganizationItem[];
+  certificates?: CertificateItem[];
+  githubStats?: { username: string; commits: number; repos: number; stars: number };
+  processSteps?: { step: string; title: string; desc: string }[];
 }
 
 export const ANIME_UNIVERSES = [
@@ -5473,3 +5585,335 @@ export const ANIME_TEMPLATES: Record<string, AnimeTemplate> = {
     }
 },
 };
+
+
+// =========================================================================
+// 20 PORTFOLIO STYLES & CUSTOMIZABLE SECTION SEQUENCES
+// =========================================================================
+export const PORTFOLIO_STYLES: PortfolioStyle[] = [
+  {
+    id: 1,
+    name: 'Classic Professional',
+    badge: '⭐ Classic Professional',
+    sections: ['hero', 'about', 'skills', 'projects', 'experience', 'education', 'contact'],
+    description: 'Format baku industri profesional dengan hierarki terstruktur: profil, keahlian, rekam jejak, dan latar belakang akademik.'
+  },
+  {
+    id: 2,
+    name: 'Developer',
+    badge: 'Developer',
+    sections: ['hero', 'about', 'tech-stack', 'projects', 'github', 'experience', 'contact'],
+    description: 'Fokus rekayasa perangkat lunak: tech stack interaktif, arsitektur sistem, dan telemetri aktivitas repositori/GitHub.'
+  },
+  {
+    id: 3,
+    name: 'Designer',
+    badge: 'Designer',
+    sections: ['hero', 'selected-works', 'about', 'skills', 'process', 'experience', 'contact'],
+    description: 'Karya visual terdepan (selected works), filosofi desain, metodologi proses berkarya, dan studi kasus mendalam.'
+  },
+  {
+    id: 4,
+    name: 'Minimalist',
+    badge: 'Minimalist',
+    sections: ['hero', 'selected-projects', 'about', 'experience', 'contact'],
+    description: 'Pendekatan esensial tanpa distraksi: langsung menuju proyek unggulan, esensi profil, dan kontak cepat.'
+  },
+  {
+    id: 5,
+    name: 'Recruiter-Friendly',
+    badge: 'Recruiter-Friendly',
+    sections: ['hero', 'about', 'experience', 'skills', 'projects', 'education', 'contact'],
+    description: 'Didesain khusus untuk hiring manager & HR: pengalaman kerja diletakkan paling awal sebelum skill teknis.'
+  },
+  {
+    id: 6,
+    name: 'Project First',
+    badge: 'Project First',
+    sections: ['hero', 'featured-projects', 'all-projects', 'skills', 'about', 'experience', 'contact'],
+    description: 'Katalog karya masif: showcase mega-project utama diikuti direktori lengkap seluruh proyek yang pernah dikerjakan.'
+  },
+  {
+    id: 7,
+    name: 'Personal Branding',
+    badge: 'Personal Branding',
+    sections: ['hero', 'about-me', 'what-i-do', 'projects', 'experience', 'testimonials', 'contact'],
+    description: 'Membangun otoritas personal: persona diri, value proposition (what I do), portofolio, dan validasi testimoni klien.'
+  },
+  {
+    id: 8,
+    name: 'Creative',
+    badge: 'Creative',
+    sections: ['hero', 'manifesto', 'featured-work', 'skills', 'journey', 'about', 'contact'],
+    description: 'Karakter berani & eksperimental: dimulai dengan manifesto visi, karya visual berani, dan linimasa perjalanan unik.'
+  },
+  {
+    id: 9,
+    name: 'Case Study',
+    badge: 'Case Study',
+    sections: ['hero', 'case-study', 'other-projects', 'skills', 'experience', 'about', 'contact'],
+    description: 'Analisis mendalam per proyek: bedah masalah, arsitektur solusi, dampak metrik, dan implementasi nyata.'
+  },
+  {
+    id: 10,
+    name: 'Tech + Academic',
+    badge: 'Tech + Academic',
+    sections: ['hero', 'about', 'research', 'projects', 'skills', 'education', 'experience', 'contact'],
+    description: 'Kombinasi riset ilmiah & implementasi praktis: paper akademik, publikasi riset, paten, dan proyek teknologi.'
+  },
+  {
+    id: 11,
+    name: 'Student Portfolio',
+    badge: 'Student Portfolio',
+    sections: ['hero', 'about', 'education', 'skills', 'projects', 'organization', 'certificates', 'contact'],
+    description: 'Portofolio mahasiswa berprestasi: riwayat kampus, organisasi kemahasiswaan, proyek akademik, dan sertifikasi.'
+  },
+  {
+    id: 12,
+    name: 'Fresh Graduate',
+    badge: 'Fresh Graduate',
+    sections: ['hero', 'about', 'skills', 'projects', 'internship', 'education', 'certificates', 'contact'],
+    description: 'Siap tempur di dunia kerja: sorotan keahlian, pengalaman magang (internship), proyek akhir, dan lisensi resmi.'
+  },
+  {
+    id: 13,
+    name: 'Full Stack Developer',
+    badge: 'Full Stack Developer',
+    sections: ['hero', 'about', 'tech-stack', 'featured-projects', 'backend', 'frontend', 'experience', 'contact'],
+    description: 'Dua pilar rekayasa terintegrasi: arsitektur backend/database performa tinggi dan antarmuka responsif frontend.'
+  },
+  {
+    id: 14,
+    name: 'Data/AI',
+    badge: 'Data/AI',
+    sections: ['hero', 'about', 'skills', 'projects', 'research', 'certifications', 'experience', 'contact'],
+    description: 'Sains data & kecerdasan buatan: model machine learning, visualisasi analitik data, riset AI, dan sertifikasi cloud/data.'
+  },
+  {
+    id: 15,
+    name: 'Storytelling',
+    badge: 'Storytelling',
+    sections: ['hero', 'my-story', 'journey', 'skills', 'projects', 'achievements', 'contact'],
+    description: 'Narasi kisah inspiratif: perjalanan jatuh bangun, evolusi skill, tonggak pencapaian, dan karya bermakna.'
+  },
+  {
+    id: 16,
+    name: 'Achievement Focused',
+    badge: 'Achievement Focused',
+    sections: ['hero', 'highlights', 'achievements', 'projects', 'experience', 'skills', 'contact'],
+    description: 'Bukti prestasi konkret: trofi kompetisi, penghargaan internasional, dampak kuantitatif, dan tonggak sukses.'
+  },
+  {
+    id: 17,
+    name: 'Services/Professional',
+    badge: 'Services/Professional',
+    sections: ['hero', 'services', 'portfolio', 'process', 'testimonials', 'about', 'contact'],
+    description: 'Fokus bisnis & agensi/konsultan: paket layanan bernilai tinggi, metodologi kerja, testimoni, dan portofolio hasil.'
+  },
+  {
+    id: 18,
+    name: 'Interactive',
+    badge: 'Interactive',
+    sections: ['hero', 'stats', 'skills', 'interactive-projects', 'timeline', 'achievements', 'contact'],
+    description: 'Eksplorasi dinamis & responsif: telemetri metrik langsung, live playable prototype, dan statistik interaktif.'
+  },
+  {
+    id: 19,
+    name: 'Editorial',
+    badge: 'Editorial',
+    sections: ['hero', 'introduction', 'selected-works', 'experience', 'articles', 'about', 'contact'],
+    description: 'Gaya majalah premium/kurasi tinggi: tipografi serif anggun, esai teknis/tulisan pemikiran, dan kurasi karya eksklusif.'
+  },
+  {
+    id: 20,
+    name: 'Premium Personal Brand',
+    badge: '🔥 Premium Personal Brand',
+    sections: ['hero', 'selected-work', 'about', 'expertise', 'experience', 'achievements', 'testimonials', 'contact'],
+    description: 'Level eksekutif & top authority: kurasi karya mahakarya, pilar kepakaran, jejak rekam prestisius, dan pengakuan publik.'
+  }
+];
+
+export const TEMPLATE_SLUG_ORDER = [
+  'frieren', 'stark', 'fern',
+  'eren', 'levi', 'mikasa',
+  'naruto', 'sasuke', 'sakura',
+  'hinata', 'luffy', 'ace',
+  'sabo', 'nami', 'zero-two',
+  'tanjiro', 'zenitsu', 'inosuke',
+  'giyuu', 'shinobu'
+];
+
+export function getTemplateStyle(slugOrId: string): PortfolioStyle {
+  const index = TEMPLATE_SLUG_ORDER.indexOf(slugOrId);
+  if (index !== -1 && index < PORTFOLIO_STYLES.length) {
+    return PORTFOLIO_STYLES[index];
+  }
+  return PORTFOLIO_STYLES[0];
+}
+
+export function getTemplateSections(slugOrId: string): SectionKey[] {
+  return [...getTemplateStyle(slugOrId).sections];
+}
+
+// Auto-patch ANIME_TEMPLATES with styleId, styleName, defaultSections, and specialized section content
+Object.keys(ANIME_TEMPLATES).forEach((slug) => {
+  const tmpl = ANIME_TEMPLATES[slug];
+  const style = getTemplateStyle(slug);
+  tmpl.styleId = style.id;
+  tmpl.styleName = style.badge;
+  tmpl.defaultSections = [...style.sections];
+
+  // Specific content enrichment per character
+  tmpl.education = [
+    {
+      institution: tmpl.series + ' Guild Institute',
+      degree: 'Grand Mastery Certification',
+      year: '2020 - 2024',
+      description: 'Summa Cum Laude in high-concurrency systems, defensive combat algorithms, and tactical architecture.'
+    },
+    {
+      institution: 'Continental Academy of Higher Systems',
+      degree: 'Advanced Applied Engineering',
+      year: '2016 - 2020',
+      description: 'Distinguished researcher in fault-tolerant distributed networks and autonomous deployment engines.'
+    }
+  ];
+
+  tmpl.research = [
+    {
+      title: 'Decentralized Fault Isolation in ' + tmpl.universeBadge,
+      field: 'Systems Architecture',
+      year: '2025',
+      summary: 'Peer-reviewed framework achieving 99.999% uptime through zero-latency failover protocols and automated node isolation.'
+    },
+    {
+      title: 'Mathematical Optimization of Sub-millisecond Execution',
+      field: 'Performance Engineering',
+      year: '2024',
+      summary: 'Breakthrough algorithmic optimization lowering latency by 64% under multi-thousand concurrency spikes.'
+    }
+  ];
+
+  tmpl.services = [
+    {
+      title: 'Full Architectural Audit',
+      category: 'Consultancy',
+      description: 'Comprehensive evaluation of existing software infrastructure, identifying bottlenecks, security exploits, and scalability ceilings.',
+      deliverables: ['Performance Telemetry Report', 'Security Threat Matrix', 'Refactoring Action Plan']
+    },
+    {
+      title: 'High-Impact Custom Development',
+      category: 'Engineering',
+      description: 'End-to-end design, implementation, and deployment of mission-critical platforms with bleeding-edge UX.',
+      deliverables: ['Production Next.js Codebase', 'Cloud Infrastructure Setup', '60fps Framer Motion Animations']
+    },
+    {
+      title: 'Advisory & Systems Mentorship',
+      category: 'Strategic',
+      description: 'Direct 1-on-1 strategic guidance for engineering leads and founders scaling high-throughput products.',
+      deliverables: ['Bi-weekly Architectural Reviews', 'Hiring Framework', 'Direct Emergency Hotline']
+    }
+  ];
+
+  tmpl.achievements = [
+    {
+      title: 'Top Vanguard Architect of the Realm',
+      metric: '#1 Global',
+      year: '2025',
+      description: 'Awarded highest honor by the Continental Association for architectural excellence and peerless reliability.'
+    },
+    {
+      title: 'Zero Failure Rate across 150+ Directives',
+      metric: '99.99%',
+      year: '2024',
+      description: 'Maintained pristine track record across mission-critical deployments under extreme high-concurrency stress.'
+    },
+    {
+      title: 'Global Open-Source Impact Laureate',
+      metric: '10K+ Stars',
+      year: '2023',
+      description: 'Authored open-source foundational libraries adopted by leading engineering teams across multiple continents.'
+    }
+  ];
+
+  tmpl.articles = [
+    {
+      title: 'Architecting for Immortality: Lessons from Thousand-Year Systems',
+      readTime: '6 min read',
+      date: 'Aug 2026',
+      platform: 'Engineering Dispatch'
+    },
+    {
+      title: 'Why Micro-interactions are the Secret Weapon of High-Conversion Design',
+      readTime: '4 min read',
+      date: 'Jun 2026',
+      platform: 'Product Mindset'
+    },
+    {
+      title: 'From Chaos to Precision: A Field Guide to Autonomous Code Deployment',
+      readTime: '8 min read',
+      date: 'Apr 2026',
+      platform: 'Vanguard Systems Journal'
+    }
+  ];
+
+  tmpl.organization = [
+    {
+      name: tmpl.series + ' Core Vanguard Council',
+      role: 'Chief Technical Director',
+      period: '2023 - Present',
+      impact: 'Headed cross-functional teams of 30+ elite specialists in orchestrating nationwide defensive infrastructure.'
+    },
+    {
+      name: 'Allied Engineering Fellowship',
+      role: 'Lead Mentor & Co-Founder',
+      period: '2021 - 2023',
+      impact: 'Mentored 120+ aspiring creators and engineers into top-tier leadership positions worldwide.'
+    }
+  ];
+
+  tmpl.certificates = [
+    {
+      name: 'Certified Enterprise Solutions Architect',
+      issuer: 'Cloud Foundation Alliance',
+      year: '2025',
+      id: 'CSA-88492-EXP'
+    },
+    {
+      name: 'Mastery in Ultra-Low Latency Systems',
+      issuer: 'Vanguard Engineering Board',
+      year: '2024',
+      id: 'ULL-44019-VNG'
+    }
+  ];
+
+  tmpl.githubStats = {
+    username: tmpl.slug + '-dev',
+    commits: 1842,
+    repos: 34,
+    stars: 870
+  };
+
+  tmpl.processSteps = [
+    {
+      step: '01',
+      title: 'Discovery & Grimoire Analysis',
+      desc: 'Deconstruct requirements, audit existing architecture, and define precise success metrics.'
+    },
+    {
+      step: '02',
+      title: 'Architectural Blueprinting',
+      desc: 'Formulate type-safe interfaces, high-performance schema, and surgical design systems.'
+    },
+    {
+      step: '03',
+      title: 'Precision Implementation',
+      desc: 'Rapid iteration with 60fps micro-animations, resilient state management, and continuous linting.'
+    },
+    {
+      step: '04',
+      title: 'Zero-Downtime Deployment',
+      desc: 'Stress testing under extreme loads, automated CI/CD pipeline, and global CDN distribution.'
+    }
+  ];
+});

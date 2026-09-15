@@ -22,12 +22,16 @@ interface TemplateSwitcherBarProps {
   currentTemplate: AnimeTemplate;
   onDeviceChange?: (device: 'desktop' | 'tablet' | 'mobile') => void;
   activeDevice?: 'desktop' | 'tablet' | 'mobile';
+  onOpenCustomizer?: () => void;
+  activeSectionCount?: number;
 }
 
 export default function TemplateSwitcherBar({ 
   currentTemplate, 
   onDeviceChange,
-  activeDevice = 'desktop' 
+  activeDevice = 'desktop',
+  onOpenCustomizer,
+  activeSectionCount
 }: TemplateSwitcherBarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -267,8 +271,36 @@ export default function TemplateSwitcherBar({
           </div>
         )}
 
-        {/* Right: Buy Template CTA & Collapse Toggle */}
+        {/* Right: Customizer Button + Buy Template CTA & Collapse Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          {onOpenCustomizer && (
+            <button
+              onClick={onOpenCustomizer}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                padding: '0.42rem 0.85rem',
+                borderRadius: '9999px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: `1.5px solid ${currentTemplate.colors.accent}`,
+                color: '#ffffff',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                boxShadow: `0 0 12px ${currentTemplate.colors.accentGlow}`,
+                whiteSpace: 'nowrap',
+                transition: 'transform 0.15s ease, background 0.15s ease',
+              }}
+              title="Customize Section Order & 20 Presets"
+            >
+              <Sparkles size={13} color={currentTemplate.colors.accent} />
+              <span>Gaya #{currentTemplate.styleId || 1}: <span className="hidden sm:inline">{currentTemplate.styleName || 'Custom'}</span></span>
+              <span style={{ fontSize: '0.68rem', padding: '0.1rem 0.4rem', borderRadius: '6px', background: currentTemplate.colors.accent, color: '#ffffff', fontWeight: 800 }}>
+                {activeSectionCount || currentTemplate.defaultSections?.length || 7} Sec
+              </span>
+            </button>
+          )}
           <a
             href={`https://wa.me/6285806003234?text=Hi!%20I%20want%20to%20purchase%20the%20${currentTemplate.name}%20Anime%20Portfolio%20Template%20($${currentTemplate.price})`}
             target="_blank"

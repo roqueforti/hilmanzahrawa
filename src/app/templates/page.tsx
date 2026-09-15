@@ -24,7 +24,7 @@ import {
   ArrowUpRight,
   PackageCheck
 } from 'lucide-react';
-import { ANIME_TEMPLATES, ANIME_UNIVERSES, AnimeTemplate } from '@/data/animeTemplates';
+import { ANIME_TEMPLATES, ANIME_UNIVERSES, AnimeTemplate, PORTFOLIO_STYLES } from '@/data/animeTemplates';
 
 const ARCHETYPE_FILTERS = [
   { id: 'all', name: 'All Layouts' },
@@ -39,6 +39,7 @@ const ARCHETYPE_FILTERS = [
 export default function TemplatesMarketplacePage() {
   const [selectedUniverse, setSelectedUniverse] = useState('all');
   const [selectedArchetype, setSelectedArchetype] = useState('all');
+  const [selectedStyleId, setSelectedStyleId] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -359,6 +360,50 @@ export default function TemplatesMarketplacePage() {
             </div>
           </div>
 
+          {/* Portfolio Style Filter Pills (20 Styles) */}
+          <div style={{ marginBottom: '2rem' }}>
+            <div style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#64748b', fontWeight: 700, marginBottom: '0.75rem' }}>
+              FILTER BY GAYA PORTOFOLIO (20 STYLES PRESETS)
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem', flexWrap: 'wrap', maxWidth: '1050px', margin: '0 auto' }}>
+              <button
+                onClick={() => setSelectedStyleId('all')}
+                style={{
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '9999px',
+                  background: selectedStyleId === 'all' ? '#10b981' : 'rgba(255, 255, 255, 0.05)',
+                  color: selectedStyleId === 'all' ? '#ffffff' : '#cbd5e1',
+                  border: `1px solid ${selectedStyleId === 'all' ? '#10b981' : 'rgba(255, 255, 255, 0.1)'}`,
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                All 20 Styles
+              </button>
+              {PORTFOLIO_STYLES.map((st) => (
+                <button
+                  key={st.id}
+                  onClick={() => setSelectedStyleId(st.id)}
+                  style={{
+                    padding: '0.35rem 0.85rem',
+                    borderRadius: '9999px',
+                    background: selectedStyleId === st.id ? '#10b981' : 'rgba(255, 255, 255, 0.03)',
+                    color: selectedStyleId === st.id ? '#ffffff' : '#94a3b8',
+                    border: `1px solid ${selectedStyleId === st.id ? '#10b981' : 'rgba(255, 255, 255, 0.08)'}`,
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  #{st.id} {st.badge}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Layout Archetype Filter Pills */}
           <div style={{ marginBottom: '3.5rem' }}>
             <div style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#64748b', fontWeight: 700, marginBottom: '0.75rem' }}>
@@ -564,9 +609,47 @@ export default function TemplatesMarketplacePage() {
                       {tmpl.roleTitle}
                     </p>
 
-                    <p style={{ fontSize: '0.86rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 1.25rem 0', minHeight: '40px' }}>
+                    {/* Portfolio Style & Section Badge */}
+                    <div style={{ margin: '0 0 0.85rem 0', display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                          padding: '0.2rem 0.65rem',
+                          borderRadius: '9999px',
+                          background: 'rgba(255, 255, 255, 0.08)',
+                          border: `1px solid ${tmpl.colors.accent}`,
+                          color: '#ffffff',
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                        }}
+                      >
+                        <Sparkles size={11} color={tmpl.colors.accent} />
+                        <span>Gaya #{tmpl.styleId || 1}: {tmpl.styleName || 'Classic Professional'}</span>
+                      </span>
+
+                      <span
+                        style={{
+                          fontSize: '0.7rem',
+                          color: '#94a3b8',
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          padding: '0.2rem 0.5rem',
+                          borderRadius: '6px',
+                        }}
+                      >
+                        {tmpl.defaultSections?.length || 7} Secs
+                      </span>
+                    </div>
+
+                    <p style={{ fontSize: '0.86rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 0.85rem 0', minHeight: '40px' }}>
                       "{tmpl.tagline}"
                     </p>
+
+                    {/* Section Sequence Flow Summary */}
+                    <div style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: '1.25rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      Flow: {tmpl.defaultSections?.join(' → ') || 'Hero → About → Skills → Projects → Experience → Education → Contact'}
+                    </div>
                   </div>
 
                   {/* Color Swatches & Accent Pill */}
