@@ -1,11 +1,26 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  X, 
+  ArrowUp, 
+  ArrowDown, 
+  Trash2, 
+  Plus, 
+  RotateCcw, 
+  Sparkles, 
+  Check, 
+  Copy, 
+  Layers,
+  LayoutGrid,
+  Search
+} from 'lucide-react';
 import {
   DashboardStyle,
   DashboardSectionKey,
   DASHBOARD_STYLES,
-} from "@/data/dashboardTemplates";
+} from '@/data/dashboardTemplates';
 
 interface DashboardSectionCustomizerDrawerProps {
   isOpen: boolean;
@@ -132,6 +147,18 @@ export default function DashboardSectionCustomizerDrawer({
 }: DashboardSectionCustomizerDrawerProps) {
   const [activeTab, setActiveTab] = useState<"sections" | "styles">("sections");
   const [searchQuery, setSearchQuery] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -154,6 +181,13 @@ export default function DashboardSectionCustomizerDrawer({
     onReorder([...sections, key]);
   };
 
+  const handleCopyConfig = () => {
+    const jsonStr = JSON.stringify(sections, null, 2);
+    navigator.clipboard.writeText(jsonStr);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const availableKeysToAdd = (Object.keys(SECTION_LABELS) as DashboardSectionKey[]).filter(
     (k) => !sections.includes(k)
   );
@@ -169,22 +203,31 @@ export default function DashboardSectionCustomizerDrawer({
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Drawer Container */}
-      <div className="relative w-full max-w-md bg-slate-950/95 border-l border-slate-800/80 backdrop-blur-xl shadow-2xl flex flex-col h-full text-slate-100 z-10">
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+        className="relative w-full max-w-md bg-slate-950/95 border-l border-slate-800/80 backdrop-blur-xl shadow-2xl flex flex-col h-full text-slate-100 z-10"
+      >
         {/* Drawer Header */}
         <div className="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-900/60">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xl">🎛️</span>
-              <h3 className="font-bold text-base text-white">Dashboard Customizer</h3>
+              <h3 className="font-bold text-base text-white">Dashboard Layout Engine</h3>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
-              Current: <span className="text-emerald-400 font-medium">#{currentStyle.id} {currentStyle.name}</span>
+              Active: <span className="text-emerald-400 font-medium">#{currentStyle.id} {currentStyle.name}</span>
             </p>
           </div>
           <button
@@ -192,7 +235,7 @@ export default function DashboardSectionCustomizerDrawer({
             className="w-8 h-8 rounded-lg bg-slate-800/85 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm transition"
             title="Close Drawer"
           >
-            ✕
+            <X size={16} />
           </button>
         </div>
 
@@ -202,22 +245,22 @@ export default function DashboardSectionCustomizerDrawer({
             onClick={() => setActiveTab("sections")}
             className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
               activeTab === "sections"
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-950"
                 : "bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800/60"
             }`}
           >
-            <span>📑</span>
+            <Layers size={13} />
             <span>Sections Order ({sections.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("styles")}
             className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
               activeTab === "styles"
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm shadow-emerald-950"
                 : "bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800/60"
             }`}
           >
-            <span>🎨</span>
+            <LayoutGrid size={13} />
             <span>20 Styles Presets</span>
           </button>
         </div>
@@ -226,20 +269,32 @@ export default function DashboardSectionCustomizerDrawer({
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {activeTab === "sections" ? (
             <>
-              {/* Reset action bar */}
+              {/* Quick Actions Strip: Reset + Copy JSON */}
               <div className="flex items-center justify-between bg-slate-900/60 border border-slate-800 rounded-xl p-3">
                 <div>
-                  <div className="text-xs font-semibold text-white">Live Reorder & Customize</div>
+                  <div className="text-xs font-semibold text-white">Live Reorder & Flow</div>
                   <div className="text-[11px] text-slate-400">
-                    Use arrows to change section flow
+                    Arrange sections in real-time
                   </div>
                 </div>
-                <button
-                  onClick={onReset}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition hover:text-white"
-                >
-                  ↺ Reset Order
-                </button>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={handleCopyConfig}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition hover:text-white"
+                    title="Copy layout array to clipboard"
+                  >
+                    {copied ? <Check size={12} color="#10b981" /> : <Copy size={12} />}
+                    <span>{copied ? 'Copied!' : 'Copy'}</span>
+                  </button>
+                  <button
+                    onClick={onReset}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition hover:text-white"
+                    title="Reset to default preset sequence"
+                  >
+                    <RotateCcw size={12} />
+                    <span>Reset</span>
+                  </button>
+                </div>
               </div>
 
               {/* Sections List */}
@@ -256,7 +311,8 @@ export default function DashboardSectionCustomizerDrawer({
                   };
 
                   return (
-                    <div
+                    <motion.div
+                      layout
                       key={`${secKey}-${idx}`}
                       className="group flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition"
                     >
@@ -283,7 +339,7 @@ export default function DashboardSectionCustomizerDrawer({
                           className="w-7 h-7 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed text-xs flex items-center justify-center transition"
                           title="Move Up"
                         >
-                          ↑
+                          <ArrowUp size={13} />
                         </button>
                         <button
                           disabled={idx === sections.length - 1}
@@ -291,17 +347,17 @@ export default function DashboardSectionCustomizerDrawer({
                           className="w-7 h-7 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed text-xs flex items-center justify-center transition"
                           title="Move Down"
                         >
-                          ↓
+                          <ArrowDown size={13} />
                         </button>
                         <button
                           onClick={() => removeSection(idx)}
                           className="w-7 h-7 rounded bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs flex items-center justify-center transition ml-1"
                           title="Remove Section"
                         >
-                          ✕
+                          <Trash2 size={13} />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -331,7 +387,10 @@ export default function DashboardSectionCustomizerDrawer({
                               {meta.name}
                             </span>
                           </div>
-                          <span className="text-xs text-emerald-400 font-bold">+ Add</span>
+                          <span className="text-xs text-emerald-400 font-bold flex items-center gap-0.5">
+                            <Plus size={12} />
+                            <span>Add</span>
+                          </span>
                         </button>
                       );
                     })}
@@ -350,7 +409,7 @@ export default function DashboardSectionCustomizerDrawer({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full px-3.5 py-2 pl-9 bg-slate-900/80 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500/60"
                 />
-                <span className="absolute left-3 top-2.5 text-xs text-slate-500">🔍</span>
+                <Search size={14} className="absolute left-3 top-2.5 text-slate-500" />
               </div>
 
               {/* Styles List */}
@@ -406,7 +465,7 @@ export default function DashboardSectionCustomizerDrawer({
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-800/80 bg-slate-950/80 flex items-center justify-between text-xs text-slate-400">
-          <span>All 20 Dashboard Templates Available</span>
+          <span>{sections.length} Sections Configured</span>
           <button
             onClick={onClose}
             className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs shadow-md shadow-emerald-900/30 transition"
@@ -414,7 +473,7 @@ export default function DashboardSectionCustomizerDrawer({
             Apply & View
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

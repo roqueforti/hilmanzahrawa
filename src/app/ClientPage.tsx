@@ -1550,7 +1550,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             }}
           >
             <Sparkles size={13} />
-            <span>Explore 20 Anime Portfolio Templates →</span>
+            <span>Explore 40+ Templates: Anime Portfolios & SaaS Dashboards →</span>
           </Link>
         </div>
 

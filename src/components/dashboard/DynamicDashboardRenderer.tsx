@@ -28,11 +28,22 @@ import {
   Filter, 
   Server, 
   Bot, 
+  PieChart, 
+  CreditCard, 
+  LayoutDashboard, 
+  Target, 
+  Database, 
   Workflow, 
   Check, 
   Award, 
   BookOpen, 
-  Briefcase 
+  Briefcase,
+  Compass,
+  GitBranch,
+  Search,
+  Code2,
+  Lock,
+  ExternalLink
 } from 'lucide-react';
 import { DashboardSectionKey, DashboardTemplate } from '@/data/dashboardTemplates';
 
@@ -49,7 +60,7 @@ export default function DynamicDashboardRenderer({
 }: DynamicDashboardRendererProps) {
   const { accentColor, accentGlow } = template;
 
-  // 1. HEADERS & GREETINGS
+  // 1. HEADERS, GREETINGS & BANNER OVERVIEWS
   if (
     sectionKey === 'header' ||
     sectionKey === 'welcome-header' ||
@@ -57,8 +68,10 @@ export default function DynamicDashboardRenderer({
     sectionKey === 'welcome' ||
     sectionKey === 'business-overview' ||
     sectionKey === 'academic-summary' ||
-    sectionKey === 'todays-overview'
+    sectionKey === 'todays-overview' ||
+    sectionKey === 'project-summary'
   ) {
+    const isProjectSummary = sectionKey === 'project-summary';
     return (
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -98,28 +111,117 @@ export default function DynamicDashboardRenderer({
               <span>Gaya #{template.styleId}: {template.styleName}</span>
             </span>
             <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-              Live Telemetry • Ready
+              {isProjectSummary ? 'Sprint 42 Live Pacing' : 'Live Telemetry • Ready'}
             </span>
           </div>
 
           <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#ffffff', margin: '0 0 0.35rem 0', letterSpacing: '-0.02em' }}>
-            {template.name}
+            {isProjectSummary ? 'Agile Sprint & Roadmap Deliverables' : template.name}
           </h2>
           <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: 0, maxWidth: '640px', lineHeight: 1.5 }}>
-            {template.subtitle} • {template.description}
+            {isProjectSummary
+              ? 'Tracking active epics, burn-down trajectory, and engineering milestones across squads.'
+              : `${template.subtitle} • ${template.description}`}
           </p>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ padding: '0.5rem 1rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', textAlign: 'right' }}>
-            <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>System Status</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#22c55e' }}>
-              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
-              <span>100% Operational</span>
+          {isProjectSummary ? (
+            <div style={{ display: 'flex', gap: '0.6rem' }}>
+              <div style={{ padding: '0.5rem 0.85rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.68rem', color: '#94a3b8', textTransform: 'uppercase' }}>Velocity</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#10b981' }}>94%</div>
+              </div>
+              <div style={{ padding: '0.5rem 0.85rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.68rem', color: '#94a3b8', textTransform: 'uppercase' }}>Epics Active</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: accentColor }}>12</div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ padding: '0.5rem 1rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', textAlign: 'right' }}>
+              <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>System Status</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#22c55e' }}>
+                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+                <span>100% Operational</span>
+              </div>
+            </div>
+          )}
         </div>
       </motion.div>
+    );
+  }
+
+  // 1B. INLINE SIDEBAR / DIRECTORY HUB SECTION
+  if (sectionKey === 'sidebar') {
+    const directoryItems = [
+      { name: 'Analytics Hub', desc: 'Realtime telemetry and metrics data', icon: BarChart3, badge: 'Live' },
+      { name: 'Customer & CRM', desc: 'Accounts, pipeline and active contracts', icon: Users, badge: '2.4K' },
+      { name: 'Billing & Ledger', desc: 'Invoices, reconciliations and payouts', icon: CreditCard, badge: 'Settled' },
+      { name: 'Cloud Infrastructure', desc: 'Cluster nodes, latency and SLA uptime', icon: Server, badge: '99.99%' },
+      { name: 'Automations & AI', desc: 'Inference calls, token usage and queues', icon: Bot, badge: 'Ready' },
+      { name: 'Security & Access', desc: 'Role permissions and MFA audit logs', icon: ShieldCheck, badge: 'Active' },
+    ];
+
+    return (
+      <div
+        style={{
+          padding: '1.5rem',
+          borderRadius: '20px',
+          background: '#131b2e',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 6px 25px rgba(0, 0, 0, 0.2)',
+          marginBottom: '1.5rem',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              Navigation Directory & Module Workspace
+            </h3>
+            <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+              Quick access shortcuts to all platform micro-frontends and management consoles.
+            </p>
+          </div>
+          <span style={{ fontSize: '0.74rem', color: accentColor, fontWeight: 700, background: `${accentColor}18`, padding: '0.25rem 0.65rem', borderRadius: '6px', border: `1px solid ${accentColor}40` }}>
+            6 Modules Connected
+          </span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.85rem' }}>
+          {directoryItems.map((item, dIdx) => {
+            const IconComponent = item.icon;
+            return (
+              <div
+                key={dIdx}
+                style={{
+                  padding: '1rem',
+                  borderRadius: '14px',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.07)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.2s ease',
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${accentColor}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: accentColor }}>
+                    <IconComponent size={16} />
+                  </div>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#94a3b8', background: 'rgba(255,255,255,0.06)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+                    {item.badge}
+                  </span>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#ffffff' }}>{item.name}</div>
+                  <div style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '0.15rem' }}>{item.desc}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     );
   }
 
@@ -144,7 +246,8 @@ export default function DynamicDashboardRenderer({
     sectionKey === 'active-services' ||
     sectionKey === 'customer-growth' ||
     sectionKey === 'business-health' ||
-    sectionKey === 'gpa'
+    sectionKey === 'gpa' ||
+    sectionKey === 'leads'
   ) {
     return (
       <div
@@ -225,8 +328,12 @@ export default function DynamicDashboardRenderer({
     sectionKey === 'cash-flow-chart' ||
     sectionKey === 'usage-trend' ||
     sectionKey === 'performance-trend' ||
-    sectionKey === 'main-performance'
+    sectionKey === 'main-performance' ||
+    sectionKey === 'user-growth' ||
+    sectionKey === 'employee-growth' ||
+    sectionKey === 'team-performance'
   ) {
+    const isTeamPerformance = sectionKey === 'team-performance';
     const maxVal = Math.max(...template.chartData.map(d => d.value), 100);
 
     return (
@@ -243,26 +350,24 @@ export default function DynamicDashboardRenderer({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: '0 0 0.25rem 0' }}>
-              {template.chartTitle}
+              {isTeamPerformance ? 'Squad Velocity & Story Point Burn-Down' : template.chartTitle}
             </h3>
-            {template.chartSubtitle && (
-              <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>
-                {template.chartSubtitle}
-              </p>
-            )}
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>
+              {isTeamPerformance
+                ? 'Bi-weekly throughput across Frontend, Backend, AI Infrastructure, and Mobile squads.'
+                : (template.chartSubtitle || 'Measured against benchmark targets and seasonal pacing.')}
+            </p>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: '#cbd5e1' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: accentColor }} />
-              <span>Current Cycle</span>
+              <span>{isTeamPerformance ? 'Delivered Points' : 'Current Cycle'}</span>
             </span>
-            {template.chartData[0]?.secondaryValue !== undefined && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: '#64748b', marginLeft: '0.5rem' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#64748b' }} />
-                <span>Target Baseline</span>
-              </span>
-            )}
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: '#64748b', marginLeft: '0.5rem' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#64748b' }} />
+              <span>{isTeamPerformance ? 'Committed Target' : 'Target Baseline'}</span>
+            </span>
           </div>
         </div>
 
@@ -270,24 +375,22 @@ export default function DynamicDashboardRenderer({
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1rem', height: '180px', paddingTop: '1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
           {template.chartData.map((pt, i) => {
             const pct = Math.round((pt.value / maxVal) * 100);
-            const secPct = pt.secondaryValue ? Math.round((pt.secondaryValue / maxVal) * 100) : null;
+            const secPct = pt.secondaryValue ? Math.round((pt.secondaryValue / maxVal) * 100) : 60;
 
             return (
               <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', width: '100%', justifyContent: 'center', height: '100%' }}>
-                  {secPct !== null && (
-                    <motion.div
-                      initial={{ height: 0 }}
-                      animate={{ height: `${secPct}%` }}
-                      transition={{ duration: 0.5, delay: i * 0.05 }}
-                      style={{
-                        width: '14px',
-                        borderRadius: '4px 4px 0 0',
-                        background: 'rgba(255, 255, 255, 0.15)',
-                      }}
-                      title={`Target: ${pt.secondaryValue}`}
-                    />
-                  )}
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: `${secPct}%` }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    style={{
+                      width: '14px',
+                      borderRadius: '4px 4px 0 0',
+                      background: 'rgba(255, 255, 255, 0.15)',
+                    }}
+                    title={`Target: ${pt.secondaryValue || 60}`}
+                  />
                   <motion.div
                     initial={{ height: 0 }}
                     animate={{ height: `${pct}%` }}
@@ -301,7 +404,7 @@ export default function DynamicDashboardRenderer({
                     title={`Actual: ${pt.value}`}
                   />
                 </div>
-                <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>
+                <span style={{ fontSize: '0.72rem', color: '#64748b', whiteSpace: 'nowrap' }}>
                   {pt.label}
                 </span>
               </div>
@@ -312,37 +415,31 @@ export default function DynamicDashboardRenderer({
     );
   }
 
-  // 4. PROGRESS, GROWTH, CONVERSION, MAPPING & FUNNELS
+  // 4. PROGRESS FUNNELS, ATTENDANCE & DISTRIBUTION
   if (
-    sectionKey === 'user-growth' ||
     sectionKey === 'conversion-rate' ||
     sectionKey === 'conversion' ||
-    sectionKey === 'traffic-sources' ||
     sectionKey === 'target-progress' ||
-    sectionKey === 'department-distribution' ||
-    sectionKey === 'attendance' ||
-    sectionKey === 'employee-growth' ||
-    sectionKey === 'performance' ||
-    sectionKey === 'progress-overview' ||
-    sectionKey === 'service-performance' ||
-    sectionKey === 'employee-performance' ||
-    sectionKey === 'cpu-ram-storage' ||
-    sectionKey === 'network-traffic' ||
-    sectionKey === 'server-status' ||
-    sectionKey === 'sales-pipeline' ||
-    sectionKey === 'operational-performance' ||
-    sectionKey === 'model-performance' ||
-    sectionKey === 'accuracy' ||
-    sectionKey === 'performance-ranking' ||
     sectionKey === 'learning-progress' ||
     sectionKey === 'completion-rate' ||
-    sectionKey === 'expense-breakdown'
+    sectionKey === 'progress-overview' ||
+    sectionKey === 'assignment-progress' ||
+    sectionKey === 'department-distribution' ||
+    sectionKey === 'expense-breakdown' ||
+    sectionKey === 'traffic-sources' ||
+    sectionKey === 'attendance' ||
+    sectionKey === 'performance' ||
+    sectionKey === 'service-performance' ||
+    sectionKey === 'employee-performance' ||
+    sectionKey === 'model-performance' ||
+    sectionKey === 'accuracy' ||
+    sectionKey === 'performance-ranking'
   ) {
-    const bars = [
-      { label: 'Core Workload / Allocation', val: 88, color: accentColor },
-      { label: 'Secondary Throughput', val: 64, color: '#38bdf8' },
-      { label: 'Residual Capacity', val: 94, color: '#4ade80' },
-      { label: 'Cache Efficiency', val: 42, color: '#f59e0b' },
+    const progressList = [
+      { label: 'Primary Conversion / Delivery Rate', pct: 84, delta: '+6.2%' },
+      { label: 'Secondary Pipeline Fulfillment', pct: 72, delta: '+3.8%' },
+      { label: 'Active Resource Allocation Efficiency', pct: 91, delta: '+12.4%' },
+      { label: 'Customer Retention & Satisfaction CSAT', pct: 96, delta: '+4.1%' },
     ];
 
     return (
@@ -352,29 +449,46 @@ export default function DynamicDashboardRenderer({
           borderRadius: '20px',
           background: '#1e293b',
           border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
           marginBottom: '1.5rem',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-            {sectionKey.replace('-', ' ').toUpperCase()} Breakdown
-          </h3>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Aggregated Telemetry</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              {sectionKey.replace(/-/g, ' ').toUpperCase()}
+            </h3>
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+              Multi-stage execution metrics and SLA threshold compliance
+            </p>
+          </div>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#10b981', background: 'rgba(16, 185, 129, 0.12)', padding: '0.35rem 0.85rem', borderRadius: '9999px', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
+            Above Benchmark (SLA 99%)
+          </span>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {bars.map((b, idx) => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+          {progressList.map((item, idx) => (
             <div key={idx}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', color: '#cbd5e1', marginBottom: '0.35rem', fontWeight: 500 }}>
-                <span>{b.label}</span>
-                <span style={{ fontWeight: 700, color: b.color }}>{b.val}%</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem', fontSize: '0.85rem' }}>
+                <span style={{ color: '#cbd5e1', fontWeight: 600 }}>{item.label}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ color: '#4ade80', fontSize: '0.78rem', fontWeight: 700 }}>{item.delta}</span>
+                  <span style={{ color: '#ffffff', fontWeight: 800 }}>{item.pct}%</span>
+                </div>
               </div>
-              <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.08)', overflow: 'hidden' }}>
+
+              <div style={{ width: '100%', height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '9999px', overflow: 'hidden' }}>
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${b.val}%` }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  style={{ height: '100%', background: b.color, borderRadius: '4px' }}
+                  animate={{ width: `${item.pct}%` }}
+                  transition={{ duration: 0.8, delay: idx * 0.1 }}
+                  style={{
+                    height: '100%',
+                    borderRadius: '9999px',
+                    background: idx === 0 ? accentColor : 'linear-gradient(90deg, #38bdf8 0%, #818cf8 100%)',
+                    boxShadow: idx === 0 ? `0 0 10px ${accentGlow}` : 'none',
+                  }}
                 />
               </div>
             </div>
@@ -384,57 +498,86 @@ export default function DynamicDashboardRenderer({
     );
   }
 
-  // 5. QUICK ACTIONS & TASKS
+  // 5. ACTIVITY, LOGS, AUDIT FEEDS, DEADLINES
   if (
-    sectionKey === 'quick-actions' ||
-    sectionKey === 'tasks' ||
+    sectionKey === 'recent-activity' ||
+    sectionKey === 'activity' ||
+    sectionKey === 'recent-logs' ||
+    sectionKey === 'logs' ||
+    sectionKey === 'deadlines' ||
+    sectionKey === 'upcoming-deadlines' ||
+    sectionKey === 'study-activity' ||
+    sectionKey === 'customer-activity' ||
     sectionKey === 'follow-ups' ||
-    sectionKey === 'schedule'
+    sectionKey === 'tasks' ||
+    sectionKey === 'staff-status' ||
+    sectionKey === 'operational-performance' ||
+    sectionKey === 'schedule' ||
+    sectionKey === 'alerts' ||
+    sectionKey === 'sales-pipeline' ||
+    sectionKey === 'git-activity'
   ) {
-    const actions = template.quickActions || [
-      { label: 'Export PDF Report', icon: 'FileText', action: 'export' },
-      { label: 'Sync Database Pods', icon: 'RefreshCw', action: 'sync' },
-      { label: 'Create New Ticket', icon: 'Plus', action: 'ticket' },
-      { label: 'Manage Permissions', icon: 'Key', action: 'perms' },
-    ];
-
     return (
       <div
         style={{
-          padding: '1.5rem 1.75rem',
+          padding: '1.75rem 2rem',
           borderRadius: '20px',
           background: '#1e293b',
           border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
           marginBottom: '1.5rem',
         }}
       >
-        <div style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#94a3b8', marginBottom: '0.85rem' }}>
-          Instant Workspace Actions
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              {sectionKey.replace(/-/g, ' ').toUpperCase()}
+            </h3>
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+              Real-time audit log stream & timestamped operational triggers
+            </p>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: '#94a3b8' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', animation: 'pulse 2s infinite' }} />
+            <span>Live Stream</span>
+          </div>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-          {actions.map((act, i) => (
-            <motion.button
-              key={i}
-              whileHover={{ scale: 1.03, borderColor: accentColor }}
-              whileTap={{ scale: 0.97 }}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+          {template.activities.map((act) => (
+            <div
+              key={act.id}
               style={{
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.65rem 1.25rem',
+                justifyContent: 'space-between',
+                padding: '0.85rem 1rem',
                 borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                color: '#ffffff',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                gap: '1rem',
               }}
             >
-              <Zap size={14} color={accentColor} />
-              <span>{act.label}</span>
-            </motion.button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: 0 }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: `${accentColor}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: accentColor, flexShrink: 0 }}>
+                  <Activity size={16} />
+                </div>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {act.title}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.15rem' }}>
+                    By {act.user} • {act.time}
+                  </div>
+                </div>
+              </div>
+
+              {act.amount && (
+                <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#4ade80', flexShrink: 0 }}>
+                  {act.amount}
+                </span>
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -445,26 +588,17 @@ export default function DynamicDashboardRenderer({
   if (
     sectionKey === 'recent-transactions' ||
     sectionKey === 'transactions' ||
-    sectionKey === 'recent-orders' ||
     sectionKey === 'recent-projects' ||
     sectionKey === 'active-projects' ||
-    sectionKey === 'deadlines' ||
-    sectionKey === 'upcoming-deadlines' ||
-    sectionKey === 'detailed-table' ||
     sectionKey === 'top-products' ||
     sectionKey === 'top-customers' ||
-    sectionKey === 'recent-logs' ||
-    sectionKey === 'logs' ||
-    sectionKey === 'alerts' ||
-    sectionKey === 'assignment-progress' ||
-    sectionKey === 'courses' ||
-    sectionKey === 'certificates' ||
-    sectionKey === 'recommended-courses' ||
+    sectionKey === 'recent-orders' ||
+    sectionKey === 'detailed-table' ||
     sectionKey === 'recent-deals' ||
-    sectionKey === 'requests' ||
-    sectionKey === 'token-cost' ||
-    sectionKey === 'deployments' ||
-    sectionKey === 'staff-status'
+    sectionKey === 'courses' ||
+    sectionKey === 'recommended-courses' ||
+    sectionKey === 'certificates' ||
+    sectionKey === 'deployments'
   ) {
     return (
       <div
@@ -478,40 +612,46 @@ export default function DynamicDashboardRenderer({
           overflowX: 'auto',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', margin: '0 0 0.2rem 0' }}>
-              {sectionKey.replace('-', ' ').toUpperCase()}
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              {sectionKey.replace(/-/g, ' ').toUpperCase()}
             </h3>
-            <p style={{ fontSize: '0.78rem', color: '#94a3b8', margin: 0 }}>
-              Live synchronized ledger entries ({template.tableItems.length} records)
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+              Granular breakdown of records, status states, and timestamps
             </p>
           </div>
 
-          <span
-            style={{
-              fontSize: '0.75rem',
-              color: accentColor,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.3rem',
-              fontWeight: 600,
-            }}
-          >
-            <CheckCircle2 size={13} />
-            <span>Verified Stream</span>
-          </span>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.4rem 0.85rem',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#cbd5e1',
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              <Filter size={13} />
+              <span>Filter</span>
+            </button>
+          </div>
         </div>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.1)', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase' }}>
-              <th style={{ padding: '0.75rem 0.5rem' }}>Identifier</th>
-              <th style={{ padding: '0.75rem 0.5rem' }}>Entity / Subject</th>
-              <th style={{ padding: '0.75rem 0.5rem' }}>Category</th>
-              <th style={{ padding: '0.75rem 0.5rem' }}>Metric / Value</th>
-              <th style={{ padding: '0.75rem 0.5rem' }}>Status</th>
-              <th style={{ padding: '0.75rem 0.5rem', textAlign: 'right' }}>Timestamp</th>
+            <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', color: '#64748b' }}>
+              <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>RECORD NAME</th>
+              <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>CATEGORY</th>
+              <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>VALUE / VOLUME</th>
+              <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>STATUS</th>
+              <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>DATE</th>
             </tr>
           </thead>
           <tbody>
@@ -519,54 +659,44 @@ export default function DynamicDashboardRenderer({
               <tr
                 key={row.id}
                 style={{
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-                  color: '#f1f5f9',
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                  color: '#e2e8f0',
                   transition: 'background 0.15s ease',
                 }}
               >
-                <td style={{ padding: '0.9rem 0.5rem', fontFamily: 'monospace', color: accentColor, fontWeight: 700 }}>
-                  {row.id}
-                </td>
-                <td style={{ padding: '0.9rem 0.5rem', fontWeight: 600 }}>
-                  {row.name}
-                </td>
-                <td style={{ padding: '0.9rem 0.5rem', color: '#94a3b8' }}>
-                  {row.category}
-                </td>
-                <td style={{ padding: '0.9rem 0.5rem', fontWeight: 700, color: '#ffffff' }}>
-                  {row.value}
-                </td>
-                <td style={{ padding: '0.9rem 0.5rem' }}>
+                <td style={{ padding: '1rem', fontWeight: 600, color: '#ffffff' }}>{row.name}</td>
+                <td style={{ padding: '1rem', color: '#94a3b8' }}>{row.category}</td>
+                <td style={{ padding: '1rem', fontWeight: 700, color: accentColor }}>{row.value}</td>
+                <td style={{ padding: '1rem' }}>
                   <span
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.3rem',
-                      padding: '0.2rem 0.6rem',
+                      padding: '0.2rem 0.55rem',
                       borderRadius: '9999px',
                       fontSize: '0.72rem',
                       fontWeight: 700,
+                      textTransform: 'uppercase',
                       background:
                         row.status === 'completed'
-                          ? 'rgba(34, 197, 94, 0.12)'
+                          ? 'rgba(34, 197, 94, 0.15)'
                           : row.status === 'active'
-                          ? 'rgba(59, 130, 246, 0.12)'
-                          : 'rgba(245, 158, 11, 0.12)',
+                          ? 'rgba(56, 189, 248, 0.15)'
+                          : row.status === 'warning'
+                          ? 'rgba(245, 158, 11, 0.15)'
+                          : 'rgba(239, 68, 68, 0.15)',
                       color:
                         row.status === 'completed'
                           ? '#4ade80'
                           : row.status === 'active'
-                          ? '#60a5fa'
-                          : '#fbbf24',
+                          ? '#38bdf8'
+                          : row.status === 'warning'
+                          ? '#fbbf24'
+                          : '#f87171',
                     }}
                   >
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'currentColor' }} />
-                    <span style={{ textTransform: 'capitalize' }}>{row.status}</span>
+                    {row.status}
                   </span>
                 </td>
-                <td style={{ padding: '0.9rem 0.5rem', textAlign: 'right', color: '#64748b' }}>
-                  {row.date}
-                </td>
+                <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.8rem' }}>{row.date}</td>
               </tr>
             ))}
           </tbody>
@@ -575,77 +705,63 @@ export default function DynamicDashboardRenderer({
     );
   }
 
-  // 7. RECENT ACTIVITY & AUDIT TIMELINE
+  // 7. SYSTEM STATUS, SERVER METRICS & TELEMETRY
   if (
-    sectionKey === 'recent-activity' ||
-    sectionKey === 'activity' ||
-    sectionKey === 'study-activity' ||
-    sectionKey === 'customer-activity' ||
-    sectionKey === 'git-activity'
+    sectionKey === 'system-status' ||
+    sectionKey === 'server-metrics' ||
+    sectionKey === 'api-usage' ||
+    sectionKey === 'system-health' ||
+    sectionKey === 'cpu-ram-storage' ||
+    sectionKey === 'network-traffic' ||
+    sectionKey === 'server-status' ||
+    sectionKey === 'ai-usage' ||
+    sectionKey === 'requests' ||
+    sectionKey === 'token-cost'
   ) {
     return (
       <div
         style={{
           padding: '1.75rem 2rem',
           borderRadius: '20px',
-          background: '#1e293b',
+          background: '#0f172a',
           border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
           marginBottom: '1.5rem',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-            Real-Time Activity Feed
-          </h3>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Auto-refreshed</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              {sectionKey.replace(/-/g, ' ').toUpperCase()}
+            </h3>
+            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+              Cluster diagnostics, compute loads, and network telemetry
+            </p>
+          </div>
+          <span style={{ fontSize: '0.78rem', color: '#38bdf8', fontWeight: 600 }}>
+            US-East-1 (Primary)
+          </span>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-          {template.activities.map((act) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          {[
+            { label: 'Cluster CPU Load', val: '28.4%', sub: '16 Cores Online', color: '#10b981' },
+            { label: 'Memory Allocation', val: '64.2 GB', sub: '128 GB Total', color: '#38bdf8' },
+            { label: 'NVMe IOPS Throughput', val: '48.2K', sub: 'Latency: 0.4ms', color: '#a855f7' },
+            { label: 'Egress Bandwidth', val: '1.4 Gbps', sub: '0.00% Packet Loss', color: '#f59e0b' },
+          ].map((item, i) => (
             <div
-              key={act.id}
+              key={i}
               style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                padding: '0.85rem 1rem',
-                borderRadius: '12px',
+                padding: '1.25rem',
+                borderRadius: '14px',
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(255, 255, 255, 0.06)',
-                gap: '1rem',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: accentColor,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#ffffff',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    flexShrink: 0,
-                  }}
-                >
-                  {act.user.charAt(0)}
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f1f5f9' }}>
-                    {act.title}
-                  </div>
-                  <div style={{ fontSize: '0.74rem', color: '#64748b' }}>
-                    Initiated by {act.user}
-                  </div>
-                </div>
-              </div>
-
-              <span style={{ fontSize: '0.74rem', color: '#94a3b8', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                {act.time}
-              </span>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem' }}>{item.label}</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: item.color, marginBottom: '0.25rem' }}>{item.val}</div>
+              <div style={{ fontSize: '0.72rem', color: '#64748b' }}>{item.sub}</div>
             </div>
           ))}
         </div>
@@ -653,7 +769,7 @@ export default function DynamicDashboardRenderer({
     );
   }
 
-  // 8. KEY INSIGHTS & AI EXECUTIVE INTELLIGENCE
+  // 8. INSIGHTS & AI RECOMMENDATIONS
   if (
     sectionKey === 'key-insights' ||
     sectionKey === 'insights'
@@ -663,88 +779,96 @@ export default function DynamicDashboardRenderer({
         style={{
           padding: '1.75rem 2rem',
           borderRadius: '20px',
-          background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-          border: `1px solid ${accentColor}40`,
-          boxShadow: `0 8px 30px ${accentGlow}`,
+          background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%)',
+          border: '1px solid rgba(139, 92, 246, 0.25)',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)',
           marginBottom: '1.5rem',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-          <Sparkles size={16} color={accentColor} />
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-            Executive AI Insights & Action Items
+          <Sparkles size={16} color="#c084fc" />
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+            Executive AI Insights & Anomalies
           </h3>
         </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-          <div style={{ padding: '1rem', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: accentColor, marginBottom: '0.35rem' }}>Revenue Velocity Spike</div>
-            <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0, lineHeight: 1.5 }}>
-              Expansion revenue from Enterprise Tier is pacing 28% above projections. Recommend increasing dedicated support capacity.
-            </p>
-          </div>
-
-          <div style={{ padding: '1rem', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.35rem' }}>Infrastructure Optimization</div>
-            <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0, lineHeight: 1.5 }}>
-              Edge cache hit ratio reached 99.4%, reducing backend egress costs by an estimated $14,200 this billing cycle.
-            </p>
-          </div>
-        </div>
+        <p style={{ fontSize: '0.88rem', color: '#cbd5e1', lineHeight: 1.6, margin: 0 }}>
+          Expansion revenue from Enterprise Tier is pacing 28% above projections. Recommend increasing dedicated support capacity in APAC region. Churn risk index dropped to an all-time low of 1.1%.
+        </p>
       </div>
     );
   }
 
-  // 9. SYSTEM STATUS, DEPLOYMENTS & API USAGE
-  if (
-    sectionKey === 'system-status' ||
-    sectionKey === 'api-usage' ||
-    sectionKey === 'server-metrics' ||
-    sectionKey === 'system-health' ||
-    sectionKey === 'ai-usage'
-  ) {
+  // 9. QUICK ACTIONS DOCK
+  if (sectionKey === 'quick-actions') {
     return (
       <div
         style={{
-          padding: '1.5rem 1.75rem',
-          borderRadius: '18px',
+          padding: '1.5rem 2rem',
+          borderRadius: '20px',
           background: '#1e293b',
           border: '1px solid rgba(255, 255, 255, 0.08)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem',
           marginBottom: '1.5rem',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Activity size={16} color={accentColor} />
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-              System Health & Node Status
-            </h4>
-          </div>
-          <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: '#4ade80' }}>ALL NODES HEALTHY</span>
+        <div>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+            Quick Operations
+          </h3>
+          <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: '0.2rem 0 0 0' }}>
+            Instant operational dispatch, report generation, and quota resets
+          </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
-          <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.04)' }}>
-            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>CPU Load</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>34.2%</div>
-          </div>
-          <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.04)' }}>
-            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Memory (RAM)</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>51.8%</div>
-          </div>
-          <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.04)' }}>
-            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Disk NVMe</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>42.1%</div>
-          </div>
-          <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.04)' }}>
-            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>P99 Latency</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#4ade80' }}>18ms</div>
-          </div>
+        <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {['Export CSV', 'Generate Invoice', 'Deploy Patch', 'Invite Member'].map((action, i) => (
+            <button
+              key={i}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: '10px',
+                background: i === 0 ? accentColor : 'rgba(255, 255, 255, 0.06)',
+                color: i === 0 ? '#0f172a' : '#ffffff',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              {action}
+            </button>
+          ))}
         </div>
       </div>
     );
   }
 
-  // Fallback
-  return null;
+  // DEFAULT FALLBACK CARD
+  return (
+    <div
+      style={{
+        padding: '1.5rem',
+        borderRadius: '16px',
+        background: '#1e293b',
+        border: '1px dashed rgba(255, 255, 255, 0.15)',
+        marginBottom: '1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div>
+        <div style={{ fontSize: '0.8rem', color: '#94a3b8', textTransform: 'uppercase' }}>Section: {sectionKey}</div>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>Active Module Loaded</div>
+      </div>
+      <span style={{ fontSize: '0.75rem', color: accentColor, background: `${accentColor}20`, padding: '0.25rem 0.65rem', borderRadius: '9999px' }}>
+        #{index + 1}
+      </span>
+    </div>
+  );
 }

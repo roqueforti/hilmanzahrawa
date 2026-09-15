@@ -17,7 +17,9 @@ import {
   ShieldCheck, 
   Star,
   X,
-  PackageCheck
+  PackageCheck,
+  LayoutDashboard,
+  ArrowRight
 } from 'lucide-react';
 import { ANIME_TEMPLATES, ANIME_UNIVERSES, PORTFOLIO_STYLES } from '@/data/animeTemplates';
 import { 
@@ -37,6 +39,7 @@ const ARCHETYPE_FILTERS = [
 
 const DASHBOARD_CATEGORIES = [
   { id: 'all', name: 'All 20 Dashboards' },
+  { id: 'featured', name: '⭐ Top Featured' },
   { id: 'admin', name: 'Admin & Operations' },
   { id: 'finance', name: 'Finance & Sales' },
   { id: 'analytics', name: 'Analytics & BI' },
@@ -60,8 +63,20 @@ function MarketplaceContent() {
     const cat = searchParams.get('category');
     if (cat === 'dashboard') {
       setCategoryTab('dashboard');
+    } else if (cat === 'anime') {
+      setCategoryTab('anime');
     }
   }, [searchParams]);
+
+  const handleCategorySwitch = (tab: 'anime' | 'dashboard') => {
+    setCategoryTab(tab);
+    setSearchQuery('');
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('category', tab);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
 
   const allAnimeTemplates = Object.values(ANIME_TEMPLATES);
   const allDashboardTemplates = Object.values(DASHBOARD_TEMPLATES);
@@ -88,7 +103,9 @@ function MarketplaceContent() {
       tmpl.sections.some((s) => s.toLowerCase().includes(query));
 
     let matchesCategory = true;
-    if (selectedDashboardCategory === 'admin') {
+    if (selectedDashboardCategory === 'featured') {
+      matchesCategory = [1, 2, 3, 15, 20].includes(tmpl.styleId);
+    } else if (selectedDashboardCategory === 'admin') {
       matchesCategory = [1, 2, 4, 18].includes(tmpl.styleId);
     } else if (selectedDashboardCategory === 'finance') {
       matchesCategory = [5, 6, 9, 10, 14, 17].includes(tmpl.styleId);
@@ -106,23 +123,27 @@ function MarketplaceContent() {
   const faqs = [
     {
       q: "Apa saja yang didapatkan saat membeli template ini?",
-      a: "Anda mendapatkan kode sumber (source code) lengkap Next.js 16 + React 19 + TypeScript + Framer Motion, Three.js 3D canvas particle engine, aset grafis tema, panduan instalasi singkat (README), dan hak lisensi komersial seumur hidup."
+      a: "Anda mendapatkan kode sumber (source code) lengkap Next.js 16 + React 19 + TypeScript + Framer Motion, Three.js 3D canvas particle engine, modul SVG chart ringan tanpa bloated libraries, aset grafis tema, panduan instalasi singkat (README), dan hak lisensi komersial seumur hidup."
     },
     {
-      q: "Apakah saya bisa mengubah warna, teks, dan tata letak bagiannya?",
-      a: "Sangat mudah! Baik template anime maupun 20 dashboard dilengkapi interactive section reorder engine terpusat. Anda cukup mengubah konfigurasi TypeScript atau memakai slide drawer customizer bawaan."
+      q: "Apakah saya bisa mengubah urutan komponen/section dashboard secara langsung?",
+      a: "Sangat mudah! Setiap template dashboard dilengkapi Section Customizer Drawer bawaan. Anda bisa menaikkan/menurunkan urutan section (move up/down), menambah atau menghapus section, serta menyalin (copy) array konfigurasi layout langsung ke clipboard."
+    },
+    {
+      q: "Bagaimana arsitektur grafik (SVG Chart) pada template dashboard?",
+      a: "Grafik di-render menggunakan pure SVG dan CSS animations bawaan tanpa dependensi chart libraries pihak ketiga yang berat (seperti Chart.js atau Recharts yang berukuran puluhan KB). Hasilnya, skor performa Lighthouse 95+ dan waktu muat halaman instan."
     },
     {
       q: "Bisakah template ini dipakai untuk proyek klien komersial?",
-      a: "Ya, 100%! Lisensi komersial berlaku seumur hidup tanpa royalti tersembunyi. Anda bebas menggunakannya untuk portofolio pribadi, website klien, agensi, maupun SaaS profesional."
+      a: "Ya, 100%! Lisensi komersial berlaku seumur hidup tanpa royalti tersembunyi. Anda bebas menggunakannya untuk portofolio pribadi, website klien, agensi, maupun platform SaaS profesional."
     },
     {
       q: "Teknologi apa saja yang digunakan pada template ini?",
-      a: "Dibangun dengan standar modern: Next.js 16 (App Router), React 19, TypeScript, Framer Motion untuk micro-interactions, Three.js / HTML5 Canvas untuk particle animation 60fps, dan SVG charts tanpa dependensi bloated."
+      a: "Dibangun dengan standar modern terkini: Next.js 16 (App Router), React 19, TypeScript, Framer Motion untuk micro-interactions 60fps, Three.js / HTML5 Canvas untuk particle animation, dan Tailwind CSS v4."
     },
     {
       q: "Bagaimana cara melakukan pembelian dan pengiriman file?",
-      a: "Klik tombol 'Beli' atau 'Get Template'. Anda akan terhubung langsung ke WhatsApp kami dengan template pesan otomatis. Pengiriman file source code ZIP atau akses repository GitHub dilakukan instan setelah konfirmasi pembayaran."
+      a: "Klik tombol 'Beli' atau 'Get Template'. Anda akan terhubung langsung ke WhatsApp kami dengan template pesan otomatis. Pengiriman file source code ZIP atau undangan akses repository GitHub dilakukan instan setelah konfirmasi pembayaran."
     },
     {
       q: "Apakah template ini siap dideploy ke Vercel?",
@@ -217,10 +238,7 @@ function MarketplaceContent() {
           }}
         >
           <button
-            onClick={() => {
-              setCategoryTab('anime');
-              setSearchQuery('');
-            }}
+            onClick={() => handleCategorySwitch('anime')}
             style={{
               padding: '0.45rem 1.1rem',
               borderRadius: '9999px',
@@ -241,10 +259,7 @@ function MarketplaceContent() {
             <span>Anime Portfolios (20)</span>
           </button>
           <button
-            onClick={() => {
-              setCategoryTab('dashboard');
-              setSearchQuery('');
-            }}
+            onClick={() => handleCategorySwitch('dashboard')}
             style={{
               padding: '0.45rem 1.1rem',
               borderRadius: '9999px',
@@ -321,7 +336,7 @@ function MarketplaceContent() {
       </header>
 
       {/* Hero Section */}
-      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem 2.5rem', textAlign: 'center', position: 'relative' }}>
+      <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '4rem 1.5rem 2rem', textAlign: 'center', position: 'relative' }}>
         {/* Glow Aura */}
         <div 
           style={{
@@ -618,6 +633,77 @@ function MarketplaceContent() {
           )}
         </div>
       </section>
+
+      {/* Cross-Discovery Banner */}
+      <div style={{ maxWidth: '1360px', margin: '0 auto 2.5rem', padding: '0 1.5rem' }}>
+        {categoryTab === 'anime' ? (
+          <div
+            onClick={() => handleCategorySwitch('dashboard')}
+            style={{
+              padding: '1rem 1.5rem',
+              borderRadius: '16px',
+              background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.12) 100%)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <span style={{ fontSize: '1.4rem' }}>📊</span>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#ffffff' }}>
+                  Looking for Admin, SaaS & Operational Dashboards?
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                  Explore 20 production dashboard layouts with real-time SVG charts & section reordering engine.
+                </div>
+              </div>
+            </div>
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span>Explore 20 Dashboards</span>
+              <ArrowRight size={14} />
+            </span>
+          </div>
+        ) : (
+          <div
+            onClick={() => handleCategorySwitch('anime')}
+            style={{
+              padding: '1rem 1.5rem',
+              borderRadius: '16px',
+              background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <span style={{ fontSize: '1.4rem' }}>✦</span>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#ffffff' }}>
+                  Looking for Creative Character & Anime Portfolios?
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                  Explore 20 signature anime portfolio themes with 60fps GPU particles & custom lore colorways.
+                </div>
+              </div>
+            </div>
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span>Explore 20 Anime Portfolios</span>
+              <ArrowRight size={14} />
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* DASHBOARDS SECTION (When categoryTab === 'dashboard') */}
       {categoryTab === 'dashboard' && (
@@ -1317,7 +1403,7 @@ function MarketplaceContent() {
             </a>
           </div>
 
-          {/* Option 2: All-Access Universe Pass (Featured) */}
+          {/* Option 2: All-Access Pass (Featured) */}
           <div style={{
             padding: '2.5rem',
             borderRadius: '28px',

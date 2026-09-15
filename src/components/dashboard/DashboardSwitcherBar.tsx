@@ -13,9 +13,12 @@ import {
   ShoppingBag, 
   Check, 
   ChevronUp,
-  LayoutDashboard
+  LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
-import { DASHBOARD_TEMPLATES, DashboardTemplate } from '@/data/dashboardTemplates';
+import { DASHBOARD_TEMPLATES, DASHBOARD_STYLES, DashboardTemplate } from '@/data/dashboardTemplates';
 
 interface DashboardSwitcherBarProps {
   currentTemplate: DashboardTemplate;
@@ -37,6 +40,11 @@ export default function DashboardSwitcherBar({
 
   const templatesList = Object.values(DASHBOARD_TEMPLATES);
 
+  // Find prev and next styles
+  const currentIndex = DASHBOARD_STYLES.findIndex((s) => s.slug === currentTemplate.slug);
+  const prevStyle = currentIndex > 0 ? DASHBOARD_STYLES[currentIndex - 1] : DASHBOARD_STYLES[DASHBOARD_STYLES.length - 1];
+  const nextStyle = currentIndex < DASHBOARD_STYLES.length - 1 ? DASHBOARD_STYLES[currentIndex + 1] : DASHBOARD_STYLES[0];
+
   return (
     <div
       style={{
@@ -54,9 +62,17 @@ export default function DashboardSwitcherBar({
         transition: 'all 0.3s ease',
       }}
     >
+      {/* Invisible backdrop to close dropdown on click outside */}
+      {dropdownOpen && (
+        <div
+          onClick={() => setDropdownOpen(false)}
+          style={{ position: 'fixed', inset: 0, zIndex: 105, cursor: 'default' }}
+        />
+      )}
+
       <div
         style={{
-          maxWidth: '1440px',
+          maxWidth: '1500px',
           margin: '0 auto',
           padding: collapsed ? '0.35rem 1.25rem' : '0.55rem 1.25rem',
           display: 'flex',
@@ -67,7 +83,9 @@ export default function DashboardSwitcherBar({
           minHeight: collapsed ? '44px' : '54px',
         }}
       >
-        {/* LEFT: Back to Store Hub + Dashboard Template Selector Dropdown */}
+        {/* =========================================================================
+           LEFT: Back to Store Hub + Dashboard Template Selector Dropdown + Prev/Next
+           ========================================================================= */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           <Link
             href="/templates"
@@ -110,10 +128,12 @@ export default function DashboardSwitcherBar({
                 boxShadow: `0 2px 10px ${currentTemplate.accentGlow}`,
                 whiteSpace: 'nowrap',
                 transition: 'transform 0.15s ease',
+                position: 'relative',
+                zIndex: 106,
               }}
             >
               <LayoutDashboard size={13} />
-              <span>{currentTemplate.name}</span>
+              <span>#{currentTemplate.styleId} {currentTemplate.name}</span>
               <ChevronDown 
                 size={13} 
                 style={{ 
@@ -135,8 +155,8 @@ export default function DashboardSwitcherBar({
                     position: 'absolute',
                     top: 'calc(100% + 8px)',
                     left: 0,
-                    width: 'min(340px, calc(100vw - 2rem))',
-                    maxHeight: '440px',
+                    width: 'min(360px, calc(100vw - 2rem))',
+                    maxHeight: '460px',
                     overflowY: 'auto',
                     background: '#0f172a',
                     borderRadius: '16px',
@@ -147,7 +167,7 @@ export default function DashboardSwitcherBar({
                   }}
                 >
                   <div style={{ padding: '0.5rem 0.75rem', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8' }}>
-                    Select Dashboard Template (20 Available)
+                    Select Dashboard Style (20 Presets)
                   </div>
                   {templatesList.map((tmpl) => {
                     const isSelected = tmpl.id === currentTemplate.id;
@@ -176,19 +196,26 @@ export default function DashboardSwitcherBar({
                               height: '10px',
                               borderRadius: '50%',
                               background: tmpl.accentColor,
-                              boxShadow: `0 0 8px ${tmpl.accentColor}`,
+                              boxShadow: `0 0 6px ${tmpl.accentGlow}`,
                             }}
                           />
                           <div>
-                            <div style={{ fontWeight: 600, fontSize: '0.84rem', color: '#ffffff' }}>
-                              #{tmpl.styleId} {tmpl.name}
+                            <div style={{ fontWeight: isSelected ? 700 : 500, fontSize: '0.82rem' }}>
+                              #{tmpl.styleId} {tmpl.styleName}
                             </div>
-                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                              {tmpl.subtitle}
+                            <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>
+                              {tmpl.name}
                             </div>
                           </div>
                         </div>
-                        {isSelected && <Check size={16} color={tmpl.accentColor} />}
+
+                        {isSelected ? (
+                          <Check size={14} color={tmpl.accentColor} />
+                        ) : (
+                          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                            ${tmpl.price}
+                          </span>
+                        )}
                       </Link>
                     );
                   })}
@@ -196,97 +223,109 @@ export default function DashboardSwitcherBar({
               )}
             </AnimatePresence>
           </div>
+
+          {/* Quick Prev / Next Arrows */}
+          <div className="hidden sm:flex items-center gap-1">
+            <Link
+              href={`/templates/dashboard/${prevStyle.slug}`}
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#cbd5e1',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+              }}
+              title={`Previous: ${prevStyle.name}`}
+            >
+              <ChevronLeft size={14} />
+            </Link>
+            <Link
+              href={`/templates/dashboard/${nextStyle.slug}`}
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#cbd5e1',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+              }}
+              title={`Next: ${nextStyle.name}`}
+            >
+              <ChevronRight size={14} />
+            </Link>
+          </div>
+
+          {/* Cross-Link to Anime Universe */}
+          <Link
+            href="/templates/frieren"
+            className="hidden lg:inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold text-sky-400 bg-sky-950/60 border border-sky-800/60 hover:bg-sky-900/60 transition"
+            title="Explore 20 Anime Portfolio Themes"
+          >
+            <span>✦</span>
+            <span>Anime Themes (20)</span>
+          </Link>
         </div>
 
-        {/* CENTER: Perfectly Horizontal Segmented Viewport Toggles */}
-        {onDeviceChange && (
-          <div 
-            style={{ 
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center', 
-              gap: '0.2rem',
-              background: 'rgba(0, 0, 0, 0.45)',
-              padding: '0.22rem 0.3rem',
-              borderRadius: '9999px',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              flexShrink: 0,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <button
-              onClick={() => onDeviceChange('desktop')}
-              title="Desktop View"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                padding: '0.32rem 0.7rem',
-                borderRadius: '9999px',
-                border: 'none',
-                background: activeDevice === 'desktop' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
-                color: activeDevice === 'desktop' ? '#ffffff' : '#94a3b8',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                whiteSpace: 'nowrap',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <Monitor size={13} />
-              <span>Desktop</span>
-            </button>
+        {/* =========================================================================
+           CENTER: Interactive Device Switcher Simulation
+           ========================================================================= */}
+        <div 
+          className="hidden md:flex"
+          style={{ 
+            alignItems: 'center', 
+            background: 'rgba(0, 0, 0, 0.45)', 
+            padding: '0.22rem', 
+            borderRadius: '9999px',
+            border: '1px solid rgba(255, 255, 255, 0.08)'
+          }}
+        >
+          {[
+            { id: 'desktop', icon: Monitor, label: 'Desktop' },
+            { id: 'tablet', icon: Tablet, label: 'Tablet (840px)' },
+            { id: 'mobile', icon: Smartphone, label: 'Mobile (420px)' },
+          ].map((dev) => {
+            const Icon = dev.icon;
+            const isCurrent = activeDevice === dev.id;
+            return (
+              <button
+                key={dev.id}
+                onClick={() => onDeviceChange && onDeviceChange(dev.id as any)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.32rem 0.75rem',
+                  borderRadius: '9999px',
+                  background: isCurrent ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                  color: isCurrent ? '#ffffff' : '#94a3b8',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.74rem',
+                  fontWeight: isCurrent ? 700 : 500,
+                  transition: 'all 0.15s ease',
+                }}
+                title={dev.label}
+              >
+                <Icon size={13} />
+                <span>{dev.label.split(' ')[0]}</span>
+              </button>
+            );
+          })}
+        </div>
 
-            <button
-              onClick={() => onDeviceChange('tablet')}
-              title="Tablet View"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                padding: '0.32rem 0.7rem',
-                borderRadius: '9999px',
-                border: 'none',
-                background: activeDevice === 'tablet' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
-                color: activeDevice === 'tablet' ? '#ffffff' : '#94a3b8',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                whiteSpace: 'nowrap',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <Tablet size={13} />
-              <span>Tablet</span>
-            </button>
-
-            <button
-              onClick={() => onDeviceChange('mobile')}
-              title="Mobile View"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                padding: '0.32rem 0.7rem',
-                borderRadius: '9999px',
-                border: 'none',
-                background: activeDevice === 'mobile' ? 'rgba(255, 255, 255, 0.18)' : 'transparent',
-                color: activeDevice === 'mobile' ? '#ffffff' : '#94a3b8',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                whiteSpace: 'nowrap',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <Smartphone size={13} />
-              <span>Mobile</span>
-            </button>
-          </div>
-        )}
-
-        {/* RIGHT: Customize Sections Button + Buy Template CTA + Collapse */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
+        {/* =========================================================================
+           RIGHT: Customizer Drawer Trigger + Buy CTA
+           ========================================================================= */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           {onOpenCustomizer && (
             <button
               onClick={onOpenCustomizer}
@@ -294,38 +333,29 @@ export default function DashboardSwitcherBar({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.45rem',
-                padding: '0.38rem 0.85rem',
+                padding: '0.38rem 0.95rem',
                 borderRadius: '9999px',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: `1.5px solid ${currentTemplate.accentColor}`,
+                border: '1px solid rgba(255, 255, 255, 0.15)',
                 color: '#ffffff',
+                fontWeight: 600,
                 fontSize: '0.78rem',
-                fontWeight: 700,
                 cursor: 'pointer',
-                boxShadow: `0 0 12px ${currentTemplate.accentGlow}`,
-                whiteSpace: 'nowrap',
-                transition: 'transform 0.15s ease, background 0.15s ease',
+                transition: 'all 0.15s ease',
               }}
-              title="Customize Section Order & 20 Presets"
+              title="Open Section Customizer & Reorder Engine"
             >
               <Sparkles size={13} color={currentTemplate.accentColor} />
-              <span>Gaya #{currentTemplate.styleId}: {currentTemplate.styleName}</span>
-              <span 
-                style={{ 
-                  fontSize: '0.68rem', 
-                  padding: '0.12rem 0.45rem', 
-                  borderRadius: '9999px', 
-                  background: currentTemplate.accentColor, 
-                  color: '#ffffff', 
-                  fontWeight: 800,
-                  marginLeft: '0.15rem'
-                }}
-              >
-                {activeSectionCount || currentTemplate.sections.length} Sec
-              </span>
+              <span>Customize Sections</span>
+              {activeSectionCount !== undefined && (
+                <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '9999px', background: `${currentTemplate.accentColor}30`, color: currentTemplate.accentColor, fontWeight: 700 }}>
+                  {activeSectionCount}
+                </span>
+              )}
             </button>
           )}
 
+          {/* Buy / Deploy CTA */}
           <a
             href={`https://wa.me/6285806003234?text=Hi!%20I%20want%20to%20purchase%20the%20${encodeURIComponent(currentTemplate.name)}%20Dashboard%20Template%20($${currentTemplate.price})`}
             target="_blank"
@@ -336,36 +366,33 @@ export default function DashboardSwitcherBar({
               gap: '0.45rem',
               padding: '0.42rem 1.15rem',
               borderRadius: '9999px',
-              background: '#ffffff',
-              color: '#0f172a',
-              textDecoration: 'none',
-              fontWeight: 700,
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              color: '#ffffff',
+              fontWeight: 800,
               fontSize: '0.78rem',
-              boxShadow: '0 4px 14px rgba(255, 255, 255, 0.15)',
-              whiteSpace: 'nowrap',
+              textDecoration: 'none',
+              boxShadow: '0 2px 12px rgba(16, 185, 129, 0.4)',
               transition: 'transform 0.15s ease',
             }}
           >
             <ShoppingBag size={13} />
-            <span>Use Template ${currentTemplate.price}</span>
+            <span>Buy (${currentTemplate.price})</span>
           </a>
 
+          {/* Collapse Bar Button */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            aria-label="Toggle switcher bar size"
             style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.1)',
+              background: 'transparent',
               border: 'none',
-              color: '#ffffff',
+              color: '#64748b',
               cursor: 'pointer',
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0,
+              padding: '0.2rem',
             }}
+            title={collapsed ? 'Expand bar' : 'Minimize bar'}
           >
             {collapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
           </button>
