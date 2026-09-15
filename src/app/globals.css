@@ -1689,12 +1689,23 @@ html, body {
    ========================================================================= */
 
 /* Archetype Grid Systems - Desktop Defaults */
-.asym-hero-grid,
-.asym-works-grid {
+@media (min-width: 901px) {
+  .desktop-portfolio-nav {
+    display: flex !important;
+  }
+}
+
+.asym-hero-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 2.5rem;
   align-items: center;
+}
+.asym-works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2.5rem;
+  align-items: stretch;
 }
 .asym-span-7 {
   grid-column: span 7;
@@ -1726,10 +1737,10 @@ html, body {
   align-items: center;
 }
 .vanguard-directive-card {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
 }
 .vanguard-timeline-row {
   display: grid;

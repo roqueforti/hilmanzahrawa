@@ -137,16 +137,16 @@ export default function FlankedBalancedLayout({ template, onSelectProject }: Arc
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                minHeight: '330px',
+                minHeight: '350px',
                 position: 'relative',
                 transition: 'all 0.25s ease'
               }}
             >
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
-                    <span style={{ fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: colors.accent }}>
                       {work.category}
                     </span>
                   </div>
@@ -157,18 +157,18 @@ export default function FlankedBalancedLayout({ template, onSelectProject }: Arc
                   )}
                 </div>
 
-                <h3 style={{ fontSize: '1.38rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem', lineHeight: 1.35, letterSpacing: '-0.02em' }}>
+                <h3 style={{ fontSize: '1.35rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.65rem', lineHeight: 1.35, letterSpacing: '-0.02em' }}>
                   {work.title}
                 </h3>
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.65, color: '#64748b', marginBottom: '1.5rem', fontWeight: 400 }}>
+                <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: '#64748b', margin: '0 0 1.5rem 0', flex: 1 }}>
                   {work.desc}
                 </p>
               </div>
 
               <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1.25rem' }}>
                   {work.tags.map((t) => (
-                    <span key={t} style={{ fontSize: '0.74rem', fontWeight: 500, padding: '0.25rem 0.65rem', borderRadius: '8px', background: '#f8fafc', color: '#475569' }}>
+                    <span key={t} style={{ fontSize: '0.74rem', fontWeight: 500, padding: '0.25rem 0.65rem', borderRadius: '8px', background: '#f8fafc', color: '#475569', border: '1px solid #f1f5f9' }}>
                       {t}
                     </span>
                   ))}

@@ -213,7 +213,7 @@ export default function ZenCenterfoldLayout({ template, onSelectProject }: Arche
             <motion.div
               key={work.id}
               className="zen-work-strip"
-              whileHover={{ x: 6, boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}
+              whileHover={{ x: 6, boxShadow: '0 12px 28px rgba(0,0,0,0.04)' }}
               onClick={() => onSelectProject(work)}
               style={{
                 borderRadius: '20px',
@@ -225,37 +225,37 @@ export default function ZenCenterfoldLayout({ template, onSelectProject }: Arche
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '1.5rem',
+                gap: '1.75rem',
                 transition: 'all 0.25s ease'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-                <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif-display)', fontStyle: 'italic', color: '#cbd5e1' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.75rem', flex: 1 }}>
+                <div style={{ fontSize: '1.6rem', fontFamily: 'var(--font-serif-display)', fontStyle: 'italic', color: '#cbd5e1', minWidth: '38px', textAlign: 'center' }}>
                   0{idx + 1}
                 </div>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.25rem' }}>
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: colors.accent }} />
-                    <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, letterSpacing: '0.06em' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.3rem' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
+                    <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', color: colors.accent, fontWeight: 700, letterSpacing: '0.06em' }}>
                       {work.category} // {work.subtag}
                     </span>
                   </div>
-                  <h3 style={{ fontSize: '1.28rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.35rem 0' }}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.35rem 0', letterSpacing: '-0.01em' }}>
                     {work.title}
                   </h3>
-                  <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0, maxWidth: '580px', lineHeight: 1.55 }}>
+                  <p style={{ fontSize: '0.9rem', color: '#64748b', margin: 0, maxWidth: '640px', lineHeight: 1.55 }}>
                     {work.desc}
                   </p>
                 </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', alignSelf: 'flex-end', minWidth: 'fit-content' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', alignSelf: 'center', minWidth: 'fit-content' }}>
                 {work.metrics && (
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: colors.accent, background: colors.badgeBg, padding: '0.25rem 0.65rem', borderRadius: '9999px' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600, color: colors.accent, background: colors.badgeBg, padding: '0.3rem 0.75rem', borderRadius: '9999px' }}>
                     {work.metrics}
                   </span>
                 )}
-                <span style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors.accent }}>
-                  <ArrowUpRight size={16} />
+                <span style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors.accent, transition: 'transform 0.2s' }}>
+                  <ArrowUpRight size={17} />
                 </span>
               </div>
             </motion.div>
@@ -276,10 +276,21 @@ export default function ZenCenterfoldLayout({ template, onSelectProject }: Arche
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.25rem' }}>
           {template.skills.map((s, i) => (
-            <div key={i} style={{ padding: '1.5rem', borderRadius: '18px', background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent, margin: '0 auto 0.75rem auto' }} />
-              <h4 style={{ fontSize: '1rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.35rem 0' }}>{s.name}</h4>
-              <div style={{ fontSize: '0.78rem', color: colors.accent, fontWeight: 700 }}>{s.level}% Purity</div>
+            <div key={i} style={{ padding: '1.75rem 1.5rem', borderRadius: '20px', background: '#ffffff', border: '1px solid #e2e8f0', boxShadow: '0 4px 16px rgba(0,0,0,0.02)', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '170px' }}>
+              <div>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: colors.accent, margin: '0 auto 0.85rem auto', boxShadow: `0 0 10px ${colors.accent}` }} />
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.35rem 0' }}>{s.name}</h4>
+                <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Category: {s.category}</div>
+              </div>
+              <div style={{ marginTop: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: colors.accent, fontWeight: 700, marginBottom: '0.35rem' }}>
+                  <span>Purity</span>
+                  <span>{s.level}%</span>
+                </div>
+                <div style={{ width: '100%', height: '5px', borderRadius: '3px', background: '#f1f5f9', overflow: 'hidden' }}>
+                  <div style={{ width: `${s.level}%`, height: '100%', background: colors.accent, borderRadius: '3px' }} />
+                </div>
+              </div>
             </div>
           ))}
         </div>

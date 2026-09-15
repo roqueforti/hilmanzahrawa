@@ -207,51 +207,29 @@ export default function CyberHudLayout({ template, onSelectProject }: ArchetypeP
           </div>
 
           {/* Right Telemetry Column (Live Readout Blocks) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{
-              padding: '1.25rem',
-              borderRadius: '16px',
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 01</span>
-                <Cpu size={15} color={colors.accent} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'center' }}>
+            {template.stats.map((st, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: '1.25rem 1.5rem',
+                  borderRadius: '16px',
+                  background: '#ffffff',
+                  border: '1.5px solid #e2e8f0',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.35rem'
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 0{i + 1}</span>
+                  {i === 0 ? <Cpu size={15} color={colors.accent} /> : i === 1 ? <Radio size={15} color="#16a34a" /> : <Zap size={15} color="#f59e0b" />}
+                </div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>{st.value}</div>
+                <div style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 500 }}>{st.label}</div>
               </div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a' }}>{template.stats[0]?.value}</div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 500 }}>{template.stats[0]?.label}</div>
-            </div>
-
-            <div style={{
-              padding: '1.25rem',
-              borderRadius: '16px',
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 02</span>
-                <Radio size={15} color="#16a34a" />
-              </div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a' }}>{template.stats[1]?.value}</div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 500 }}>{template.stats[1]?.label}</div>
-            </div>
-
-            <div style={{
-              padding: '1.25rem',
-              borderRadius: '16px',
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.02)'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>METRIC // 03</span>
-                <Zap size={15} color="#f59e0b" />
-              </div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a' }}>{template.stats[2]?.value}</div>
-              <div style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 500 }}>{template.stats[2]?.label}</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

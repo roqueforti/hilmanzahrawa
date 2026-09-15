@@ -162,8 +162,8 @@ export default function VanguardDynamicLayout({ template, onSelectProject }: Arc
           </h2>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          {template.projects.map((work, idx) => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+          {template.projects.map((work) => (
             <motion.div
               key={work.id}
               className="vanguard-directive-card"
@@ -172,37 +172,45 @@ export default function VanguardDynamicLayout({ template, onSelectProject }: Arc
               style={{
                 borderRadius: '24px',
                 background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                padding: '2rem',
+                border: '1.5px solid #e2e8f0',
+                padding: '2.25rem',
                 cursor: 'pointer',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.25rem',
+                width: '100%',
                 transition: 'all 0.25s ease'
               }}
             >
-              <div style={{ width: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.5rem' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
-                  <span style={{ fontSize: '0.74rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.06em' }}>
-                    {work.category} // {work.subtag}
-                  </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.4rem' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: colors.accent }} />
+                    <span style={{ fontSize: '0.76rem', fontWeight: 800, textTransform: 'uppercase', color: colors.accent, letterSpacing: '0.06em' }}>
+                      {work.category} // {work.subtag}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: '1.45rem', fontWeight: 700, color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>{work.title}</h3>
                 </div>
-                <h3 style={{ fontSize: '1.45rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.5rem 0' }}>{work.title}</h3>
                 {work.metrics && (
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: colors.accent, background: colors.badgeBg, padding: '0.2rem 0.65rem', borderRadius: '9999px', display: 'inline-block', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: colors.accent, background: colors.badgeBg, padding: '0.3rem 0.85rem', borderRadius: '9999px' }}>
                     {work.metrics}
                   </span>
                 )}
-                <p style={{ fontSize: '0.94rem', lineHeight: 1.6, color: '#475569', margin: '0 0 1.25rem 0' }}>{work.desc}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    {work.tags.map((t) => (
-                      <span key={t} style={{ fontSize: '0.74rem', fontWeight: 500, padding: '0.2rem 0.65rem', borderRadius: '6px', background: '#f8fafc', color: '#334155' }}>{t}</span>
-                    ))}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.88rem', fontWeight: 700, color: colors.accent }}>
-                    <span>View Directive</span>
-                    <ArrowUpRight size={16} />
-                  </div>
+              </div>
+
+              <p style={{ fontSize: '0.96rem', lineHeight: 1.65, color: '#475569', margin: 0 }}>{work.desc}</p>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+                  {work.tags.map((t) => (
+                    <span key={t} style={{ fontSize: '0.75rem', fontWeight: 500, padding: '0.25rem 0.7rem', borderRadius: '6px', background: '#f8fafc', color: '#334155', border: '1px solid #e2e8f0' }}>{t}</span>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.88rem', fontWeight: 700, color: colors.accent }}>
+                  <span>Examine Directive</span>
+                  <ArrowUpRight size={16} />
                 </div>
               </div>
             </motion.div>

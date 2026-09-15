@@ -118,7 +118,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          1. TOP NAVIGATION (Exact Match: Logo left, Hamburger right)
          ========================================================================= */}
       <header className="landing-header" style={{
-        padding: '2rem 2.5rem',
+        padding: '1.75rem 2.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
         display: 'flex',
@@ -142,35 +142,71 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </span>
         </Link>
 
-        {/* Right Navigation & Templates Store Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        {/* Center Desktop Navigation - Pure Portfolio Focus */}
+        <nav className="desktop-portfolio-nav" style={{ display: 'none', alignItems: 'center', gap: '2rem' }}>
+          <a href="#about" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>About</a>
+          <a href="#process" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Process</a>
+          <a href="#works" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Selected Works</a>
+          <a href={`mailto:${email}`} style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Contact</a>
+        </nav>
+
+        {/* Right Navigation: Templates Store Pill & Primary Contact CTA */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {/* Templates Store Link (Subtle Elegant Commerce Pill) */}
           <Link
             href="/templates"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.45rem',
-              padding: '0.55rem 1.25rem',
+              padding: '0.55rem 1.15rem',
               borderRadius: '9999px',
-              background: '#0ea5e9',
-              color: '#ffffff',
-              fontSize: '0.85rem',
+              background: '#f8fafc',
+              border: '1.5px solid #e2e8f0',
+              color: '#0284c7',
+              fontSize: '0.84rem',
               fontWeight: 700,
               textDecoration: 'none',
-              boxShadow: '0 4px 14px rgba(14, 165, 233, 0.35)',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+              transition: 'all 0.2s ease',
             }}
           >
-            <Sparkles size={14} />
-            <span>Anime Templates (20)</span>
+            <Sparkles size={14} color="#0284c7" />
+            <span>Templates Store</span>
+            <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>20</span>
           </Link>
+
+          {/* Let's Talk CTA */}
+          <a
+            href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="desktop-header-cta"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.55rem 1.25rem',
+              borderRadius: '9999px',
+              background: '#0f172a',
+              color: '#ffffff',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.15)',
+              transition: 'transform 0.2s ease',
+            }}
+          >
+            <span>Let's Talk</span>
+            <ArrowUpRight size={14} />
+          </a>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation"
             style={{
-              width: '44px',
-              height: '44px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
               border: '1.5px solid #e2e8f0',
               background: '#ffffff',
@@ -183,7 +219,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               transition: 'background 0.2s'
             }}
           >
-            <Menu size={20} />
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </header>
@@ -209,17 +245,34 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
-              minWidth: '220px'
+              minWidth: '240px'
             }}
           >
-            <Link href="/templates" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0ea5e9', fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <Sparkles size={16} />
-              <span>Anime Templates (20)</span>
-            </Link>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About</a>
-            <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Process</a>
+            <div style={{ paddingBottom: '0.75rem', borderBottom: '1px solid #f1f5f9' }}>
+              <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', fontWeight: 700 }}>
+                PORTFOLIO
+              </span>
+            </div>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About Me</a>
+            <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Design Process</a>
             <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Selected Works</a>
-            <a href={`mailto:${email}`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0ea5e9', fontWeight: 600, fontSize: '0.95rem' }}>Drop a Line</a>
+            <a href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span>Let's Talk (WhatsApp)</span>
+              <ArrowUpRight size={14} />
+            </a>
+
+            <div style={{ paddingTop: '0.75rem', borderTop: '1px solid #f1f5f9' }}>
+              <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>
+                DIGITAL STORE
+              </span>
+              <Link href="/templates" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0284c7', fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Sparkles size={16} />
+                  <span>Templates Store</span>
+                </span>
+                <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>20 themes</span>
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1045,7 +1098,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         {/* 2 Staggered Testimonials Underneath (Matching sec4_process.png) */}
         <div className="process-testimonials-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
           gap: '4rem',
           maxWidth: '1080px',
           margin: '7rem auto 0 auto',
@@ -1135,7 +1188,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         <div className="works-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
           gap: '2.5rem'
         }}>
           {showcaseWorks.map((work) => (

@@ -190,33 +190,39 @@ export default function AsymmetricSplitLayout({ template, onSelectProject }: Arc
           )}
 
           {/* Stacked Projects Column */}
-          <div className="asym-span-5" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="asym-span-5" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', height: '100%', justifyContent: 'space-between' }}>
             {template.projects.slice(1, 4).map((work) => (
               <motion.div
                 key={work.id}
-                whileHover={{ y: -4, boxShadow: '0 15px 30px -8px rgba(0,0,0,0.06)' }}
+                whileHover={{ y: -3, boxShadow: '0 15px 30px -8px rgba(0,0,0,0.06)' }}
                 onClick={() => onSelectProject(work)}
                 style={{
-                  borderRadius: '22px',
+                  borderRadius: '20px',
                   background: '#ffffff',
                   border: '1px solid #e2e8f0',
-                  padding: '1.75rem',
+                  padding: '1.5rem 1.75rem',
                   boxShadow: '0 4px 16px rgba(0,0,0,0.02)',
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '130px',
+                  flex: 1,
                   transition: 'all 0.25s ease'
                 }}
               >
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: colors.accent, letterSpacing: '0.06em' }}>{work.category}</span>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b' }}>{work.metrics}</span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 800, color: colors.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{work.category}</span>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 700, color: colors.accent, background: colors.badgeBg, padding: '0.2rem 0.55rem', borderRadius: '9999px' }}>{work.metrics}</span>
                   </div>
-                  <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.35rem 0' }}>{work.title}</h4>
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.35rem 0' }}>{work.title}</h4>
                   <p style={{ fontSize: '0.86rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>{work.desc}</p>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '0.65rem', marginTop: '0.5rem', borderTop: '1px solid #f8fafc' }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: colors.accent, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <span>Specs</span>
+                    <ArrowUpRight size={13} />
+                  </span>
                 </div>
               </motion.div>
             ))}
