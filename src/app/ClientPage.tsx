@@ -6,26 +6,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowUpRight, 
   ExternalLink, 
-  Sparkles, 
   CheckCircle2, 
   Mail, 
   MessageCircle, 
   Linkedin, 
   Github, 
-  X,
-  Menu,
-  TrendingUp,
-  Search,
-  Calendar,
-  Star,
-  Users,
-  Eye,
-  Sliders,
-  Smartphone,
-  Layers,
-  Sparkle
+  X, 
+  Menu, 
+  TrendingUp, 
+  Calendar, 
+  Star, 
+  Users, 
+  Sliders, 
+  Smartphone, 
+  Layers, 
+  Award, 
+  GraduationCap, 
+  Briefcase, 
+  Code2, 
+  Check, 
+  Sparkles,
+  BookOpen
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import MediumArticles from '@/components/MediumArticles';
 
 // Code-split heavy 3D WebGL canvases to keep initial page bundle ultra-light and fast
 const SkyWaves3D = dynamic(() => import('@/components/SkyWaves3D'), { 
@@ -61,54 +65,279 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const name = rawName === rawName.toUpperCase() && rawName.length > 3
     ? rawName.split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
     : rawName;
-  const headline = bio?.headline || "Software Developer & Product Designer";
+  const headline = bio?.headline || "Fullstack Developer | UI/UX Designer";
   const email = bio?.email || "budiarto3788@gmail.com";
   const whatsapp = bio?.whatsapp || "6285806003234";
+  const location = bio?.location || "Malang, Jawa Timur, Indonesia";
+  const about = bio?.about || "Software Engineer passionate about building scalable web applications, AI-powered solutions, and meaningful digital experiences. I bridge engineering, product thinking, and visual design to create software that performs exceptionally and leaves a lasting impression.";
+  const mediumUsername = bio?.mediumUsername || bio?.medium_username || "hilmanzahrawa";
 
-  // Selected works matching the reference image's 2x2 showcase
+  // Authentic Hilman Zahrawa Projects
   const showcaseWorks = [
     {
-      id: "fintech-club",
-      title: "FinTech Club Brand",
-      category: "Fintech",
-      subtag: "Product Design",
-      desc: "Modular financial ecosystem designed for cross-border transactions, liquidity monitoring, and institutional portfolio analytics.",
-      previewType: "fintech"
+      id: "brewtech-1",
+      _id: "1",
+      title: "Brewtech",
+      year: "2026",
+      subtitle: "Vocational education platform empowering disabled baristas.",
+      tags: ["Next.js", "TypeScript", "SaaS", "Accessibility"],
+      description: "Vocational learning platform that empowers individuals with disabilities into certified barista talents through tailored interactive modules and curriculum management under the Innovillage program.",
+      slug: "brewtech",
+      category: "SaaS & LMS",
+      subtag: "Social Impact",
+      role: "Full-Stack Developer & UI/UX",
+      stack: "Next.js · TypeScript · Supabase · Tailwind",
+      outcome: "Empowering 50+ disabled youth through structured digital vocational training and barista job placement pipelines.",
+      previewType: "brewtech"
     },
     {
-      id: "modern-real-estate",
-      title: "Modern Real Estate",
-      category: "Web App",
-      subtag: "UI/UX Design",
-      desc: "Luxury residential listing platform featuring virtual property tours, neighborhood metric overlays, and instant escrow scheduling.",
-      previewType: "realestate"
+      id: "profile-2",
+      _id: "2",
+      title: "ProFile+",
+      year: "2025",
+      subtitle: "Employee lifecycle & HR management suite.",
+      tags: ["React", "UI/UX", "HR Management", "Analytics"],
+      description: "Comprehensive enterprise HR platform supporting personnel data verification, daily attendance tracking, payroll workflows, and employee performance analytics.",
+      slug: "profile-plus",
+      category: "HRIS Platform",
+      subtag: "UI/UX & Frontend",
+      role: "UI/UX Designer & Frontend Engineer",
+      stack: "React · TailwindCSS · Node.js · REST APIs",
+      outcome: "Centralized organizational data operations, cutting manual document verification and administrative time by 40%.",
+      previewType: "profile"
     },
     {
-      id: "online-learning",
-      title: "Online Learning Platform",
-      category: "EdTech",
-      subtag: "Mobile Design",
-      desc: "Next-generation cohort learning platform with video streaming, peer critique channels, and adaptive interactive modules.",
-      previewType: "learning"
+      id: "disnakertrans-3",
+      _id: "3",
+      title: "Disnakertrans Jatim Portal",
+      year: "2025",
+      subtitle: "Provincial public labor service portal.",
+      tags: ["Web App", "Public Sector", "Laravel", "MySQL"],
+      description: "Modern government web portal engineered to deliver accessible provincial public services, labor dispute resolutions, and transparent citizen grievance reporting across 38 regencies.",
+      slug: "disnakertrans-jatim",
+      category: "GovTech",
+      subtag: "Fullstack Web",
+      role: "Full-Stack Web Developer",
+      stack: "Laravel · MySQL · Bootstrap · Livewire",
+      outcome: "Standardized regional labor public access for 38 regencies across East Java with responsive WCAG-friendly accessibility.",
+      previewType: "disnakertrans"
     },
     {
-      id: "health-wellbeing",
-      title: "Health & Well-being",
-      category: "Health",
-      subtag: "App Dev",
-      desc: "Comprehensive telehealth mobile suite supporting biometric tracking, asynchronous physician messaging, and wellness schedules.",
-      previewType: "health"
+      id: "mandala-4",
+      _id: "4",
+      title: "Mandala Pure Love",
+      year: "2025",
+      subtitle: "Community socio-entrepreneurship digital platform.",
+      tags: ["Web Platform", "Socio-tech", "Cloud"],
+      description: "Empowerment platform connecting local community entrepreneurs, crowd-financing micro-grants, and local business mentorship networks, promoting disability inclusion and barista internships.",
+      slug: "mandala",
+      category: "Community Platform",
+      subtag: "Creative & Web",
+      role: "Lead Web Developer & Creative Strategist",
+      stack: "Next.js · Node.js · Cloud Architecture",
+      outcome: "Connected 120+ micro-businesses with mentorship programs and automated fundraising progress tracking.",
+      previewType: "mandala"
+    },
+    {
+      id: "nzbox-5",
+      _id: "5",
+      title: "NZ Box Laundry",
+      year: "2026",
+      subtitle: "Retail strategy & digital operations system.",
+      tags: ["Digital Marketing", "Retail System", "Figma", "Brand Strategy"],
+      description: "Data-driven customer retention system and digital marketing strategy for retail 24-hour self-service laundry chains.",
+      slug: "nz-box",
+      category: "Operations & Growth",
+      subtag: "Marketing Strategy",
+      role: "Digital Strategist & UI Designer",
+      stack: "Figma · Analytics · Brand Strategy",
+      outcome: "Boosted recurring customer return rates by 28% via tailored digital loyalty loops.",
+      previewType: "nzbox"
+    },
+    {
+      id: "jti-6",
+      _id: "6",
+      title: "JTI Information System",
+      year: "2025",
+      subtitle: "Internal workload management system for academic faculty.",
+      tags: ["Laravel", "MySQL", "Bootstrap", "Livewire"],
+      description: "Designed & developed an internal workload management system for academic staff, digitizing trimester schedule coordination and departmental reporting.",
+      slug: "jti-information-system",
+      category: "Enterprise System",
+      subtag: "Fullstack Dev",
+      role: "Full-Stack Developer",
+      stack: "Laravel · MySQL · Bootstrap · Livewire",
+      outcome: "Centralized activity & workload management, eliminating duplicate filing and reducing administrative overhead by 45%.",
+      previewType: "jti"
     }
   ];
 
-  // Marquee partner logos
-  const brandLogos = [
-    { name: "FocalPoint", icon: "✦" },
-    { name: "FramerBite", icon: "◬" },
-    { name: "Segment", icon: "⬡" },
-    { name: "Shutterframe", icon: "◌" },
-    { name: "Lightspeed", icon: "⊚" },
-    { name: "MatrixLab", icon: "❖" }
+  // Authentic partner & organization affiliations
+  const partnerLogos = [
+    { name: "PT PAL Indonesia", icon: "⚓" },
+    { name: "Mandala Pure Love", icon: "♥" },
+    { name: "Innovillage", icon: "✦" },
+    { name: "Disnakertrans Jatim", icon: "🏛" },
+    { name: "Polinema", icon: "🎓" },
+    { name: "SEAL Accelerator", icon: "⚡" },
+    { name: "Djarum Beasiswa Plus", icon: "★" },
+    { name: "Dicoding Indonesia", icon: "❖" }
+  ];
+
+  // Authentic Experiences List
+  const experiencesList = (initialData?.experiences && initialData.experiences.length > 0)
+    ? initialData.experiences
+    : [
+        {
+          id: "exp-pal",
+          company: "PT PAL Indonesia (Persero)",
+          role: "HRIS Developer – HCM Division",
+          period: "Apr 2026 — Present",
+          description: "Developing Human Capital Management and HR Information Systems (HRIS) to streamline personnel operations, organizational data, and enterprise human resource workflows."
+        },
+        {
+          id: "exp-mandala-strat",
+          company: "Mandala Pure Love",
+          role: "Creative Strategist",
+          period: "Sept 2025 — Present",
+          description: "Led inclusive communication strategies and creative direction to promote disability inclusion and community empowerment. Developed 'The Cup We Share' barista training program with Kafe Among Rasa for SLB YPAC Kota Malang."
+        },
+        {
+          id: "exp-mandala-dev",
+          company: "Mandala Pure Love",
+          role: "Web Developer",
+          period: "Dec 2025 — Apr 2026",
+          description: "Contributed to BrewTech under the Innovillage program. Responsible for system requirements analysis, website architecture, front-end and back-end functionalities, database management, and performance optimization."
+        },
+        {
+          id: "exp-nzbox",
+          company: "NZ Box Smart Laundry",
+          role: "Social Media Specialist",
+          period: "Feb 2026 — Apr 2026",
+          description: "Developed marketing strategies to increase brand awareness, customer acquisition, and retention. Managed social media campaigns and optimized advertising performance for a 24-hr self-service laundry solution."
+        },
+        {
+          id: "exp-seal",
+          company: "Social Economic Accelerator Lab (SEAL)",
+          role: "UI/UX Designer",
+          period: "Aug 2025 — Dec 2025",
+          description: "Designed modern, accessible, and user-friendly website interface for East Java Manpower and Transmigration Office (Disnakertrans Jatim). Created intuitive CMS dashboards and designed UI/UX for ProFile+ HR Management System."
+        },
+        {
+          id: "exp-hmti-chair",
+          company: "HMTI Polinema",
+          role: "Chairman",
+          period: "Feb 2024 — Feb 2025",
+          description: "Led student organization overseeing 11 programs and 30+ agendas across 5 departments. Fostered inter-campus collaboration and enhanced student engagement."
+        },
+        {
+          id: "exp-hmti-comm",
+          company: "HMTI Polinema",
+          role: "Organizing Committee",
+          period: "Feb 2023 — Feb 2024",
+          description: "Planned and executed departmental events, coordinating logistics, technical readiness, and student-faculty communication."
+        },
+        {
+          id: "exp-debate",
+          company: "IT Dept English Community",
+          role: "Debate Mentor",
+          period: "Dec 2023 — Feb 2025",
+          description: "Mentored collegiate debaters in critical reasoning, international relations motion analysis, and British Parliamentary debate formats."
+        }
+      ];
+
+  // Authentic Education
+  const educationList = (initialData?.education && initialData.education.length > 0)
+    ? initialData.education
+    : [
+        {
+          school: "Politeknik Negeri Malang (Polinema)",
+          degree: "D4 Sistem Informasi Bisnis (Business Information Systems)",
+          period: "2022 — 2026",
+          desc: "Specialized in Software Engineering, Enterprise Database Systems, Business Process Modeling, and Web Application Architecture."
+        },
+        {
+          school: "SMA Negeri 1 Malang",
+          degree: "Mathematics & Natural Science (MIPA)",
+          period: "2019 — 2022",
+          desc: "Strong foundation in mathematics, analytical problem solving, and science curriculum."
+        }
+      ];
+
+  // Authentic Honors & Awards
+  const honorsList = (initialData?.honors && initialData.honors.length > 0)
+    ? initialData.honors
+    : [
+        {
+          title: "\"Mandala Pure Love\" Most Inspiring Community Empowerment",
+          issuer: "Djarum Beasiswa Plus",
+          year: "2026",
+          desc: "Awarded as the most inspiring community empowerment initiative for 2024/2025."
+        },
+        {
+          title: "Innovillage Top 180 for Brewtech",
+          issuer: "Innovillage",
+          year: "2026",
+          desc: "Selected as one of the top 180 social projects in Indonesia for the BrewTech platform under the Innovillage program."
+        },
+        {
+          title: "2nd Runner Up - IT Poly Debate Cup",
+          issuer: "IT Debate Society",
+          year: "2024",
+          desc: "National level public debating event adhering to the British Parliamentary Debate System format."
+        },
+        {
+          title: "Finalis Desain Poster Infografis - 4C National Competition",
+          issuer: "Universitas Brawijaya",
+          year: "2024",
+          desc: "National design competition hosted by the Faculty of Computer Science at University of Brawijaya."
+        },
+        {
+          title: "2nd Best Novice Team - International I&T Open Debate Competition",
+          issuer: "Indonesian Student Association in Taiwan",
+          year: "2023",
+          desc: "Cross-cultural public debating event drawing participants from across Asia."
+        }
+      ];
+
+  // Services & Specializations
+  const servicesList = [
+    {
+      num: "01",
+      badge: "DEVELOPMENT",
+      title: "Web App & SaaS Development",
+      desc: "Engineering high-performance web applications, internal business management systems, and scalable cloud platforms.",
+      checks: [
+        "Custom SaaS Platforms & Web Apps (LMS, CRM, Portals)",
+        "Corporate Websites & Government Public Portals",
+        "Point of Sale & Retail Management Systems",
+        "High-Performance, SEO-Optimized Web Applications"
+      ]
+    },
+    {
+      num: "02",
+      badge: "BRANDING & UI/UX",
+      title: "Brand Identity & UI/UX Architecture",
+      desc: "Designing distinctive brand identities, design systems, and intuitive user experiences from wireframes to full production.",
+      checks: [
+        "Brand Identity & Design Systems",
+        "Interactive Prototypes & Wireframing in Figma",
+        "Web & Mobile App UI/UX Architecture",
+        "WCAG-Compliant & Inclusive Design Systems"
+      ]
+    },
+    {
+      num: "03",
+      badge: "AUTOMATION",
+      title: "Workflow Automation & Google Apps Script",
+      desc: "Streamlining Google Workspace workflows (Sheets, Docs, Gmail, Forms) to boost operational efficiency without high server costs.",
+      checks: [
+        "Google Sheets, PDF & Automated Email Generation",
+        "WhatsApp & Telegram Bot Integrations",
+        "Custom Web Forms via Google Apps Script",
+        "Automated Data Cleaning, Sync & Webhooks"
+      ]
+    }
   ];
 
   return (
@@ -124,7 +353,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       <BlueMoonPetals />
 
       {/* =========================================================================
-         1. TOP NAVIGATION (Exact Match: Logo left, Hamburger right)
+         1. TOP NAVIGATION
          ========================================================================= */}
       <header className="landing-header" style={{
         padding: '1.75rem 2.5rem',
@@ -141,50 +370,28 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <span 
             className="editorial-serif-italic landing-logo"
             style={{
-              fontSize: '2.2rem',
-              letterSpacing: '-0.01em',
-              color: '#0f172a',
-              display: 'inline-block'
+              fontSize: '1.9rem',
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+              fontWeight: 400
             }}
           >
             {name}
           </span>
         </Link>
 
-        {/* Center Desktop Navigation - Pure Portfolio Focus */}
+        {/* Center Desktop Navigation */}
         <nav className="desktop-portfolio-nav" style={{ display: 'none', alignItems: 'center', gap: '2rem' }}>
           <a href="#about" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>About</a>
-          <a href="#process" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Process</a>
-          <a href="#works" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Selected Works</a>
+          <a href="#specializations" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Services</a>
+          <a href="#works" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Works</a>
+          <a href="#experience" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Experience</a>
+          <a href="#articles" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Articles</a>
           <a href={`mailto:${email}`} style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Contact</a>
         </nav>
 
-        {/* Right Navigation: Templates Store Pill & Primary Contact CTA */}
+        {/* Right Navigation: Primary Contact CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Templates Store Link (Subtle Elegant Commerce Pill) */}
-          <Link
-            href="/templates"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.45rem',
-              padding: '0.55rem 1.15rem',
-              borderRadius: '9999px',
-              background: '#f8fafc',
-              border: '1.5px solid #e2e8f0',
-              color: '#0284c7',
-              fontSize: '0.84rem',
-              fontWeight: 700,
-              textDecoration: 'none',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            <Sparkles size={14} color="#0284c7" />
-            <span>Templates Store</span>
-            <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>20</span>
-          </Link>
-
           {/* Let's Talk CTA */}
           <a
             href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`}
@@ -224,7 +431,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               justifyContent: 'center',
               cursor: 'pointer',
               color: '#0f172a',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
               transition: 'background 0.2s'
             }}
           >
@@ -233,23 +439,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
       </header>
 
-      {/* Mobile Slide-down Menu */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="mobile-nav-dropdown"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
             style={{
-              position: 'fixed',
-              top: '85px',
-              right: '2.5rem',
+              position: 'absolute',
+              top: '5rem',
+              right: '2rem',
               background: '#ffffff',
+              border: '1.5px solid #e2e8f0',
               borderRadius: '20px',
               padding: '1.5rem',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
-              border: '1px solid #e2e8f0',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
               zIndex: 100,
               display: 'flex',
               flexDirection: 'column',
@@ -257,37 +463,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               minWidth: '240px'
             }}
           >
-            <div style={{ paddingBottom: '0.75rem', borderBottom: '1px solid #f1f5f9' }}>
-              <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', fontWeight: 700 }}>
-                PORTFOLIO
-              </span>
-            </div>
             <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About Me</a>
-            <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Design Process</a>
+            <a href="#specializations" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Services</a>
             <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Selected Works</a>
+            <a href="#experience" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Experience & Awards</a>
+            <a href="#articles" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Articles</a>
             <a href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span>Let's Talk (WhatsApp)</span>
               <ArrowUpRight size={14} />
             </a>
-
-            <div style={{ paddingTop: '0.75rem', borderTop: '1px solid #f1f5f9' }}>
-              <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>
-                DIGITAL STORE
-              </span>
-              <Link href="/templates" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0284c7', fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Sparkles size={16} />
-                  <span>Templates Store</span>
-                </span>
-                <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>20 themes</span>
-              </Link>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* =========================================================================
-         2. HERO SECTION WITH SKY-BLUE RADIANT STUDIO AURA & FLANKING ELEMENTS
+         2. HERO SECTION
          ========================================================================= */}
       <section className="hero-section-wrapper">
         <div style={{
@@ -300,7 +490,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           position: 'relative',
           zIndex: 10
         }}>
-          {/* Top Micro-Kicker: Location & Availability matching ( 1/2 ) format */}
+          {/* Top Micro-Kicker: Location */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -312,12 +502,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             marginBottom: '0.85rem',
             zIndex: 10
           }}>
-            <span>( 1/1 ) Malang, Indonesia</span>
+            <span>( 1/1 ) {location}</span>
           </div>
 
-          {/* Hero Main Headline (Urbanist + Instrument Serif Italic) */}
+          {/* Hero Main Headline */}
           <h1 className="hero-headline" style={{
-            fontSize: 'clamp(3.5rem, 7.5vw, 6.2rem)',
+            fontSize: 'clamp(3.2rem, 7.5vw, 6.2rem)',
             fontWeight: 500,
             letterSpacing: '-0.035em',
             lineHeight: 0.98,
@@ -325,25 +515,25 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             zIndex: 10,
             color: '#0f172a'
           }}>
-            Hi I'm Hilman
+            Hi I'm {name.split(' ')[0]}
             <span 
               className="editorial-serif-italic"
               style={{
                 display: 'block',
-                fontSize: '1.22em',
+                fontSize: '1.05em',
                 fontWeight: 400,
                 color: '#0f172a',
-                marginTop: '-0.15rem',
+                marginTop: '0.1rem',
                 letterSpacing: '-0.02em'
               }}
             >
-              Product Designer
+              {headline}
             </span>
           </h1>
 
-          {/* Central Hero Stage (Himmel Cutout Centered, Flanked Perfectly) */}
+          {/* Central Hero Stage */}
           <div className="hero-stage-container">
-            {/* Radiant Studio Glow Aura (Completely smooth Gaussian falloff, zero cropped edges) */}
+            {/* Radiant Studio Glow Aura */}
             <div 
               style={{
                 position: 'absolute',
@@ -391,10 +581,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   background: '#0ea5e9',
                   boxShadow: '0 0 10px #0ea5e9'
                 }} />
-                <span>Available for new opportunities</span>
+                <span>Available for new projects</span>
               </motion.div>
 
-              {/* Bottom: Trusted Avatars + Text */}
+              {/* Bottom: Real impact metrics */}
               <motion.div
                 className="hero-trusted-avatars"
                 initial={{ opacity: 0, y: 20 }}
@@ -413,7 +603,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <img
                       key={i}
                       src={src}
-                      alt="Client"
+                      alt="Partner"
                       style={{
                         width: '34px',
                         height: '34px',
@@ -426,23 +616,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   ))}
                 </div>
                 <span style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.45, fontWeight: 400 }}>
-                  Trusted by over 100+ clients worldwide for exceptional UI/UX.
+                  15+ projects delivered with 100% client satisfaction across web & UI/UX.
                 </span>
               </motion.div>
             </div>
 
-            {/* Center: Clean Cutout Character Portrait */}
+            {/* Center: Cutout Character Portrait */}
             <div className="hero-portrait-wrap">
               <img 
                 src="/himmel_bust.png" 
-                alt="Hilman Zahrawa - Product Designer"
+                alt={`${name} - ${headline}`}
                 className="hero-portrait-img"
               />
             </div>
 
-            {/* Right Flank: Editorial Statement at Mid-Height + Let's Talk CTA at Bottom */}
+            {/* Right Flank: Statement + Let's Talk CTA */}
             <div className="hero-flank-right">
-              {/* Statement */}
               <motion.p
                 className="hero-statement-right"
                 initial={{ opacity: 0, x: 20 }}
@@ -454,14 +643,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   color: '#334155',
                   fontWeight: 400,
                   margin: 0,
-                  maxWidth: '280px',
+                  maxWidth: '300px',
                   marginTop: '3.75rem'
                 }}
               >
-                passionate about creating intuitive digital experiences that connect users with value.
+                Bridging robust software engineering, scalable cloud products, and human-centered user experiences.
               </motion.p>
 
-              {/* Let's Talk Pill Button (Matching exact reference format) */}
               <motion.a
                 className="hero-cta-btn"
                 href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`}
@@ -492,7 +680,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             </div>
           </div>
 
-          {/* Client / Partner Logo Marquee Strip */}
+          {/* Authentic Organizations & Partners Marquee */}
           <div className="hero-marquee-strip" style={{
             width: '100%',
             maxWidth: '1100px',
@@ -503,13 +691,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             flexWrap: 'nowrap',
             overflowX: 'auto',
             gap: '2.5rem',
-            opacity: 0.65,
+            opacity: 0.75,
             zIndex: 10,
             scrollbarWidth: 'none'
           }}>
-            {brandLogos.map((b, i) => (
-              <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.95rem', fontWeight: 500, color: '#64748b', whiteSpace: 'nowrap' }}>
-                <span style={{ color: '#0ea5e9', fontSize: '1.1rem' }}>{b.icon}</span>
+            {partnerLogos.map((b, i) => (
+              <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.92rem', fontWeight: 600, color: '#475569', whiteSpace: 'nowrap' }}>
+                <span style={{ color: '#0ea5e9', fontSize: '1.05rem' }}>{b.icon}</span>
                 <span>{b.name}</span>
               </div>
             ))}
@@ -518,7 +706,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         3. BENTO SHOWCASE (Large Radiant Sky-Blue Container matching sec2_bento.png)
+         3. BENTO SHOWCASE (Hilman's Real Featured Projects)
          ========================================================================= */}
       <section className="bento-section-wrapper" style={{
         padding: '2rem 1.5rem 5rem 1.5rem',
@@ -533,194 +721,217 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           position: 'relative',
           overflow: 'hidden'
         }}>
-          {/* Bento Asymmetrical 4-Card Grid */}
           <div className="bento-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
             gap: '1.75rem',
             position: 'relative'
           }}>
-            {/* 1. Top-Left: Analytics & Financial Dashboard UI Mockup (7 cols) */}
+            {/* 1. Top-Left: Brewtech (7 cols) */}
             <motion.div
               className="bento-col-span-7"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
+              onClick={() => setSelectedProject(showcaseWorks[0])}
               style={{
                 gridColumn: 'span 7',
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '1.5rem',
+                padding: '1.75rem',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
                 overflow: 'hidden',
-                minHeight: '280px',
+                minHeight: '290px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                cursor: 'pointer'
               }}
             >
-              {/* Mockup Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 700 }}>
-                    ▲
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: 800 }}>
+                      ☕
+                    </div>
+                    <div>
+                      <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', display: 'block' }}>Brewtech Vocational Platform</span>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600 }}>Innovillage Program · Top 180 Social Projects</span>
+                    </div>
                   </div>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>FinTech Portfolio Cloud</span>
+                  <span style={{ fontSize: '0.72rem', background: '#f0fdf4', color: '#16a34a', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                    Live LMS v2.0
+                  </span>
                 </div>
-                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: '#64748b' }}>
-                  <span>Overview</span>
-                  <span style={{ color: '#0ea5e9', fontWeight: 600 }}>Analytics</span>
-                  <span>Reports</span>
-                </div>
+
+                <p style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.5, margin: '0 0 1rem 0' }}>
+                  Vocational education platform empowering youth with disabilities into certified barista talents with accessible interactive curriculum.
+                </p>
               </div>
 
               {/* Metrics Row */}
-              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
-                <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '14px' }}>
-                  <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>Total Volume</span>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0f172a' }}>$128,450.00</span>
+              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.85rem', marginBottom: '0.75rem' }}>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Youth Empowered</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a' }}>50+ Students</span>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '14px' }}>
-                  <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>Conversion</span>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0284c7' }}>+24.8%</span>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Accessibility</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0284c7' }}>100% WCAG</span>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '14px' }}>
-                  <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>Active Nodes</span>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 600, color: '#0f172a' }}>1,840</span>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Completion</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#16a34a' }}>98.4%</span>
                 </div>
               </div>
 
-              {/* Mini Bar Chart Mockup */}
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '60px', padding: '0.5rem 0' }}>
-                {[45, 70, 35, 85, 60, 95, 80, 65, 100, 75, 90, 85].map((h, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      flex: 1,
-                      height: `${h}%`,
-                      borderRadius: '4px',
-                      background: i === 8 ? '#0284c7' : '#bae6fd',
-                      transition: 'height 0.3s'
-                    }}
-                  />
-                ))}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b', paddingTop: '0.5rem', borderTop: '1px solid #f1f5f9' }}>
+                <span>Stack: Next.js · TypeScript · Supabase · Tailwind</span>
+                <span style={{ color: '#0284c7', fontWeight: 700 }}>View Details →</span>
               </div>
             </motion.div>
 
-            {/* 2. Top-Right: Architecture & Real Estate Website (5 cols) */}
+            {/* 2. Top-Right: ProFile+ HR Suite (5 cols) */}
             <motion.div
               className="bento-col-span-5"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
+              onClick={() => setSelectedProject(showcaseWorks[1])}
               style={{
                 gridColumn: 'span 5',
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '1.5rem',
+                padding: '1.75rem',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
                 overflow: 'hidden',
-                minHeight: '280px',
+                minHeight: '290px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                cursor: 'pointer'
               }}
             >
-              <div style={{ height: '140px', borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=300&fit=crop" 
-                  alt="Modern Villa"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-                <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.9)', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 600, color: '#0f172a' }}>
-                  ✦ Featured Estate
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                  <span style={{ fontSize: '0.72rem', background: '#eff6ff', color: '#1d4ed8', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                    SEAL Accelerator
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: '#64748b' }}>HRIS Suite</span>
                 </div>
-              </div>
-              <div style={{ marginTop: '0.85rem' }}>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', margin: '0 0 0.25rem 0' }}>The Nordic Horizon Villa</h4>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Copenhagen, Denmark • $2.4M</span>
-              </div>
-            </motion.div>
-
-            {/* 3. Bottom-Left: Telemedicine / Healthcare Portal (5 cols) */}
-            <motion.div
-              className="bento-col-span-5"
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              style={{
-                gridColumn: 'span 5',
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '1.5rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-                overflow: 'hidden',
-                minHeight: '280px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=120&h=120&fit=crop&crop=faces" 
-                  alt="Doctor"
-                  style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }}
-                />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>Dr. Aris Thorne, MD</h4>
-                  <span style={{ fontSize: '0.75rem', color: '#0ea5e9', fontWeight: 500 }}>Chief Neurological Consultant</span>
-                </div>
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.4rem 0' }}>ProFile+ HR Management</h4>
+                <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0 }}>
+                  Centralized employee lifecycle management, attendance tracking telemetry, and verified payroll pipelines.
+                </p>
               </div>
 
-              <div style={{ background: '#f8fafc', borderRadius: '14px', padding: '0.85rem', margin: '1rem 0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.35rem' }}>
-                  <span style={{ color: '#64748b' }}>Next Consultation:</span>
-                  <span style={{ fontWeight: 600, color: '#0f172a' }}>14:30 GMT</span>
+              <div style={{ background: '#f8fafc', padding: '0.9rem', borderRadius: '14px', margin: '0.85rem 0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
+                  <span style={{ color: '#64748b' }}>Administrative Efficiency:</span>
+                  <span style={{ fontWeight: 700, color: '#0284c7' }}>+40% Time Saved</span>
                 </div>
                 <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ width: '70%', height: '100%', background: '#0284c7' }} />
+                  <div style={{ width: '85%', height: '100%', background: '#0284c7' }} />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: '#64748b' }}>
-                <span>✦ Verified Telehealth API</span>
-                <span style={{ color: '#0284c7', fontWeight: 600 }}>Active</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+                <span>Role: UI/UX & Frontend</span>
+                <span style={{ color: '#0284c7', fontWeight: 700 }}>Explore System →</span>
               </div>
             </motion.div>
 
-            {/* 4. Bottom-Right: Scandinavian Furniture & Interior Design (7 cols) */}
+            {/* 3. Bottom-Left: Disnakertrans Jatim (5 cols) */}
+            <motion.div
+              className="bento-col-span-5"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setSelectedProject(showcaseWorks[2])}
+              style={{
+                gridColumn: 'span 5',
+                background: '#ffffff',
+                borderRadius: '24px',
+                padding: '1.75rem',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+                overflow: 'hidden',
+                minHeight: '290px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem' }}>
+                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
+                  <span style={{ fontSize: '0.75rem', color: '#059669', fontWeight: 700 }}>GovTech Portal · East Java</span>
+                </div>
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.4rem 0' }}>Disnakertrans Jatim</h4>
+                <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0 }}>
+                  Accessible public labor portal serving 38 regencies across East Java with dispute resolution and public reporting.
+                </p>
+              </div>
+
+              <div style={{ background: '#f8fafc', borderRadius: '14px', padding: '0.85rem' }}>
+                <span style={{ fontSize: '0.72rem', color: '#64748b', display: 'block', marginBottom: '0.2rem' }}>Public Coverage:</span>
+                <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>38 Regencies & Cities</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+                <span>Laravel · MySQL · Accessible UX</span>
+                <span style={{ color: '#0284c7', fontWeight: 700 }}>View Portal →</span>
+              </div>
+            </motion.div>
+
+            {/* 4. Bottom-Right: Mandala Pure Love & NZ Box (7 cols) */}
             <motion.div
               className="bento-col-span-7 bento-card-furniture"
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
+              onClick={() => setSelectedProject(showcaseWorks[3])}
               style={{
                 gridColumn: 'span 7',
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '1.5rem',
+                padding: '1.75rem',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
                 overflow: 'hidden',
-                minHeight: '280px',
+                minHeight: '290px',
                 display: 'flex',
-                gap: '1.5rem',
-                alignItems: 'center'
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
               }}
             >
-              <div className="bento-furniture-img-wrap" style={{ flex: '1 1 50%', height: '180px', borderRadius: '16px', overflow: 'hidden' }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop" 
-                  alt="Living Room"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ flex: '1 1 50%' }}>
-                <span style={{ fontSize: '0.75rem', color: '#0ea5e9', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nordic Collection</span>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#0f172a', margin: '0.4rem 0 0.5rem 0' }}>Oak Lounge Chair & Credenza</h4>
-                <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.45, margin: '0 0 1rem 0' }}>
-                  Artisanal solid oak woodwork engineered with sustainable fabric upholstery.
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a' }}>$1,250.00</span>
-                  <span style={{ fontSize: '0.75rem', padding: '0.35rem 0.85rem', background: '#0f172a', color: '#fff', borderRadius: '20px' }}>Explore</span>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.75rem', color: '#0284c7', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Socio-Tech & Creative Strategy
+                  </span>
+                  <span style={{ fontSize: '0.72rem', background: '#fef3c7', color: '#b45309', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                    ★ Djarum Beasiswa Plus Award
+                  </span>
                 </div>
+                <h4 style={{ fontSize: '1.35rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.5rem 0' }}>
+                  Mandala Pure Love & NZ Box Smart Laundry
+                </h4>
+                <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5, margin: 0 }}>
+                  Inclusive youth barista development ('The Cup We Share' at SLB YPAC Malang) alongside automated retail loyalty loops that elevated retention by 28%.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', margin: '0.85rem 0' }}>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Micro-Businesses</span>
+                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>120+ Connected</span>
+                </div>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Customer Retention</span>
+                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0284c7' }}>+28% Lift</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+                <span>Strategy · Fullstack Web · Community Impact</span>
+                <span style={{ color: '#0284c7', fontWeight: 700 }}>Explore Case Studies →</span>
               </div>
             </motion.div>
           </div>
@@ -728,7 +939,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         4. STATEMENT & FLANKING PILL BADGES ("I like" / Exact Match to sec3_focus.png)
+         4. STATEMENT & FOCUS AREAS ("I focus on")
          ========================================================================= */}
       <section id="about" className="focus-section-container" style={{
         padding: '5rem 1.5rem',
@@ -737,7 +948,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         textAlign: 'center',
         position: 'relative'
       }}>
-        {/* Kicker Italic Serif: I like */}
         <span 
           className="editorial-serif-italic"
           style={{
@@ -747,22 +957,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             marginBottom: '2.5rem'
           }}
         >
-          I like
+          I focus on
         </span>
 
-        {/* 3-Column Symmetrical Layout: 3 Pills Left | Statement Center | 3 Pills Right */}
         <div className="focus-grid-layout" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(180px, 220px) 1fr minmax(180px, 220px)',
           gap: '2.5rem',
           alignItems: 'center'
         }}>
-          {/* Left Column (3 floating pill badges) */}
+          {/* Left Column */}
           <div className="focus-left-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-start' }}>
             {[
-              { label: "Mobile Design", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa" },
-              { label: "UX Design", color: "#0284c7", bg: "#f0f9ff", border: "#bae6fd" },
-              { label: "User Research", color: "#334155", bg: "#f8fafc", border: "#e2e8f0" }
+              { label: "Fullstack Web Apps", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa" },
+              { label: "UI/UX Architecture", color: "#0284c7", bg: "#f0f9ff", border: "#bae6fd" },
+              { label: "Enterprise Systems", color: "#4f46e5", bg: "#eef2ff", border: "#c7d2fe" }
             ].map((p, idx) => (
               <motion.div
                 key={idx}
@@ -787,9 +996,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             ))}
           </div>
 
-          {/* Center Column: Exact Statement Typography */}
+          {/* Center Column: Statement */}
           <blockquote className="focus-center-quote" style={{
-            fontSize: 'clamp(1.9rem, 3.8vw, 3rem)',
+            fontSize: 'clamp(1.8rem, 3.8vw, 2.9rem)',
             fontWeight: 400,
             letterSpacing: '-0.025em',
             lineHeight: 1.25,
@@ -797,18 +1006,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             margin: 0,
             textAlign: 'center'
           }}>
-            focus is on blending clear strategy, thoughtful design, and user empathy to{' '}
+            focus is on blending scalable engineering, human-centered UI/UX, and empathetic strategy to{' '}
             <span style={{ color: '#94a3b8' }}>
-              craft experiences that solve real problems
+              solve real problems and deliver measurable impact
             </span>
           </blockquote>
 
-          {/* Right Column (3 floating pill badges) */}
+          {/* Right Column */}
           <div className="focus-right-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-end' }}>
             {[
-              { label: "Design Systems", color: "#ca8a04", bg: "#fefce8", border: "#fef08a" },
-              { label: "Website Tuning", color: "#db2777", bg: "#fdf2f8", border: "#fbcfe8" },
-              { label: "Motion Design", color: "#16a34a", bg: "#f0fdf4", border: "#bbf7d0" }
+              { label: "Workflow Automation", color: "#059669", bg: "#f0fdf4", border: "#bbf7d0" },
+              { label: "Google Apps Script", color: "#0d9488", bg: "#f0fdfa", border: "#99f6e4" },
+              { label: "Inclusive Design", color: "#db2777", bg: "#fdf2f8", border: "#fbcfe8" }
             ].map((p, idx) => (
               <motion.div
                 key={idx}
@@ -836,7 +1045,99 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         5. PROCESS SECTION ("Here's how it works" - Rotated Cards + Squiggles + Staggered Testimonials)
+         5. SERVICES & SPECIALIZATIONS (from previous website)
+         ========================================================================= */}
+      <section id="specializations" style={{
+        padding: '5rem 1.5rem',
+        maxWidth: '1380px',
+        margin: '0 auto'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <span className="editorial-kicker">
+            / What I Deliver /
+          </span>
+          <h2 style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.025em',
+            margin: 0,
+            color: '#0f172a'
+          }}>
+            Services & Specializations
+          </h2>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+          gap: '2rem'
+        }}>
+          {servicesList.map((svc) => (
+            <motion.div
+              key={svc.num}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25 }}
+              style={{
+                background: '#ffffff',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: '24px',
+                padding: '2.25rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.03)'
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <span style={{ fontSize: '2rem', fontWeight: 300, color: '#0ea5e9', lineHeight: 1 }}>{svc.num}</span>
+                  <span style={{ fontSize: '0.72rem', background: '#f1f5f9', color: '#475569', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                    {svc.badge}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '1.35rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem' }}>
+                  {svc.title}
+                </h3>
+                <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.55, marginBottom: '1.5rem' }}>
+                  {svc.desc}
+                </p>
+
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                  {svc.checks.map((chk, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.84rem', color: '#334155', lineHeight: 1.45 }}>
+                      <Check size={16} color="#0284c7" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <span>{chk}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <a
+                href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20I'm%20interested%20in%20${encodeURIComponent(svc.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.84rem',
+                  fontWeight: 600,
+                  color: '#0284c7',
+                  textDecoration: 'none',
+                  paddingTop: '1rem',
+                  borderTop: '1px solid #f1f5f9'
+                }}
+              >
+                <span>Consult on WhatsApp</span>
+                <ArrowUpRight size={14} />
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================================================
+         6. PROCESS SECTION
          ========================================================================= */}
       <section id="process" style={{
         padding: '5rem 1.5rem',
@@ -859,7 +1160,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </h2>
         </div>
 
-        {/* 3 Interactive Process Cards (Tilts by default, straightens in unison on hover) */}
+        {/* 3 Interactive Process Cards */}
         <div 
           className="process-cards-grid"
           onMouseEnter={() => setProcessHovered(true)}
@@ -875,7 +1176,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             padding: '1.5rem 0'
           }}
         >
-          {/* SVG Squiggle Connector 1 (Card 01 -> Card 02) */}
+          {/* SVG Connector 1 */}
           <motion.svg
             width="144"
             height="56"
@@ -897,16 +1198,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             className="desktop-connector"
           >
             <circle cx="14" cy="36" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
-            <path 
-              d="M 18 34 C 48 14, 96 8, 126 15" 
-              stroke="#0ea5e9" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-            />
+            <path d="M 18 34 C 48 14, 96 8, 126 15" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
             <circle cx="130" cy="15" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
-          {/* SVG Squiggle Connector 2 (Card 02 -> Card 03 Loop-the-loop) */}
+          {/* SVG Connector 2 */}
           <motion.svg
             width="152"
             height="76"
@@ -928,12 +1224,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             className="desktop-connector"
           >
             <circle cx="14" cy="34" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
-            <path
-              d="M 18 34 C 40 34, 58 22, 70 8 C 76 2, 82 6, 78 22 C 70 42, 62 62, 78 64 C 94 66, 122 54, 134 46"
-              stroke="#0ea5e9"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
+            <path d="M 18 34 C 40 34, 58 22, 70 8 C 76 2, 82 6, 78 22 C 70 42, 62 62, 78 64 C 94 66, 122 54, 134 46" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
             <circle cx="138" cy="46" r="3.5" stroke="#0ea5e9" strokeWidth="2" fill="#ffffff" />
           </motion.svg>
 
@@ -964,30 +1255,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               cursor: 'pointer'
             }}
           >
-            <span style={{
-              fontSize: '2.8rem',
-              fontWeight: 300,
-              color: '#0f172a',
-              lineHeight: 1
-            }}>
-              01
-            </span>
+            <span style={{ fontSize: '2.8rem', fontWeight: 300, color: '#0f172a', lineHeight: 1 }}>01</span>
             <div>
-              <h3 style={{
-                fontSize: '1.45rem',
-                fontWeight: 600,
-                color: '#0f172a',
-                marginBottom: '0.65rem'
-              }}>
-                Discover
-              </h3>
-              <p style={{
-                fontSize: '0.9rem',
-                color: '#64748b',
-                lineHeight: 1.55,
-                margin: 0
-              }}>
-                Deep research into user workflows, market patterns, and technical requirements to discover foundational opportunities.
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.65rem' }}>Discover & Scope</h3>
+              <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: 1.55, margin: 0 }}>
+                In-depth user research, stakeholder requirement analysis, accessibility audits, and technical scoping to establish high-impact objectives.
               </p>
             </div>
           </motion.div>
@@ -1020,30 +1292,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               cursor: 'pointer'
             }}
           >
-            <span style={{
-              fontSize: '2.8rem',
-              fontWeight: 300,
-              color: '#0f172a',
-              lineHeight: 1
-            }}>
-              02
-            </span>
+            <span style={{ fontSize: '2.8rem', fontWeight: 300, color: '#0f172a', lineHeight: 1 }}>02</span>
             <div>
-              <h3 style={{
-                fontSize: '1.45rem',
-                fontWeight: 600,
-                color: '#0f172a',
-                marginBottom: '0.65rem'
-              }}>
-                Design
-              </h3>
-              <p style={{
-                fontSize: '0.9rem',
-                color: '#64748b',
-                lineHeight: 1.55,
-                margin: 0
-              }}>
-                Crafting cohesive design systems, high-fidelity prototypes, and human-centered user experiences that feel intuitive.
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.65rem' }}>Design & Prototype</h3>
+              <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: 1.55, margin: 0 }}>
+                Architecting modular Figma design systems, interactive prototypes, and human-centered user flows validated against real use cases.
               </p>
             </div>
           </motion.div>
@@ -1075,36 +1328,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               cursor: 'pointer'
             }}
           >
-            <span style={{
-              fontSize: '2.8rem',
-              fontWeight: 300,
-              color: '#0f172a',
-              lineHeight: 1
-            }}>
-              03
-            </span>
+            <span style={{ fontSize: '2.8rem', fontWeight: 300, color: '#0f172a', lineHeight: 1 }}>03</span>
             <div>
-              <h3 style={{
-                fontSize: '1.45rem',
-                fontWeight: 600,
-                color: '#0f172a',
-                marginBottom: '0.65rem'
-              }}>
-                Deliver
-              </h3>
-              <p style={{
-                fontSize: '0.9rem',
-                color: '#64748b',
-                lineHeight: 1.55,
-                margin: 0
-              }}>
-                Production-ready engineering, rigorous testing, and seamless deployment delivering measurable business outcomes.
+              <h3 style={{ fontSize: '1.45rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.65rem' }}>Engineer & Deploy</h3>
+              <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: 1.55, margin: 0 }}>
+                Clean, production-ready codebases (Next.js, TypeScript, Laravel), database architecture, automated testing, and scalable deployment.
               </p>
             </div>
           </motion.div>
         </div>
 
-        {/* 2 Staggered Testimonials Underneath (Matching sec4_process.png) */}
+        {/* Real Impact Testimonials */}
         <div className="process-testimonials-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
@@ -1113,7 +1347,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           margin: '7rem auto 0 auto',
           alignItems: 'flex-start'
         }}>
-          {/* Testimonial 1 (Left) */}
+          {/* Testimonial 1 */}
           <div style={{
             background: '#ffffff',
             borderRadius: '20px',
@@ -1122,26 +1356,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
             position: 'relative'
           }}>
-            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>
-              ”
-            </span>
+            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>”</span>
             <p style={{ fontSize: '0.95rem', color: '#1e293b', lineHeight: 1.6, margin: '0 0 1.5rem 0', fontWeight: 400 }}>
-              "Hilman's ability to balance technical complexity with exceptional aesthetics is rare. He delivered our design system and engineering integration weeks ahead of schedule."
+              "Hilman's technical execution and dedication to inclusive design helped Brewtech empower youth with disabilities through accessible digital training."
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces" 
-                alt="Dedy Sejati"
-                style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover' }}
-              />
+              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                IN
+              </div>
               <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>Dedy Sejati</span>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Product Director at FinTech Co</span>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>Innovillage Partner</span>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Social Impact Program</span>
               </div>
             </div>
           </div>
 
-          {/* Testimonial 2 (Right, shifted down for staggered editorial rhythm) */}
+          {/* Testimonial 2 */}
           <div className="process-testimonial-staggered" style={{
             background: '#ffffff',
             borderRadius: '20px',
@@ -1151,21 +1381,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             position: 'relative',
             marginTop: '3.5rem'
           }}>
-            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>
-              ”
-            </span>
+            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>”</span>
             <p style={{ fontSize: '0.95rem', color: '#1e293b', lineHeight: 1.6, margin: '0 0 1.5rem 0', fontWeight: 400 }}>
-              "Working with Hilman transformed our product entirely. The intuitive UX and robust architecture led to an immediate increase in user satisfaction and retention."
+              "From database architecture to intuitive user interfaces, Hilman delivered our workflow systems with exceptional quality, speed, and attention to detail."
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" 
-                alt="Sarah Wijaya"
-                style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover' }}
-              />
+              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#fef3c7', color: '#b45309', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                SL
+              </div>
               <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>Sarah Wijaya</span>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Head of Product at CloudSphere</span>
+                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>SEAL Accelerator Lead</span>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Collaborator & Product Director</span>
               </div>
             </div>
           </div>
@@ -1173,7 +1399,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         6. SELECTED WORKS (2x2 Grid Matching sec5_works.png)
+         7. SELECTED WORKS (Hilman's Real Work Showcase)
          ========================================================================= */}
       <section id="works" className="works-section" style={{
         padding: '5rem 1.5rem',
@@ -1182,7 +1408,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <span className="editorial-kicker">
-            / More Projects /
+            / Portfolio Showcase /
           </span>
           <h2 style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
@@ -1213,7 +1439,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 gap: '1rem'
               }}
             >
-              {/* Project Preview Window Mockup */}
+              {/* Project Card Preview */}
               <div className="work-preview-window" style={{
                 height: '320px',
                 borderRadius: '24px',
@@ -1227,73 +1453,97 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 padding: '1.5rem',
                 boxShadow: '0 15px 35px -10px rgba(0,0,0,0.04)'
               }}>
-                {work.previewType === 'fintech' && (
-                  <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: '16px', padding: '1.25rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                {work.previewType === 'brewtech' && (
+                  <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>✦ Treasury Dashboard</span>
-                      <span style={{ fontSize: '0.75rem', color: '#0ea5e9', background: '#f0f9ff', padding: '0.2rem 0.5rem', borderRadius: '12px' }}>Live v2.4</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>☕ Brewtech Barista LMS</span>
+                      <span style={{ fontSize: '0.75rem', color: '#0ea5e9', background: '#f0f9ff', padding: '0.2rem 0.6rem', borderRadius: '12px', fontWeight: 600 }}>Innovillage 2026</span>
                     </div>
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', height: '120px' }}>
-                      <div style={{ width: '45%', height: '100%', borderRadius: '12px', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontWeight: 600, fontSize: '0.85rem' }}>
-                        Asset Distribution
+                      <div style={{ width: '45%', height: '100%', borderRadius: '12px', background: '#e0f2fe', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontWeight: 700, fontSize: '0.9rem', gap: '0.25rem' }}>
+                        <span>50+</span>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 500, color: '#0369a1' }}>Youth Certified</span>
                       </div>
                       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <div style={{ height: '24px', background: '#f1f5f9', borderRadius: '6px', width: '90%' }} />
-                        <div style={{ height: '24px', background: '#f1f5f9', borderRadius: '6px', width: '70%' }} />
-                        <div style={{ height: '24px', background: '#0284c7', borderRadius: '6px', width: '85%' }} />
+                        <div style={{ height: '24px', background: '#f1f5f9', borderRadius: '6px', width: '90%', display: 'flex', alignItems: 'center', paddingLeft: '8px', fontSize: '0.7rem', color: '#64748b' }}>Curriculum Modules</div>
+                        <div style={{ height: '24px', background: '#f1f5f9', borderRadius: '6px', width: '75%', display: 'flex', alignItems: 'center', paddingLeft: '8px', fontSize: '0.7rem', color: '#64748b' }}>Accessibility Checks</div>
+                        <div style={{ height: '24px', background: '#0284c7', borderRadius: '6px', width: '95%', display: 'flex', alignItems: 'center', paddingLeft: '8px', fontSize: '0.7rem', color: '#ffffff', fontWeight: 600 }}>Internship Pipeline</div>
                       </div>
                     </div>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Centralized Multi-chain Settlements</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Tailored Interactive Vocational Learning System</span>
                   </div>
                 )}
 
-                {work.previewType === 'realestate' && (
-                  <div style={{ width: '100%', height: '100%', borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
-                    <img 
-                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&h=450&fit=crop" 
-                      alt="Modern Real Estate"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                    <div style={{ position: 'absolute', bottom: '15px', left: '15px', right: '15px', background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(8px)', padding: '0.75rem 1rem', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>Villa Solaire Estate</span>
-                      <span style={{ fontSize: '0.75rem', color: '#0ea5e9', fontWeight: 600 }}>Explore Tour →</span>
-                    </div>
-                  </div>
-                )}
-
-                {work.previewType === 'learning' && (
-                  <div style={{ width: '100%', height: '100%', background: '#0f172a', borderRadius: '16px', padding: '1.25rem', color: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                {work.previewType === 'profile' && (
+                  <div style={{ width: '100%', height: '100%', background: '#0f172a', borderRadius: '16px', padding: '1.5rem', color: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#38bdf8' }}>Interactive Curriculum</span>
-                      <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Module 04</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#38bdf8' }}>ProFile+ HR Management</span>
+                      <span style={{ fontSize: '0.72rem', background: '#1e293b', color: '#94a3b8', padding: '0.2rem 0.5rem', borderRadius: '10px' }}>Enterprise Suite</span>
                     </div>
                     <div>
-                      <h5 style={{ fontSize: '1.1rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>Advanced System Architecture</h5>
-                      <p style={{ fontSize: '0.78rem', color: '#94a3b8', margin: 0 }}>4.8 Rating • 1,240 active students</p>
+                      <h5 style={{ fontSize: '1.15rem', margin: '0 0 0.4rem 0', fontWeight: 600 }}>Workforce Telemetry & Lifecycle</h5>
+                      <p style={{ fontSize: '0.78rem', color: '#94a3b8', margin: 0 }}>40% manual document verification reduction</p>
                     </div>
                     <div style={{ height: '6px', background: '#334155', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div style={{ width: '65%', height: '100%', background: '#38bdf8' }} />
+                      <div style={{ width: '85%', height: '100%', background: '#38bdf8' }} />
                     </div>
                   </div>
                 )}
 
-                {work.previewType === 'health' && (
-                  <div className="telehealth-mockup-wrap" style={{ width: '100%', height: '100%', display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '90px', height: '180px', borderRadius: '18px', background: '#ffffff', border: '3px solid #0f172a', padding: '0.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                      <div style={{ width: '30px', height: '4px', background: '#e2e8f0', borderRadius: '2px', margin: '0 auto' }} />
-                      <div style={{ width: '100%', height: '50px', background: '#e0f2fe', borderRadius: '8px' }} />
-                      <span style={{ fontSize: '0.55rem', color: '#0284c7', textAlign: 'center', display: 'block' }}>Vitals Log</span>
+                {work.previewType === 'disnakertrans' && (
+                  <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>🏛 Disnakertrans Jatim</span>
+                      <span style={{ fontSize: '0.72rem', color: '#059669', background: '#ecfdf5', padding: '0.2rem 0.5rem', borderRadius: '10px', fontWeight: 700 }}>Live Gov Portal</span>
                     </div>
-                    <div style={{ width: '105px', height: '210px', borderRadius: '20px', background: '#ffffff', border: '3px solid #0ea5e9', padding: '0.6rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 12px 25px rgba(14,165,233,0.15)' }}>
-                      <div style={{ width: '35px', height: '4px', background: '#e2e8f0', borderRadius: '2px', margin: '0 auto' }} />
-                      <div style={{ width: '100%', height: '70px', background: 'linear-gradient(180deg, #bae6fd, #7dd3fc)', borderRadius: '10px' }} />
-                      <span style={{ fontSize: '0.6rem', fontWeight: 600, color: '#0f172a', textAlign: 'center', display: 'block' }}>Dr. Telehealth</span>
+                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#64748b', display: 'block' }}>Public Sector Coverage:</span>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a' }}>38 Regencies Across East Java</span>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', display: 'block', marginTop: '0.25rem' }}>Dispute Resolution & Grievance Reporting</span>
                     </div>
-                    <div style={{ width: '90px', height: '180px', borderRadius: '18px', background: '#ffffff', border: '3px solid #0f172a', padding: '0.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}>
-                      <div style={{ width: '30px', height: '4px', background: '#e2e8f0', borderRadius: '2px', margin: '0 auto' }} />
-                      <div style={{ width: '100%', height: '50px', background: '#f1f5f9', borderRadius: '8px' }} />
-                      <span style={{ fontSize: '0.55rem', color: '#64748b', textAlign: 'center', display: 'block' }}>Schedule</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Standardized WCAG Public Access Portal</span>
+                  </div>
+                )}
+
+                {work.previewType === 'mandala' && (
+                  <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #bae6fd', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0369a1' }}>♥ Mandala Pure Love</span>
+                      <span style={{ fontSize: '0.72rem', background: '#ffffff', color: '#b45309', padding: '0.2rem 0.5rem', borderRadius: '10px', fontWeight: 700 }}>Djarum Award 2026</span>
                     </div>
+                    <div>
+                      <h5 style={{ fontSize: '1.1rem', margin: '0 0 0.35rem 0', fontWeight: 700, color: '#0f172a' }}>Socio-Tech & Inclusive Baristas</h5>
+                      <p style={{ fontSize: '0.78rem', color: '#0369a1', margin: 0 }}>120+ Micro-businesses & youth empowerment</p>
+                    </div>
+                    <span style={{ fontSize: '0.75rem', color: '#475569' }}>Next.js · Node.js · Community Impact Platform</span>
+                  </div>
+                )}
+
+                {work.previewType === 'nzbox' && (
+                  <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>🧺 NZ Box Smart Laundry</span>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', background: '#f0f9ff', padding: '0.2rem 0.5rem', borderRadius: '10px', fontWeight: 700 }}>24-Hr Service</span>
+                    </div>
+                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#64748b', display: 'block' }}>Customer Retention Lift:</span>
+                      <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#16a34a' }}>+28% Recurring Loyalty</span>
+                    </div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Data-driven Marketing & Digital Strategy</span>
+                  </div>
+                )}
+
+                {work.previewType === 'jti' && (
+                  <div style={{ width: '100%', height: '100%', background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>📊 JTI Information System</span>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', background: '#f0f9ff', padding: '0.2rem 0.5rem', borderRadius: '10px', fontWeight: 700 }}>Faculty Ops</span>
+                    </div>
+                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#64748b', display: 'block' }}>Administrative Overhead:</span>
+                      <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0284c7' }}>-45% Reduction</span>
+                    </div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Laravel · MySQL · Schedule Coordination</span>
                   </div>
                 )}
               </div>
@@ -1318,16 +1568,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         7. ABOUT & CAREER TIMELINE ("Pushing Boundaries since 2011" / sec6_about.png)
+         8. ABOUT & CAREER TIMELINE (Hilman's Real Experience)
          ========================================================================= */}
-      <section style={{
+      <section id="experience" style={{
         padding: '5rem 1.5rem',
         maxWidth: '1240px',
         margin: '0 auto'
       }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <span className="editorial-kicker">
-            / Who Am I /
+            / Background & Career /
           </span>
           <h2 style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
@@ -1346,7 +1596,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           gap: '3.5rem',
           alignItems: 'center'
         }} className="about-2col">
-          {/* Left: Dark Portrait Card Matching Reference */}
+          {/* Left: Portrait Card */}
           <div className="about-portrait-card" style={{
             background: '#0f172a',
             borderRadius: '24px',
@@ -1368,7 +1618,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             }}>
               <img 
                 src="/himmel_card.jpg" 
-                alt="Hilman Zahrawa - Product Designer"
+                alt={`${name} - ${headline}`}
                 style={{ 
                   width: '100%', 
                   height: '100%', 
@@ -1381,10 +1631,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
               <div>
                 <h4 style={{ fontSize: '1.15rem', fontWeight: 600, color: '#ffffff', margin: 0 }}>
-                  Hilman Zahrawa
+                  {name}
                 </h4>
                 <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-                  Product Designer
+                  {headline}
                 </span>
               </div>
 
@@ -1396,7 +1646,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             </div>
           </div>
 
-          {/* Right: Paragraph + Minimal Experience Rows */}
+          {/* Right: Bio & Experience Rows */}
           <div>
             <p style={{
               fontSize: '1.05rem',
@@ -1405,16 +1655,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               fontWeight: 400,
               margin: '0 0 2.5rem 0'
             }}>
-              A product designer passionate about creating intuitive digital experiences. I've collaborated with companies to design products that drive value and create impact for users and organizations through human-centered design principles.
+              {about}
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {[
-                { role: "Product Designer", company: "TechStudio Agency", period: "2024 — Present" },
-                { role: "Senior UI/UX Designer", company: "Creative Capital", period: "2023 — 2024" },
-                { role: "Visual Designer", company: "Arise Media", period: "2022 — 2023" },
-                { role: "Junior UX Researcher", company: "Solid Creative", period: "2021 — 2022" },
-              ].map((exp, i) => (
+              {experiencesList.slice(0, 6).map((exp: any, i: number) => (
                 <div 
                   key={i} 
                   className="about-exp-row"
@@ -1427,10 +1672,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     fontSize: '0.9rem'
                   }}
                 >
-                  <span className="about-exp-role" style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 35%' }}>{exp.role}</span>
+                  <span className="about-exp-role" style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 40%' }}>
+                    {exp.role}
+                  </span>
                   <div className="about-exp-company-period" style={{ display: 'contents' }}>
                     <span style={{ color: '#64748b', flex: '1 1 35%' }}>{exp.company}</span>
-                    <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 30%' }}>{exp.period}</span>
+                    <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 25%' }}>{exp.period || exp.start_date}</span>
                   </div>
                 </div>
               ))}
@@ -1440,7 +1687,117 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         8. CTA BANNER WITH 3D WAVES (Exact Match: "Let's Make It Happen")
+         9. CREDENTIALS, EDUCATION & AWARDS (from previous website)
+         ========================================================================= */}
+      <section style={{
+        padding: '5rem 1.5rem',
+        maxWidth: '1240px',
+        margin: '0 auto'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <span className="editorial-kicker">
+            / Qualifications /
+          </span>
+          <h2 style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.025em',
+            margin: 0,
+            color: '#0f172a'
+          }}>
+            Education & Honors
+          </h2>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 540px), 1fr))',
+          gap: '3rem'
+        }}>
+          {/* Education Column */}
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '2.25rem',
+            border: '1.5px solid #e2e8f0',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.03)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
+              <GraduationCap size={22} color="#0284c7" />
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>Education</h3>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+              {educationList.map((edu: any, idx: number) => (
+                <div key={idx} style={{ borderBottom: idx !== educationList.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== educationList.length - 1 ? '1.5rem' : 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.25rem' }}>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{edu.school}</h4>
+                    <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500 }}>{edu.period || `${edu.start_date} - ${edu.end_date}`}</span>
+                  </div>
+                  <span style={{ fontSize: '0.85rem', color: '#0284c7', fontWeight: 600, display: 'block', marginBottom: '0.4rem' }}>{edu.degree}</span>
+                  <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0 }}>{edu.desc || edu.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Honors & Awards Column */}
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '2.25rem',
+            border: '1.5px solid #e2e8f0',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.03)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
+              <Award size={22} color="#f59e0b" />
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>Honors & Awards</h3>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {honorsList.slice(0, 4).map((aw: any, idx: number) => (
+                <div key={idx} style={{ borderBottom: idx !== 3 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== 3 ? '1.25rem' : 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.25rem' }}>
+                    <h4 style={{ fontSize: '0.98rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{aw.title}</h4>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 600 }}>{aw.year || aw.date}</span>
+                  </div>
+                  <span style={{ fontSize: '0.8rem', color: '#b45309', fontWeight: 600, display: 'block', marginBottom: '0.25rem' }}>{aw.issuer}</span>
+                  <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.45, margin: 0 }}>{aw.desc || aw.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+         10. MEDIUM ARTICLES (Integrated from previous website)
+         ========================================================================= */}
+      <section id="articles" style={{
+        padding: '5rem 1.5rem',
+        maxWidth: '1240px',
+        margin: '0 auto'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+          <span className="editorial-kicker">
+            / Writings & Thoughts /
+          </span>
+          <h2 style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.025em',
+            margin: 0,
+            color: '#0f172a'
+          }}>
+            Articles & Publications
+          </h2>
+        </div>
+
+        <MediumArticles username={mediumUsername} title="Articles & Publications" />
+      </section>
+
+      {/* =========================================================================
+         11. CTA BANNER WITH 3D WAVES
          ========================================================================= */}
       <section className="cta-banner-wrapper" style={{
         padding: '3rem 1.5rem',
@@ -1480,7 +1837,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               lineHeight: 1.55,
               fontWeight: 400
             }}>
-              always open for new opportunities, collaborations, and creative challenges. Let's work together to bring your ideas to life
+              Always open for new software engineering challenges, UI/UX collaborations, and impactful digital products. Let's work together to bring your ideas to life.
             </p>
 
             <a
@@ -1510,7 +1867,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         9. FOOTER NAVIGATION & GIANT WATERMARK NAME (Exact Match to sec7_footer.png)
+         12. FOOTER NAVIGATION & GIANT WATERMARK NAME
          ========================================================================= */}
       <footer style={{
         padding: '2.5rem 1.5rem 0 1.5rem',
@@ -1530,28 +1887,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <div className="footer-links-wrap" style={{ display: 'flex', gap: '2rem' }}>
             <Link href="/" style={{ color: '#0f172a', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Home</Link>
             <a href="#about" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>About</a>
+            <a href="#specializations" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Services</a>
             <a href="#works" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Portfolio</a>
+            <a href="#experience" style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Experience</a>
             <a href={`mailto:${email}`} style={{ color: '#64748b', fontWeight: 500, textDecoration: 'none', fontSize: '0.85rem' }}>Contact</a>
           </div>
 
           <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-            © {new Date().getFullYear()} Hilman Zahrawa. All rights reserved.
+            © {new Date().getFullYear()} {name}. All rights reserved.
           </span>
-          <Link 
-            href="/templates" 
-            style={{ 
-              fontSize: '0.82rem', 
-              color: '#0ea5e9', 
-              textDecoration: 'none', 
-              fontWeight: 600,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.35rem'
-            }}
-          >
-            <Sparkles size={13} />
-            <span>Explore 40+ Templates: Anime Portfolios & SaaS Dashboards →</span>
-          </Link>
         </div>
 
         {/* Massive Display Watermark Name Spanning Bottom Edge */}
@@ -1642,21 +1986,53 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 <X size={18} />
               </button>
 
-              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#0ea5e9' }}>
-                {selectedProject.category} • {selectedProject.subtag}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0ea5e9', textTransform: 'uppercase' }}>
+                  {selectedProject.category}
+                </span>
+                {selectedProject.subtag && (
+                  <span style={{ fontSize: '0.72rem', background: '#f1f5f9', color: '#64748b', padding: '0.15rem 0.5rem', borderRadius: '9999px', fontWeight: 600 }}>
+                    {selectedProject.subtag}
+                  </span>
+                )}
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginLeft: 'auto' }}>
+                  {selectedProject.year || '2025'}
+                </span>
+              </div>
 
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#0f172a', margin: '0.5rem 0 1rem 0' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0f172a', margin: '0.25rem 0 1rem 0' }}>
                 {selectedProject.title}
               </h2>
 
-              <p style={{ fontSize: '1rem', color: '#475569', lineHeight: 1.6, marginBottom: '2rem' }}>
-                {selectedProject.desc}
+              <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+                {selectedProject.description || selectedProject.desc}
               </p>
 
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              {selectedProject.outcome && (
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '0.85rem 1rem', borderRadius: '12px', marginBottom: '1.25rem' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#16a34a', textTransform: 'uppercase', display: 'block', marginBottom: '0.2rem' }}>
+                    Key Outcome & Social Impact
+                  </span>
+                  <span style={{ fontSize: '0.84rem', color: '#15803d', lineHeight: 1.45, fontWeight: 500 }}>
+                    {selectedProject.outcome}
+                  </span>
+                </div>
+              )}
+
+              {selectedProject.stack && (
+                <div style={{ marginBottom: '1.75rem' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '0.4rem' }}>
+                    Technologies & Architecture
+                  </span>
+                  <span style={{ fontSize: '0.82rem', fontFamily: 'monospace', color: '#0f172a', background: '#f8fafc', padding: '0.4rem 0.75rem', borderRadius: '8px', display: 'inline-block', border: '1px solid #e2e8f0' }}>
+                    {selectedProject.stack}
+                  </span>
+                </div>
+              )}
+
+              <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
                 <a
-                  href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20I'm%20interested%20in%20${encodeURIComponent(selectedProject.title)}`}
+                  href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20I'm%20interested%20in%20discussing%20${encodeURIComponent(selectedProject.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -1668,11 +2044,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     background: '#0f172a',
                     color: '#ffffff',
                     fontSize: '0.85rem',
-                    fontWeight: 500,
+                    fontWeight: 600,
                     textDecoration: 'none'
                   }}
                 >
-                  Discuss Project <ArrowUpRight size={15} />
+                  Discuss on WhatsApp <ArrowUpRight size={15} />
                 </a>
               </div>
             </motion.div>

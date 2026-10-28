@@ -143,15 +143,15 @@ export const fallbackPortfolioData = {
   ],
   bio: {
     name: "Hilman Zahrawa",
-    headline: "Software Developer & UI/UX Designer",
-    tagline: "Building Digital Products, Websites & Human-Centered Experiences.",
-    about: "Software Developer & UI/UX Designer focused on building functional, thoughtful, and visually engaging digital products.",
-    experience_summary: "3+ years crafting scalable web applications and intuitive interfaces.",
+    headline: "Fullstack Developer | UI/UX Designer",
+    tagline: "Building Scalable Web Products, Workflow Automation & Human-Centered Experiences.",
+    about: "Software Engineer passionate about building scalable web applications, AI-powered solutions, and meaningful digital experiences. I bridge engineering, product thinking, and visual design to create software that performs exceptionally and leaves a lasting impression.",
+    experience_summary: "3+ years crafting scalable web applications, internal systems, and intuitive interfaces.",
     location: "Malang, Jawa Timur, Indonesia",
     email: "budiarto3788@gmail.com",
     whatsapp: "6285806003234",
     avatar_url: "/avatar.png",
-    skills: "Web Application Development, UI/UX Architecture, Information Systems, Workflow Automation, Interactive 3D, Clean Code & Scalability",
+    skills: "Web Application Development, UI/UX Architecture, Information Systems, Workflow Automation, Google Apps Script, Interactive 3D, Clean Code & Scalability, English (Full Professional)",
     medium_username: "hilmanzahrawa",
     social_links: [
       { platform: "LinkedIn", url: "https://linkedin.com/in/hilmanzahrawa" },
@@ -160,32 +160,223 @@ export const fallbackPortfolioData = {
   },
   experiences: [
     {
-      id: "exp-1",
-      company: "Freelance & Independent Contractor",
-      role: "Full-Stack Developer & UI/UX Designer",
-      slug: "independent-contractor",
-      start_date: "2023",
+      id: "exp-pal",
+      company: "PT PAL Indonesia (Persero)",
+      role: "HRIS Developer – HCM Division",
+      slug: "pt-pal-indonesia",
+      start_date: "Apr 2026",
       end_date: "Present",
-      description: "Delivering end-to-end web applications, custom CMS dashboards, and accessible UI/UX designs for clients across government, education, and retail.",
-      details: "Delivering production-grade applications with modern TypeScript, Next.js, Laravel, and cloud databases."
+      description: "Developing Human Capital Management and HR Information Systems (HRIS) to streamline personnel operations, organizational data, and enterprise human resource workflows.",
+      details: "Engineering enterprise HRIS dashboards, relational database optimizations, and cross-department personnel tracking pipelines."
+    },
+    {
+      id: "exp-mandala-strat",
+      company: "Mandala Pure Love",
+      role: "Creative Strategist",
+      slug: "mandala-creative-strategist",
+      start_date: "Sept 2025",
+      end_date: "Present",
+      description: "Led inclusive communication strategies and creative direction to promote disability inclusion and community empowerment. Developed insights-driven campaigns and collaborated with disability communities and partners. Contributed to the development of 'The Cup We Share' barista training program with Kafe Among Rasa, which supported sociopreneurship initiatives at SLB YPAC Kota Malang and enabled students to participate in real-world coffee shop internships.",
+      details: "Inclusive campaign strategy, partnership management, social impact storytelling, and community development."
+    },
+    {
+      id: "exp-mandala-dev",
+      company: "Mandala Pure Love",
+      role: "Web Developer",
+      slug: "mandala-web-developer",
+      start_date: "Dec 2025",
+      end_date: "Apr 2026",
+      description: "Contributed to the development of BrewTech under the Innovillage program. Responsible for system requirements analysis, website architecture, front-end and back-end functionalities, database management, and performance optimization.",
+      details: "Next.js, TypeScript, database schemas, accessible interfaces, and social impact delivery."
+    },
+    {
+      id: "exp-nzbox",
+      company: "NZ Box Smart Laundry",
+      role: "Social Media Specialist",
+      slug: "nz-box-smart-laundry",
+      start_date: "Feb 2026",
+      end_date: "Apr 2026",
+      description: "Developed marketing strategies to increase brand awareness, customer acquisition, and retention. Managed social media campaigns, created promotional materials, optimized advertising performance, and analyzed metrics for a 24-hour self-service laundry solution.",
+      details: "Content creation, paid ads optimization, audience analysis, and customer loyalty retention."
+    },
+    {
+      id: "exp-seal",
+      company: "Social Economic Accelerator Lab (SEAL)",
+      role: "UI/UX Designer",
+      slug: "seal-accelerator",
+      start_date: "Aug 2025",
+      end_date: "Dec 2025",
+      description: "Designed modern, accessible, and user-friendly website interface for East Java Manpower and Transmigration Office (Disnakertrans Jatim). Created intuitive CMS dashboards and designed UI/UX for ProFile+ HR Management System.",
+      details: "Figma design systems, public sector accessibility audits, wireframing, and interactive prototyping."
+    },
+    {
+      id: "exp-hmti-chair",
+      company: "HMTI Polinema",
+      role: "Chairman",
+      slug: "hmti-polinema-chairman",
+      start_date: "Feb 2024",
+      end_date: "Feb 2025",
+      description: "Led student organization overseeing 11 programs and 30+ agendas across 5 departments. Fostered inter-campus collaboration and enhanced student engagement.",
+      details: "Executive leadership, strategic planning, cross-functional organizational management, and public representation."
+    },
+    {
+      id: "exp-hmti-comm",
+      company: "HMTI Polinema",
+      role: "Organizing Committee",
+      slug: "hmti-polinema-committee",
+      start_date: "Feb 2023",
+      end_date: "Feb 2024",
+      description: "Planned and executed departmental events, coordinating logistics, technical readiness, and student-faculty communication.",
+      details: "Event management, timeline scheduling, and technical operations."
+    },
+    {
+      id: "exp-debate",
+      company: "IT Dept English Community",
+      role: "Debate Mentor",
+      slug: "it-debate-mentor",
+      start_date: "Dec 2023",
+      end_date: "Feb 2025",
+      description: "Mentored collegiate debaters in critical reasoning, international relations motion analysis, and British Parliamentary debate formats.",
+      details: "Public speaking coaching, argument construction, and debate competition adjudication."
     }
   ],
   education: [
     {
-      id: "edu-1",
-      school: "State Polytechnic of Malang (Polinema)",
-      degree: "Information Technology / Informatics Engineering",
-      start_date: "2022",
-      end_date: "Present",
-      description: "Specialized in Web Software Engineering, Database Systems, and Human-Computer Interaction."
+      id: "edu-polinema",
+      school: "Politeknik Negeri Malang (Polinema)",
+      degree: "D4 Sistem Informasi Bisnis (Business Information Systems)",
+      start_date: "Aug 2022",
+      end_date: "2026",
+      description: "Specialized in Software Engineering, Enterprise Database Systems, Business Process Modeling, and Web Application Architecture."
+    },
+    {
+      id: "edu-sman1",
+      school: "SMA Negeri 1 Malang",
+      degree: "Mathematics & Natural Science (MIPA)",
+      start_date: "Jul 2019",
+      end_date: "May 2022",
+      description: "Strong foundation in mathematics, analytical problem solving, and science curriculum."
     }
   ],
-  honors: [],
-  certificates: [],
-  organizations: [],
+  honors: [
+    {
+      id: "aw-djarum",
+      title: "\"Mandala Pure Love\" Most Inspiring Community Empowerment",
+      issuer: "Djarum Beasiswa Plus",
+      date: "2026",
+      associated_with: "Mandala Pure Love",
+      description: "Awarded as the most inspiring community empowerment initiative for 2024/2025."
+    },
+    {
+      id: "aw-innovillage",
+      title: "Innovillage Top 180 for Brewtech",
+      issuer: "Innovillage",
+      date: "2026",
+      associated_with: "BrewTech",
+      description: "Selected as one of the top 180 social projects in Indonesia for the BrewTech platform under the Innovillage program."
+    },
+    {
+      id: "aw-debate",
+      title: "2nd Runner Up - IT Poly Debate Cup",
+      issuer: "IT Debate Society",
+      date: "2024",
+      associated_with: "Politeknik Negeri Malang",
+      description: "National level public debating event adhering to the British Parliamentary Debate System format."
+    },
+    {
+      id: "aw-4c-2024",
+      title: "Finalis Desain Poster Infografis - 4C National Competition",
+      issuer: "Universitas Brawijaya",
+      date: "2024",
+      associated_with: "Politeknik Negeri Malang",
+      description: "National competition hosted by the Faculty of Computer Science at the University of Brawijaya."
+    },
+    {
+      id: "aw-intl-debate",
+      title: "2nd Best Novice Team - International I&T Open Debate Competition",
+      issuer: "Indonesian Student Association in Taiwan",
+      date: "2023",
+      associated_with: "Politeknik Negeri Malang",
+      description: "Cross-cultural public debating event drawing participants from diverse Asian nations including Indonesia, Taiwan, the Philippines, and China."
+    },
+    {
+      id: "aw-4c-2023",
+      title: "Finalis Desain Poster Infografis - 4C National Competition",
+      issuer: "Universitas Brawijaya",
+      date: "2023",
+      associated_with: "Politeknik Negeri Malang",
+      description: "National competition hosted by the Faculty of Computer Science at the University of Brawijaya."
+    }
+  ],
+  certificates: [
+    {
+      id: "cert-1",
+      title: "2nd Best Novice Team International I&T Open Debate Competition",
+      issuer: "International Award",
+      date: "2024"
+    },
+    {
+      id: "cert-2",
+      title: "2nd Place Video Competition Expo Kelembagaan OKI Polinema",
+      issuer: "Polinema",
+      date: "2023"
+    },
+    {
+      id: "cert-3",
+      title: "Finalist Poster Infographic Design 4C National Competition",
+      issuer: "Universitas Brawijaya",
+      date: "2023"
+    },
+    {
+      id: "cert-4",
+      title: "2nd Runner Up IT Poly Debate Cup",
+      issuer: "Polinema",
+      date: "2024"
+    },
+    {
+      id: "cert-5",
+      title: "How to Validate Your Social Project Leadership Program",
+      issuer: "Innovillage",
+      date: "2025"
+    },
+    {
+      id: "cert-6",
+      title: "Communicating for Community Engagement and Influence",
+      issuer: "Innovillage",
+      date: "2025"
+    },
+    {
+      id: "cert-7",
+      title: "Memulai Pemrograman dengan Python",
+      issuer: "Dicoding Indonesia",
+      date: "2024"
+    },
+    {
+      id: "cert-8",
+      title: "Belajar Dasar AI",
+      issuer: "Dicoding Indonesia",
+      date: "2024"
+    }
+  ],
+  organizations: [
+    {
+      id: "org-1",
+      name: "Himpunan Mahasiswa Teknologi Informasi (HMTI) Polinema",
+      role: "Chairman",
+      period: "2024 — 2025",
+      description: "Led 5 core departments, 11 executive work programs, and 30+ regional campus agendas."
+    },
+    {
+      id: "org-2",
+      name: "IT Dept English Community",
+      role: "Debate Mentor",
+      period: "2023 — 2025",
+      description: "Coached competitive varsity debate teams for regional and national championships."
+    }
+  ],
   landingPage: {
     title: "Home",
-    tagline: "Building Digital Products, Websites & Human-Centered Experiences."
+    tagline: "Building Scalable Web Products, Workflow Automation & Human-Centered Experiences."
   }
 };
 
@@ -269,9 +460,9 @@ export async function getPortfolioData() {
       bio: mappedBio,
       experiences: (experiences && experiences.length > 0) ? experiences : fallbackPortfolioData.experiences,
       education: (education && education.length > 0) ? education : fallbackPortfolioData.education,
-      honors: honors || [],
-      certificates: mappedCertificates,
-      organizations: organizations || [],
+      honors: (honors && honors.length > 0) ? honors : fallbackPortfolioData.honors,
+      certificates: (mappedCertificates && mappedCertificates.length > 0) ? mappedCertificates : fallbackPortfolioData.certificates,
+      organizations: (organizations && organizations.length > 0) ? organizations : fallbackPortfolioData.organizations,
       landingPage: landingPageList?.[0] || fallbackPortfolioData.landingPage
     };
   } catch (error) {
