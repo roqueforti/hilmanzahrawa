@@ -733,17 +733,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', fontWeight: 800 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', fontWeight: 800 }}>
                       ☕
                     </div>
                     <div>
-                      <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', display: 'block' }}>Brewtech Vocational Platform</span>
-                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600 }}>Innovillage Program · Top 180 Social Projects</span>
+                      <span style={{ fontSize: '1.18rem', fontWeight: 800, color: '#0f172a', display: 'block', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+                        Brewtech Vocational Platform
+                      </span>
+                      <span style={{ fontSize: '0.82rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '0.15rem' }}>
+                        Innovillage Program · Top 180 Social Projects
+                      </span>
                     </div>
                   </div>
-                  <span style={{ fontSize: '0.72rem', background: '#f0fdf4', color: '#16a34a', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.78rem', background: '#f0fdf4', color: '#16a34a', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #bbf7d0', flexShrink: 0 }}>
                     Live LMS · 15 Screens
                   </span>
                 </div>
@@ -770,35 +774,35 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'space-between',
-                    padding: '0.5rem 0.75rem'
+                    padding: '0.55rem 0.85rem'
                   }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.74rem', fontWeight: 600 }}>Accessible Barista Training Portal</span>
-                    <span style={{ background: '#0284c7', color: '#ffffff', fontSize: '0.65rem', fontWeight: 700, padding: '0.15rem 0.5rem', borderRadius: '6px' }}>15 Screens</span>
+                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Accessible Barista Training Portal</span>
+                    <span style={{ background: '#0284c7', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.2rem 0.55rem', borderRadius: '6px' }}>15 Screens</span>
                   </div>
                 </div>
 
-                <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>
+                <p style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.6, margin: 0, fontWeight: 400 }}>
                   Vocational education platform empowering youth with disabilities into certified barista talents with accessible interactive curriculum.
                 </p>
               </div>
 
               {/* Metrics Row */}
-              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.85rem', margin: '0.75rem 0' }}>
-                <div style={{ background: '#f8fafc', padding: '0.65rem', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.65rem', color: '#64748b', display: 'block' }}>Youth Empowered</span>
-                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>50+ Students</span>
+              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.85rem', margin: '0.85rem 0' }}>
+                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Youth Empowered</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>50+ Students</span>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '0.65rem', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.65rem', color: '#64748b', display: 'block' }}>Accessibility</span>
-                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0284c7' }}>100% WCAG</span>
+                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Accessibility</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0284c7' }}>100% WCAG</span>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '0.65rem', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.65rem', color: '#64748b', display: 'block' }}>Completion</span>
-                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#16a34a' }}>98.4%</span>
+                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Completion</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#16a34a' }}>98.4%</span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b', paddingTop: '0.5rem', borderTop: '1px solid #f1f5f9' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500, paddingTop: '0.65rem', borderTop: '1px solid #f1f5f9' }}>
                 <span>Stack: Next.js · TypeScript · Supabase · Tailwind</span>
                 <span style={{ color: '#0284c7', fontWeight: 700 }}>Open Gallery →</span>
               </div>
@@ -825,16 +829,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.72rem', background: '#eff6ff', color: '#1d4ed8', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                  <span style={{ fontSize: '0.78rem', background: '#eff6ff', color: '#1d4ed8', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #bfdbfe' }}>
                     SEAL Accelerator
                   </span>
-                  <span style={{ fontSize: '0.72rem', background: '#f8fafc', color: '#64748b', padding: '0.2rem 0.5rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.78rem', background: '#f8fafc', color: '#0f172a', padding: '0.25rem 0.65rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontWeight: 700 }}>
                     16 Screens
                   </span>
                 </div>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.35rem 0' }}>ProFile+ HR Management</h4>
-                <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.45, margin: 0 }}>
+                <h4 style={{ fontSize: '1.28rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+                  ProFile+ HR Management
+                </h4>
+                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
                   Centralized employee lifecycle management, attendance telemetry, and verified payroll pipelines.
                 </p>
 
@@ -844,7 +850,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   height: '110px',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  margin: '0.75rem 0',
+                  margin: '0.85rem 0',
                   border: '1px solid #e2e8f0',
                   background: '#0f172a'
                 }}>
@@ -860,25 +866,25 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'space-between',
-                    padding: '0.4rem 0.65rem'
+                    padding: '0.45rem 0.75rem'
                   }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.72rem', fontWeight: 600 }}>Enterprise Dashboard UI</span>
-                    <span style={{ background: '#38bdf8', color: '#0f172a', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.4rem', borderRadius: '4px' }}>UI/UX</span>
+                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Enterprise Dashboard UI</span>
+                    <span style={{ background: '#38bdf8', color: '#0f172a', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>UI/UX</span>
                   </div>
                 </div>
               </div>
 
-              <div style={{ background: '#f8fafc', padding: '0.65rem 0.85rem', borderRadius: '12px', marginBottom: '0.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.73rem', marginBottom: '0.25rem' }}>
-                  <span style={{ color: '#64748b' }}>Verification Efficiency:</span>
-                  <span style={{ fontWeight: 700, color: '#0284c7' }}>+40% Saved</span>
+              <div style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '12px', marginBottom: '0.75rem', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '0.35rem', fontWeight: 600 }}>
+                  <span style={{ color: '#334155' }}>Verification Efficiency:</span>
+                  <span style={{ fontWeight: 800, color: '#0284c7' }}>+40% Saved</span>
                 </div>
-                <div style={{ height: '5px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{ width: '85%', height: '100%', background: '#0284c7' }} />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
                 <span>Role: UI/UX & Frontend</span>
                 <span style={{ color: '#0284c7', fontWeight: 700 }}>Explore System →</span>
               </div>
@@ -905,15 +911,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#10b981' }} />
-                    <span style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 700 }}>GovTech Portal · East Java</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
+                    <span style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 700 }}>GovTech Portal · East Java</span>
                   </div>
-                  <span style={{ fontSize: '0.7rem', color: '#64748b' }}>Mobile UX</span>
+                  <span style={{ fontSize: '0.78rem', color: '#0f172a', fontWeight: 700, background: '#f8fafc', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>Mobile UX</span>
                 </div>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.35rem 0' }}>Disnakertrans Jatim</h4>
-                <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.45, margin: 0 }}>
+                <h4 style={{ fontSize: '1.28rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+                  Disnakertrans Jatim
+                </h4>
+                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
                   Accessible public labor portal serving 38 regencies across East Java with dispute resolution.
                 </p>
 
@@ -923,7 +931,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   height: '110px',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  margin: '0.75rem 0',
+                  margin: '0.85rem 0',
                   border: '1px solid #e2e8f0',
                   background: '#0f172a'
                 }}>
@@ -939,20 +947,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'space-between',
-                    padding: '0.4rem 0.65rem'
+                    padding: '0.45rem 0.75rem'
                   }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.72rem', fontWeight: 600 }}>Provincial Labor Service</span>
-                    <span style={{ background: '#10b981', color: '#ffffff', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.4rem', borderRadius: '4px' }}>3 Screens</span>
+                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Provincial Labor Service</span>
+                    <span style={{ background: '#10b981', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>3 Screens</span>
                   </div>
                 </div>
               </div>
 
-              <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '0.65rem 0.85rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.68rem', color: '#64748b', display: 'block' }}>Public Coverage:</span>
-                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>38 Regencies Across East Java</span>
+              <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '0.75rem 1rem', marginBottom: '0.75rem', border: '1px solid #e2e8f0' }}>
+                <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Public Coverage:</span>
+                <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>38 Regencies Across East Java</span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
                 <span>Laravel · MySQL · WCAG</span>
                 <span style={{ color: '#0284c7', fontWeight: 700 }}>View Portal →</span>
               </div>
@@ -979,18 +987,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#0284c7', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Socio-Tech & Creative Strategy
                   </span>
-                  <span style={{ fontSize: '0.72rem', background: '#fef3c7', color: '#b45309', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.78rem', background: '#fef3c7', color: '#b45309', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #fde68a' }}>
                     ★ Djarum Beasiswa Plus
                   </span>
                 </div>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.4rem 0' }}>
+                <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
                   Among Rasa Landing Page & Mandala
                 </h4>
-                <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.45, margin: 0 }}>
+                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
                   Empowerment platform and barista internship initiative ('The Cup We Share') at SLB YPAC Kota Malang.
                 </p>
 
@@ -1000,7 +1008,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   height: '110px',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  margin: '0.75rem 0',
+                  margin: '0.85rem 0',
                   border: '1px solid #e2e8f0',
                   background: '#0f172a'
                 }}>
@@ -1016,26 +1024,26 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'space-between',
-                    padding: '0.4rem 0.65rem'
+                    padding: '0.45rem 0.75rem'
                   }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.72rem', fontWeight: 600 }}>Kafe Among Rasa & Sociopreneurship</span>
-                    <span style={{ background: '#f59e0b', color: '#ffffff', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.4rem', borderRadius: '4px' }}>Live Web</span>
+                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Kafe Among Rasa & Sociopreneurship</span>
+                    <span style={{ background: '#f59e0b', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>Live Web</span>
                   </div>
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '0.5rem' }}>
-                <div style={{ background: '#f8fafc', padding: '0.65rem', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.65rem', color: '#64748b', display: 'block' }}>Social Impact</span>
-                  <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>Inclusive Baristas</span>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '0.75rem' }}>
+                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Social Impact</span>
+                  <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Inclusive Baristas</span>
                 </div>
-                <div style={{ background: '#f8fafc', padding: '0.65rem', borderRadius: '10px' }}>
-                  <span style={{ fontSize: '0.65rem', color: '#64748b', display: 'block' }}>Mentorship</span>
-                  <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0284c7' }}>SLB YPAC Malang</span>
+                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Mentorship</span>
+                  <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0284c7' }}>SLB YPAC Malang</span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', color: '#64748b' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
                 <span>Next.js · TailwindCSS · Animation</span>
                 <span style={{ color: '#0284c7', fontWeight: 700 }}>Open Project →</span>
               </div>
@@ -1196,22 +1204,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 300, color: '#0ea5e9', lineHeight: 1 }}>{svc.num}</span>
-                  <span style={{ fontSize: '0.72rem', background: '#f1f5f9', color: '#475569', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 700 }}>
+                  <span style={{ fontSize: '2.2rem', fontWeight: 300, color: '#0ea5e9', lineHeight: 1 }}>{svc.num}</span>
+                  <span style={{ fontSize: '0.8rem', background: '#f8fafc', color: '#0f172a', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #e2e8f0' }}>
                     {svc.badge}
                   </span>
                 </div>
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 600, color: '#0f172a', marginBottom: '0.75rem' }}>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
                   {svc.title}
                 </h3>
-                <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.55, marginBottom: '1.5rem' }}>
+                <p style={{ fontSize: '0.94rem', color: '#334155', lineHeight: 1.6, marginBottom: '1.5rem', fontWeight: 400 }}>
                   {svc.desc}
                 </p>
 
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {svc.checks.map((chk, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.84rem', color: '#334155', lineHeight: 1.45 }}>
-                      <Check size={16} color="#0284c7" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.9rem', color: '#1e293b', lineHeight: 1.5, fontWeight: 500 }}>
+                      <Check size={18} color="#0284c7" style={{ flexShrink: 0, marginTop: '2px' }} />
                       <span>{chk}</span>
                     </li>
                   ))}
@@ -1569,12 +1577,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 >
                   <span>{cat.label}</span>
                   <span style={{
-                    fontSize: '0.72rem',
-                    padding: '0.1rem 0.45rem',
+                    fontSize: '0.76rem',
+                    padding: '0.15rem 0.55rem',
                     borderRadius: '9999px',
-                    background: isActive ? 'rgba(255,255,255,0.2)' : '#f1f5f9',
-                    color: isActive ? '#ffffff' : '#475569',
-                    fontWeight: 600
+                    background: isActive ? 'rgba(255,255,255,0.25)' : '#f1f5f9',
+                    color: isActive ? '#ffffff' : '#1e293b',
+                    fontWeight: 700
                   }}>
                     {cat.count}
                   </span>
@@ -1652,14 +1660,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         className="gallery-card-img"
                       />
                     ) : (
-                      <div style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Visual Preview</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>Visual Preview</div>
                     )}
 
                     {/* Gradient overlay for bottom readability */}
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(to bottom, rgba(15,23,42,0.4) 0%, transparent 40%, rgba(15,23,42,0.7) 100%)',
+                      background: 'linear-gradient(to bottom, rgba(15,23,42,0.35) 0%, transparent 40%, rgba(15,23,42,0.75) 100%)',
                       pointerEvents: 'none'
                     }} />
 
@@ -1668,17 +1676,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       position: 'absolute',
                       top: '1rem',
                       left: '1rem',
-                      background: 'rgba(15, 23, 42, 0.75)',
+                      background: 'rgba(15, 23, 42, 0.85)',
                       backdropFilter: 'blur(8px)',
                       color: '#ffffff',
-                      fontSize: '0.74rem',
-                      fontWeight: 600,
-                      padding: '0.3rem 0.75rem',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      padding: '0.35rem 0.85rem',
                       borderRadius: '9999px',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.35rem',
-                      border: '1px solid rgba(255,255,255,0.15)'
+                      gap: '0.4rem',
+                      border: '1px solid rgba(255,255,255,0.2)'
                     }}>
                       <span>{work.displayCategory || work.category || 'Platform'}</span>
                     </div>
@@ -1688,26 +1696,26 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       position: 'absolute',
                       top: '1rem',
                       right: '1rem',
-                      background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.75)',
+                      background: isVideo ? 'rgba(239, 68, 68, 0.95)' : 'rgba(15, 23, 42, 0.85)',
                       backdropFilter: 'blur(8px)',
                       color: '#ffffff',
-                      fontSize: '0.72rem',
+                      fontSize: '0.78rem',
                       fontWeight: 700,
-                      padding: '0.3rem 0.75rem',
+                      padding: '0.35rem 0.85rem',
                       borderRadius: '9999px',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.35rem',
+                      gap: '0.4rem',
                       border: '1px solid rgba(255,255,255,0.2)'
                     }}>
                       {isVideo ? (
                         <>
-                          <Play size={12} fill="#ffffff" />
+                          <Play size={13} fill="#ffffff" />
                           <span>Video</span>
                         </>
                       ) : (
                         <>
-                          <ImageIcon size={12} />
+                          <ImageIcon size={13} />
                           <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
                         </>
                       )}
@@ -1716,31 +1724,33 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     {/* Bottom-left Device / Year tag */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '0.85rem',
+                      bottom: '0.9rem',
                       left: '1rem',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.4rem'
+                      gap: '0.45rem'
                     }}>
                       <span style={{
-                        background: 'rgba(255, 255, 255, 0.92)',
+                        background: '#ffffff',
                         color: '#0f172a',
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        padding: '0.2rem 0.6rem',
-                        borderRadius: '6px'
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        padding: '0.25rem 0.65rem',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                       }}>
                         {work.year || '2025'}
                       </span>
                       {work.role && (
                         <span style={{
-                          background: 'rgba(15, 23, 42, 0.8)',
-                          color: '#e2e8f0',
-                          fontSize: '0.72rem',
-                          fontWeight: 500,
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '6px',
-                          backdropFilter: 'blur(6px)'
+                          background: 'rgba(15, 23, 42, 0.85)',
+                          color: '#f8fafc',
+                          fontSize: '0.78rem',
+                          fontWeight: 600,
+                          padding: '0.25rem 0.65rem',
+                          borderRadius: '8px',
+                          backdropFilter: 'blur(8px)',
+                          border: '1px solid rgba(255,255,255,0.2)'
                         }}>
                           {work.role}
                         </span>
@@ -1750,30 +1760,32 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
                   {/* Card Content */}
                   <div style={{
-                    padding: '1.5rem',
+                    padding: '1.65rem',
                     display: 'flex',
                     flexDirection: 'column',
                     flexGrow: 1,
                     justifyContent: 'space-between',
-                    gap: '1rem'
+                    gap: '1.15rem'
                   }}>
                     <div>
                       <h3 style={{
-                        fontSize: '1.25rem',
-                        fontWeight: 700,
+                        fontSize: '1.32rem',
+                        fontWeight: 800,
                         color: '#0f172a',
-                        margin: '0 0 0.5rem 0',
-                        lineHeight: 1.35
+                        margin: '0 0 0.55rem 0',
+                        lineHeight: 1.3,
+                        letterSpacing: '-0.02em'
                       }}>
                         {work.title}
                       </h3>
                       <p style={{
-                        fontSize: '0.86rem',
-                        color: '#64748b',
-                        lineHeight: 1.55,
+                        fontSize: '0.93rem',
+                        color: '#334155',
+                        lineHeight: 1.6,
                         margin: 0,
+                        fontWeight: 400,
                         display: '-webkit-box',
-                        WebkitLineClamp: 2,
+                        WebkitLineClamp: 3,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden'
                       }}>
@@ -1783,18 +1795,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
                     {/* Tags / Stack */}
                     {work.stack && (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
                         {work.stack.split('·').slice(0, 4).map((tech: string, i: number) => (
                           <span
                             key={i}
                             style={{
-                              fontSize: '0.72rem',
-                              fontWeight: 500,
-                              color: '#334155',
-                              background: '#f8fafc',
+                              fontSize: '0.78rem',
+                              fontWeight: 600,
+                              color: '#1e293b',
+                              background: '#f1f5f9',
                               border: '1px solid #e2e8f0',
-                              padding: '0.2rem 0.55rem',
-                              borderRadius: '6px'
+                              padding: '0.25rem 0.65rem',
+                              borderRadius: '8px'
                             }}
                           >
                             {tech.trim()}
@@ -1808,20 +1820,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      paddingTop: '0.85rem',
+                      paddingTop: '0.95rem',
                       borderTop: '1px solid #f1f5f9',
                       marginTop: 'auto'
                     }}>
                       <span style={{
-                        fontSize: '0.82rem',
+                        fontSize: '0.9rem',
                         fontWeight: 700,
                         color: '#0284c7',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.35rem'
+                        gap: '0.45rem'
                       }}>
-                        <Eye size={14} />
-                        View Gallery ({screenshotCount})
+                        <Eye size={16} />
+                        Explore Gallery ({screenshotCount})
                       </span>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -1833,9 +1845,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             onClick={(e) => e.stopPropagation()}
                             title="Visit Live Site"
                             style={{
-                              width: '32px',
-                              height: '32px',
-                              borderRadius: '8px',
+                              width: '36px',
+                              height: '36px',
+                              borderRadius: '10px',
                               background: '#f0f9ff',
                               color: '#0284c7',
                               display: 'flex',
@@ -1845,7 +1857,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                               border: '1px solid #bae6fd'
                             }}
                           >
-                            <ExternalLink size={14} />
+                            <ExternalLink size={15} />
                           </a>
                         )}
                         {work.videoUrl && (
@@ -1856,9 +1868,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             onClick={(e) => e.stopPropagation()}
                             title="Watch on YouTube"
                             style={{
-                              width: '32px',
-                              height: '32px',
-                              borderRadius: '8px',
+                              width: '36px',
+                              height: '36px',
+                              borderRadius: '10px',
                               background: '#fef2f2',
                               color: '#ef4444',
                               display: 'flex',
@@ -1868,7 +1880,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                               border: '1px solid #fecaca'
                             }}
                           >
-                            <Play size={14} fill="#ef4444" />
+                            <Play size={15} fill="#ef4444" />
                           </a>
                         )}
                       </div>
@@ -2044,12 +2056,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
               {educationList.map((edu: any, idx: number) => (
                 <div key={idx} style={{ borderBottom: idx !== educationList.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== educationList.length - 1 ? '1.5rem' : 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.25rem' }}>
-                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{edu.school}</h4>
-                    <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500 }}>{edu.period || `${edu.start_date} - ${edu.end_date}`}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.35rem' }}>
+                    <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>{edu.school}</h4>
+                    <span style={{ fontSize: '0.84rem', color: '#475569', fontWeight: 600 }}>{edu.period || `${edu.start_date} - ${edu.end_date}`}</span>
                   </div>
-                  <span style={{ fontSize: '0.85rem', color: '#0284c7', fontWeight: 600, display: 'block', marginBottom: '0.4rem' }}>{edu.degree}</span>
-                  <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0 }}>{edu.desc || edu.description}</p>
+                  <span style={{ fontSize: '0.92rem', color: '#0284c7', fontWeight: 700, display: 'block', marginBottom: '0.45rem' }}>{edu.degree}</span>
+                  <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.55, margin: 0, fontWeight: 400 }}>{edu.desc || edu.description}</p>
                 </div>
               ))}
             </div>
@@ -2065,18 +2077,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
               <Award size={22} color="#f59e0b" />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>Honors & Awards</h3>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Honors & Awards</h3>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {honorsList.slice(0, 4).map((aw: any, idx: number) => (
                 <div key={idx} style={{ borderBottom: idx !== 3 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== 3 ? '1.25rem' : 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.25rem' }}>
-                    <h4 style={{ fontSize: '0.98rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{aw.title}</h4>
-                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 600 }}>{aw.year || aw.date}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.35rem' }}>
+                    <h4 style={{ fontSize: '1.08rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>{aw.title}</h4>
+                    <span style={{ fontSize: '0.84rem', color: '#475569', fontWeight: 600 }}>{aw.year || aw.date}</span>
                   </div>
-                  <span style={{ fontSize: '0.8rem', color: '#b45309', fontWeight: 600, display: 'block', marginBottom: '0.25rem' }}>{aw.issuer}</span>
-                  <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.45, margin: 0 }}>{aw.desc || aw.description}</p>
+                  <span style={{ fontSize: '0.88rem', color: '#b45309', fontWeight: 700, display: 'block', marginBottom: '0.35rem' }}>{aw.issuer}</span>
+                  <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.55, margin: 0, fontWeight: 400 }}>{aw.desc || aw.description}</p>
                 </div>
               ))}
             </div>
@@ -2554,10 +2566,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
                 {/* Description */}
                 <div style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.5rem 0' }}>
+                  <h4 style={{ fontSize: '0.86rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.5rem 0' }}>
                     Project Overview
                   </h4>
-                  <p style={{ fontSize: '0.98rem', color: '#334155', lineHeight: 1.65, margin: 0 }}>
+                  <p style={{ fontSize: '1.02rem', color: '#1e293b', lineHeight: 1.7, margin: 0, fontWeight: 400 }}>
                     {selectedProject.description || selectedProject.desc || selectedProject.subtitle}
                   </p>
                 </div>
@@ -2567,15 +2579,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   <div style={{
                     background: '#f0fdf4',
                     border: '1px solid #bbf7d0',
-                    padding: '1.15rem 1.25rem',
+                    padding: '1.25rem 1.35rem',
                     borderRadius: '16px',
                     marginBottom: '1.5rem'
                   }}>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#16a34a', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem' }}>
-                      <CheckCircle2 size={16} />
+                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#16a34a', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.4rem', letterSpacing: '0.04em' }}>
+                      <CheckCircle2 size={18} />
                       Key Outcome & Social Impact
                     </span>
-                    <p style={{ fontSize: '0.9rem', color: '#15803d', lineHeight: 1.5, margin: 0, fontWeight: 500 }}>
+                    <p style={{ fontSize: '0.96rem', color: '#15803d', lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
                       {selectedProject.outcome}
                     </p>
                   </div>
@@ -2584,22 +2596,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 {/* Stack & Architecture */}
                 {selectedProject.stack && (
                   <div style={{ marginBottom: '2rem' }}>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.6rem' }}>
                       Technology Stack & Architecture
                     </span>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem' }}>
                       {selectedProject.stack.split('·').map((tech: string, i: number) => (
                         <span
                           key={i}
                           style={{
-                            fontSize: '0.82rem',
+                            fontSize: '0.86rem',
                             fontFamily: 'monospace',
                             color: '#0f172a',
                             background: '#f8fafc',
-                            border: '1px solid #e2e8f0',
-                            padding: '0.35rem 0.75rem',
+                            border: '1px solid #cbd5e1',
+                            padding: '0.4rem 0.85rem',
                             borderRadius: '8px',
-                            fontWeight: 600
+                            fontWeight: 700
                           }}
                         >
                           {tech.trim()}
@@ -2614,7 +2626,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '1rem',
-                  paddingTop: '1.25rem',
+                  paddingTop: '1.5rem',
                   borderTop: '1px solid #f1f5f9',
                   flexWrap: 'wrap'
                 }}>
@@ -2626,18 +2638,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
-                        padding: '0.75rem 1.5rem',
+                        gap: '0.55rem',
+                        padding: '0.85rem 1.65rem',
                         borderRadius: '9999px',
                         background: '#0284c7',
                         color: '#ffffff',
-                        fontSize: '0.88rem',
-                        fontWeight: 600,
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
                         textDecoration: 'none',
                         boxShadow: '0 4px 14px rgba(2, 132, 199, 0.25)'
                       }}
                     >
-                      <ExternalLink size={16} />
+                      <ExternalLink size={17} />
                       <span>Visit Live Website</span>
                     </a>
                   )}
@@ -2650,18 +2662,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
-                        padding: '0.75rem 1.5rem',
+                        gap: '0.55rem',
+                        padding: '0.85rem 1.65rem',
                         borderRadius: '9999px',
                         background: '#ef4444',
                         color: '#ffffff',
-                        fontSize: '0.88rem',
-                        fontWeight: 600,
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
                         textDecoration: 'none',
                         boxShadow: '0 4px 14px rgba(239, 68, 68, 0.25)'
                       }}
                     >
-                      <Play size={16} fill="#ffffff" />
+                      <Play size={17} fill="#ffffff" />
                       <span>Watch on YouTube</span>
                     </a>
                   )}
@@ -2673,17 +2685,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.75rem 1.5rem',
+                      gap: '0.55rem',
+                      padding: '0.85rem 1.65rem',
                       borderRadius: '9999px',
                       background: '#0f172a',
                       color: '#ffffff',
-                      fontSize: '0.88rem',
-                      fontWeight: 600,
+                      fontSize: '0.92rem',
+                      fontWeight: 700,
                       textDecoration: 'none'
                     }}
                   >
-                    <MessageCircle size={16} />
+                    <MessageCircle size={17} />
                     <span>Discuss on WhatsApp</span>
                   </a>
 
@@ -2691,13 +2703,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     onClick={() => setSelectedProject(null)}
                     style={{
                       marginLeft: 'auto',
-                      padding: '0.75rem 1.25rem',
+                      padding: '0.85rem 1.4rem',
                       borderRadius: '9999px',
                       background: '#f8fafc',
-                      color: '#64748b',
-                      border: '1px solid #e2e8f0',
-                      fontSize: '0.85rem',
-                      fontWeight: 500,
+                      color: '#475569',
+                      border: '1px solid #cbd5e1',
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
                       cursor: 'pointer'
                     }}
                   >

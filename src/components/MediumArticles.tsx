@@ -132,17 +132,18 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.7 }}>
-                    <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{formatDate(article.pubDate)}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: 0.85 }}>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-secondary)' }}>{formatDate(article.pubDate)}</span>
                   </div>
-                  <ExternalLink size={14} style={{ opacity: 0.5, color: 'var(--text-primary)' }} />
+                  <ExternalLink size={16} style={{ opacity: 0.7, color: 'var(--text-primary)' }} />
                 </div>
                 <h3 style={{ 
-                  fontSize: '1rem', 
-                  fontWeight: 800, 
+                  fontSize: '1.15rem', 
+                  fontWeight: 700, 
                   color: 'var(--text-primary)', 
                   lineHeight: '1.4',
                   marginBottom: '1rem',
+                  letterSpacing: '-0.015em',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
@@ -153,8 +154,8 @@ export default function MediumArticles({ username, title }: MediumArticlesProps)
               </div>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-mono)' }}>Read Article</span>
-                <div className="article-line" style={{ flex: 1, height: '1px', background: 'var(--text-primary)', opacity: 0.2 }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Read on Medium</span>
+                <div className="article-line" style={{ flex: 1, height: '1.5px', background: 'var(--text-primary)', opacity: 0.15 }} />
               </div>
             </motion.a>
           ))}
