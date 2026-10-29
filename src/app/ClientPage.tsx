@@ -1364,25 +1364,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   setExpandedImageIndex(0);
                   setIsExpandedMediaLoading(true);
 
-                  // Smooth scroll to top of #works gallery section (matching Ritchie Ollie ease-out scroll)
-                  const worksEl = document.getElementById('works');
-                  if (worksEl) {
-                    const rect = worksEl.getBoundingClientRect();
-                    const targetY = Math.max(0, window.scrollY + rect.top - 80);
-                    const startY = window.scrollY;
-                    const startTime = performance.now();
-                    const duration = 280;
 
-                    const animScroll = (now: number) => {
-                      const elapsed = Math.min((now - startTime) / duration, 1);
-                      const ease = 1 - Math.pow(1 - elapsed, 3);
-                      window.scrollTo(0, startY + (targetY - startY) * ease);
-                      if (elapsed < 1) {
-                        requestAnimationFrame(animScroll);
-                      }
-                    };
-                    requestAnimationFrame(animScroll);
-                  }
                 }}
               >
                 {/* 16:9 Thumbnail */}
