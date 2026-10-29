@@ -70,6 +70,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [processHovered, setProcessHovered] = useState(false);
   const [hoveredProcessCard, setHoveredProcessCard] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
+  const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
@@ -77,6 +79,24 @@ export default function ClientPage({ initialData }: ClientPageProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  React.useEffect(() => {
+    setIsExpandedMediaLoading(true);
+    const timer = setTimeout(() => {
+      setIsExpandedMediaLoading(false);
+    }, 4500);
+    return () => clearTimeout(timer);
+  }, [expandedProject?.id, expandedProject?.slug, expandedImageIndex]);
+
+  React.useEffect(() => {
+    if (selectedProject) {
+      setIsModalMediaLoading(true);
+      const timer = setTimeout(() => {
+        setIsModalMediaLoading(false);
+      }, 4500);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedProject?.id, selectedProject?.slug, activeModalImageIndex]);
 
   const bio = initialData?.bio || {};
   const rawName = bio?.name || "Hilman Zahrawa";
@@ -1029,20 +1049,40 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     position: 'relative',
                     boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
                   }}>
+                    {/* Animated Skeleton Shimmer Placeholder */}
+                    <div className={`media-skeleton-container ${!isExpandedMediaLoading ? 'is-hidden' : ''}`}>
+                      <div className="media-skeleton-wave" />
+                      <div className="media-skeleton-badge">
+                        <div className="media-skeleton-icon-disc">
+                          {isVideo ? <Play size={24} style={{ marginLeft: '3px' }} /> : <ImageIcon size={24} />}
+                        </div>
+                        <div className="media-skeleton-label">
+                          {isVideo ? 'Loading Video Player...' : 'Loading Visual Preview...'}
+                        </div>
+                        <div className="media-skeleton-bar-wrap">
+                          <div className="media-skeleton-bar-fill" />
+                        </div>
+                      </div>
+                    </div>
+
                     {isVideo && youtubeEmbed ? (
                       <iframe
+                        key={`yt-${displayProject.id || displayProject.slug}`}
                         src={youtubeEmbed || undefined}
                         title={displayProject.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                         referrerPolicy="strict-origin-when-cross-origin"
+                        onLoad={() => setIsExpandedMediaLoading(false)}
                         style={{ width: '100%', height: '100%', border: 'none' }}
                       />
                     ) : (
                       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                         <img
+                          key={`img-${activeScreenshot}`}
                           src={activeScreenshot}
                           alt={displayProject.title}
+                          onLoad={() => setIsExpandedMediaLoading(false)}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -2478,12 +2518,28 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     background: '#000000',
                     boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
                   }}>
+                    <div className={`media-skeleton-container ${!isModalMediaLoading ? 'is-hidden' : ''}`}>
+                      <div className="media-skeleton-wave" />
+                      <div className="media-skeleton-badge">
+                        <div className="media-skeleton-icon-disc">
+                          <Play size={24} style={{ marginLeft: '3px' }} />
+                        </div>
+                        <div className="media-skeleton-label">
+                          Loading Video Player...
+                        </div>
+                        <div className="media-skeleton-bar-wrap">
+                          <div className="media-skeleton-bar-fill" />
+                        </div>
+                      </div>
+                    </div>
                     <iframe
+                      key={`modal-yt-${selectedProject.id || selectedProject.slug}`}
                       src={youtubeEmbed}
                       title={selectedProject.title}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
                       referrerPolicy="strict-origin-when-cross-origin"
+                      onLoad={() => setIsModalMediaLoading(false)}
                       style={{ width: '100%', height: '100%', border: 'none' }}
                     />
                   </div>
@@ -2502,9 +2558,25 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       justifyContent: 'center',
                       boxShadow: '0 15px 35px rgba(0,0,0,0.12)'
                     }}>
+                      <div className={`media-skeleton-container ${!isModalMediaLoading ? 'is-hidden' : ''}`}>
+                        <div className="media-skeleton-wave" />
+                        <div className="media-skeleton-badge">
+                          <div className="media-skeleton-icon-disc">
+                            <ImageIcon size={24} />
+                          </div>
+                          <div className="media-skeleton-label">
+                            Loading Screenshot...
+                          </div>
+                          <div className="media-skeleton-bar-wrap">
+                            <div className="media-skeleton-bar-fill" />
+                          </div>
+                        </div>
+                      </div>
                       <img
+                        key={`modal-img-${currentImg}`}
                         src={currentImg}
                         alt={`${selectedProject.title} screenshot ${activeModalImageIndex + 1}`}
+                        onLoad={() => setIsModalMediaLoading(false)}
                         style={{
                           maxWidth: '100%',
                           maxHeight: '100%',
