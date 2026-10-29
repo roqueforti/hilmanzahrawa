@@ -93,32 +93,27 @@ export default function ClientPage({ initialData }: ClientPageProps) {
     ? initialData.projects
     : fallbackPortfolioData.projects;
 
-  const brewtechProject = showcaseWorks.find((p: any) => p.slug === 'brewtech') || showcaseWorks[0];
-  const profileProject = showcaseWorks.find((p: any) => p.slug === 'profile-plus') || showcaseWorks[1];
-  const disnakerProject = showcaseWorks.find((p: any) => p.slug === 'disnakertrans-jatim') || showcaseWorks[2];
-  const mandalaProject = showcaseWorks.find((p: any) => p.slug === 'among-rasa') || showcaseWorks[3];
-
   const galleryCategories = [
     { id: 'all', label: 'All Projects', count: showcaseWorks.length },
     { 
       id: 'web', 
       label: 'Web Apps & SaaS', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'web' || p.slug === 'brewtech' || p.slug === 'polinema-creative-center').length 
+      count: showcaseWorks.filter((p: any) => p.categoryTab === 'web' || p.slug === 'brewtech' || p.slug === 'polinema-creative-center' || p.role?.toLowerCase().includes('fullstack') || p.role?.toLowerCase().includes('developer')).length 
     },
     { 
       id: 'ui', 
       label: 'UI/UX Design', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'ui' || p.role?.toLowerCase().includes('designer') || p.slug === 'profile-plus').length 
+      count: showcaseWorks.filter((p: any) => p.categoryTab === 'ui' || p.role?.toLowerCase().includes('designer') || p.slug === 'profile-plus' || p.slug === 'disnakertrans-jatim').length 
     },
     { 
       id: 'landing', 
       label: 'Landing Pages', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'landing' || p.title?.toLowerCase().includes('landing')).length 
+      count: showcaseWorks.filter((p: any) => p.categoryTab === 'landing' || p.title?.toLowerCase().includes('landing') || p.slug === 'among-rasa' || p.slug === 'pos-paud-teratai' || p.slug === 'jayatrans').length 
     },
     { 
       id: 'creative', 
       label: 'Film & Media', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'creative' || p.role?.toLowerCase().includes('director') || p.role?.toLowerCase().includes('editor')).length 
+      count: showcaseWorks.filter((p: any) => p.categoryTab === 'creative' || p.role?.toLowerCase().includes('director') || p.role?.toLowerCase().includes('editor') || Boolean(p.videoUrl)).length 
     }
   ];
 
@@ -367,12 +362,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         {/* Center Desktop Navigation */}
         <nav className="desktop-portfolio-nav" style={{ display: 'none', alignItems: 'center', gap: '2rem' }}>
+          <a href="#works" style={{ textDecoration: 'none', color: '#0f172a', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}>Works</a>
           <a href="#about" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>About</a>
           <a href="#specializations" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Services</a>
-          <a href="#works" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Works</a>
+          <a href="#process" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Process</a>
           <a href="#experience" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Experience</a>
           <a href="#articles" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Articles</a>
-          <a href={`mailto:${email}`} style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Contact</a>
         </nav>
 
         {/* Right Navigation: Primary Contact CTA */}
@@ -448,11 +443,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               minWidth: '240px'
             }}
           >
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>About Me</a>
-            <a href="#specializations" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Services</a>
-            <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Selected Works</a>
-            <a href="#experience" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Experience & Awards</a>
-            <a href="#articles" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 500, fontSize: '0.95rem' }}>Articles</a>
+            <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 700, fontSize: '0.95rem' }}>Selected Works</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>About Me</a>
+            <a href="#specializations" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Services</a>
+            <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Process</a>
+            <a href="#experience" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Experience & Career</a>
+            <a href="#articles" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Articles</a>
             <a href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span>Let's Talk (WhatsApp)</span>
               <ArrowUpRight size={14} />
@@ -690,366 +686,432 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
       </section>
 
-      {/* =========================================================================
-         3. BENTO SHOWCASE (Hilman's Real Featured Projects)
+            {/* =========================================================================
+         3. PROJECT SHOWCASE GALLERY (Hilman's Selected Works)
          ========================================================================= */}
-      <section className="bento-section-wrapper" style={{
-        padding: '2rem 1.5rem 5rem 1.5rem',
+      <section id="works" className="works-section" style={{
+        padding: '3.5rem 1.5rem 5.5rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto'
       }}>
-        <div className="bento-container-box" style={{
-          borderRadius: '36px',
-          padding: '2.5rem',
-          background: 'radial-gradient(ellipse at 50% 40%, #7dd3fc 0%, #38bdf8 35%, #0ea5e9 75%, #0284c7 100%)',
-          boxShadow: '0 30px 70px -15px rgba(14, 165, 233, 0.4)',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div className="bento-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: '1.75rem',
-            position: 'relative'
+        {/* Gallery Header */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <span className="editorial-kicker">
+            / Showcase Gallery /
+          </span>
+          <h2 style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.025em',
+            margin: '0.4rem 0 0.8rem 0',
+            color: '#0f172a'
           }}>
-            {/* 1. Top-Left: Brewtech (7 cols) */}
-            <motion.div
-              className="bento-col-span-7"
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => { setSelectedProject(brewtechProject); setActiveModalImageIndex(0); }}
-              style={{
-                gridColumn: 'span 7',
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '1.75rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-                overflow: 'hidden',
-                minHeight: '340px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                cursor: 'pointer'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', fontWeight: 800 }}>
-                      ☕
-                    </div>
-                    <div>
-                      <span style={{ fontSize: '1.18rem', fontWeight: 800, color: '#0f172a', display: 'block', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
-                        Brewtech Vocational Platform
-                      </span>
-                      <span style={{ fontSize: '0.82rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '0.15rem' }}>
-                        Innovillage Program · Top 180 Social Projects
-                      </span>
-                    </div>
-                  </div>
-                  <span style={{ fontSize: '0.78rem', background: '#f0fdf4', color: '#16a34a', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #bbf7d0', flexShrink: 0 }}>
-                    Live LMS · 15 Screens
-                  </span>
-                </div>
+            Selected Projects & Gallery
+          </h2>
+          <p style={{
+            fontSize: '1.05rem',
+            color: '#475569',
+            maxWidth: '720px',
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Explore production web platforms, human-centered UI/UX systems, accessible public portals, responsive landing pages, and creative video works. Click any card to explore screenshots & case study details.
+          </p>
 
-                {/* Screenshot Preview */}
-                <div style={{
-                  position: 'relative',
-                  height: '140px',
-                  borderRadius: '14px',
-                  overflow: 'hidden',
-                  marginBottom: '1rem',
-                  border: '1px solid #e2e8f0',
-                  background: '#0f172a'
-                }}>
-                  <img 
-                    src={brewtechProject.image || "https://cdn.sanity.io/images/1plh3iom/production/6700c06497f1f0a2ba193fa7febe5d207f212267-1920x1080.png"}
-                    alt="Brewtech Barista LMS" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} 
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 60%)',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    padding: '0.55rem 0.85rem'
+          {/* Interactive Category Filter Pills */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: '0.6rem',
+            marginTop: '2rem'
+          }}>
+            {galleryCategories.map((cat) => {
+              const isActive = galleryFilter === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setGalleryFilter(cat.id)}
+                  style={{
+                    padding: '0.55rem 1.25rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.86rem',
+                    fontWeight: isActive ? 700 : 500,
+                    background: isActive ? '#0f172a' : '#ffffff',
+                    color: isActive ? '#ffffff' : '#475569',
+                    border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
+                    boxShadow: isActive ? '0 6px 16px rgba(15,23,42,0.18)' : '0 2px 6px rgba(0,0,0,0.02)',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <span>{cat.label}</span>
+                  <span style={{
+                    fontSize: '0.76rem',
+                    padding: '0.15rem 0.55rem',
+                    borderRadius: '9999px',
+                    background: isActive ? 'rgba(255,255,255,0.25)' : '#f1f5f9',
+                    color: isActive ? '#ffffff' : '#0f172a',
+                    fontWeight: 700
                   }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Accessible Barista Training Portal</span>
-                    <span style={{ background: '#0284c7', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.2rem 0.55rem', borderRadius: '6px' }}>15 Screens</span>
-                  </div>
-                </div>
-
-                <p style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.6, margin: 0, fontWeight: 400 }}>
-                  Vocational education platform empowering youth with disabilities into certified barista talents with accessible interactive curriculum.
-                </p>
-              </div>
-
-              {/* Metrics Row */}
-              <div className="bento-metrics-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.85rem', margin: '0.85rem 0' }}>
-                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Youth Empowered</span>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>50+ Students</span>
-                </div>
-                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Accessibility</span>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0284c7' }}>100% WCAG</span>
-                </div>
-                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Completion</span>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#16a34a' }}>98.4%</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500, paddingTop: '0.65rem', borderTop: '1px solid #f1f5f9' }}>
-                <span>Stack: Next.js · TypeScript · Supabase · Tailwind</span>
-                <span style={{ color: '#0284c7', fontWeight: 700 }}>Open Gallery →</span>
-              </div>
-            </motion.div>
-
-            {/* 2. Top-Right: ProFile+ HR Suite (5 cols) */}
-            <motion.div
-              className="bento-col-span-5"
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => { setSelectedProject(profileProject); setActiveModalImageIndex(0); }}
-              style={{
-                gridColumn: 'span 5',
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '1.75rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-                overflow: 'hidden',
-                minHeight: '340px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                cursor: 'pointer'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                  <span style={{ fontSize: '0.78rem', background: '#eff6ff', color: '#1d4ed8', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #bfdbfe' }}>
-                    SEAL Accelerator
+                    {cat.count}
                   </span>
-                  <span style={{ fontSize: '0.78rem', background: '#f8fafc', color: '#0f172a', padding: '0.25rem 0.65rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontWeight: 700 }}>
-                    16 Screens
-                  </span>
-                </div>
-                <h4 style={{ fontSize: '1.28rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
-                  ProFile+ HR Management
-                </h4>
-                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
-                  Centralized employee lifecycle management, attendance telemetry, and verified payroll pipelines.
-                </p>
-
-                {/* Screenshot Preview */}
-                <div style={{
-                  position: 'relative',
-                  height: '110px',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  margin: '0.85rem 0',
-                  border: '1px solid #e2e8f0',
-                  background: '#0f172a'
-                }}>
-                  <img 
-                    src={profileProject.image || "https://cdn.sanity.io/images/1plh3iom/production/34a70659101d28362cb237eec591b6443c7cb7ea-1920x1080.png"}
-                    alt="ProFile+ HR Suite" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} 
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 60%)',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    padding: '0.45rem 0.75rem'
-                  }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Enterprise Dashboard UI</span>
-                    <span style={{ background: '#38bdf8', color: '#0f172a', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>UI/UX</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '12px', marginBottom: '0.75rem', border: '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '0.35rem', fontWeight: 600 }}>
-                  <span style={{ color: '#334155' }}>Verification Efficiency:</span>
-                  <span style={{ fontWeight: 800, color: '#0284c7' }}>+40% Saved</span>
-                </div>
-                <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ width: '85%', height: '100%', background: '#0284c7' }} />
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
-                <span>Role: UI/UX & Frontend</span>
-                <span style={{ color: '#0284c7', fontWeight: 700 }}>Explore System →</span>
-              </div>
-            </motion.div>
-
-            {/* 3. Bottom-Left: Disnakertrans Jatim (5 cols) */}
-            <motion.div
-              className="bento-col-span-5"
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => { setSelectedProject(disnakerProject); setActiveModalImageIndex(0); }}
-              style={{
-                gridColumn: 'span 5',
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '1.75rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-                overflow: 'hidden',
-                minHeight: '340px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                cursor: 'pointer'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
-                    <span style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 700 }}>GovTech Portal · East Java</span>
-                  </div>
-                  <span style={{ fontSize: '0.78rem', color: '#0f172a', fontWeight: 700, background: '#f8fafc', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>Mobile UX</span>
-                </div>
-                <h4 style={{ fontSize: '1.28rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
-                  Disnakertrans Jatim
-                </h4>
-                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
-                  Accessible public labor portal serving 38 regencies across East Java with dispute resolution.
-                </p>
-
-                {/* Screenshot Preview */}
-                <div style={{
-                  position: 'relative',
-                  height: '110px',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  margin: '0.85rem 0',
-                  border: '1px solid #e2e8f0',
-                  background: '#0f172a'
-                }}>
-                  <img 
-                    src={disnakerProject.image || "https://cdn.sanity.io/images/1plh3iom/production/a4dac36d02b97aabf019333450c398342b02fa29-360x5140.png"}
-                    alt="Disnakertrans Jatim" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} 
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 60%)',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    padding: '0.45rem 0.75rem'
-                  }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Provincial Labor Service</span>
-                    <span style={{ background: '#10b981', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>3 Screens</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '0.75rem 1rem', marginBottom: '0.75rem', border: '1px solid #e2e8f0' }}>
-                <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Public Coverage:</span>
-                <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>38 Regencies Across East Java</span>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
-                <span>Laravel · MySQL · WCAG</span>
-                <span style={{ color: '#0284c7', fontWeight: 700 }}>View Portal →</span>
-              </div>
-            </motion.div>
-
-            {/* 4. Bottom-Right: Among Rasa & Mandala (7 cols) */}
-            <motion.div
-              className="bento-col-span-7 bento-card-furniture"
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => { setSelectedProject(mandalaProject); setActiveModalImageIndex(0); }}
-              style={{
-                gridColumn: 'span 7',
-                background: '#ffffff',
-                borderRadius: '24px',
-                padding: '1.75rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-                overflow: 'hidden',
-                minHeight: '340px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                cursor: 'pointer'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                  <span style={{ fontSize: '0.8rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    Socio-Tech & Creative Strategy
-                  </span>
-                  <span style={{ fontSize: '0.78rem', background: '#fef3c7', color: '#b45309', padding: '0.3rem 0.75rem', borderRadius: '9999px', fontWeight: 700, border: '1px solid #fde68a' }}>
-                    ★ Djarum Beasiswa Plus
-                  </span>
-                </div>
-                <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
-                  Among Rasa Landing Page & Mandala
-                </h4>
-                <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.55, margin: 0 }}>
-                  Empowerment platform and barista internship initiative ('The Cup We Share') at SLB YPAC Kota Malang.
-                </p>
-
-                {/* Screenshot Preview */}
-                <div style={{
-                  position: 'relative',
-                  height: '110px',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  margin: '0.85rem 0',
-                  border: '1px solid #e2e8f0',
-                  background: '#0f172a'
-                }}>
-                  <img 
-                    src={mandalaProject.image || "https://cdn.sanity.io/images/1plh3iom/production/c401442607a60e14c6db577a2975c03702065f52-1920x17643.png"}
-                    alt="Among Rasa Landing Page" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} 
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 60%)',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    padding: '0.45rem 0.75rem'
-                  }}>
-                    <span style={{ color: '#ffffff', fontSize: '0.82rem', fontWeight: 700 }}>Kafe Among Rasa & Sociopreneurship</span>
-                    <span style={{ background: '#f59e0b', color: '#ffffff', fontSize: '0.72rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: '4px' }}>Live Web</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '0.75rem' }}>
-                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Social Impact</span>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Inclusive Baristas</span>
-                </div>
-                <div style={{ background: '#f8fafc', padding: '0.75rem 0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                  <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600, display: 'block', marginBottom: '0.15rem' }}>Mentorship</span>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0284c7' }}>SLB YPAC Malang</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
-                <span>Next.js · TailwindCSS · Animation</span>
-                <span style={{ color: '#0284c7', fontWeight: 700 }}>Open Project →</span>
-              </div>
-            </motion.div>
+                </button>
+              );
+            })}
           </div>
         </div>
+
+        {/* Gallery Cards Grid */}
+        <motion.div 
+          layout
+          className="works-grid" 
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 390px), 1fr))',
+            gap: '2rem'
+          }}
+        >
+          <AnimatePresence>
+            {filteredWorks.map((work: any) => {
+              const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0 
+                ? work.gallery.length 
+                : (work.image || work.coverImage ? 1 : 0);
+              const isVideo = Boolean(work.videoUrl || work.categoryTab === 'creative');
+              const displayImg = work.image || work.coverImage;
+
+              return (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  key={work.id || work.slug}
+                  whileHover={{ y: -8 }}
+                  onClick={() => {
+                    setSelectedProject(work);
+                    setActiveModalImageIndex(0);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    background: '#ffffff',
+                    borderRadius: '24px',
+                    border: '1px solid #e2e8f0',
+                    overflow: 'hidden',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
+                    transition: 'box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease',
+                    height: '100%'
+                  }}
+                  className="project-gallery-card"
+                >
+                  {/* Thumbnail Viewport */}
+                  <div style={{
+                    height: '250px',
+                    width: '100%',
+                    background: '#0f172a',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {displayImg ? (
+                      <img
+                        src={displayImg}
+                        alt={work.title}
+                        loading="lazy"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'top center',
+                          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                        }}
+                        className="gallery-card-img"
+                      />
+                    ) : (
+                      <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>Visual Preview</div>
+                    )}
+
+                    {/* Gradient overlay for bottom readability */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, transparent 45%, rgba(15,23,42,0.75) 100%)',
+                      pointerEvents: 'none'
+                    }} />
+
+                    {/* Top-Left Category Badge */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '0.85rem',
+                      left: '0.85rem',
+                      background: 'rgba(15, 23, 42, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#ffffff',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      padding: '0.3rem 0.75rem',
+                      borderRadius: '9999px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }}>
+                      <span>{work.displayCategory || work.category || 'Platform'}</span>
+                    </div>
+
+                    {/* Top-Right Badge: Screenshot Count or Video */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '0.85rem',
+                      right: '0.85rem',
+                      background: isVideo ? 'rgba(239, 68, 68, 0.92)' : 'rgba(15, 23, 42, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#ffffff',
+                      fontSize: '0.76rem',
+                      fontWeight: 700,
+                      padding: '0.3rem 0.75rem',
+                      borderRadius: '9999px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }}>
+                      {isVideo ? (
+                        <>
+                          <Play size={12} fill="#ffffff" />
+                          <span>Video Reel</span>
+                        </>
+                      ) : (
+                        <>
+                          <ImageIcon size={12} />
+                          <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Bottom-left: Year & Role Badges */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '0.85rem',
+                      left: '0.85rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      zIndex: 2
+                    }}>
+                      <span style={{
+                        background: '#ffffff',
+                        color: '#0f172a',
+                        fontSize: '0.75rem',
+                        fontWeight: 800,
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '6px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.14)'
+                      }}>
+                        {work.year || '2025'}
+                      </span>
+                      {work.role && (
+                        <span style={{
+                          background: 'rgba(15, 23, 42, 0.85)',
+                          color: '#f8fafc',
+                          fontSize: '0.75rem',
+                          fontWeight: 600,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '6px',
+                          backdropFilter: 'blur(8px)',
+                          border: '1px solid rgba(255,255,255,0.2)'
+                        }}>
+                          {work.role}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div style={{
+                    padding: '1.5rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: 1,
+                    justifyContent: 'space-between',
+                    gap: '1rem'
+                  }}>
+                    <div>
+                      {/* Subtitle / Client Kicker */}
+                      {work.subtitle && (
+                        <span style={{
+                          fontSize: '0.78rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          color: '#0284c7',
+                          display: 'block',
+                          marginBottom: '0.35rem'
+                        }}>
+                          {work.subtitle}
+                        </span>
+                      )}
+
+                      {/* Judul (Title) */}
+                      <h3 style={{
+                        fontSize: '1.25rem',
+                        fontWeight: 800,
+                        color: '#0f172a',
+                        margin: '0 0 0.55rem 0',
+                        lineHeight: 1.35,
+                        letterSpacing: '-0.02em',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                      }}>
+                        {work.title}
+                      </h3>
+
+                      {/* Mini Description */}
+                      <p style={{
+                        fontSize: '0.92rem',
+                        color: '#334155',
+                        lineHeight: 1.6,
+                        margin: 0,
+                        fontWeight: 400,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                      }}>
+                        {work.description ? work.description.replace(/\n+/g, ' ') : (work.outcome || work.subtitle)}
+                      </p>
+
+                      {/* Key Impact Metric / Outcome */}
+                      {work.outcome && (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '0.5rem',
+                          background: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          borderRadius: '10px',
+                          padding: '0.55rem 0.75rem',
+                          marginTop: '0.85rem'
+                        }}>
+                          <Sparkles size={14} color="#0284c7" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
+                          <span style={{ fontSize: '0.8rem', color: '#1e293b', fontWeight: 600, lineHeight: 1.45 }}>
+                            {work.outcome}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Tech Stack Pills */}
+                    {work.stack && (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: 'auto' }}>
+                        {work.stack.split('·').slice(0, 4).map((tech: string, i: number) => (
+                          <span
+                            key={i}
+                            style={{
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              color: '#334155',
+                              background: '#f1f5f9',
+                              border: '1px solid #e2e8f0',
+                              padding: '0.2rem 0.55rem',
+                              borderRadius: '6px'
+                            }}
+                          >
+                            {tech.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Footer Actions: Explore Gallery + External Link */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingTop: '0.85rem',
+                      borderTop: '1px solid #f1f5f9',
+                      marginTop: '0.5rem'
+                    }}>
+                      <span style={{
+                        fontSize: '0.88rem',
+                        fontWeight: 700,
+                        color: '#0284c7',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.4rem'
+                      }}>
+                        <Eye size={15} />
+                        Explore Gallery ({screenshotCount})
+                      </span>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                        {work.link && (
+                          <a
+                            href={work.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            title="Visit Live Site"
+                            style={{
+                              width: '34px',
+                              height: '34px',
+                              borderRadius: '9px',
+                              background: '#f0f9ff',
+                              color: '#0284c7',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              textDecoration: 'none',
+                              border: '1px solid #bae6fd',
+                              transition: 'all 0.2s'
+                            }}
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        )}
+                        {work.videoUrl && (
+                          <a
+                            href={work.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            title="Watch on YouTube"
+                            style={{
+                              width: '34px',
+                              height: '34px',
+                              borderRadius: '9px',
+                              background: '#fef2f2',
+                              color: '#ef4444',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              textDecoration: 'none',
+                              border: '1px solid #fecaca',
+                              transition: 'all 0.2s'
+                            }}
+                          >
+                            <Play size={14} fill="#ef4444" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </section>
 
       {/* =========================================================================
@@ -1512,389 +1574,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
       </section>
 
-      {/* =========================================================================
-         7. PROJECT GALLERY & SHOWCASE (Hilman's Real Work Gallery)
-         ========================================================================= */}
-      <section id="works" className="works-section" style={{
-        padding: '5.5rem 1.5rem',
-        maxWidth: '1380px',
-        margin: '0 auto'
-      }}>
-        {/* Gallery Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <span className="editorial-kicker">
-            / Project Gallery & Case Studies /
-          </span>
-          <h2 style={{
-            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
-            fontWeight: 400,
-            letterSpacing: '-0.025em',
-            margin: '0.4rem 0 0.8rem 0',
-            color: '#0f172a'
-          }}>
-            Selected Projects & Gallery
-          </h2>
-          <p style={{
-            fontSize: '1rem',
-            color: '#64748b',
-            maxWidth: '680px',
-            margin: '0 auto',
-            lineHeight: 1.6
-          }}>
-            Explore production web platforms, human-centered UI/UX systems, accessible public portals, responsive landing pages, and creative film direction.
-          </p>
-
-          {/* Interactive Category Filter Pills */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '0.6rem',
-            marginTop: '2rem'
-          }}>
-            {galleryCategories.map((cat) => {
-              const isActive = galleryFilter === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setGalleryFilter(cat.id)}
-                  style={{
-                    padding: '0.55rem 1.25rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.85rem',
-                    fontWeight: isActive ? 600 : 500,
-                    background: isActive ? '#0f172a' : '#ffffff',
-                    color: isActive ? '#ffffff' : '#64748b',
-                    border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
-                    boxShadow: isActive ? '0 6px 16px rgba(15,23,42,0.18)' : '0 2px 6px rgba(0,0,0,0.02)',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  <span>{cat.label}</span>
-                  <span style={{
-                    fontSize: '0.76rem',
-                    padding: '0.15rem 0.55rem',
-                    borderRadius: '9999px',
-                    background: isActive ? 'rgba(255,255,255,0.25)' : '#f1f5f9',
-                    color: isActive ? '#ffffff' : '#1e293b',
-                    fontWeight: 700
-                  }}>
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Gallery Cards Grid */}
-        <motion.div 
-          layout
-          className="works-grid" 
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 410px), 1fr))',
-            gap: '2.5rem'
-          }}
-        >
-          <AnimatePresence>
-            {filteredWorks.map((work: any) => {
-              const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0 
-                ? work.gallery.length 
-                : (work.image || work.coverImage ? 1 : 0);
-              const isVideo = Boolean(work.videoUrl || work.categoryTab === 'creative');
-
-              return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                  key={work.id || work.slug}
-                  whileHover={{ y: -8 }}
-                  onClick={() => {
-                    setSelectedProject(work);
-                    setActiveModalImageIndex(0);
-                  }}
-                  style={{
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    background: '#ffffff',
-                    borderRadius: '24px',
-                    border: '1px solid #e2e8f0',
-                    overflow: 'hidden',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                    transition: 'box-shadow 0.3s ease, border-color 0.3s ease'
-                  }}
-                  className="project-gallery-card"
-                >
-                  {/* Image Viewport */}
-                  <div style={{
-                    height: '270px',
-                    background: '#0f172a',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    {work.image || work.coverImage ? (
-                      <img
-                        src={work.image || work.coverImage}
-                        alt={work.title}
-                        loading="lazy"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          objectPosition: 'top center',
-                          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
-                        }}
-                        className="gallery-card-img"
-                      />
-                    ) : (
-                      <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>Visual Preview</div>
-                    )}
-
-                    {/* Gradient overlay for bottom readability */}
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to bottom, rgba(15,23,42,0.35) 0%, transparent 40%, rgba(15,23,42,0.75) 100%)',
-                      pointerEvents: 'none'
-                    }} />
-
-                    {/* Top-Left Category Badge */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      left: '1rem',
-                      background: 'rgba(15, 23, 42, 0.85)',
-                      backdropFilter: 'blur(8px)',
-                      color: '#ffffff',
-                      fontSize: '0.8rem',
-                      fontWeight: 700,
-                      padding: '0.35rem 0.85rem',
-                      borderRadius: '9999px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.4rem',
-                      border: '1px solid rgba(255,255,255,0.2)'
-                    }}>
-                      <span>{work.displayCategory || work.category || 'Platform'}</span>
-                    </div>
-
-                    {/* Top-Right Badge: Screenshot Count or Video */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      right: '1rem',
-                      background: isVideo ? 'rgba(239, 68, 68, 0.95)' : 'rgba(15, 23, 42, 0.85)',
-                      backdropFilter: 'blur(8px)',
-                      color: '#ffffff',
-                      fontSize: '0.78rem',
-                      fontWeight: 700,
-                      padding: '0.35rem 0.85rem',
-                      borderRadius: '9999px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.4rem',
-                      border: '1px solid rgba(255,255,255,0.2)'
-                    }}>
-                      {isVideo ? (
-                        <>
-                          <Play size={13} fill="#ffffff" />
-                          <span>Video</span>
-                        </>
-                      ) : (
-                        <>
-                          <ImageIcon size={13} />
-                          <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
-                        </>
-                      )}
-                    </div>
-
-                    {/* Bottom-left Device / Year tag */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '0.9rem',
-                      left: '1rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.45rem'
-                    }}>
-                      <span style={{
-                        background: '#ffffff',
-                        color: '#0f172a',
-                        fontSize: '0.78rem',
-                        fontWeight: 800,
-                        padding: '0.25rem 0.65rem',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                      }}>
-                        {work.year || '2025'}
-                      </span>
-                      {work.role && (
-                        <span style={{
-                          background: 'rgba(15, 23, 42, 0.85)',
-                          color: '#f8fafc',
-                          fontSize: '0.78rem',
-                          fontWeight: 600,
-                          padding: '0.25rem 0.65rem',
-                          borderRadius: '8px',
-                          backdropFilter: 'blur(8px)',
-                          border: '1px solid rgba(255,255,255,0.2)'
-                        }}>
-                          {work.role}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div style={{
-                    padding: '1.65rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flexGrow: 1,
-                    justifyContent: 'space-between',
-                    gap: '1.15rem'
-                  }}>
-                    <div>
-                      <h3 style={{
-                        fontSize: '1.32rem',
-                        fontWeight: 800,
-                        color: '#0f172a',
-                        margin: '0 0 0.55rem 0',
-                        lineHeight: 1.3,
-                        letterSpacing: '-0.02em'
-                      }}>
-                        {work.title}
-                      </h3>
-                      <p style={{
-                        fontSize: '0.93rem',
-                        color: '#334155',
-                        lineHeight: 1.6,
-                        margin: 0,
-                        fontWeight: 400,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
-                        {work.subtitle || work.description || work.outcome}
-                      </p>
-                    </div>
-
-                    {/* Tags / Stack */}
-                    {work.stack && (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
-                        {work.stack.split('·').slice(0, 4).map((tech: string, i: number) => (
-                          <span
-                            key={i}
-                            style={{
-                              fontSize: '0.78rem',
-                              fontWeight: 600,
-                              color: '#1e293b',
-                              background: '#f1f5f9',
-                              border: '1px solid #e2e8f0',
-                              padding: '0.25rem 0.65rem',
-                              borderRadius: '8px'
-                            }}
-                          >
-                            {tech.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Footer Actions */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      paddingTop: '0.95rem',
-                      borderTop: '1px solid #f1f5f9',
-                      marginTop: 'auto'
-                    }}>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        fontWeight: 700,
-                        color: '#0284c7',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.45rem'
-                      }}>
-                        <Eye size={16} />
-                        Explore Gallery ({screenshotCount})
-                      </span>
-
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        {work.link && (
-                          <a
-                            href={work.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            title="Visit Live Site"
-                            style={{
-                              width: '36px',
-                              height: '36px',
-                              borderRadius: '10px',
-                              background: '#f0f9ff',
-                              color: '#0284c7',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              textDecoration: 'none',
-                              border: '1px solid #bae6fd'
-                            }}
-                          >
-                            <ExternalLink size={15} />
-                          </a>
-                        )}
-                        {work.videoUrl && (
-                          <a
-                            href={work.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            title="Watch on YouTube"
-                            style={{
-                              width: '36px',
-                              height: '36px',
-                              borderRadius: '10px',
-                              background: '#fef2f2',
-                              color: '#ef4444',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              textDecoration: 'none',
-                              border: '1px solid #fecaca'
-                            }}
-                          >
-                            <Play size={15} fill="#ef4444" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
-      </section>
-
-      {/* =========================================================================
-         8. ABOUT & CAREER TIMELINE (Hilman's Real Experience)
+            {/* =========================================================================
+         7. ABOUT & CAREER TIMELINE (Hilman's Real Experience)
          ========================================================================= */}
       <section id="experience" style={{
         padding: '5rem 1.5rem',
