@@ -819,10 +819,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
            ========================================================================= */}
         {(() => {
           const expandedWork = expandedProject
-            ? filteredWorks.find((w: any) => (w.id && w.id === expandedProject.id) || (w.slug && w.slug === expandedProject.slug))
+            ? (filteredWorks.find((w: any) => 
+                (w.id && expandedProject.id && w.id === expandedProject.id) ||
+                (w.slug && expandedProject.slug && w.slug === expandedProject.slug) ||
+                (w.title && expandedProject.title && w.title === expandedProject.title)
+              ) || expandedProject)
             : null;
           const remainingWorks = expandedWork
-            ? filteredWorks.filter((w: any) => !((w.id && w.id === expandedWork.id) || (w.slug && w.slug === expandedWork.slug)))
+            ? filteredWorks.filter((w: any) => 
+                !((w.id && expandedWork.id && w.id === expandedWork.id) ||
+                  (w.slug && expandedWork.slug && w.slug === expandedWork.slug) ||
+                  (w.title && expandedWork.title && w.title === expandedWork.title))
+              )
             : filteredWorks;
 
           const renderExpandedPanel = (work: any) => {
