@@ -71,6 +71,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [processHovered, setProcessHovered] = useState(false);
   const [hoveredProcessCard, setHoveredProcessCard] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isHimmelRevealed, setIsHimmelRevealed] = useState(false);
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
@@ -605,13 +606,35 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               </motion.div>
             </div>
 
-            {/* Center: Cutout Character Portrait */}
-            <div className="hero-portrait-wrap">
+            {/* Center: Cutout Character Portrait with Interactive Brush Reveal (Hilman -> Himmel) */}
+            <div 
+              className={`hero-portrait-wrap portrait-brush-container ${isHimmelRevealed ? 'revealed' : ''}`}
+              onMouseEnter={() => setIsHimmelRevealed(true)}
+              onMouseLeave={() => setIsHimmelRevealed(false)}
+              onClick={() => setIsHimmelRevealed(prev => !prev)}
+              title="Hover to reveal Himmel"
+            >
+              {/* Layer 1: Hilman's Real Photo (Default Visible) */}
+              <img 
+                src="/profilephoto_bust.png" 
+                alt={name}
+                className="hero-portrait-img portrait-hilman-layer"
+                loading="eager"
+              />
+
+              {/* Layer 2: Himmel (Revealed on Hover with Brush Effect) */}
               <img 
                 src="/himmel_bust.png" 
-                alt={`${name} - ${headline}`}
-                className="hero-portrait-img"
+                alt={`${name} - Himmel`}
+                className="hero-portrait-img portrait-himmel-layer"
+                loading="eager"
               />
+
+              {/* Subtle Interactive Hint Badge */}
+              <div className="portrait-brush-badge">
+                <Sparkles size={11} style={{ color: '#38bdf8' }} />
+                <span>Hover me</span>
+              </div>
             </div>
 
             {/* Right Flank: Statement + Let's Talk CTA */}
