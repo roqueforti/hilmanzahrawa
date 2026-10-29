@@ -1759,3 +1759,62 @@ html, body {
   font-family: var(--font-main) !important;
   color: #1e293b !important;
 }
+
+/* =========================================================================
+   Showcase Gallery - Image 1 (Grid) & Image 2 (Expanded) Responsive Styles
+   ========================================================================= */
+
+.gallery-project-item {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-project-item:hover {
+  transform: translateY(-4px);
+}
+
+.gallery-project-item:hover .gallery-thumb-img {
+  transform: scale(1.04);
+}
+
+.gallery-project-item:hover .gallery-item-title {
+  color: #0284c7 !important;
+}
+
+/* 4-column Gallery Grid Breakpoints (Image 1) */
+@media (max-width: 1200px) {
+  .works-grid-image1 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem 1.25rem !important;
+  }
+}
+
+@media (max-width: 840px) {
+  .works-grid-image1 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.75rem 1rem !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .works-grid-image1 {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Expanded Showcase Breakpoints (Image 2) */
+@media (max-width: 1024px) {
+  .expanded-showcase-container {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+    padding: 1.25rem !important;
+  }
+
+  .expanded-showcase-container > div:nth-child(2) {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid #f1f5f9 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding: 1.25rem 0 !important;
+  }
+}

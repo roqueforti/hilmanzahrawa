@@ -62,6 +62,8 @@ interface ClientPageProps {
 
 export default function ClientPage({ initialData }: ClientPageProps) {
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [expandedProject, setExpandedProject] = useState<any | null>(null);
+  const [expandedImageIndex, setExpandedImageIndex] = useState<number>(0);
   const [galleryFilter, setGalleryFilter] = useState<string>('all');
   const [activeModalImageIndex, setActiveModalImageIndex] = useState<number>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -690,90 +692,763 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          3. PROJECT SHOWCASE GALLERY (Hilman's Selected Works)
          ========================================================================= */}
       <section id="works" className="works-section" style={{
-        padding: '3.5rem 1.5rem 5.5rem 1.5rem',
+        padding: '3rem 1.5rem 5.5rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto'
       }}>
-        {/* Gallery Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <span className="editorial-kicker">
-            / Showcase Gallery /
-          </span>
-          <h2 style={{
-            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
-            fontWeight: 400,
-            letterSpacing: '-0.025em',
-            margin: '0.4rem 0 0.8rem 0',
-            color: '#0f172a'
-          }}>
-            Selected Projects & Gallery
-          </h2>
-          <p style={{
-            fontSize: '1.05rem',
-            color: '#475569',
-            maxWidth: '720px',
-            margin: '0 auto',
-            lineHeight: 1.6
-          }}>
-            Explore production web platforms, human-centered UI/UX systems, accessible public portals, responsive landing pages, and creative video works. Click any card to explore screenshots & case study details.
-          </p>
+        {/* Gallery Top Navigation Header (Matching Image 2: "SELECTED WORK" / Location) */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid #e2e8f0',
+          paddingBottom: '1.25rem',
+          marginBottom: '2rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <span style={{
+              fontSize: '0.78rem',
+              fontWeight: 800,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: '#0f172a'
+            }}>
+              Selected Work
+            </span>
+            <span style={{
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              padding: '0.15rem 0.6rem',
+              borderRadius: '9999px',
+              background: '#f1f5f9',
+              color: '#0284c7'
+            }}>
+              {filteredWorks.length} Projects
+            </span>
+          </div>
 
-          {/* Interactive Category Filter Pills */}
+          <span style={{
+            fontSize: '0.78rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: '#64748b'
+          }}>
+            {location.split(',')[0]}, ID
+          </span>
+        </div>
+
+        {/* Interactive Category Filter Pills */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          flexWrap: 'wrap',
+          gap: '0.55rem',
+          marginBottom: '2.5rem'
+        }}>
+          {galleryCategories.map((cat) => {
+            const isActive = galleryFilter === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setGalleryFilter(cat.id)}
+                style={{
+                  padding: '0.45rem 1.15rem',
+                  borderRadius: '9999px',
+                  fontSize: '0.82rem',
+                  fontWeight: isActive ? 700 : 500,
+                  background: isActive ? '#0f172a' : '#ffffff',
+                  color: isActive ? '#ffffff' : '#64748b',
+                  border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
+                  boxShadow: isActive ? '0 4px 12px rgba(15,23,42,0.15)' : 'none',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <span>{cat.label}</span>
+                <span style={{
+                  fontSize: '0.74rem',
+                  padding: '0.1rem 0.5rem',
+                  borderRadius: '9999px',
+                  background: isActive ? 'rgba(255,255,255,0.25)' : '#f1f5f9',
+                  color: isActive ? '#ffffff' : '#0f172a',
+                  fontWeight: 700
+                }}>
+                  {cat.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* =========================================================================
+           IMAGE 2 LAYOUT: EXPANDED PROJECT SHOWCASE (When a project is clicked)
+           ========================================================================= */}
+        <AnimatePresence mode="wait">
+          {expandedProject && (() => {
+            const isVideo = Boolean(expandedProject.videoUrl || expandedProject.categoryTab === 'creative');
+            const youtubeEmbed = getYoutubeEmbedUrl(expandedProject.videoUrl);
+            const projectGallery: string[] = Array.isArray(expandedProject.gallery) && expandedProject.gallery.length > 0
+              ? expandedProject.gallery
+              : [expandedProject.image || expandedProject.coverImage].filter(Boolean);
+            const activeScreenshot = projectGallery[expandedImageIndex] || projectGallery[0];
+            const screenshotCount = projectGallery.length;
+
+            // Side queue: next 2 projects from the current filter
+            const sideProjects = filteredWorks.filter((p: any) => p.id !== expandedProject.id && p.slug !== expandedProject.slug).slice(0, 2);
+
+            return (
+              <motion.div
+                key={expandedProject.id || expandedProject.slug}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.28 }}
+                className="expanded-showcase-container"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'minmax(0, 1.85fr) minmax(0, 0.9fr) minmax(0, 1.15fr)',
+                  gap: '2.25rem',
+                  alignItems: 'start',
+                  marginBottom: '4rem',
+                  padding: '1.75rem',
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  border: '1.5px solid #e2e8f0',
+                  boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.08)'
+                }}
+              >
+                {/* 1. LEFT COLUMN: Large Media Player + Title & Mini Description */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {/* Media Viewport (16:9 Aspect Ratio) */}
+                  <div style={{
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    background: '#0f172a',
+                    position: 'relative',
+                    boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
+                  }}>
+                    {isVideo && youtubeEmbed ? (
+                      <iframe
+                        src={youtubeEmbed}
+                        title={expandedProject.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ width: '100%', height: '100%', border: 'none' }}
+                      />
+                    ) : (
+                      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                        <img
+                          src={activeScreenshot}
+                          alt={expandedProject.title}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'top center',
+                            transition: 'opacity 0.25s ease'
+                          }}
+                        />
+
+                        {/* Navigation Chevrons if multi-screenshot */}
+                        {screenshotCount > 1 && (
+                          <>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedImageIndex((prev) => (prev > 0 ? prev - 1 : screenshotCount - 1));
+                              }}
+                              aria-label="Previous screenshot"
+                              style={{
+                                position: 'absolute',
+                                left: '0.85rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '50%',
+                                background: 'rgba(15, 23, 42, 0.75)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#ffffff',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              <ChevronLeft size={20} />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedImageIndex((prev) => (prev < screenshotCount - 1 ? prev + 1 : 0));
+                              }}
+                              aria-label="Next screenshot"
+                              style={{
+                                position: 'absolute',
+                                right: '0.85rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '50%',
+                                background: 'rgba(15, 23, 42, 0.75)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#ffffff',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              <ChevronRight size={20} />
+                            </button>
+
+                            {/* Screenshot Counter Pill */}
+                            <div style={{
+                              position: 'absolute',
+                              bottom: '0.85rem',
+                              left: '0.85rem',
+                              background: 'rgba(15, 23, 42, 0.85)',
+                              backdropFilter: 'blur(8px)',
+                              color: '#ffffff',
+                              fontSize: '0.74rem',
+                              fontWeight: 700,
+                              padding: '0.25rem 0.65rem',
+                              borderRadius: '9999px',
+                              border: '1px solid rgba(255,255,255,0.2)'
+                            }}>
+                              {expandedImageIndex + 1} / {screenshotCount} Screens
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Top-Right (X) Close Button (Matching Image 2) */}
+                    <button
+                      onClick={() => setExpandedProject(null)}
+                      title="Close expanded view"
+                      aria-label="Close project preview"
+                      style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        right: '1rem',
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '50%',
+                        background: 'rgba(15, 23, 42, 0.82)',
+                        backdropFilter: 'blur(8px)',
+                        color: '#ffffff',
+                        border: '1px solid rgba(255,255,255,0.25)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10,
+                        transition: 'transform 0.2s ease, background 0.2s ease'
+                      }}
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+
+                  {/* Info Row directly below Media Viewport (Matching Image 2) */}
+                  <div style={{ marginTop: '0.25rem' }}>
+                    {/* Row 1: Title (left) & Year (right) */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      justifyContent: 'space-between',
+                      gap: '0.75rem',
+                      marginBottom: '0.25rem'
+                    }}>
+                      <h3 style={{
+                        fontSize: '1.35rem',
+                        fontWeight: 800,
+                        color: '#0f172a',
+                        margin: 0,
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1.3
+                      }}>
+                        {expandedProject.title}
+                      </h3>
+                      <span style={{
+                        fontSize: '0.9rem',
+                        fontWeight: 800,
+                        color: '#64748b',
+                        flexShrink: 0
+                      }}>
+                        {expandedProject.year || '2025'}
+                      </span>
+                    </div>
+
+                    {/* Row 2: Subtitle / Client (left) & Category (right) */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '0.75rem',
+                      fontSize: '0.88rem'
+                    }}>
+                      <span style={{
+                        color: '#64748b',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em'
+                      }}>
+                        {expandedProject.subtitle || expandedProject.role || 'Project'}
+                      </span>
+                      <span style={{
+                        color: '#0284c7',
+                        fontWeight: 700,
+                        flexShrink: 0
+                      }}>
+                        {expandedProject.displayCategory || expandedProject.category || 'Platform'}
+                      </span>
+                    </div>
+
+                    {/* Row 3: Mini Description & Outcome */}
+                    <p style={{
+                      fontSize: '0.93rem',
+                      color: '#334155',
+                      lineHeight: 1.6,
+                      margin: '0.85rem 0 0 0',
+                      fontWeight: 400
+                    }}>
+                      {expandedProject.description ? expandedProject.description.replace(/\n+/g, ' ') : (expandedProject.outcome || expandedProject.subtitle)}
+                    </p>
+
+                    {/* Screenshot thumbnails selector if multi-screen */}
+                    {screenshotCount > 1 && (
+                      <div style={{
+                        display: 'flex',
+                        gap: '0.5rem',
+                        marginTop: '1rem',
+                        overflowX: 'auto',
+                        paddingBottom: '0.4rem'
+                      }}>
+                        {projectGallery.slice(0, 8).map((imgUrl, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setExpandedImageIndex(idx)}
+                            style={{
+                              width: '56px',
+                              height: '36px',
+                              borderRadius: '6px',
+                              overflow: 'hidden',
+                              padding: 0,
+                              border: expandedImageIndex === idx ? '2px solid #0284c7' : '1px solid #e2e8f0',
+                              cursor: 'pointer',
+                              flexShrink: 0,
+                              opacity: expandedImageIndex === idx ? 1 : 0.6,
+                              transition: 'all 0.2s'
+                            }}
+                          >
+                            <img src={imgUrl} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          </button>
+                        ))}
+                        {screenshotCount > 8 && (
+                          <button
+                            onClick={() => {
+                              setSelectedProject(expandedProject);
+                              setActiveModalImageIndex(0);
+                            }}
+                            style={{
+                              height: '36px',
+                              padding: '0 0.6rem',
+                              borderRadius: '6px',
+                              background: '#f1f5f9',
+                              border: '1px solid #e2e8f0',
+                              fontSize: '0.74rem',
+                              fontWeight: 700,
+                              color: '#0284c7',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                          >
+                            +{screenshotCount - 8} more
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 2. CENTER COLUMN: CREDITS / SPECIFICATIONS (Matching Image 2) */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem',
+                  borderLeft: '1px solid #f1f5f9',
+                  borderRight: '1px solid #f1f5f9',
+                  padding: '0 1.25rem'
+                }}>
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#94a3b8'
+                  }}>
+                    Credits & Details
+                  </span>
+
+                  {/* Role */}
+                  <div>
+                    <span style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: '#64748b',
+                      display: 'block',
+                      marginBottom: '0.2rem'
+                    }}>
+                      Role
+                    </span>
+                    <span style={{
+                      fontSize: '0.94rem',
+                      fontWeight: 800,
+                      color: '#0f172a'
+                    }}>
+                      {expandedProject.role || 'Fullstack Developer'}
+                    </span>
+                  </div>
+
+                  {/* Client / Program */}
+                  <div>
+                    <span style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: '#64748b',
+                      display: 'block',
+                      marginBottom: '0.2rem'
+                    }}>
+                      Client / Program
+                    </span>
+                    <span style={{
+                      fontSize: '0.92rem',
+                      fontWeight: 700,
+                      color: '#0f172a'
+                    }}>
+                      {expandedProject.subtitle || 'Independent'}
+                    </span>
+                  </div>
+
+                  {/* Tech Stack */}
+                  {expandedProject.stack && (
+                    <div>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: '#64748b',
+                        display: 'block',
+                        marginBottom: '0.35rem'
+                      }}>
+                        Technologies
+                      </span>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                        {expandedProject.stack.split('·').slice(0, 5).map((t: string, i: number) => (
+                          <span
+                            key={i}
+                            style={{
+                              fontSize: '0.74rem',
+                              fontWeight: 600,
+                              color: '#1e293b',
+                              background: '#f8fafc',
+                              border: '1px solid #e2e8f0',
+                              padding: '0.2rem 0.55rem',
+                              borderRadius: '6px'
+                            }}
+                          >
+                            {t.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Key Impact / Outcome */}
+                  {expandedProject.outcome && (
+                    <div>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: '#64748b',
+                        display: 'block',
+                        marginBottom: '0.2rem'
+                      }}>
+                        Key Impact
+                      </span>
+                      <p style={{
+                        fontSize: '0.84rem',
+                        color: '#334155',
+                        lineHeight: 1.5,
+                        margin: 0,
+                        fontWeight: 500
+                      }}>
+                        {expandedProject.outcome}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Actions / Live Links */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto', paddingTop: '0.5rem' }}>
+                    {expandedProject.link && (
+                      <a
+                        href={expandedProject.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.65rem 0.95rem',
+                          borderRadius: '10px',
+                          background: '#0f172a',
+                          color: '#ffffff',
+                          fontSize: '0.84rem',
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          boxShadow: '0 4px 12px rgba(15,23,42,0.15)',
+                          transition: 'transform 0.2s'
+                        }}
+                      >
+                        <span>Visit Live Platform</span>
+                        <ArrowUpRight size={15} />
+                      </a>
+                    )}
+
+                    {expandedProject.videoUrl && (
+                      <a
+                        href={expandedProject.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.65rem 0.95rem',
+                          borderRadius: '10px',
+                          background: '#ef4444',
+                          color: '#ffffff',
+                          fontSize: '0.84rem',
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          boxShadow: '0 4px 12px rgba(239,68,68,0.2)',
+                          transition: 'transform 0.2s'
+                        }}
+                      >
+                        <span>Watch on YouTube</span>
+                        <Play size={15} fill="#ffffff" />
+                      </a>
+                    )}
+
+                    {/* Open in full HD modal */}
+                    <button
+                      onClick={() => {
+                        setSelectedProject(expandedProject);
+                        setActiveModalImageIndex(expandedImageIndex);
+                      }}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.55rem 0.95rem',
+                        borderRadius: '10px',
+                        background: '#f0f9ff',
+                        color: '#0284c7',
+                        border: '1px solid #bae6fd',
+                        fontSize: '0.82rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        transition: 'background 0.2s'
+                      }}
+                    >
+                      <span>Full HD Lightbox ({screenshotCount})</span>
+                      <Maximize2 size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 3. RIGHT COLUMN: SIDE QUEUE (Matching Image 2: Next Projects Preview) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <span style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#94a3b8'
+                  }}>
+                    Next in Gallery
+                  </span>
+
+                  {sideProjects.map((sideWork: any) => {
+                    const sideImg = sideWork.image || sideWork.coverImage;
+                    return (
+                      <motion.div
+                        key={sideWork.id || sideWork.slug}
+                        whileHover={{ y: -4 }}
+                        onClick={() => {
+                          setExpandedProject(sideWork);
+                          setExpandedImageIndex(0);
+                        }}
+                        style={{
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '0.5rem'
+                        }}
+                      >
+                        <div style={{
+                          width: '100%',
+                          aspectRatio: '16 / 9',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          background: '#0f172a',
+                          position: 'relative'
+                        }}>
+                          <img
+                            src={sideImg}
+                            alt={sideWork.title}
+                            loading="lazy"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: 'top center',
+                              transition: 'transform 0.4s ease'
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            justifyContent: 'space-between',
+                            gap: '0.5rem'
+                          }}>
+                            <span style={{
+                              fontSize: '0.88rem',
+                              fontWeight: 800,
+                              color: '#0f172a',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.02em',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden'
+                            }}>
+                              {sideWork.title}
+                            </span>
+                            <span style={{
+                              fontSize: '0.78rem',
+                              fontWeight: 700,
+                              color: '#64748b',
+                              flexShrink: 0
+                            }}>
+                              {sideWork.year || '2025'}
+                            </span>
+                          </div>
+
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: '0.5rem',
+                            fontSize: '0.78rem'
+                          }}>
+                            <span style={{
+                              color: '#64748b',
+                              fontWeight: 500,
+                              display: '-webkit-box',
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden'
+                            }}>
+                              {sideWork.subtitle || sideWork.role || 'Project'}
+                            </span>
+                            <span style={{ color: '#0284c7', fontWeight: 700, flexShrink: 0 }}>
+                              {sideWork.displayCategory || sideWork.category || 'Work'}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            );
+          })()}
+        </AnimatePresence>
+
+        {/* =========================================================================
+           IMAGE 1 LAYOUT: 4-COLUMN GALLERY GRID (All Projects)
+           ========================================================================= */}
+        {expandedProject && (
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '0.6rem',
-            marginTop: '2rem'
+            justifyContent: 'space-between',
+            borderTop: '1px solid #e2e8f0',
+            paddingTop: '2rem',
+            marginBottom: '1.75rem'
           }}>
-            {galleryCategories.map((cat) => {
-              const isActive = galleryFilter === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setGalleryFilter(cat.id)}
-                  style={{
-                    padding: '0.55rem 1.25rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.86rem',
-                    fontWeight: isActive ? 700 : 500,
-                    background: isActive ? '#0f172a' : '#ffffff',
-                    color: isActive ? '#ffffff' : '#475569',
-                    border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
-                    boxShadow: isActive ? '0 6px 16px rgba(15,23,42,0.18)' : '0 2px 6px rgba(0,0,0,0.02)',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  <span>{cat.label}</span>
-                  <span style={{
-                    fontSize: '0.76rem',
-                    padding: '0.15rem 0.55rem',
-                    borderRadius: '9999px',
-                    background: isActive ? 'rgba(255,255,255,0.25)' : '#f1f5f9',
-                    color: isActive ? '#ffffff' : '#0f172a',
-                    fontWeight: 700
-                  }}>
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
+            <span style={{
+              fontSize: '0.78rem',
+              fontWeight: 800,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#64748b'
+            }}>
+              All Works ({filteredWorks.length})
+            </span>
+            <button
+              onClick={() => setExpandedProject(null)}
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                color: '#0284c7',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem'
+              }}
+            >
+              <span>Close Expanded View</span>
+              <X size={14} />
+            </button>
           </div>
-        </div>
+        )}
 
-        {/* Gallery Cards Grid */}
-        <motion.div 
+        <motion.div
           layout
-          className="works-grid" 
+          className="works-grid-image1"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 390px), 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '2.5rem 1.5rem'
           }}
         >
           <AnimatePresence>
@@ -783,44 +1458,43 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 : (work.image || work.coverImage ? 1 : 0);
               const isVideo = Boolean(work.videoUrl || work.categoryTab === 'creative');
               const displayImg = work.image || work.coverImage;
+              const isCurrentExpanded = expandedProject && (expandedProject.id === work.id || expandedProject.slug === work.slug);
 
               return (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.25 }}
                   key={work.id || work.slug}
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -4 }}
                   onClick={() => {
-                    setSelectedProject(work);
-                    setActiveModalImageIndex(0);
+                    setExpandedProject(work);
+                    setExpandedImageIndex(0);
+                    const worksElem = document.getElementById('works');
+                    if (worksElem) {
+                      worksElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                   }}
                   style={{
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
-                    background: '#ffffff',
-                    borderRadius: '24px',
-                    border: '1px solid #e2e8f0',
-                    overflow: 'hidden',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
-                    transition: 'box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease',
-                    height: '100%'
+                    gap: '0.65rem',
+                    opacity: isCurrentExpanded ? 0.45 : 1,
+                    transition: 'opacity 0.2s ease, transform 0.2s ease'
                   }}
-                  className="project-gallery-card"
+                  className="gallery-project-item"
                 >
-                  {/* Thumbnail Viewport */}
+                  {/* 16:9 Thumbnail (Matching Image 1) */}
                   <div style={{
-                    height: '250px',
                     width: '100%',
-                    background: '#0f172a',
-                    position: 'relative',
+                    aspectRatio: '16 / 9',
+                    borderRadius: '12px',
                     overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    background: '#0f172a',
+                    position: 'relative'
                   }}>
                     {displayImg ? (
                       <img
@@ -832,287 +1506,133 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           height: '100%',
                           objectFit: 'cover',
                           objectPosition: 'top center',
-                          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                          transition: 'transform 0.45s ease'
                         }}
-                        className="gallery-card-img"
+                        className="gallery-thumb-img"
                       />
                     ) : (
-                      <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>Visual Preview</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                        Preview
+                      </div>
                     )}
 
-                    {/* Gradient overlay for bottom readability */}
+                    {/* Screenshot Count or Video pill badge on top-right */}
                     <div style={{
                       position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, transparent 45%, rgba(15,23,42,0.75) 100%)',
-                      pointerEvents: 'none'
-                    }} />
-
-                    {/* Top-Left Category Badge */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '0.85rem',
-                      left: '0.85rem',
-                      background: 'rgba(15, 23, 42, 0.85)',
-                      backdropFilter: 'blur(8px)',
+                      top: '0.65rem',
+                      right: '0.65rem',
+                      background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
+                      backdropFilter: 'blur(6px)',
                       color: '#ffffff',
-                      fontSize: '0.78rem',
+                      fontSize: '0.72rem',
                       fontWeight: 700,
-                      padding: '0.3rem 0.75rem',
+                      padding: '0.2rem 0.55rem',
                       borderRadius: '9999px',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.35rem',
-                      border: '1px solid rgba(255,255,255,0.2)'
-                    }}>
-                      <span>{work.displayCategory || work.category || 'Platform'}</span>
-                    </div>
-
-                    {/* Top-Right Badge: Screenshot Count or Video */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '0.85rem',
-                      right: '0.85rem',
-                      background: isVideo ? 'rgba(239, 68, 68, 0.92)' : 'rgba(15, 23, 42, 0.85)',
-                      backdropFilter: 'blur(8px)',
-                      color: '#ffffff',
-                      fontSize: '0.76rem',
-                      fontWeight: 700,
-                      padding: '0.3rem 0.75rem',
-                      borderRadius: '9999px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.35rem',
+                      gap: '0.3rem',
                       border: '1px solid rgba(255,255,255,0.2)'
                     }}>
                       {isVideo ? (
                         <>
-                          <Play size={12} fill="#ffffff" />
-                          <span>Video Reel</span>
+                          <Play size={10} fill="#ffffff" />
+                          <span>Video</span>
                         </>
                       ) : (
                         <>
-                          <ImageIcon size={12} />
+                          <ImageIcon size={10} />
                           <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
                         </>
                       )}
                     </div>
+                  </div>
 
-                    {/* Bottom-left: Year & Role Badges */}
+                  {/* Metadata underneath (Matching Image 1) */}
+                  <div>
+                    {/* Row 1: Title (left) & Year (right) */}
                     <div style={{
-                      position: 'absolute',
-                      bottom: '0.85rem',
-                      left: '0.85rem',
                       display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.4rem',
-                      zIndex: 2
+                      alignItems: 'baseline',
+                      justifyContent: 'space-between',
+                      gap: '0.5rem',
+                      marginBottom: '0.2rem'
                     }}>
-                      <span style={{
-                        background: '#ffffff',
-                        color: '#0f172a',
-                        fontSize: '0.75rem',
+                      <h3 style={{
+                        fontSize: '0.94rem',
                         fontWeight: 800,
-                        padding: '0.2rem 0.6rem',
-                        borderRadius: '6px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.14)'
+                        color: '#0f172a',
+                        margin: 0,
+                        letterSpacing: '0.02em',
+                        textTransform: 'uppercase',
+                        lineHeight: 1.3,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 1,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        transition: 'color 0.2s ease'
+                      }}
+                      className="gallery-item-title"
+                      >
+                        {work.title}
+                      </h3>
+                      <span style={{
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        color: '#64748b',
+                        flexShrink: 0
                       }}>
                         {work.year || '2025'}
                       </span>
-                      {work.role && (
-                        <span style={{
-                          background: 'rgba(15, 23, 42, 0.85)',
-                          color: '#f8fafc',
-                          fontSize: '0.75rem',
-                          fontWeight: 600,
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '6px',
-                          backdropFilter: 'blur(8px)',
-                          border: '1px solid rgba(255,255,255,0.2)'
-                        }}>
-                          {work.role}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div style={{
-                    padding: '1.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flexGrow: 1,
-                    justifyContent: 'space-between',
-                    gap: '1rem'
-                  }}>
-                    <div>
-                      {/* Subtitle / Client Kicker */}
-                      {work.subtitle && (
-                        <span style={{
-                          fontSize: '0.78rem',
-                          fontWeight: 700,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.05em',
-                          color: '#0284c7',
-                          display: 'block',
-                          marginBottom: '0.35rem'
-                        }}>
-                          {work.subtitle}
-                        </span>
-                      )}
-
-                      {/* Judul (Title) */}
-                      <h3 style={{
-                        fontSize: '1.25rem',
-                        fontWeight: 800,
-                        color: '#0f172a',
-                        margin: '0 0 0.55rem 0',
-                        lineHeight: 1.35,
-                        letterSpacing: '-0.02em',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
-                        {work.title}
-                      </h3>
-
-                      {/* Mini Description */}
-                      <p style={{
-                        fontSize: '0.92rem',
-                        color: '#334155',
-                        lineHeight: 1.6,
-                        margin: 0,
-                        fontWeight: 400,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
-                        {work.description ? work.description.replace(/\n+/g, ' ') : (work.outcome || work.subtitle)}
-                      </p>
-
-                      {/* Key Impact Metric / Outcome */}
-                      {work.outcome && (
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '0.5rem',
-                          background: '#f8fafc',
-                          border: '1px solid #e2e8f0',
-                          borderRadius: '10px',
-                          padding: '0.55rem 0.75rem',
-                          marginTop: '0.85rem'
-                        }}>
-                          <Sparkles size={14} color="#0284c7" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
-                          <span style={{ fontSize: '0.8rem', color: '#1e293b', fontWeight: 600, lineHeight: 1.45 }}>
-                            {work.outcome}
-                          </span>
-                        </div>
-                      )}
                     </div>
 
-                    {/* Tech Stack Pills */}
-                    {work.stack && (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: 'auto' }}>
-                        {work.stack.split('·').slice(0, 4).map((tech: string, i: number) => (
-                          <span
-                            key={i}
-                            style={{
-                              fontSize: '0.75rem',
-                              fontWeight: 600,
-                              color: '#334155',
-                              background: '#f1f5f9',
-                              border: '1px solid #e2e8f0',
-                              padding: '0.2rem 0.55rem',
-                              borderRadius: '6px'
-                            }}
-                          >
-                            {tech.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Footer Actions: Explore Gallery + External Link */}
+                    {/* Row 2: Subtitle / Client (left) & Category (right) */}
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      paddingTop: '0.85rem',
-                      borderTop: '1px solid #f1f5f9',
-                      marginTop: '0.5rem'
+                      gap: '0.5rem',
+                      fontSize: '0.82rem'
                     }}>
                       <span style={{
-                        fontSize: '0.88rem',
-                        fontWeight: 700,
-                        color: '#0284c7',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.4rem'
+                        color: '#64748b',
+                        fontWeight: 500,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 1,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
                       }}>
-                        <Eye size={15} />
-                        Explore Gallery ({screenshotCount})
+                        {work.subtitle || work.role || 'Project'}
                       </span>
-
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                        {work.link && (
-                          <a
-                            href={work.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            title="Visit Live Site"
-                            style={{
-                              width: '34px',
-                              height: '34px',
-                              borderRadius: '9px',
-                              background: '#f0f9ff',
-                              color: '#0284c7',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              textDecoration: 'none',
-                              border: '1px solid #bae6fd',
-                              transition: 'all 0.2s'
-                            }}
-                          >
-                            <ExternalLink size={14} />
-                          </a>
-                        )}
-                        {work.videoUrl && (
-                          <a
-                            href={work.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            title="Watch on YouTube"
-                            style={{
-                              width: '34px',
-                              height: '34px',
-                              borderRadius: '9px',
-                              background: '#fef2f2',
-                              color: '#ef4444',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              textDecoration: 'none',
-                              border: '1px solid #fecaca',
-                              transition: 'all 0.2s'
-                            }}
-                          >
-                            <Play size={14} fill="#ef4444" />
-                          </a>
-                        )}
-                      </div>
+                      <span style={{
+                        color: '#0284c7',
+                        fontWeight: 700,
+                        flexShrink: 0
+                      }}>
+                        {work.displayCategory || work.category || 'Platform'}
+                      </span>
                     </div>
+
+                    {/* Row 3: Mini Description */}
+                    <p style={{
+                      fontSize: '0.82rem',
+                      color: '#475569',
+                      lineHeight: 1.5,
+                      margin: '0.35rem 0 0 0',
+                      fontWeight: 400,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}>
+                      {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
+                    </p>
                   </div>
                 </motion.div>
               );
             })}
           </AnimatePresence>
         </motion.div>
-      </section>
+      </section></section>
 
       {/* =========================================================================
          4. STATEMENT & FOCUS AREAS ("I focus on")
