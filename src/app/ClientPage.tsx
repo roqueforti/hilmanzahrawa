@@ -798,8 +798,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             const activeScreenshot = projectGallery[expandedImageIndex] || projectGallery[0];
             const screenshotCount = projectGallery.length;
 
-            // Side queue: next 2 projects from the current filter
-            const sideProjects = filteredWorks.filter((p: any) => p.id !== expandedProject.id && p.slug !== expandedProject.slug).slice(0, 2);
+            const currentProjectIndex = filteredWorks.findIndex(
+              (p: any) => p.id === expandedProject.id || p.slug === expandedProject.slug
+            );
+
+            // All subsequent projects in rotation order starting right after current project
+            const subsequentProjects = currentProjectIndex >= 0
+              ? [...filteredWorks.slice(currentProjectIndex + 1), ...filteredWorks.slice(0, currentProjectIndex)]
+              : filteredWorks;
 
             return (
               <motion.div
@@ -1289,112 +1295,219 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   </div>
                 </div>
 
-                {/* 3. RIGHT COLUMN: SIDE QUEUE (Matching Image 2: Next Projects Preview) */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  <span style={{
-                    fontSize: '0.74rem',
-                    fontWeight: 800,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#94a3b8'
+                {/* 3. RIGHT COLUMN: SUBSEQUENT PROJECTS QUEUE (Access Next Projects) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingBottom: '0.5rem',
+                    borderBottom: '1px solid #f1f5f9'
                   }}>
-                    Next in Gallery
-                  </span>
+                    <span style={{
+                      fontSize: '0.74rem',
+                      fontWeight: 800,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: '#94a3b8'
+                    }}>
+                      Next in Gallery ({subsequentProjects.length})
+                    </span>
 
-                  {sideProjects.map((sideWork: any) => {
-                    const sideImg = sideWork.image || sideWork.coverImage;
-                    return (
-                      <motion.div
-                        key={sideWork.id || sideWork.slug}
-                        whileHover={{ y: -4 }}
-                        onClick={() => {
-                          setExpandedProject(sideWork);
+                    {/* Quick Next / Prev Jump Controls */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const prevIdx = currentProjectIndex > 0 ? currentProjectIndex - 1 : filteredWorks.length - 1;
+                          setExpandedProject(filteredWorks[prevIdx]);
                           setExpandedImageIndex(0);
                         }}
+                        title="Previous Project"
+                        aria-label="Previous Project"
                         style={{
-                          cursor: 'pointer',
+                          width: '28px',
+                          height: '28px',
+                          borderRadius: '50%',
+                          background: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          color: '#475569',
                           display: 'flex',
-                          flexDirection: 'column',
-                          gap: '0.5rem'
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
                         }}
                       >
-                        <div style={{
-                          width: '100%',
-                          aspectRatio: '16 / 9',
-                          borderRadius: '12px',
-                          overflow: 'hidden',
+                        <ChevronLeft size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const nextIdx = (currentProjectIndex + 1) % filteredWorks.length;
+                          setExpandedProject(filteredWorks[nextIdx]);
+                          setExpandedImageIndex(0);
+                        }}
+                        title="Next Project"
+                        aria-label="Next Project"
+                        style={{
+                          width: '28px',
+                          height: '28px',
+                          borderRadius: '50%',
                           background: '#0f172a',
-                          position: 'relative'
-                        }}>
-                          <img
-                            src={sideImg}
-                            alt={sideWork.title}
-                            loading="lazy"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              objectPosition: 'top center',
-                              transition: 'transform 0.4s ease'
-                            }}
-                          />
-                        </div>
+                          border: 'none',
+                          color: '#ffffff',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
+                  </div>
 
-                        <div>
-                          <div style={{
+                  {/* Scrollable list of ALL subsequent projects */}
+                  <div 
+                    className="subsequent-projects-scroll"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                      maxHeight: '520px',
+                      overflowY: 'auto',
+                      paddingRight: '0.4rem'
+                    }}
+                  >
+                    {subsequentProjects.map((sideWork: any) => {
+                      const sideImg = sideWork.image || sideWork.coverImage;
+                      const isSideVideo = Boolean(sideWork.videoUrl || sideWork.categoryTab === 'creative');
+                      const sideScreens = Array.isArray(sideWork.gallery) && sideWork.gallery.length > 0
+                        ? sideWork.gallery.length
+                        : 1;
+
+                      return (
+                        <motion.div
+                          key={sideWork.id || sideWork.slug}
+                          whileHover={{ y: -3 }}
+                          onClick={() => {
+                            setExpandedProject(sideWork);
+                            setExpandedImageIndex(0);
+                          }}
+                          style={{
+                            cursor: 'pointer',
                             display: 'flex',
-                            alignItems: 'baseline',
-                            justifyContent: 'space-between',
-                            gap: '0.5rem'
+                            flexDirection: 'column',
+                            gap: '0.45rem',
+                            padding: '0.5rem',
+                            borderRadius: '14px',
+                            background: '#ffffff',
+                            border: '1px solid #f1f5f9',
+                            transition: 'all 0.2s ease'
+                          }}
+                          className="subsequent-card-item"
+                        >
+                          <div style={{
+                            width: '100%',
+                            aspectRatio: '16 / 9',
+                            borderRadius: '10px',
+                            overflow: 'hidden',
+                            background: '#0f172a',
+                            position: 'relative'
                           }}>
-                            <span style={{
-                              fontSize: '0.88rem',
-                              fontWeight: 800,
-                              color: '#0f172a',
-                              textTransform: 'uppercase',
-                              letterSpacing: '0.02em',
-                              display: '-webkit-box',
-                              WebkitLineClamp: 1,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden'
-                            }}>
-                              {sideWork.title}
-                            </span>
-                            <span style={{
-                              fontSize: '0.78rem',
+                            <img
+                              src={sideImg}
+                              alt={sideWork.title}
+                              loading="lazy"
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                objectPosition: 'top center',
+                                transition: 'transform 0.4s ease'
+                              }}
+                              className="subsequent-card-img"
+                            />
+                            <div style={{
+                              position: 'absolute',
+                              top: '0.45rem',
+                              right: '0.45rem',
+                              background: isSideVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
+                              backdropFilter: 'blur(6px)',
+                              color: '#ffffff',
+                              fontSize: '0.68rem',
                               fontWeight: 700,
-                              color: '#64748b',
-                              flexShrink: 0
+                              padding: '0.15rem 0.45rem',
+                              borderRadius: '9999px',
+                              border: '1px solid rgba(255,255,255,0.2)'
                             }}>
-                              {sideWork.year || '2025'}
-                            </span>
+                              {isSideVideo ? 'Video' : `${sideScreens} Screens`}
+                            </div>
                           </div>
 
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            gap: '0.5rem',
-                            fontSize: '0.78rem'
-                          }}>
-                            <span style={{
-                              color: '#64748b',
-                              fontWeight: 500,
-                              display: '-webkit-box',
-                              WebkitLineClamp: 1,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden'
+                          <div>
+                            <div style={{
+                              display: 'flex',
+                              alignItems: 'baseline',
+                              justifyContent: 'space-between',
+                              gap: '0.5rem'
                             }}>
-                              {sideWork.subtitle || sideWork.role || 'Project'}
-                            </span>
-                            <span style={{ color: '#0284c7', fontWeight: 700, flexShrink: 0 }}>
-                              {sideWork.displayCategory || sideWork.category || 'Work'}
-                            </span>
+                              <span style={{
+                                fontSize: '0.86rem',
+                                fontWeight: 800,
+                                color: '#0f172a',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.02em',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 1,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden'
+                              }}
+                              className="subsequent-card-title"
+                              >
+                                {sideWork.title}
+                              </span>
+                              <span style={{
+                                fontSize: '0.76rem',
+                                fontWeight: 700,
+                                color: '#64748b',
+                                flexShrink: 0
+                              }}>
+                                {sideWork.year || '2025'}
+                              </span>
+                            </div>
+
+                            <div style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              gap: '0.5rem',
+                              fontSize: '0.76rem',
+                              marginTop: '0.15rem'
+                            }}>
+                              <span style={{
+                                color: '#64748b',
+                                fontWeight: 500,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 1,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden'
+                              }}>
+                                {sideWork.subtitle || sideWork.role || 'Project'}
+                              </span>
+                              <span style={{ color: '#0284c7', fontWeight: 700, flexShrink: 0 }}>
+                                {sideWork.displayCategory || sideWork.category || 'Work'}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
               </motion.div>
             );
