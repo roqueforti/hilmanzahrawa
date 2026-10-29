@@ -821,805 +821,691 @@ export default function ClientPage({ initialData }: ClientPageProps) {
            - Clicking (X) collapses back to standard 4-column cards.
            ========================================================================= */}
         {(() => {
-          const activeProject = expandedProject;
-          const activeIndex = activeProject
-            ? filteredWorks.findIndex((p: any) => p.id === activeProject.id || p.slug === activeProject.slug)
-            : -1;
-
-          // In rotation order starting right after active project
-          const remainingOriginalWorks = activeIndex >= 0
-            ? [...filteredWorks.slice(activeIndex + 1), ...filteredWorks.slice(0, activeIndex)]
-            : [];
-
-          const renderGalleryCard = (work: any) => {
+          const renderProjectCard = (work: any) => {
+            const isExpanded = Boolean(expandedProject && (expandedProject.id === work.id || expandedProject.slug === work.slug));
             const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0
               ? work.gallery.length
               : (work.image || work.coverImage ? 1 : 0);
             const isVideo = Boolean(work.videoUrl || work.categoryTab === 'creative');
+            const youtubeEmbed = getYoutubeEmbedUrl(work.videoUrl);
+            const projectGallery: string[] = Array.isArray(work.gallery) && work.gallery.length > 0
+              ? work.gallery
+              : [work.image || work.coverImage].filter(Boolean);
+            const activeScreenshot = projectGallery[expandedImageIndex] || projectGallery[0];
             const displayImg = work.image || work.coverImage;
 
             return (
               <motion.div
+                layout
                 key={work.id || work.slug}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
                 transition={{
-                  duration: 0.28,
-                  ease: [0.16, 1, 0.3, 1]
+                  layout: { duration: 0.42, ease: [0.16, 1, 0.3, 1] }
                 }}
-                whileHover={{ y: -4 }}
+                className={`gallery-project-item ${isExpanded ? 'is-expanded' : ''}`}
                 onClick={() => {
-                  setExpandedAnchorId(work.id || work.slug);
-                  setExpandedProject(work);
-                  setExpandedImageIndex(0);
+                  if (!isExpanded) {
+                    setExpandedAnchorId(work.id || work.slug);
+                    setExpandedProject(work);
+                    setExpandedImageIndex(0);
+                  }
                 }}
-                style={{
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.65rem'
-                }}
-                className="gallery-project-item"
               >
-                {/* 16:9 Thumbnail */}
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '16 / 9',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  background: '#0f172a',
-                  position: 'relative'
-                }}>
-                  {displayImg ? (
-                    <img
-                      src={displayImg}
-                      alt={work.title}
-                      loading="lazy"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'top center',
-                        transition: 'transform 0.4s ease'
-                      }}
-                      className="gallery-item-img"
-                    />
-                  ) : (
-                    <div style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#ffffff'
-                    }}>
-                      <Code2 size={24} style={{ opacity: 0.4 }} />
-                    </div>
-                  )}
-
-                  {/* Screenshot Count or Video pill badge on top-right */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '0.65rem',
-                    right: '0.65rem',
-                    background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
-                    backdropFilter: 'blur(6px)',
-                    color: '#ffffff',
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                    padding: '0.2rem 0.55rem',
-                    borderRadius: '9999px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }}>
-                    {isVideo ? (
-                      <>
-                        <Play size={10} fill="#ffffff" />
-                        <span>Video</span>
-                      </>
-                    ) : (
-                      <>
-                        <ImageIcon size={10} />
-                        <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Metadata underneath */}
-                <div>
-                  {/* Row 1: Title (left) & Year (right) */}
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    justifyContent: 'space-between',
-                    gap: '0.5rem',
-                    marginBottom: '0.2rem'
-                  }}>
-                    <h3 style={{
-                      fontSize: '0.94rem',
-                      fontWeight: 800,
-                      color: '#0f172a',
-                      margin: 0,
-                      letterSpacing: '0.02em',
-                      textTransform: 'uppercase',
-                      lineHeight: 1.3,
-                      display: '-webkit-box',
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      transition: 'color 0.2s ease'
-                    }}
-                    className="gallery-item-title"
-                    >
-                      {work.title}
-                    </h3>
-                    <span style={{
-                      fontSize: '0.8rem',
-                      fontWeight: 700,
-                      color: '#64748b',
-                      flexShrink: 0
-                    }}>
-                      {work.year || '2025'}
-                    </span>
-                  </div>
-
-                  {/* Row 2: Subtitle / Client (left) & Category (right) */}
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '0.5rem',
-                    fontSize: '0.82rem'
-                  }}>
-                    <span style={{
-                      color: '#64748b',
-                      fontWeight: 500,
-                      display: '-webkit-box',
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
-                    }}>
-                      {work.subtitle || work.role || 'Project'}
-                    </span>
-                    <span style={{
-                      color: '#0284c7',
-                      fontWeight: 700,
-                      flexShrink: 0
-                    }}>
-                      {work.displayCategory || work.category || 'Platform'}
-                    </span>
-                  </div>
-
-                  {/* Row 3: Mini Description */}
-                  <p style={{
-                    fontSize: '0.82rem',
-                    color: '#475569',
-                    lineHeight: 1.5,
-                    margin: '0.35rem 0 0 0',
-                    fontWeight: 400,
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                    {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          };
-
-          const renderExpandedDetailCard = (displayProject: any) => {
-            const isVideo = Boolean(displayProject.videoUrl || displayProject.categoryTab === 'creative');
-            const youtubeEmbed = getYoutubeEmbedUrl(displayProject.videoUrl);
-            const projectGallery: string[] = Array.isArray(displayProject.gallery) && displayProject.gallery.length > 0
-              ? displayProject.gallery
-              : [displayProject.image || displayProject.coverImage].filter(Boolean);
-            const activeScreenshot = projectGallery[expandedImageIndex] || projectGallery[0];
-            const screenshotCount = projectGallery.length;
-
-            return (
-              <motion.div
-                key="expanded-showcase-box"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 15 }}
-                transition={{
-                  duration: 0.35,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="expanded-detail-box"
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`showcase-content-${displayProject.id || displayProject.slug}`}
-                    initial={{ opacity: 0, x: 35 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -35 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="expanded-inner-grid"
-                  >
-                    {/* 1. LEFT COLUMN: Large Media Player + Info & Mini Description */}
+                {isExpanded ? (
+                  /* ================= EXPANDED VIEW ================= */
+                  <motion.div layout="position" className="expanded-inner-grid">
+                    {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {/* Media Viewport (16:9 Aspect Ratio) */}
-                  <div style={{
-                    width: '100%',
-                    aspectRatio: '16 / 9',
-                    borderRadius: '16px',
-                    overflow: 'hidden',
-                    background: '#0f172a',
-                    position: 'relative',
-                    boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
-                  }}>
-                    {/* Animated Skeleton Shimmer Placeholder */}
-                    <div className={`media-skeleton-container ${!isExpandedMediaLoading ? 'is-hidden' : ''}`}>
-                      <div className="media-skeleton-wave" />
-                      <div className="media-skeleton-badge">
-                        <div className="media-skeleton-icon-disc">
-                          {isVideo ? <Play size={24} style={{ marginLeft: '3px' }} /> : <ImageIcon size={24} />}
+                      {/* Media Viewport (16:9 Aspect Ratio) */}
+                      <div style={{
+                        width: '100%',
+                        aspectRatio: '16 / 9',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        background: '#0f172a',
+                        position: 'relative',
+                        boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
+                      }}>
+                        {isVideo && youtubeEmbed ? (
+                          <>
+                            <div className={`media-skeleton-container ${!isExpandedMediaLoading ? 'is-hidden' : ''}`}>
+                              <div className="media-skeleton-wave" />
+                              <div className="media-skeleton-badge">
+                                <div className="media-skeleton-icon-disc">
+                                  <Play size={24} style={{ marginLeft: '3px' }} />
+                                </div>
+                                <div className="media-skeleton-label">Loading Video Player...</div>
+                                <div className="media-skeleton-bar-wrap">
+                                  <div className="media-skeleton-bar-fill" />
+                                </div>
+                              </div>
+                            </div>
+                            <iframe
+                              key={`yt-${work.id || work.slug}`}
+                              src={youtubeEmbed || undefined}
+                              title={work.title}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              onLoad={() => setIsExpandedMediaLoading(false)}
+                              style={{ width: '100%', height: '100%', border: 'none' }}
+                            />
+                          </>
+                        ) : (
+                          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                            <img
+                              key={`img-${activeScreenshot}`}
+                              src={activeScreenshot}
+                              alt={work.title}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                objectPosition: 'top center'
+                              }}
+                            />
+
+                            {/* Navigation Chevrons if multi-screenshot */}
+                            {screenshotCount > 1 && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setExpandedImageIndex((prev) => (prev > 0 ? prev - 1 : screenshotCount - 1));
+                                  }}
+                                  aria-label="Previous screenshot"
+                                  style={{
+                                    position: 'absolute',
+                                    left: '0.85rem',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    width: '38px',
+                                    height: '38px',
+                                    borderRadius: '50%',
+                                    background: 'rgba(15, 23, 42, 0.75)',
+                                    backdropFilter: 'blur(8px)',
+                                    color: '#ffffff',
+                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'all 0.2s'
+                                  }}
+                                >
+                                  <ChevronLeft size={20} />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setExpandedImageIndex((prev) => (prev < screenshotCount - 1 ? prev + 1 : 0));
+                                  }}
+                                  aria-label="Next screenshot"
+                                  style={{
+                                    position: 'absolute',
+                                    right: '0.85rem',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    width: '38px',
+                                    height: '38px',
+                                    borderRadius: '50%',
+                                    background: 'rgba(15, 23, 42, 0.75)',
+                                    backdropFilter: 'blur(8px)',
+                                    color: '#ffffff',
+                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'all 0.2s'
+                                  }}
+                                >
+                                  <ChevronRight size={20} />
+                                </button>
+
+                                {/* Screenshot Counter Pill */}
+                                <div style={{
+                                  position: 'absolute',
+                                  bottom: '0.85rem',
+                                  left: '0.85rem',
+                                  background: 'rgba(15, 23, 42, 0.85)',
+                                  backdropFilter: 'blur(8px)',
+                                  color: '#ffffff',
+                                  fontSize: '0.74rem',
+                                  fontWeight: 700,
+                                  padding: '0.25rem 0.65rem',
+                                  borderRadius: '9999px',
+                                  border: '1px solid rgba(255,255,255,0.2)'
+                                }}>
+                                  {expandedImageIndex + 1} / {screenshotCount} Screens
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Top-Right (X) Close Button */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedAnchorId(null);
+                            setExpandedProject(null);
+                          }}
+                          title="Close expanded view"
+                          aria-label="Close project preview"
+                          style={{
+                            position: 'absolute',
+                            top: '1rem',
+                            right: '1rem',
+                            width: '38px',
+                            height: '38px',
+                            borderRadius: '50%',
+                            background: 'rgba(15, 23, 42, 0.82)',
+                            backdropFilter: 'blur(8px)',
+                            color: '#ffffff',
+                            border: '1px solid rgba(255,255,255,0.25)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 10,
+                            transition: 'transform 0.2s ease, background 0.2s ease'
+                          }}
+                        >
+                          <X size={18} />
+                        </button>
+                      </div>
+
+                      {/* Info Row directly below Media Viewport */}
+                      <div style={{ marginTop: '0.25rem' }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'baseline',
+                          justifyContent: 'space-between',
+                          gap: '0.75rem',
+                          marginBottom: '0.25rem'
+                        }}>
+                          <h3 style={{
+                            fontSize: '1.35rem',
+                            fontWeight: 800,
+                            color: '#0f172a',
+                            margin: 0,
+                            letterSpacing: '-0.02em',
+                            lineHeight: 1.3
+                          }}>
+                            {work.title}
+                          </h3>
+                          <span style={{
+                            fontSize: '0.9rem',
+                            fontWeight: 800,
+                            color: '#64748b',
+                            flexShrink: 0
+                          }}>
+                            {work.year || '2025'}
+                          </span>
                         </div>
-                        <div className="media-skeleton-label">
-                          {isVideo ? 'Loading Video Player...' : 'Loading Visual Preview...'}
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.5rem',
+                          fontSize: '0.86rem'
+                        }}>
+                          <span style={{
+                            color: '#64748b',
+                            fontWeight: 600,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.04em'
+                          }}>
+                            {work.subtitle || work.role || 'Project'}
+                          </span>
+                          <span style={{
+                            color: '#0284c7',
+                            fontWeight: 700,
+                            flexShrink: 0
+                          }}>
+                            {work.displayCategory || work.category || 'Platform'}
+                          </span>
                         </div>
-                        <div className="media-skeleton-bar-wrap">
-                          <div className="media-skeleton-bar-fill" />
-                        </div>
+
+                        {/* Screenshot thumbnails selector if multi-screen */}
+                        {screenshotCount > 1 && (
+                          <div style={{
+                            display: 'flex',
+                            gap: '0.5rem',
+                            marginTop: '1rem',
+                            overflowX: 'auto',
+                            paddingBottom: '0.4rem'
+                          }}>
+                            {projectGallery.slice(0, 8).map((imgUrl: string, idx: number) => (
+                              <button
+                                type="button"
+                                key={idx}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedImageIndex(idx);
+                                }}
+                                style={{
+                                  width: '56px',
+                                  height: '36px',
+                                  borderRadius: '6px',
+                                  overflow: 'hidden',
+                                  padding: 0,
+                                  border: expandedImageIndex === idx ? '2px solid #0284c7' : '1px solid #e2e8f0',
+                                  cursor: 'pointer',
+                                  flexShrink: 0,
+                                  opacity: expandedImageIndex === idx ? 1 : 0.6,
+                                  transition: 'all 0.2s'
+                                }}
+                              >
+                                <img src={imgUrl} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              </button>
+                            ))}
+                            {screenshotCount > 8 && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedProject(work);
+                                  setActiveModalImageIndex(0);
+                                }}
+                                style={{
+                                  height: '36px',
+                                  padding: '0 0.6rem',
+                                  borderRadius: '6px',
+                                  background: '#f1f5f9',
+                                  border: '1px solid #e2e8f0',
+                                  fontSize: '0.74rem',
+                                  fontWeight: 700,
+                                  color: '#0284c7',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center'
+                                }}
+                              >
+                                +{screenshotCount - 8} more
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {isVideo && youtubeEmbed ? (
-                      <iframe
-                        key={`yt-${displayProject.id || displayProject.slug}`}
-                        src={youtubeEmbed || undefined}
-                        title={displayProject.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        onLoad={() => setIsExpandedMediaLoading(false)}
-                        style={{ width: '100%', height: '100%', border: 'none' }}
-                      />
-                    ) : (
-                      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={`img-${activeScreenshot}`}
-                            src={activeScreenshot}
-                            alt={displayProject.title}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.22, ease: "easeOut" }}
-                            onLoad={() => setIsExpandedMediaLoading(false)}
+                    {/* RIGHT COLUMN: Credits & Details */}
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1.25rem',
+                      borderLeft: '1px solid #f1f5f9',
+                      paddingLeft: '1.5rem',
+                      height: '100%'
+                    }}>
+                      <h4 style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: '#94a3b8',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Credits & Details
+                      </h4>
+
+                      <div>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          color: '#64748b',
+                          display: 'block',
+                          marginBottom: '0.2rem'
+                        }}>
+                          Role
+                        </span>
+                        <span style={{
+                          fontSize: '0.94rem',
+                          fontWeight: 800,
+                          color: '#0f172a'
+                        }}>
+                          {work.role || 'Fullstack Developer'}
+                        </span>
+                      </div>
+
+                      <div>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          color: '#64748b',
+                          display: 'block',
+                          marginBottom: '0.2rem'
+                        }}>
+                          Client / Program
+                        </span>
+                        <span style={{
+                          fontSize: '0.92rem',
+                          fontWeight: 700,
+                          color: '#0f172a'
+                        }}>
+                          {work.subtitle || 'Independent'}
+                        </span>
+                      </div>
+
+                      {work.stack && (
+                        <div>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.06em',
+                            textTransform: 'uppercase',
+                            color: '#64748b',
+                            display: 'block',
+                            marginBottom: '0.35rem'
+                          }}>
+                            Technologies
+                          </span>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                            {work.stack.split('·').slice(0, 5).map((t: string, i: number) => (
+                              <span
+                                key={i}
+                                style={{
+                                  fontSize: '0.74rem',
+                                  fontWeight: 600,
+                                  color: '#1e293b',
+                                  background: '#f8fafc',
+                                  border: '1px solid #e2e8f0',
+                                  padding: '0.2rem 0.55rem',
+                                  borderRadius: '6px'
+                                }}
+                              >
+                                {t.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {work.impact && (
+                        <div>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.06em',
+                            textTransform: 'uppercase',
+                            color: '#64748b',
+                            display: 'block',
+                            marginBottom: '0.2rem'
+                          }}>
+                            Key Impact
+                          </span>
+                          <p style={{
+                            fontSize: '0.84rem',
+                            color: '#334155',
+                            lineHeight: 1.5,
+                            margin: 0,
+                            fontWeight: 500
+                          }}>
+                            {work.impact}
+                          </p>
+                        </div>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.65rem',
+                        marginTop: 'auto',
+                        paddingTop: '1rem'
+                      }}>
+                        {work.link && (
+                          <a
+                            href={work.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
                             style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              objectPosition: 'top center'
-                            }}
-                          />
-                        </AnimatePresence>
-
-                        {/* Navigation Chevrons if multi-screenshot */}
-                        {screenshotCount > 1 && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setExpandedImageIndex((prev) => (prev > 0 ? prev - 1 : screenshotCount - 1));
-                              }}
-                              aria-label="Previous screenshot"
-                              style={{
-                                position: 'absolute',
-                                left: '0.85rem',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: '38px',
-                                height: '38px',
-                                borderRadius: '50%',
-                                background: 'rgba(15, 23, 42, 0.75)',
-                                backdropFilter: 'blur(8px)',
-                                color: '#ffffff',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.2s'
-                              }}
-                            >
-                              <ChevronLeft size={20} />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setExpandedImageIndex((prev) => (prev < screenshotCount - 1 ? prev + 1 : 0));
-                              }}
-                              aria-label="Next screenshot"
-                              style={{
-                                position: 'absolute',
-                                right: '0.85rem',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: '38px',
-                                height: '38px',
-                                borderRadius: '50%',
-                                background: 'rgba(15, 23, 42, 0.75)',
-                                backdropFilter: 'blur(8px)',
-                                color: '#ffffff',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.2s'
-                              }}
-                            >
-                              <ChevronRight size={20} />
-                            </button>
-
-                            {/* Screenshot Counter Pill */}
-                            <div style={{
-                              position: 'absolute',
-                              bottom: '0.85rem',
-                              left: '0.85rem',
-                              background: 'rgba(15, 23, 42, 0.85)',
-                              backdropFilter: 'blur(8px)',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '0.65rem 0.95rem',
+                              borderRadius: '10px',
+                              background: '#0f172a',
                               color: '#ffffff',
-                              fontSize: '0.74rem',
+                              fontSize: '0.84rem',
                               fontWeight: 700,
-                              padding: '0.25rem 0.65rem',
-                              borderRadius: '9999px',
-                              border: '1px solid rgba(255,255,255,0.2)'
-                            }}>
-                              {expandedImageIndex + 1} / {screenshotCount} Screens
-                            </div>
+                              textDecoration: 'none',
+                              boxShadow: '0 4px 12px rgba(15,23,42,0.15)'
+                            }}
+                          >
+                            <span>Visit Live Platform</span>
+                            <ArrowUpRight size={15} />
+                          </a>
+                        )}
+
+                        {work.videoUrl && (
+                          <a
+                            href={work.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '0.65rem 0.95rem',
+                              borderRadius: '10px',
+                              background: '#ef4444',
+                              color: '#ffffff',
+                              fontSize: '0.84rem',
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              boxShadow: '0 4px 12px rgba(239,68,68,0.2)'
+                            }}
+                          >
+                            <span>Watch on YouTube</span>
+                            <Play size={15} fill="#ffffff" />
+                          </a>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProject(work);
+                            setActiveModalImageIndex(expandedImageIndex);
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '0.55rem 0.95rem',
+                            borderRadius: '10px',
+                            background: '#f0f9ff',
+                            color: '#0284c7',
+                            border: '1px solid #bae6fd',
+                            fontSize: '0.82rem',
+                            fontWeight: 700,
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <span>Full Details & Lightbox ({screenshotCount})</span>
+                          <Maximize2 size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  /* ================= COLLAPSED NORMAL CARD ================= */
+                  <motion.div layout="position" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                    {/* 16:9 Thumbnail */}
+                    <div style={{
+                      width: '100%',
+                      aspectRatio: '16 / 9',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      background: '#0f172a',
+                      position: 'relative'
+                    }}>
+                      {displayImg ? (
+                        <img
+                          src={displayImg}
+                          alt={work.title}
+                          loading="lazy"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'top center',
+                            transition: 'transform 0.4s ease'
+                          }}
+                          className="gallery-item-img"
+                        />
+                      ) : (
+                        <div style={{
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#ffffff'
+                        }}>
+                          <Code2 size={24} style={{ opacity: 0.4 }} />
+                        </div>
+                      )}
+
+                      {/* Screenshot Count or Video pill badge on top-right */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.65rem',
+                        right: '0.65rem',
+                        background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
+                        backdropFilter: 'blur(6px)',
+                        color: '#ffffff',
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: '9999px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.3rem',
+                        border: '1px solid rgba(255,255,255,0.2)'
+                      }}>
+                        {isVideo ? (
+                          <>
+                            <Play size={10} fill="#ffffff" />
+                            <span>Video</span>
+                          </>
+                        ) : (
+                          <>
+                            <ImageIcon size={10} />
+                            <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
                           </>
                         )}
                       </div>
-                    )}
-
-                    {/* Top-Right (X) Close Button */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setExpandedAnchorId(null);
-                        setExpandedProject(null);
-                      }}
-                      title="Close expanded view"
-                      aria-label="Close project preview"
-                      style={{
-                        position: 'absolute',
-                        top: '1rem',
-                        right: '1rem',
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '50%',
-                        background: 'rgba(15, 23, 42, 0.82)',
-                        backdropFilter: 'blur(8px)',
-                        color: '#ffffff',
-                        border: '1px solid rgba(255,255,255,0.25)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                        transition: 'transform 0.2s ease, background 0.2s ease'
-                      }}
-                    >
-                      <X size={18} />
-                    </button>
-                  </div>
-
-                  {/* Info Row directly below Media Viewport */}
-                  <div style={{ marginTop: '0.25rem' }}>
-                    {/* Row 1: Title (left) & Year (right) */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      justifyContent: 'space-between',
-                      gap: '0.75rem',
-                      marginBottom: '0.25rem'
-                    }}>
-                      <h3 style={{
-                        fontSize: '1.35rem',
-                        fontWeight: 800,
-                        color: '#0f172a',
-                        margin: 0,
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.3
-                      }}>
-                        {displayProject.title}
-                      </h3>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        fontWeight: 800,
-                        color: '#64748b',
-                        flexShrink: 0
-                      }}>
-                        {displayProject.year || '2025'}
-                      </span>
                     </div>
 
-                    {/* Row 2: Subtitle / Client (left) & Category (right) */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: '0.75rem',
-                      fontSize: '0.88rem'
-                    }}>
-                      <span style={{
-                        color: '#64748b',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.04em'
-                      }}>
-                        {displayProject.subtitle || displayProject.role || 'Project'}
-                      </span>
-                      <span style={{
-                        color: '#0284c7',
-                        fontWeight: 700,
-                        flexShrink: 0
-                      }}>
-                        {displayProject.displayCategory || displayProject.category || 'Platform'}
-                      </span>
-                    </div>
-
-                    
-
-                    {/* Screenshot thumbnails selector if multi-screen */}
-                    {screenshotCount > 1 && (
+                    {/* Metadata underneath */}
+                    <div>
                       <div style={{
                         display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'space-between',
                         gap: '0.5rem',
-                        marginTop: '1rem',
-                        overflowX: 'auto',
-                        paddingBottom: '0.4rem'
-                      }}>
-                        {projectGallery.slice(0, 8).map((imgUrl, idx) => (
-                          <button
-                            type="button"
-                            key={idx}
-                            onClick={() => setExpandedImageIndex(idx)}
-                            style={{
-                              width: '56px',
-                              height: '36px',
-                              borderRadius: '6px',
-                              overflow: 'hidden',
-                              padding: 0,
-                              border: expandedImageIndex === idx ? '2px solid #0284c7' : '1px solid #e2e8f0',
-                              cursor: 'pointer',
-                              flexShrink: 0,
-                              opacity: expandedImageIndex === idx ? 1 : 0.6,
-                              transition: 'all 0.2s'
-                            }}
-                          >
-                            <img src={imgUrl} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                          </button>
-                        ))}
-                        {screenshotCount > 8 && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelectedProject(displayProject);
-                              setActiveModalImageIndex(0);
-                            }}
-                            style={{
-                              height: '36px',
-                              padding: '0 0.6rem',
-                              borderRadius: '6px',
-                              background: '#f1f5f9',
-                              border: '1px solid #e2e8f0',
-                              fontSize: '0.74rem',
-                              fontWeight: 700,
-                              color: '#0284c7',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center'
-                            }}
-                          >
-                            +{screenshotCount - 8} more
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* 2. RIGHT COLUMN: CREDITS / DETAILS (No duplicate card queue!) */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1.25rem',
-                  borderLeft: '1px solid #f1f5f9',
-                  paddingLeft: '1.5rem'
-                }}>
-                  <span style={{
-                    fontSize: '0.74rem',
-                    fontWeight: 800,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#94a3b8'
-                  }}>
-                    Credits & Details
-                  </span>
-
-                  {/* Role */}
-                  <div>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      color: '#64748b',
-                      display: 'block',
-                      marginBottom: '0.2rem'
-                    }}>
-                      Role
-                    </span>
-                    <span style={{
-                      fontSize: '0.94rem',
-                      fontWeight: 800,
-                      color: '#0f172a'
-                    }}>
-                      {displayProject.role || 'Fullstack Developer'}
-                    </span>
-                  </div>
-
-                  {/* Client / Program */}
-                  <div>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      color: '#64748b',
-                      display: 'block',
-                      marginBottom: '0.2rem'
-                    }}>
-                      Client / Program
-                    </span>
-                    <span style={{
-                      fontSize: '0.92rem',
-                      fontWeight: 700,
-                      color: '#0f172a'
-                    }}>
-                      {displayProject.subtitle || 'Independent'}
-                    </span>
-                  </div>
-
-                  {/* Tech Stack */}
-                  {displayProject.stack && (
-                    <div>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        letterSpacing: '0.06em',
-                        textTransform: 'uppercase',
-                        color: '#64748b',
-                        display: 'block',
-                        marginBottom: '0.35rem'
-                      }}>
-                        Technologies
-                      </span>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                        {displayProject.stack.split('·').slice(0, 5).map((t: string, i: number) => (
-                          <span
-                            key={i}
-                            style={{
-                              fontSize: '0.74rem',
-                              fontWeight: 600,
-                              color: '#1e293b',
-                              background: '#f8fafc',
-                              border: '1px solid #e2e8f0',
-                              padding: '0.2rem 0.55rem',
-                              borderRadius: '6px'
-                            }}
-                          >
-                            {t.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Key Impact / Outcome */}
-                  {displayProject.outcome && (
-                    <div>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        letterSpacing: '0.06em',
-                        textTransform: 'uppercase',
-                        color: '#64748b',
-                        display: 'block',
                         marginBottom: '0.2rem'
                       }}>
-                        Key Impact
-                      </span>
-                      <p style={{
-                        fontSize: '0.84rem',
-                        color: '#334155',
-                        lineHeight: 1.5,
-                        margin: 0,
-                        fontWeight: 500
-                      }}>
-                        {displayProject.outcome}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Actions / Live Links */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto', paddingTop: '0.5rem' }}>
-                    {displayProject.link && (
-                      <a
-                        href={displayProject.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.65rem 0.95rem',
-                          borderRadius: '10px',
-                          background: '#0f172a',
-                          color: '#ffffff',
-                          fontSize: '0.84rem',
-                          fontWeight: 700,
-                          textDecoration: 'none',
-                          boxShadow: '0 4px 12px rgba(15,23,42,0.15)',
-                          transition: 'transform 0.2s'
+                        <h3 style={{
+                          fontSize: '0.94rem',
+                          fontWeight: 800,
+                          color: '#0f172a',
+                          margin: 0,
+                          letterSpacing: '0.02em',
+                          textTransform: 'uppercase',
+                          lineHeight: 1.3,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
                         }}
-                      >
-                        <span>Visit Live Platform</span>
-                        <ArrowUpRight size={15} />
-                      </a>
-                    )}
-
-                    {displayProject.videoUrl && (
-                      <a
-                        href={displayProject.videoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.65rem 0.95rem',
-                          borderRadius: '10px',
-                          background: '#ef4444',
-                          color: '#ffffff',
-                          fontSize: '0.84rem',
+                        className="gallery-item-title"
+                        >
+                          {work.title}
+                        </h3>
+                        <span style={{
+                          fontSize: '0.8rem',
                           fontWeight: 700,
-                          textDecoration: 'none',
-                          boxShadow: '0 4px 12px rgba(239,68,68,0.2)',
-                          transition: 'transform 0.2s'
-                        }}
-                      >
-                        <span>Watch on YouTube</span>
-                        <Play size={15} fill="#ffffff" />
-                      </a>
-                    )}
+                          color: '#64748b',
+                          flexShrink: 0
+                        }}>
+                          {work.year || '2025'}
+                        </span>
+                      </div>
 
-                    {/* Open in full HD modal */}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedProject(displayProject);
-                        setActiveModalImageIndex(expandedImageIndex);
-                      }}
-                      style={{
-                        display: 'inline-flex',
+                      <div style={{
+                        display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        padding: '0.55rem 0.95rem',
-                        borderRadius: '10px',
-                        background: '#f0f9ff',
-                        color: '#0284c7',
-                        border: '1px solid #bae6fd',
+                        gap: '0.5rem',
+                        fontSize: '0.82rem'
+                      }}>
+                        <span style={{
+                          color: '#64748b',
+                          fontWeight: 500,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}>
+                          {work.subtitle || work.role || 'Project'}
+                        </span>
+                        <span style={{
+                          color: '#0284c7',
+                          fontWeight: 700,
+                          flexShrink: 0
+                        }}>
+                          {work.displayCategory || work.category || 'Platform'}
+                        </span>
+                      </div>
+
+                      <p style={{
                         fontSize: '0.82rem',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        transition: 'background 0.2s'
-                      }}
-                    >
-                      <span>Full Details & Lightbox ({screenshotCount})</span>
-                      <Maximize2 size={14} />
-                    </button>
-                  </div>
-                </div>
+                        color: '#475569',
+                        lineHeight: 1.5,
+                        margin: '0.35rem 0 0 0',
+                        fontWeight: 400,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                      }}>
+                        {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
+                      </p>
+                    </div>
                   </motion.div>
-                </AnimatePresence>
+                )}
               </motion.div>
             );
           };
 
           return (
-            <div className="works-gallery-container">
-              <AnimatePresence mode="wait">
-                {!activeProject ? (
-                  // Normal 4-column gallery view
-                  <motion.div
-                    key="gallery-grid-normal"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="works-grid-image1"
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(4, 1fr)',
-                      gap: '2.5rem 1.5rem',
-                      alignItems: 'start'
-                    }}
-                  >
-                    {filteredWorks.map((work: any) => renderGalleryCard(work))}
-                  </motion.div>
-                ) : (
-                  // Active project view: Showcase Row + Remaining Grid
-                  <motion.div
-                    key="gallery-grid-showcase"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '2.5rem'
-                    }}
-                  >
-                    {/* Top Row: Expanded Showcase (Left 75%) + Next Cards Rail (Right 25%) */}
-                    <div className="showcase-top-row">
-                      {/* Left: Expanded Detail Showcase Card */}
-                      {renderExpandedDetailCard(activeProject)}
-
-                      {/* Right: Next 2 Projects stacked vertically */}
-                      <div className="showcase-side-rail">
-                        <AnimatePresence mode="popLayout">
-                          {remainingOriginalWorks.slice(0, 2).map((work: any) => (
-                            <motion.div
-                              key={`rail-${work.id || work.slug}`}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -20 }}
-                              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                              {renderGalleryCard(work)}
-                            </motion.div>
-                          ))}
-                        </AnimatePresence>
-                      </div>
-                    </div>
-
-                    {/* Bottom Row: Remaining Original Cards continuing in 4 columns */}
-                    {remainingOriginalWorks.length > 2 && (
-                      <div
-                        className="works-grid-image1"
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(4, 1fr)',
-                          gap: '2.5rem 1.5rem',
-                          alignItems: 'start'
-                        }}
-                      >
-                        {remainingOriginalWorks.slice(2).map((work: any) => renderGalleryCard(work))}
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <motion.div
+              layout
+              className="works-grid-image1"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '2.5rem 1.5rem',
+                alignItems: 'start'
+              }}
+            >
+              {filteredWorks.map((work: any) => renderProjectCard(work))}
+            </motion.div>
           );
-        })()}
-      </section>
+        })()}      </section>
 
       {/* =========================================================================
          4. STATEMENT & FOCUS AREAS ("I focus on")
