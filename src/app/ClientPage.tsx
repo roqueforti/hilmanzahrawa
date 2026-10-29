@@ -1503,6 +1503,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(4, 1fr)',
+                gridAutoFlow: 'dense',
                 gap: '2.5rem 1.5rem',
                 alignItems: 'start'
               }}
