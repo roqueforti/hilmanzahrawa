@@ -836,10 +836,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             return (
               <motion.div
-                layout
+                layout="position"
                 key={work.id || work.slug}
                 transition={{
-                  layout: { duration: 0.42, ease: [0.16, 1, 0.3, 1] }
+                  layout: { duration: 0.38, ease: [0.16, 1, 0.3, 1] }
                 }}
                 className={`gallery-project-item ${isExpanded ? 'is-expanded' : ''}`}
                 onClick={() => {
@@ -852,7 +852,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               >
                 {isExpanded ? (
                   /* ================= EXPANDED VIEW ================= */
-                  <motion.div layout="position" className="expanded-inner-grid">
+                  <motion.div
+                    initial={{ scale: 0.98, y: 8 }}
+                    animate={{ scale: 1, y: 0 }}
+                    transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ transformOrigin: 'top left' }}
+                    className="expanded-inner-grid"
+                  >
                     {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       {/* Media Viewport (16:9 Aspect Ratio) */}
@@ -1341,7 +1347,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   </motion.div>
                 ) : (
                   /* ================= COLLAPSED NORMAL CARD ================= */
-                  <motion.div layout="position" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                     {/* 16:9 Thumbnail */}
                     <div style={{
                       width: '100%',
@@ -1485,15 +1491,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
               </motion.div>
             );
           };
 
           return (
-            <motion.div
-              layout
+            <div
               className="works-grid-image1"
               style={{
                 display: 'grid',
@@ -1503,7 +1508,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }}
             >
               {filteredWorks.map((work: any) => renderProjectCard(work))}
-            </motion.div>
+            </div>
           );
         })()}      </section>
 
