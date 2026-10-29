@@ -15,37 +15,33 @@ export async function GET(request: Request) {
     const cleanUsername = username.trim().replace(/\/$/, ""); // remove trailing slash
     
     if (cleanUsername.includes('.') || cleanUsername.includes('http')) {
-      // It's likely a subdomain or full URL
       try {
         const url = cleanUsername.includes('http') ? new URL(cleanUsername) : new URL(`https://${cleanUsername}`);
-        // For Medium subdomains, the feed is at subdomain.medium.com/feed
         feedUrl = `https://${url.host}/feed`;
-      } catch (e) {
-        // Fallback for weird formats
+      } catch {
         feedUrl = `https://${cleanUsername.replace(/^@/, "")}.medium.com/feed`;
       }
     } else {
-      // Standard @username format
       const formattedUsername = cleanUsername.startsWith('@') ? cleanUsername : `@${cleanUsername}`;
       feedUrl = `https://medium.com/feed/${formattedUsername}`;
     }
 
-    console.log(`Fetching Medium feed for ${username}: ${feedUrl}`);
+    const response = await fetch(feedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; PortfolioBot/1.0)'
+      },
+      next: { revalidate: 3600 }
+    });
     
-    const response = await fetch(feedUrl);
-    const xml = await response.text();
-
     if (!response.ok) {
-      console.error(`Medium Feed Fetch Failed: ${response.status}`, xml);
+      console.error(`Medium Feed Fetch Failed: ${response.status}`);
       return NextResponse.json({ error: "Failed to fetch Medium feed" }, { status: response.status });
     }
 
-    // Split by <item> tag with case-insensitivity and optional attributes
+    const xml = await response.text();
     const items = xml.split(/<item\b[^>]*>/i).slice(1);
-    console.log(`Found ${items.length} items in Medium feed`);
 
     const articles = items.map(item => {
-      // Improved regex with case-insensitivity and optional spaces
       const titleMatch = item.match(/<title(?:\s+[^>]*)?>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/i);
       const linkMatch = item.match(/<link(?:\s+[^>]*)?>\s*([\s\S]*?)\s*<\/link>/i);
       const pubDateMatch = item.match(/<pubDate(?:\s+[^>]*)?>\s*([\s\S]*?)\s*<\/pubDate>/i);
@@ -54,13 +50,34 @@ export async function GET(request: Request) {
       const content = contentMatch ? contentMatch[1] : "";
       const thumbnailMatch = content.match(/<img.*?src=["'](.*?)["']/i);
 
+      // Extract categories
+      const categories: string[] = [];
+      const catRegex = /<category(?:\s+[^>]*)?>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/category>/gi;
+      let m;
+      while ((m = catRegex.exec(item)) !== null) {
+        if (m[1] && m[1].trim()) categories.push(m[1].trim());
+      }
+
+      // Clean snippet
+      const cleanSnippet = content
+        .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const words = cleanSnippet.split(/\s+/).length;
+      const readMinutes = Math.max(2, Math.ceil(words / 180));
+
       return {
         title: titleMatch ? titleMatch[1].replace(/&amp;/g, '&').trim() : "Untitled",
         link: linkMatch ? linkMatch[1].trim() : "#",
         pubDate: pubDateMatch ? pubDateMatch[1].trim() : null,
-        thumbnail: thumbnailMatch ? thumbnailMatch[1] : null
+        thumbnail: thumbnailMatch ? thumbnailMatch[1] : null,
+        categories: categories.slice(0, 4),
+        snippet: cleanSnippet.slice(0, 180) + (cleanSnippet.length > 180 ? '...' : ''),
+        readTime: `${readMinutes} min read`
       };
-    }).slice(0, 6);
+    }).slice(0, 10);
 
     return NextResponse.json({ articles });
   } catch (error) {

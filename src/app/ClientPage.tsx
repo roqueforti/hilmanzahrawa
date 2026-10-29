@@ -2431,6 +2431,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           }}>
             Articles & Publications
           </h2>
+          <p style={{
+            fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
+            color: '#64748b',
+            maxWidth: '600px',
+            margin: '0.75rem auto 0 auto',
+            lineHeight: 1.6
+          }}>
+            Essays and reflections on technology, governance, human connection, and personal growth.
+          </p>
         </div>
 
         <MediumArticles username={mediumUsername} title="Articles & Publications" />
