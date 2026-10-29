@@ -1220,16 +1220,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       </span>
                     </div>
 
-                    {/* Row 3: Mini Description & Outcome */}
-                    <p style={{
-                      fontSize: '0.93rem',
-                      color: '#334155',
-                      lineHeight: 1.6,
-                      margin: '0.85rem 0 0 0',
-                      fontWeight: 400
-                    }}>
-                      {displayProject.description ? displayProject.description.replace(/\n+/g, ' ') : (displayProject.outcome || displayProject.subtitle)}
-                    </p>
+                    
 
                     {/* Screenshot thumbnails selector if multi-screen */}
                     {screenshotCount > 1 && (
@@ -1487,7 +1478,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         transition: 'background 0.2s'
                       }}
                     >
-                      <span>Full HD Lightbox ({screenshotCount})</span>
+                      <span>Full Details & Lightbox ({screenshotCount})</span>
                       <Maximize2 size={14} />
                     </button>
                   </div>
