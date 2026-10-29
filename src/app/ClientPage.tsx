@@ -836,7 +836,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   }}>
                     {isVideo && youtubeEmbed ? (
                       <iframe
-                        src={youtubeEmbed}
+                        src={youtubeEmbed || undefined}
                         title={expandedProject.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
@@ -1632,7 +1632,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             })}
           </AnimatePresence>
         </motion.div>
-      </section></section>
+      </section>
 
       {/* =========================================================================
          4. STATEMENT & FOCUS AREAS ("I focus on")

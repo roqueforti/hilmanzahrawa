@@ -659,9 +659,9 @@ export async function getPortfolioData() {
             categoryTab: p.category_tab || fallback?.categoryTab || 'web',
             displayCategory: p.display_category || fallback?.displayCategory || p.category || 'Web Platform',
             deviceType: p.device_type || fallback?.deviceType || 'desktop',
-            mediaType: p.media_type || fallback?.mediaType || 'image',
+            mediaType: p.media_type || (fallback as any)?.mediaType || 'image',
             videoUrl: p.video_url || fallback?.videoUrl || null,
-            layoutSize: p.layout_size || fallback?.layoutSize,
+            layoutSize: p.layout_size || (fallback as any)?.layoutSize,
             stack: p.stack || fallback?.stack,
             outcome: p.outcome || fallback?.outcome,
             link: p.link || fallback?.link || null
