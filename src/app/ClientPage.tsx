@@ -811,18 +811,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
 
 {/* =========================================================================
-           PROJECT SHOWCASE GALLERY (Unified In-Place Shift Grid)
-           Matching Reference (Ritchie Ollie Layout):
-           - Normal view: 4-column gallery grid.
-           - Active view: Selected project expands into an in-place showcase box
-             spanning 3 columns & 2 rows (Media Player + Credits & Details, NO duplicate cards).
+           PROJECT SHOWCASE GALLERY (Matching Ritchie Ollie Architecture)
+           - Active view: Expanded project takes span 3 & span 2 at top of grid.
            - Remaining original cards naturally shift into Column 4 and Row 3+.
-           - Clicking any card in Col 4 or below smoothly activates that project.
-           - Clicking (X) collapses back to standard 4-column cards.
+           - Smooth FLIP position animation on all cards without distortion or blink.
+           - Clicking (X) collapses cleanly back to standard 4-column cards.
            ========================================================================= */}
         {(() => {
-          const renderProjectCard = (work: any) => {
-            const isExpanded = Boolean(expandedProject && (expandedProject.id === work.id || expandedProject.slug === work.slug));
+          const expandedWork = expandedProject
+            ? filteredWorks.find((w: any) => (w.id && w.id === expandedProject.id) || (w.slug && w.slug === expandedProject.slug))
+            : null;
+          const remainingWorks = expandedWork
+            ? filteredWorks.filter((w: any) => !((w.id && w.id === expandedWork.id) || (w.slug && w.slug === expandedWork.slug)))
+            : filteredWorks;
+
+          const renderExpandedPanel = (work: any) => {
             const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0
               ? work.gallery.length
               : (work.image || work.coverImage ? 1 : 0);
@@ -832,618 +835,205 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               ? work.gallery
               : [work.image || work.coverImage].filter(Boolean);
             const activeScreenshot = projectGallery[expandedImageIndex] || projectGallery[0];
-            const displayImg = work.image || work.coverImage;
 
             return (
               <motion.div
-                layout="position"
-                key={work.id || work.slug}
-                transition={{
-                  layout: { duration: 0.38, ease: [0.16, 1, 0.3, 1] }
-                }}
-                className={`gallery-project-item ${isExpanded ? 'is-expanded' : ''}`}
-                onClick={() => {
-                  if (!isExpanded) {
-                    setExpandedAnchorId(work.id || work.slug);
-                    setExpandedProject(work);
-                    setExpandedImageIndex(0);
-                  }
-                }}
+                layout
+                key={`expanded-${work.id || work.slug}`}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+                className="gallery-project-expanded"
               >
-                {isExpanded ? (
-                  /* ================= EXPANDED VIEW ================= */
-                  <motion.div
-                    initial={{ scale: 0.98, y: 8 }}
-                    animate={{ scale: 1, y: 0 }}
-                    transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ transformOrigin: 'top left' }}
-                    className="expanded-inner-grid"
-                  >
-                    {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      {/* Media Viewport (16:9 Aspect Ratio) */}
-                      <div style={{
-                        width: '100%',
-                        aspectRatio: '16 / 9',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        background: '#0f172a',
-                        position: 'relative',
-                        boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
-                      }}>
-                        {isVideo && youtubeEmbed ? (
-                          <>
-                            <div className={`media-skeleton-container ${!isExpandedMediaLoading ? 'is-hidden' : ''}`}>
-                              <div className="media-skeleton-wave" />
-                              <div className="media-skeleton-badge">
-                                <div className="media-skeleton-icon-disc">
-                                  <Play size={24} style={{ marginLeft: '3px' }} />
-                                </div>
-                                <div className="media-skeleton-label">Loading Video Player...</div>
-                                <div className="media-skeleton-bar-wrap">
-                                  <div className="media-skeleton-bar-fill" />
-                                </div>
-                              </div>
-                            </div>
-                            <iframe
-                              key={`yt-${work.id || work.slug}`}
-                              src={youtubeEmbed || undefined}
-                              title={work.title}
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                              allowFullScreen
-                              referrerPolicy="strict-origin-when-cross-origin"
-                              onLoad={() => setIsExpandedMediaLoading(false)}
-                              style={{ width: '100%', height: '100%', border: 'none' }}
-                            />
-                          </>
-                        ) : (
-                          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                            <img
-                              key={`img-${activeScreenshot}`}
-                              src={activeScreenshot}
-                              alt={work.title}
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                objectPosition: 'top center'
-                              }}
-                            />
-
-                            {/* Navigation Chevrons if multi-screenshot */}
-                            {screenshotCount > 1 && (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setExpandedImageIndex((prev) => (prev > 0 ? prev - 1 : screenshotCount - 1));
-                                  }}
-                                  aria-label="Previous screenshot"
-                                  style={{
-                                    position: 'absolute',
-                                    left: '0.85rem',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    width: '38px',
-                                    height: '38px',
-                                    borderRadius: '50%',
-                                    background: 'rgba(15, 23, 42, 0.75)',
-                                    backdropFilter: 'blur(8px)',
-                                    color: '#ffffff',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.2s'
-                                  }}
-                                >
-                                  <ChevronLeft size={20} />
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setExpandedImageIndex((prev) => (prev < screenshotCount - 1 ? prev + 1 : 0));
-                                  }}
-                                  aria-label="Next screenshot"
-                                  style={{
-                                    position: 'absolute',
-                                    right: '0.85rem',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    width: '38px',
-                                    height: '38px',
-                                    borderRadius: '50%',
-                                    background: 'rgba(15, 23, 42, 0.75)',
-                                    backdropFilter: 'blur(8px)',
-                                    color: '#ffffff',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'all 0.2s'
-                                  }}
-                                >
-                                  <ChevronRight size={20} />
-                                </button>
-
-                                {/* Screenshot Counter Pill */}
-                                <div style={{
-                                  position: 'absolute',
-                                  bottom: '0.85rem',
-                                  left: '0.85rem',
-                                  background: 'rgba(15, 23, 42, 0.85)',
-                                  backdropFilter: 'blur(8px)',
-                                  color: '#ffffff',
-                                  fontSize: '0.74rem',
-                                  fontWeight: 700,
-                                  padding: '0.25rem 0.65rem',
-                                  borderRadius: '9999px',
-                                  border: '1px solid rgba(255,255,255,0.2)'
-                                }}>
-                                  {expandedImageIndex + 1} / {screenshotCount} Screens
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Top-Right (X) Close Button */}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedAnchorId(null);
-                            setExpandedProject(null);
-                          }}
-                          title="Close expanded view"
-                          aria-label="Close project preview"
-                          style={{
-                            position: 'absolute',
-                            top: '1rem',
-                            right: '1rem',
-                            width: '38px',
-                            height: '38px',
-                            borderRadius: '50%',
-                            background: 'rgba(15, 23, 42, 0.82)',
-                            backdropFilter: 'blur(8px)',
-                            color: '#ffffff',
-                            border: '1px solid rgba(255,255,255,0.25)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            zIndex: 10,
-                            transition: 'transform 0.2s ease, background 0.2s ease'
-                          }}
-                        >
-                          <X size={18} />
-                        </button>
-                      </div>
-
-                      {/* Info Row directly below Media Viewport */}
-                      <div style={{ marginTop: '0.25rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'baseline',
-                          justifyContent: 'space-between',
-                          gap: '0.75rem',
-                          marginBottom: '0.25rem'
-                        }}>
-                          <h3 style={{
-                            fontSize: '1.35rem',
-                            fontWeight: 800,
-                            color: '#0f172a',
-                            margin: 0,
-                            letterSpacing: '-0.02em',
-                            lineHeight: 1.3
-                          }}>
-                            {work.title}
-                          </h3>
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: 800,
-                            color: '#64748b',
-                            flexShrink: 0
-                          }}>
-                            {work.year || '2025'}
-                          </span>
-                        </div>
-
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          gap: '0.5rem',
-                          fontSize: '0.86rem'
-                        }}>
-                          <span style={{
-                            color: '#64748b',
-                            fontWeight: 600,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.04em'
-                          }}>
-                            {work.subtitle || work.role || 'Project'}
-                          </span>
-                          <span style={{
-                            color: '#0284c7',
-                            fontWeight: 700,
-                            flexShrink: 0
-                          }}>
-                            {work.displayCategory || work.category || 'Platform'}
-                          </span>
-                        </div>
-
-                        {/* Screenshot thumbnails selector if multi-screen */}
-                        {screenshotCount > 1 && (
-                          <div style={{
-                            display: 'flex',
-                            gap: '0.5rem',
-                            marginTop: '1rem',
-                            overflowX: 'auto',
-                            paddingBottom: '0.4rem'
-                          }}>
-                            {projectGallery.slice(0, 8).map((imgUrl: string, idx: number) => (
-                              <button
-                                type="button"
-                                key={idx}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setExpandedImageIndex(idx);
-                                }}
-                                style={{
-                                  width: '56px',
-                                  height: '36px',
-                                  borderRadius: '6px',
-                                  overflow: 'hidden',
-                                  padding: 0,
-                                  border: expandedImageIndex === idx ? '2px solid #0284c7' : '1px solid #e2e8f0',
-                                  cursor: 'pointer',
-                                  flexShrink: 0,
-                                  opacity: expandedImageIndex === idx ? 1 : 0.6,
-                                  transition: 'all 0.2s'
-                                }}
-                              >
-                                <img src={imgUrl} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                              </button>
-                            ))}
-                            {screenshotCount > 8 && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedProject(work);
-                                  setActiveModalImageIndex(0);
-                                }}
-                                style={{
-                                  height: '36px',
-                                  padding: '0 0.6rem',
-                                  borderRadius: '6px',
-                                  background: '#f1f5f9',
-                                  border: '1px solid #e2e8f0',
-                                  fontSize: '0.74rem',
-                                  fontWeight: 700,
-                                  color: '#0284c7',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center'
-                                }}
-                              >
-                                +{screenshotCount - 8} more
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* RIGHT COLUMN: Credits & Details */}
-                    <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1.25rem',
-                      borderLeft: '1px solid #f1f5f9',
-                      paddingLeft: '1.5rem',
-                      height: '100%'
-                    }}>
-                      <h4 style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 800,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        color: '#94a3b8',
-                        margin: '0 0 0.25rem 0'
-                      }}>
-                        Credits & Details
-                      </h4>
-
-                      <div>
-                        <span style={{
-                          fontSize: '0.72rem',
-                          fontWeight: 700,
-                          letterSpacing: '0.06em',
-                          textTransform: 'uppercase',
-                          color: '#64748b',
-                          display: 'block',
-                          marginBottom: '0.2rem'
-                        }}>
-                          Role
-                        </span>
-                        <span style={{
-                          fontSize: '0.94rem',
-                          fontWeight: 800,
-                          color: '#0f172a'
-                        }}>
-                          {work.role || 'Fullstack Developer'}
-                        </span>
-                      </div>
-
-                      <div>
-                        <span style={{
-                          fontSize: '0.72rem',
-                          fontWeight: 700,
-                          letterSpacing: '0.06em',
-                          textTransform: 'uppercase',
-                          color: '#64748b',
-                          display: 'block',
-                          marginBottom: '0.2rem'
-                        }}>
-                          Client / Program
-                        </span>
-                        <span style={{
-                          fontSize: '0.92rem',
-                          fontWeight: 700,
-                          color: '#0f172a'
-                        }}>
-                          {work.subtitle || 'Independent'}
-                        </span>
-                      </div>
-
-                      {work.stack && (
-                        <div>
-                          <span style={{
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            letterSpacing: '0.06em',
-                            textTransform: 'uppercase',
-                            color: '#64748b',
-                            display: 'block',
-                            marginBottom: '0.35rem'
-                          }}>
-                            Technologies
-                          </span>
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                            {work.stack.split('·').slice(0, 5).map((t: string, i: number) => (
-                              <span
-                                key={i}
-                                style={{
-                                  fontSize: '0.74rem',
-                                  fontWeight: 600,
-                                  color: '#1e293b',
-                                  background: '#f8fafc',
-                                  border: '1px solid #e2e8f0',
-                                  padding: '0.2rem 0.55rem',
-                                  borderRadius: '6px'
-                                }}
-                              >
-                                {t.trim()}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {work.impact && (
-                        <div>
-                          <span style={{
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            letterSpacing: '0.06em',
-                            textTransform: 'uppercase',
-                            color: '#64748b',
-                            display: 'block',
-                            marginBottom: '0.2rem'
-                          }}>
-                            Key Impact
-                          </span>
-                          <p style={{
-                            fontSize: '0.84rem',
-                            color: '#334155',
-                            lineHeight: 1.5,
-                            margin: 0,
-                            fontWeight: 500
-                          }}>
-                            {work.impact}
-                          </p>
-                        </div>
-                      )}
-
-                      <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '0.65rem',
-                        marginTop: 'auto',
-                        paddingTop: '1rem'
-                      }}>
-                        {work.link && (
-                          <a
-                            href={work.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              padding: '0.65rem 0.95rem',
-                              borderRadius: '10px',
-                              background: '#0f172a',
-                              color: '#ffffff',
-                              fontSize: '0.84rem',
-                              fontWeight: 700,
-                              textDecoration: 'none',
-                              boxShadow: '0 4px 12px rgba(15,23,42,0.15)'
-                            }}
-                          >
-                            <span>Visit Live Platform</span>
-                            <ArrowUpRight size={15} />
-                          </a>
-                        )}
-
-                        {work.videoUrl && (
-                          <a
-                            href={work.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              padding: '0.65rem 0.95rem',
-                              borderRadius: '10px',
-                              background: '#ef4444',
-                              color: '#ffffff',
-                              fontSize: '0.84rem',
-                              fontWeight: 700,
-                              textDecoration: 'none',
-                              boxShadow: '0 4px 12px rgba(239,68,68,0.2)'
-                            }}
-                          >
-                            <span>Watch on YouTube</span>
-                            <Play size={15} fill="#ffffff" />
-                          </a>
-                        )}
-
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProject(work);
-                            setActiveModalImageIndex(expandedImageIndex);
-                          }}
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '0.55rem 0.95rem',
-                            borderRadius: '10px',
-                            background: '#f0f9ff',
-                            color: '#0284c7',
-                            border: '1px solid #bae6fd',
-                            fontSize: '0.82rem',
-                            fontWeight: 700,
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <span>Full Details & Lightbox ({screenshotCount})</span>
-                          <Maximize2 size={14} />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ) : (
-                  /* ================= COLLAPSED NORMAL CARD ================= */
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                    {/* 16:9 Thumbnail */}
+                <div className="expanded-inner-grid">
+                  {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {/* Media Viewport (16:9 Aspect Ratio) */}
                     <div style={{
                       width: '100%',
                       aspectRatio: '16 / 9',
-                      borderRadius: '12px',
+                      borderRadius: '16px',
                       overflow: 'hidden',
                       background: '#0f172a',
-                      position: 'relative'
+                      position: 'relative',
+                      boxShadow: '0 12px 30px rgba(0,0,0,0.18)'
                     }}>
-                      {displayImg ? (
-                        <img
-                          src={displayImg}
-                          alt={work.title}
-                          loading="lazy"
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'top center',
-                            transition: 'transform 0.4s ease'
-                          }}
-                          className="gallery-item-img"
-                        />
+                      {isVideo && youtubeEmbed ? (
+                        <>
+                          <div className={`media-skeleton-container ${!isExpandedMediaLoading ? 'is-hidden' : ''}`}>
+                            <div className="media-skeleton-wave" />
+                            <div className="media-skeleton-badge">
+                              <div className="media-skeleton-icon-disc">
+                                <Play size={24} style={{ marginLeft: '3px' }} />
+                              </div>
+                              <div className="media-skeleton-label">Loading Video Player...</div>
+                              <div className="media-skeleton-bar-wrap">
+                                <div className="media-skeleton-bar-fill" />
+                              </div>
+                            </div>
+                          </div>
+                          <iframe
+                            key={`yt-${work.id || work.slug}`}
+                            src={youtubeEmbed || undefined}
+                            title={work.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            onLoad={() => setIsExpandedMediaLoading(false)}
+                            style={{ width: '100%', height: '100%', border: 'none' }}
+                          />
+                        </>
                       ) : (
-                        <div style={{
-                          width: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: '#ffffff'
-                        }}>
-                          <Code2 size={24} style={{ opacity: 0.4 }} />
+                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                          <img
+                            key={`img-${activeScreenshot}`}
+                            src={activeScreenshot}
+                            alt={work.title}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: 'top center'
+                            }}
+                          />
+
+                          {/* Navigation Chevrons if multi-screenshot */}
+                          {screenshotCount > 1 && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedImageIndex((prev) => (prev > 0 ? prev - 1 : screenshotCount - 1));
+                                }}
+                                aria-label="Previous screenshot"
+                                style={{
+                                  position: 'absolute',
+                                  left: '0.85rem',
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                  width: '38px',
+                                  height: '38px',
+                                  borderRadius: '50%',
+                                  background: 'rgba(15, 23, 42, 0.75)',
+                                  backdropFilter: 'blur(8px)',
+                                  color: '#ffffff',
+                                  border: '1px solid rgba(255,255,255,0.2)',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  transition: 'all 0.2s'
+                                }}
+                              >
+                                <ChevronLeft size={20} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedImageIndex((prev) => (prev < screenshotCount - 1 ? prev + 1 : 0));
+                                }}
+                                aria-label="Next screenshot"
+                                style={{
+                                  position: 'absolute',
+                                  right: '0.85rem',
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                  width: '38px',
+                                  height: '38px',
+                                  borderRadius: '50%',
+                                  background: 'rgba(15, 23, 42, 0.75)',
+                                  backdropFilter: 'blur(8px)',
+                                  color: '#ffffff',
+                                  border: '1px solid rgba(255,255,255,0.2)',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  transition: 'all 0.2s'
+                                }}
+                              >
+                                <ChevronRight size={20} />
+                              </button>
+
+                              {/* Screenshot Counter Pill */}
+                              <div style={{
+                                position: 'absolute',
+                                bottom: '0.85rem',
+                                left: '0.85rem',
+                                background: 'rgba(15, 23, 42, 0.85)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#ffffff',
+                                fontSize: '0.74rem',
+                                fontWeight: 700,
+                                padding: '0.25rem 0.65rem',
+                                borderRadius: '9999px',
+                                border: '1px solid rgba(255,255,255,0.2)'
+                              }}>
+                                {expandedImageIndex + 1} / {screenshotCount} Screens
+                              </div>
+                            </>
+                          )}
                         </div>
                       )}
 
-                      {/* Screenshot Count or Video pill badge on top-right */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '0.65rem',
-                        right: '0.65rem',
-                        background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
-                        backdropFilter: 'blur(6px)',
-                        color: '#ffffff',
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        padding: '0.2rem 0.55rem',
-                        borderRadius: '9999px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.3rem',
-                        border: '1px solid rgba(255,255,255,0.2)'
-                      }}>
-                        {isVideo ? (
-                          <>
-                            <Play size={10} fill="#ffffff" />
-                            <span>Video</span>
-                          </>
-                        ) : (
-                          <>
-                            <ImageIcon size={10} />
-                            <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
-                          </>
-                        )}
-                      </div>
+                      {/* Top-Right (X) Close Button */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedAnchorId(null);
+                          setExpandedProject(null);
+                        }}
+                        title="Close expanded view"
+                        aria-label="Close project preview"
+                        style={{
+                          position: 'absolute',
+                          top: '1rem',
+                          right: '1rem',
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '50%',
+                          background: 'rgba(15, 23, 42, 0.82)',
+                          backdropFilter: 'blur(8px)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255,255,255,0.25)',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          zIndex: 10,
+                          transition: 'transform 0.2s ease, background 0.2s ease'
+                        }}
+                      >
+                        <X size={18} />
+                      </button>
                     </div>
 
-                    {/* Metadata underneath */}
-                    <div>
+                    {/* Info Row directly below Media Viewport */}
+                    <div style={{ marginTop: '0.25rem' }}>
                       <div style={{
                         display: 'flex',
                         alignItems: 'baseline',
                         justifyContent: 'space-between',
-                        gap: '0.5rem',
-                        marginBottom: '0.2rem'
+                        gap: '0.75rem',
+                        marginBottom: '0.25rem'
                       }}>
                         <h3 style={{
-                          fontSize: '0.94rem',
+                          fontSize: '1.35rem',
                           fontWeight: 800,
                           color: '#0f172a',
                           margin: 0,
-                          letterSpacing: '0.02em',
-                          textTransform: 'uppercase',
-                          lineHeight: 1.3,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
-                        }}
-                        className="gallery-item-title"
-                        >
+                          letterSpacing: '-0.02em',
+                          lineHeight: 1.3
+                        }}>
                           {work.title}
                         </h3>
                         <span style={{
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
+                          fontSize: '0.9rem',
+                          fontWeight: 800,
                           color: '#64748b',
                           flexShrink: 0
                         }}>
@@ -1456,15 +1046,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: '0.5rem',
-                        fontSize: '0.82rem'
+                        fontSize: '0.86rem'
                       }}>
                         <span style={{
                           color: '#64748b',
-                          fontWeight: 500,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
+                          fontWeight: 600,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em'
                         }}>
                           {work.subtitle || work.role || 'Project'}
                         </span>
@@ -1477,22 +1065,461 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         </span>
                       </div>
 
-                      <p style={{
-                        fontSize: '0.82rem',
-                        color: '#475569',
-                        lineHeight: 1.5,
-                        margin: '0.35rem 0 0 0',
-                        fontWeight: 400,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
-                        {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
-                      </p>
+                      {/* Screenshot thumbnails selector if multi-screen */}
+                      {screenshotCount > 1 && (
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem',
+                          marginTop: '1rem',
+                          overflowX: 'auto',
+                          paddingBottom: '0.4rem'
+                        }}>
+                          {projectGallery.slice(0, 8).map((imgUrl: string, idx: number) => (
+                            <button
+                              type="button"
+                              key={idx}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedImageIndex(idx);
+                              }}
+                              style={{
+                                width: '56px',
+                                height: '36px',
+                                borderRadius: '6px',
+                                overflow: 'hidden',
+                                padding: 0,
+                                border: expandedImageIndex === idx ? '2px solid #0284c7' : '1px solid #e2e8f0',
+                                cursor: 'pointer',
+                                flexShrink: 0,
+                                opacity: expandedImageIndex === idx ? 1 : 0.6,
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              <img src={imgUrl} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            </button>
+                          ))}
+                          {screenshotCount > 8 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedProject(work);
+                                setActiveModalImageIndex(0);
+                              }}
+                              style={{
+                                height: '36px',
+                                padding: '0 0.6rem',
+                                borderRadius: '6px',
+                                background: '#f1f5f9',
+                                border: '1px solid #e2e8f0',
+                                fontSize: '0.74rem',
+                                fontWeight: 700,
+                                color: '#0284c7',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center'
+                              }}
+                            >
+                              +{screenshotCount - 8} more
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
-                )}
+
+                  {/* RIGHT COLUMN: Credits & Details */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1.25rem',
+                    borderLeft: '1px solid #f1f5f9',
+                    paddingLeft: '1.5rem',
+                    height: '100%'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: '#94a3b8',
+                      margin: '0 0 0.25rem 0'
+                    }}>
+                      Credits & Details
+                    </h4>
+
+                    <div>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: '#64748b',
+                        display: 'block',
+                        marginBottom: '0.2rem'
+                      }}>
+                        Role
+                      </span>
+                      <span style={{
+                        fontSize: '0.94rem',
+                        fontWeight: 800,
+                        color: '#0f172a'
+                      }}>
+                        {work.role || 'Fullstack Developer'}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: '#64748b',
+                        display: 'block',
+                        marginBottom: '0.2rem'
+                      }}>
+                        Client / Program
+                      </span>
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
+                        color: '#0f172a'
+                      }}>
+                        {work.subtitle || 'Independent'}
+                      </span>
+                    </div>
+
+                    {work.stack && (
+                      <div>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          color: '#64748b',
+                          display: 'block',
+                          marginBottom: '0.35rem'
+                        }}>
+                          Technologies
+                        </span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                          {work.stack.split('·').slice(0, 5).map((t: string, i: number) => (
+                            <span
+                              key={i}
+                              style={{
+                                fontSize: '0.74rem',
+                                fontWeight: 600,
+                                color: '#1e293b',
+                                background: '#f8fafc',
+                                border: '1px solid #e2e8f0',
+                                padding: '0.2rem 0.55rem',
+                                borderRadius: '6px'
+                              }}
+                            >
+                              {t.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {work.impact && (
+                      <div>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          color: '#64748b',
+                          display: 'block',
+                          marginBottom: '0.2rem'
+                        }}>
+                          Key Impact
+                        </span>
+                        <p style={{
+                          fontSize: '0.84rem',
+                          color: '#334155',
+                          lineHeight: 1.5,
+                          margin: 0,
+                          fontWeight: 500
+                        }}>
+                          {work.impact}
+                        </p>
+                      </div>
+                    )}
+
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.65rem',
+                      marginTop: 'auto',
+                      paddingTop: '1rem'
+                    }}>
+                      {work.link && (
+                        <a
+                          href={work.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '0.65rem 0.95rem',
+                            borderRadius: '10px',
+                            background: '#0f172a',
+                            color: '#ffffff',
+                            fontSize: '0.84rem',
+                            fontWeight: 700,
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 12px rgba(15,23,42,0.15)'
+                          }}
+                        >
+                          <span>Visit Live Platform</span>
+                          <ArrowUpRight size={15} />
+                        </a>
+                      )}
+
+                      {work.videoUrl && (
+                        <a
+                          href={work.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '0.65rem 0.95rem',
+                            borderRadius: '10px',
+                            background: '#ef4444',
+                            color: '#ffffff',
+                            fontSize: '0.84rem',
+                            fontWeight: 700,
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 12px rgba(239,68,68,0.2)'
+                          }}
+                        >
+                          <span>Watch on YouTube</span>
+                          <Play size={15} fill="#ffffff" />
+                        </a>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProject(work);
+                          setActiveModalImageIndex(expandedImageIndex);
+                        }}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.55rem 0.95rem',
+                          borderRadius: '10px',
+                          background: '#f0f9ff',
+                          color: '#0284c7',
+                          border: '1px solid #bae6fd',
+                          fontSize: '0.82rem',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <span>Full Details & Lightbox ({screenshotCount})</span>
+                        <Maximize2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          };
+
+          const renderNormalCard = (work: any) => {
+            const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0
+              ? work.gallery.length
+              : (work.image || work.coverImage ? 1 : 0);
+            const isVideo = Boolean(work.videoUrl || work.categoryTab === 'creative');
+            const displayImg = work.image || work.coverImage;
+
+            return (
+              <motion.div
+                layout="position"
+                key={work.id || work.slug}
+                transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+                className="gallery-project-item"
+                onClick={() => {
+                  setExpandedAnchorId(work.id || work.slug);
+                  setExpandedProject(work);
+                  setExpandedImageIndex(0);
+                  setIsExpandedMediaLoading(true);
+
+                  // Smooth scroll to top of #works gallery section (matching Ritchie Ollie ease-out scroll)
+                  const worksEl = document.getElementById('works');
+                  if (worksEl) {
+                    const rect = worksEl.getBoundingClientRect();
+                    const targetY = Math.max(0, window.scrollY + rect.top - 80);
+                    const startY = window.scrollY;
+                    const startTime = performance.now();
+                    const duration = 280;
+
+                    const animScroll = (now: number) => {
+                      const elapsed = Math.min((now - startTime) / duration, 1);
+                      const ease = 1 - Math.pow(1 - elapsed, 3);
+                      window.scrollTo(0, startY + (targetY - startY) * ease);
+                      if (elapsed < 1) {
+                        requestAnimationFrame(animScroll);
+                      }
+                    };
+                    requestAnimationFrame(animScroll);
+                  }
+                }}
+              >
+                {/* 16:9 Thumbnail */}
+                <div style={{
+                  width: '100%',
+                  aspectRatio: '16 / 9',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  background: '#0f172a',
+                  position: 'relative'
+                }}>
+                  {displayImg ? (
+                    <img
+                      src={displayImg}
+                      alt={work.title}
+                      loading="lazy"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'top center',
+                        transition: 'transform 0.4s ease'
+                      }}
+                      className="gallery-item-img"
+                    />
+                  ) : (
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff'
+                    }}>
+                      <Code2 size={24} style={{ opacity: 0.4 }} />
+                    </div>
+                  )}
+
+                  {/* Screenshot Count or Video pill badge on top-right */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '0.65rem',
+                    right: '0.65rem',
+                    background: isVideo ? 'rgba(239, 68, 68, 0.9)' : 'rgba(15, 23, 42, 0.82)',
+                    backdropFilter: 'blur(6px)',
+                    color: '#ffffff',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '9999px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    border: '1px solid rgba(255,255,255,0.2)'
+                  }}>
+                    {isVideo ? (
+                      <>
+                        <Play size={10} fill="#ffffff" />
+                        <span>Video</span>
+                      </>
+                    ) : (
+                      <>
+                        <ImageIcon size={10} />
+                        <span>{screenshotCount} {screenshotCount === 1 ? 'Screen' : 'Screens'}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Metadata underneath */}
+                <div>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    marginBottom: '0.2rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '0.94rem',
+                      fontWeight: 800,
+                      color: '#0f172a',
+                      margin: 0,
+                      letterSpacing: '0.02em',
+                      textTransform: 'uppercase',
+                      lineHeight: 1.3,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}
+                    className="gallery-item-title"
+                    >
+                      {work.title}
+                    </h3>
+                    <span style={{
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      color: '#64748b',
+                      flexShrink: 0
+                    }}>
+                      {work.year || '2025'}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    fontSize: '0.82rem'
+                  }}>
+                    <span style={{
+                      color: '#64748b',
+                      fontWeight: 500,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}>
+                      {work.subtitle || work.role || 'Project'}
+                    </span>
+                    <span style={{
+                      color: '#0284c7',
+                      fontWeight: 700,
+                      flexShrink: 0
+                    }}>
+                      {work.displayCategory || work.category || 'Platform'}
+                    </span>
+                  </div>
+
+                  <p style={{
+                    fontSize: '0.82rem',
+                    color: '#475569',
+                    lineHeight: 1.5,
+                    margin: '0.35rem 0 0 0',
+                    fontWeight: 400,
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  }}>
+                    {work.outcome || (work.description ? work.description.replace(/\n+/g, ' ') : work.subtitle)}
+                  </p>
+                </div>
               </motion.div>
             );
           };
@@ -1507,7 +1534,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 alignItems: 'start'
               }}
             >
-              {filteredWorks.map((work: any) => renderProjectCard(work))}
+              <AnimatePresence>
+                {expandedWork && renderExpandedPanel(expandedWork)}
+                {remainingWorks.map((work: any) => renderNormalCard(work))}
+              </AnimatePresence>
             </div>
           );
         })()}      </section>
