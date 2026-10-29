@@ -39,7 +39,7 @@ import { fallbackPortfolioData } from '@/lib/supabase';
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  return match ? `https://www.youtube-nocookie.com/embed/${match[1]}?rel=0&playsinline=1` : null;
 }
 import dynamic from 'next/dynamic';
 import MediumArticles from '@/components/MediumArticles';
@@ -1033,8 +1033,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       <iframe
                         src={youtubeEmbed || undefined}
                         title={displayProject.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
+                        referrerPolicy="strict-origin-when-cross-origin"
                         style={{ width: '100%', height: '100%', border: 'none' }}
                       />
                     ) : (
@@ -2480,8 +2481,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <iframe
                       src={youtubeEmbed}
                       title={selectedProject.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
                       style={{ width: '100%', height: '100%', border: 'none' }}
                     />
                   </div>
