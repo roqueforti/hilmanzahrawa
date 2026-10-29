@@ -1374,7 +1374,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   borderRadius: '12px',
                   overflow: 'hidden',
                   background: '#0f172a',
-                  position: 'relative'
+                  position: 'relative',
+                  border: '1px solid rgba(15, 23, 42, 0.08)',
+                  boxShadow: '0 2px 8px rgba(15, 23, 42, 0.03)'
                 }}>
                   {displayImg ? (
                     <img
@@ -1520,7 +1522,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '2.5rem 1.5rem',
+                gap: '1.75rem 1.25rem',
                 alignItems: 'start'
               }}
             >
