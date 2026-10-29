@@ -840,14 +840,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             return (
               <motion.div
-                layout
                 key={work.id || work.slug}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                exit={{ opacity: 0, y: -16 }}
                 transition={{
-                  layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
-                  duration: 0.25
+                  duration: 0.28,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
                 whileHover={{ y: -4 }}
                 onClick={() => {
@@ -859,8 +858,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.65rem',
-                  gridColumn: 'span 1'
+                  gap: '0.65rem'
                 }}
                 className="gallery-project-item"
               >
@@ -1026,19 +1024,27 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
             return (
               <motion.div
-                layout
-                key={`expanded-${displayProject.id || displayProject.slug}`}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
+                key="expanded-showcase-box"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 15 }}
                 transition={{
-                  layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
-                  opacity: { duration: 0.25 }
+                  duration: 0.35,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
                 className="expanded-detail-box"
               >
-                {/* 1. LEFT COLUMN: Large Media Player + Info & Mini Description */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`showcase-content-${displayProject.id || displayProject.slug}`}
+                    initial={{ opacity: 0, x: 35 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -35 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="expanded-inner-grid"
+                  >
+                    {/* 1. LEFT COLUMN: Large Media Player + Info & Mini Description */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {/* Media Viewport (16:9 Aspect Ratio) */}
                   <div style={{
                     width: '100%',
@@ -1078,19 +1084,24 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       />
                     ) : (
                       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                        <img
-                          key={`img-${activeScreenshot}`}
-                          src={activeScreenshot}
-                          alt={displayProject.title}
-                          onLoad={() => setIsExpandedMediaLoading(false)}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'top center',
-                            transition: 'opacity 0.25s ease'
-                          }}
-                        />
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={`img-${activeScreenshot}`}
+                            src={activeScreenshot}
+                            alt={displayProject.title}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.22, ease: "easeOut" }}
+                            onLoad={() => setIsExpandedMediaLoading(false)}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: 'top center'
+                            }}
+                          />
+                        </AnimatePresence>
 
                         {/* Navigation Chevrons if multi-screenshot */}
                         {screenshotCount > 1 && (
@@ -1524,33 +1535,88 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     </button>
                   </div>
                 </div>
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
             );
           };
 
           return (
-            <motion.div
-              layout
-              className="works-grid-image1"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '2.5rem 1.5rem',
-                alignItems: 'start'
-              }}
-            >
-              {!activeProject ? (
-                // Normal 4-column gallery view
-                filteredWorks.map((work: any) => renderGalleryCard(work))
-              ) : (
-                // Active project view: Expanded Detail Box (Left 3 cols, 2 rows)
-                // followed by remaining original cards filling Col 4 and Row 3+
-                <>
-                  {renderExpandedDetailCard(activeProject)}
-                  {remainingOriginalWorks.map((work: any) => renderGalleryCard(work))}
-                </>
-              )}
-            </motion.div>
+            <div className="works-gallery-container">
+              <AnimatePresence mode="wait">
+                {!activeProject ? (
+                  // Normal 4-column gallery view
+                  <motion.div
+                    key="gallery-grid-normal"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="works-grid-image1"
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(4, 1fr)',
+                      gap: '2.5rem 1.5rem',
+                      alignItems: 'start'
+                    }}
+                  >
+                    {filteredWorks.map((work: any) => renderGalleryCard(work))}
+                  </motion.div>
+                ) : (
+                  // Active project view: Showcase Row + Remaining Grid
+                  <motion.div
+                    key="gallery-grid-showcase"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '2.5rem'
+                    }}
+                  >
+                    {/* Top Row: Expanded Showcase (Left 75%) + Next Cards Rail (Right 25%) */}
+                    <div className="showcase-top-row">
+                      {/* Left: Expanded Detail Showcase Card */}
+                      {renderExpandedDetailCard(activeProject)}
+
+                      {/* Right: Next 2 Projects stacked vertically */}
+                      <div className="showcase-side-rail">
+                        <AnimatePresence mode="popLayout">
+                          {remainingOriginalWorks.slice(0, 2).map((work: any) => (
+                            <motion.div
+                              key={`rail-${work.id || work.slug}`}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -20 }}
+                              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                            >
+                              {renderGalleryCard(work)}
+                            </motion.div>
+                          ))}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    {/* Bottom Row: Remaining Original Cards continuing in 4 columns */}
+                    {remainingOriginalWorks.length > 2 && (
+                      <div
+                        className="works-grid-image1"
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(4, 1fr)',
+                          gap: '2.5rem 1.5rem',
+                          alignItems: 'start'
+                        }}
+                      >
+                        {remainingOriginalWorks.slice(2).map((work: any) => renderGalleryCard(work))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           );
         })()}
       </section>
