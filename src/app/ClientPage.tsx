@@ -2824,42 +2824,26 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             flexDirection: 'column',
             alignItems: 'center'
           }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.3rem 0.85rem',
-              borderRadius: '9999px',
-              background: '#fffbeb',
-              border: '1px solid #fde68a',
-              marginBottom: '0.5rem'
-            }}>
-              <Trophy size={15} color="#b45309" />
-              <span style={{
-                fontSize: '0.74rem',
-                fontWeight: 700,
-                color: '#b45309',
-                letterSpacing: '0.03em',
-                textTransform: 'uppercase'
-              }}>
-                Honors & Accolades Showcase
-              </span>
-            </div>
+            <span className="editorial-kicker" style={{ marginBottom: '0.4rem', fontSize: '1.05rem' }}>
+              / Honors & Accolades /
+            </span>
 
             <h3 style={{
-              fontSize: 'clamp(1.4rem, 2.5vw, 1.95rem)',
-              fontWeight: 600,
+              fontSize: 'clamp(2.2rem, 4.2vw, 3.2rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.025em',
+              margin: '0 0 0.35rem 0',
               color: '#0f172a',
-              margin: '0 0 0.25rem 0',
-              letterSpacing: '-0.02em'
+              lineHeight: 1.15
             }}>
-              Competitive Trophies & Grants
+              Competitive Trophies <span style={{ fontWeight: 300, color: '#94a3b8' }}>& Grants</span>
             </h3>
             <p style={{
-              fontSize: '0.86rem',
+              fontSize: 'clamp(0.92rem, 1.6vw, 1.05rem)',
               color: '#64748b',
               margin: 0,
-              maxWidth: '560px'
+              maxWidth: '580px',
+              lineHeight: 1.5
             }}>
               Interactive 3D Carousel • Swipe or drag horizontally across the screen to explore verified recognitions.
             </p>
