@@ -1978,64 +1978,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </motion.div>
         </div>
 
-        {/* Real Impact Testimonials */}
-        <div className="process-testimonials-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
-          gap: '4rem',
-          maxWidth: '1080px',
-          margin: '7rem auto 0 auto',
-          alignItems: 'flex-start'
-        }}>
-          {/* Testimonial 1 */}
-          <div style={{
-            background: '#ffffff',
-            borderRadius: '20px',
-            padding: '1.75rem',
-            border: '1px solid #f1f5f9',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-            position: 'relative'
-          }}>
-            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>”</span>
-            <p style={{ fontSize: '0.95rem', color: '#1e293b', lineHeight: 1.6, margin: '0 0 1.5rem 0', fontWeight: 400 }}>
-              "Hilman's technical execution and dedication to inclusive design helped Brewtech empower youth with disabilities through accessible digital training."
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
-                IN
-              </div>
-              <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>Innovillage Partner</span>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Social Impact Program</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Testimonial 2 */}
-          <div className="process-testimonial-staggered" style={{
-            background: '#ffffff',
-            borderRadius: '20px',
-            padding: '1.75rem',
-            border: '1px solid #f1f5f9',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-            position: 'relative',
-            marginTop: '3.5rem'
-          }}>
-            <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontSize: '1.5rem', color: '#0f172a', fontWeight: 700 }}>”</span>
-            <p style={{ fontSize: '0.95rem', color: '#1e293b', lineHeight: 1.6, margin: '0 0 1.5rem 0', fontWeight: 400 }}>
-              "From database architecture to intuitive user interfaces, Hilman delivered our workflow systems with exceptional quality, speed, and attention to detail."
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#fef3c7', color: '#b45309', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
-                SL
-              </div>
-              <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', display: 'block' }}>SEAL Accelerator Lead</span>
-                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Collaborator & Product Director</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </section>
 
             {/* =========================================================================

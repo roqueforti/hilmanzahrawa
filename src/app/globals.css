@@ -1548,13 +1548,6 @@ html, body {
     padding: 2rem 1.75rem !important;
     border-radius: 22px !important;
   }
-  .process-testimonials-grid {
-    margin: 3.5rem auto 0 auto !important;
-    gap: 1.5rem !important;
-  }
-  .process-testimonial-staggered {
-    margin-top: 0 !important;
-  }
 }
 
 /* 6. Selected Works */
