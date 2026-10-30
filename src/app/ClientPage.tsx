@@ -41,6 +41,7 @@ import {
   Globe
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
+const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
 
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
@@ -2565,11 +2566,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          9. CREDENTIALS, EDUCATION & AWARDS (Interactive Academic Journey & Trophy Cabinet)
          ========================================================================= */}
       <section id="credentials" style={{
-        padding: '5rem 1.5rem',
-        maxWidth: '1240px',
-        margin: '0 auto'
+        padding: '5rem 0 3rem 0',
+        width: '100%',
+        margin: '0 auto',
+        overflow: 'hidden'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+        {/* Section Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '3.5rem',
+          maxWidth: '1240px',
+          margin: '0 auto 3.5rem auto',
+          padding: '0 1.5rem'
+        }}>
           <span className="editorial-kicker">
             / Qualifications & Accolades /
           </span>
@@ -2592,11 +2601,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </p>
         </div>
 
+        {/* 1. Academic Journey (Structured Foundation Container) */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 540px), 1fr))',
-          gap: '2.5rem',
-          alignItems: 'start'
+          maxWidth: '920px',
+          margin: '0 auto 4.5rem auto',
+          padding: '0 1.5rem'
         }}>
           {/* ==================== LEFT COLUMN: INTERACTIVE EDUCATION JOURNEY ==================== */}
           <div style={{
@@ -2798,292 +2807,122 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* ==================== RIGHT COLUMN: INTERACTIVE TROPHY CABINET ==================== */}
+        {/* 2. Honors & Awards: Full-Width Seamless 3D Circular Carousel (No Card Enclosure) */}
+        <div style={{
+          width: '100%',
+          position: 'relative'
+        }}>
+          {/* Header & Subtitle */}
           <div style={{
-            background: '#ffffff',
-            borderRadius: '26px',
-            padding: '2.25rem',
-            border: '1.5px solid #e2e8f0',
-            boxShadow: '0 12px 35px -10px rgba(15, 23, 42, 0.05)',
-            position: 'relative'
+            textAlign: 'center',
+            maxWidth: '1240px',
+            margin: '0 auto 1.5rem auto',
+            padding: '0 1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
           }}>
-            {/* Header */}
             <div style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingBottom: '1.25rem',
-              borderBottom: '1px solid #f1f5f9',
-              marginBottom: '1.25rem'
+              gap: '0.6rem',
+              padding: '0.35rem 0.95rem',
+              borderRadius: '9999px',
+              background: '#fffbeb',
+              border: '1px solid #fde68a',
+              marginBottom: '0.75rem'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
-                  background: '#fef3c7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#b45309'
-                }}>
-                  <Trophy size={22} />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
-                    Honors & Awards
-                  </h3>
-                  <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
-                    Recognitions & Competitive Accolades
-                  </span>
-                </div>
-              </div>
-
+              <Trophy size={16} color="#b45309" />
               <span style={{
-                fontSize: '0.72rem',
+                fontSize: '0.78rem',
                 fontWeight: 700,
                 color: '#b45309',
-                background: '#fffbeb',
-                padding: '0.2rem 0.65rem',
-                borderRadius: '9999px',
-                border: '1px solid #fde68a'
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase'
               }}>
-                5 Awards
+                Honors & Accolades Showcase
               </span>
             </div>
 
-            {/* Category Quick Filter */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '0.45rem',
-              marginBottom: '1.25rem'
+            <h3 style={{
+              fontSize: 'clamp(1.5rem, 3vw, 2.1rem)',
+              fontWeight: 600,
+              color: '#0f172a',
+              margin: '0 0 0.4rem 0',
+              letterSpacing: '-0.02em'
             }}>
-              {[
-                { id: 'all', label: 'All Accolades (5)' },
-                { id: 'impact', label: 'Community & Grants (2)' },
-                { id: 'competition', label: 'Debate & Design (3)' }
-              ].map((cat) => {
-                const isActive = awardsCategoryFilter === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setAwardsCategoryFilter(cat.id)}
-                    style={{
-                      padding: '0.35rem 0.8rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.78rem',
-                      fontWeight: isActive ? 700 : 500,
-                      background: isActive ? '#0f172a' : '#f8fafc',
-                      color: isActive ? '#ffffff' : '#64748b',
-                      border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    {cat.label}
-                  </button>
-                );
-              })}
-            </div>
+              Competitive Trophies & Grants
+            </h3>
+            <p style={{
+              fontSize: '0.9rem',
+              color: '#64748b',
+              margin: 0,
+              maxWidth: '560px'
+            }}>
+              Interactive 3D Carousel • Swipe or drag horizontally across the screen to explore verified recognitions.
+            </p>
+          </div>
 
-            {/* Interactive Awards List (Accordion Cards) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {(() => {
-                const allAwards = [
-                  {
-                    id: 0,
-                    title: '"Mandala Pure Love" Most Inspiring Community Empowerment',
-                    issuer: 'Djarum Beasiswa Plus',
-                    year: '2026',
-                    scope: 'National Winner',
-                    category: 'impact',
-                    icon: '🏆',
-                    bgLight: '#fef3c7',
-                    textAccent: '#b45309',
-                    borderAccent: 'rgba(245, 158, 11, 0.4)',
-                    desc: 'Awarded as the most inspiring community empowerment initiative for 2024/2025 across all Djarum Beasiswa Plus partner programs in Indonesia.'
-                  },
-                  {
-                    id: 1,
-                    title: 'Innovillage Top 180 for Brewtech',
-                    issuer: 'Innovillage — Telkom Indonesia',
-                    year: '2026',
-                    scope: 'Social Venture Grant',
-                    category: 'impact',
-                    icon: '🚀',
-                    bgLight: '#e0f2fe',
-                    textAccent: '#0369a1',
-                    borderAccent: 'rgba(2, 132, 199, 0.4)',
-                    desc: 'Selected as one of the top 180 social engineering projects in Indonesia for the BrewTech platform under the national Innovillage social venture program.'
-                  },
-                  {
-                    id: 2,
-                    title: '2nd Runner Up - IT Poly Debate Cup',
-                    issuer: 'IT Debate Society',
-                    year: '2024',
-                    scope: 'National Competition',
-                    category: 'competition',
-                    icon: '🎙️',
-                    bgLight: '#e0e7ff',
-                    textAccent: '#4338ca',
-                    borderAccent: 'rgba(99, 102, 241, 0.4)',
-                    desc: 'National level public debating event adhering to the rigorous British Parliamentary Debate System format, testing rhetoric and critical argumentation.'
-                  },
-                  {
-                    id: 3,
-                    title: 'Finalis Desain Poster Infografis - 4C National Competition',
-                    issuer: 'Universitas Brawijaya (FILKOM)',
-                    year: '2024',
-                    scope: 'National Design Contest',
-                    category: 'competition',
-                    icon: '🎨',
-                    bgLight: '#f3e8ff',
-                    textAccent: '#7e22ce',
-                    borderAccent: 'rgba(168, 85, 247, 0.4)',
-                    desc: 'National digital design and infographic architecture competition hosted by the Faculty of Computer Science (FILKOM) at Universitas Brawijaya.'
-                  },
-                  {
-                    id: 4,
-                    title: '2nd Best Novice Team - International I&T Open Debate',
-                    issuer: 'Indonesian Student Association in Taiwan (PPI)',
-                    year: '2023',
-                    scope: 'International Competition',
-                    category: 'competition',
-                    icon: '🌏',
-                    bgLight: '#ffe4e6',
-                    textAccent: '#be123c',
-                    borderAccent: 'rgba(244, 63, 94, 0.4)',
-                    desc: 'Cross-cultural public debating tournament drawing competitive collegiate participants from universities across Asia.'
-                  }
-                ];
-
-                const filteredAwards = allAwards.filter(aw => {
-                  if (awardsCategoryFilter === 'all') return true;
-                  return aw.category === awardsCategoryFilter;
-                });
-
-                return filteredAwards.map((aw) => {
-                  const isOpen = activeAwardId === aw.id;
-
-                  return (
-                    <div
-                      key={aw.id}
-                      onClick={() => setActiveAwardId(isOpen ? null : aw.id)}
-                      style={{
-                        background: '#ffffff',
-                        border: isOpen ? `1.5px solid ${aw.borderAccent}` : '1px solid #e2e8f0',
-                        borderRadius: '18px',
-                        padding: '1.15rem 1.25rem',
-                        cursor: 'pointer',
-                        boxShadow: isOpen 
-                          ? '0 10px 25px -6px rgba(15, 23, 42, 0.08)' 
-                          : '0 2px 6px rgba(15, 23, 42, 0.02)',
-                        transition: 'border-color 0.25s ease, box-shadow 0.25s ease'
-                      }}
-                      className="award-interactive-item"
-                    >
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: '0.85rem'
-                      }}>
-                        {/* Icon & Title */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: 0 }}>
-                          <div style={{
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '12px',
-                            background: aw.bgLight,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.2rem',
-                            flexShrink: 0
-                          }}>
-                            {aw.icon}
-                          </div>
-
-                          <div style={{ minWidth: 0 }}>
-                            <h4 style={{
-                              fontSize: '0.96rem',
-                              fontWeight: 700,
-                              color: '#0f172a',
-                              margin: 0,
-                              lineHeight: 1.35,
-                              letterSpacing: '-0.01em'
-                            }}>
-                              {aw.title}
-                            </h4>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginTop: '0.2rem', flexWrap: 'wrap' }}>
-                              <span style={{ fontSize: '0.82rem', color: aw.textAccent, fontWeight: 700 }}>
-                                {aw.issuer}
-                              </span>
-                              <span style={{ fontSize: '0.72rem', color: '#64748b', background: '#f1f5f9', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>
-                                {aw.scope}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Year & Chevron */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#94a3b8' }}>
-                            {aw.year}
-                          </span>
-                          <div style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            background: isOpen ? aw.bgLight : '#f8fafc',
-                            color: isOpen ? aw.textAccent : '#94a3b8',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'all 0.2s ease',
-                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
-                          }}>
-                            <ChevronDown size={16} />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Expandable Award Description */}
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ overflow: 'hidden' }}
-                          >
-                            <div style={{
-                              paddingTop: '0.85rem',
-                              marginTop: '0.85rem',
-                              borderTop: '1px solid #f1f5f9'
-                            }}>
-                              <p style={{
-                                fontSize: '0.88rem',
-                                color: '#334155',
-                                lineHeight: 1.6,
-                                margin: 0
-                              }}>
-                                {aw.desc}
-                              </p>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                });
-              })()}
-            </div>
+          {/* Full-Width Interactive 3D Circular Carousel Ring */}
+          <div style={{
+            width: '100vw',
+            position: 'relative',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw',
+            height: '480px',
+            overflow: 'hidden'
+          }}>
+            <CircularCarousel
+              className="circular-carousel-showcase"
+              items={[
+                {
+                  src: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=900&q=80&auto=format&fit=crop',
+                  alt: 'Mandala Pure Love Most Inspiring Community Empowerment',
+                  title: '🏆 "Mandala Pure Love" Initiative',
+                  subtitle: 'Djarum Beasiswa Plus (2026) • National Winner'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80&auto=format&fit=crop',
+                  alt: 'Innovillage Top 180 for Brewtech',
+                  title: '🚀 Top 180 for Brewtech',
+                  subtitle: 'Telkom Indonesia / Innovillage (2026) • Social Venture Grant'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=900&q=80&auto=format&fit=crop',
+                  alt: '2nd Runner Up - IT Poly Debate Cup',
+                  title: '🎙️ 2nd Runner Up - Debate Cup',
+                  subtitle: 'IT Debate Society (2024) • National Parliamentary Debate'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=900&q=80&auto=format&fit=crop',
+                  alt: 'Finalis Desain Poster Infografis 4C',
+                  title: '🎨 Finalis Desain Infografis 4C',
+                  subtitle: 'Universitas Brawijaya (2024) • National Design Contest'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=900&q=80&auto=format&fit=crop',
+                  alt: '2nd Best Novice Team - International Debate',
+                  title: '🌏 2nd Best Novice Team',
+                  subtitle: 'PPI Taiwan Open Debate (2023) • International Competition'
+                }
+              ]}
+              preset="cylinder"
+              intro="rise"
+              cardWidth={260}
+              aspectRatio={1.22}
+              speed={11}
+              gap={30}
+              autoplay="drift"
+              fadeColor="#ffffff"
+              innerShade={0.12}
+              depthFade={0.35}
+              cornerRadius={16}
+              captions={true}
+            />
           </div>
         </div>
       </section>
