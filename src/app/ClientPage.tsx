@@ -42,7 +42,6 @@ import {
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
 const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
-const CardSwap = dynamic(() => import('@/components/CardSwap'), { ssr: false });
 
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
@@ -81,7 +80,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
   const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
-  const [activeFocusIndex, setActiveFocusIndex] = useState<number>(0);
   const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
   const [isRealPhoto, setIsRealPhoto] = useState<boolean>(false);
   const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
