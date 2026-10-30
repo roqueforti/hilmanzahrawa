@@ -2845,7 +2845,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               maxWidth: '580px',
               lineHeight: 1.5
             }}>
-              Interactive 3D Carousel • Swipe or drag horizontally across the screen to explore verified recognitions.
+              Recognitions across national and international competitions, social grants, and leadership initiatives.
             </p>
           </div>
 
