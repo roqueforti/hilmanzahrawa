@@ -43,7 +43,9 @@ import {
   HeartHandshake,
   Sprout,
   Shirt,
-  Zap
+  Zap,
+  RotateCw,
+  Landmark
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
 const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
@@ -2534,101 +2536,178 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         {/* 1. Academic Journey (Interactive 3D FlipCards) */}
         <div style={{
-          maxWidth: '820px',
+          maxWidth: '860px',
           margin: '0 auto 4.5rem auto',
           padding: '0 1.5rem'
         }}>
           {/* Interactive Flip Cards Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
             gap: '2.5rem',
             justifyItems: 'center',
-            alignItems: 'center'
+            alignItems: 'stretch'
           }}>
-            {/* Card 1: Politeknik Negeri Malang */}
+            {/* Card 1: Politeknik Negeri Malang (Academic Pass) */}
             <FlipCard
               width="100%"
-              height={440}
+              height={460}
               radius={28}
               perspective={1200}
-              background="#ffffff"
+              background="transparent"
               color="#0f172a"
-              shadowColor="#0f172a"
-              shadowOpacity={0.08}
-              glareOpacity={0.18}
+              shadowColor="#0284c7"
+              shadowOpacity={0.16}
+              glareOpacity={0.24}
               tiltMax={10}
               front={
                 <div style={{
                   height: '100%',
-                  padding: '2rem',
+                  borderRadius: '28px',
+                  background: 'linear-gradient(150deg, #091326 0%, #0f172a 55%, #071938 100%)',
+                  border: '1.5px solid rgba(56, 189, 248, 0.28)',
+                  padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
-                  border: '1.5px solid #e2e8f0',
-                  borderRadius: '24px'
+                  color: '#ffffff',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 25px 50px -12px rgba(2, 132, 199, 0.22)'
                 }}>
+                  {/* Subtle Background Glow & Radial Watermark */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-30%',
+                    right: '-20%',
+                    width: '260px',
+                    height: '260px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0) 70%)',
+                    pointerEvents: 'none'
+                  }} />
+
+                  {/* Watermark Monogram */}
+                  <span style={{
+                    position: 'absolute',
+                    bottom: '-15px',
+                    right: '10px',
+                    fontSize: '6.5rem',
+                    fontWeight: 900,
+                    color: 'rgba(255, 255, 255, 0.03)',
+                    letterSpacing: '-0.05em',
+                    lineHeight: 1,
+                    userSelect: 'none',
+                    pointerEvents: 'none'
+                  }}>
+                    POLINEMA
+                  </span>
+
+                  {/* Top Bar: Holographic Header & Status Badge */}
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <div style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '12px',
+                          background: 'rgba(56, 189, 248, 0.14)',
+                          border: '1px solid rgba(56, 189, 248, 0.3)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#38bdf8'
+                        }}>
+                          <GraduationCap size={20} strokeWidth={2.2} />
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.68rem',
+                            fontWeight: 800,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            color: '#38bdf8',
+                            display: 'block'
+                          }}>
+                            Undergraduate Pass
+                          </span>
+                          <span style={{ fontSize: '0.62rem', color: '#94a3b8', letterSpacing: '0.04em' }}>
+                            REG NO. 22417600
+                          </span>
+                        </div>
+                      </div>
+
                       <span style={{
-                        fontSize: '0.75rem',
+                        fontSize: '0.72rem',
                         fontWeight: 700,
-                        color: '#0284c7',
-                        background: '#f0f9ff',
-                        padding: '0.2rem 0.65rem',
-                        borderRadius: '9999px',
-                        border: '1px solid #bae6fd'
-                      }}>
-                        Undergraduate Program
-                      </span>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        color: '#15803d',
-                        background: '#dcfce7',
-                        padding: '0.2rem 0.65rem',
+                        color: '#4ade80',
+                        background: 'rgba(34, 197, 94, 0.14)',
+                        border: '1px solid rgba(74, 222, 128, 0.3)',
+                        padding: '0.25rem 0.65rem',
                         borderRadius: '9999px',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.35rem',
-                        border: '1px solid rgba(22, 163, 74, 0.2)'
+                        gap: '0.35rem'
                       }}>
-                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#16a34a' }} />
-                        2022 — 2026
+                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
+                        2022 – 2026
                       </span>
                     </div>
 
-                    <h4 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.35rem 0', letterSpacing: '-0.02em' }}>
+                    {/* Institution Title & Major */}
+                    <h3 style={{
+                      fontSize: '1.45rem',
+                      fontWeight: 800,
+                      color: '#ffffff',
+                      margin: '0 0 0.35rem 0',
+                      letterSpacing: '-0.02em'
+                    }}>
                       Politeknik Negeri Malang
-                    </h4>
-                    <span style={{ fontSize: '0.98rem', color: '#0284c7', fontWeight: 700, display: 'block', lineHeight: 1.4 }}>
+                    </h3>
+                    <div style={{
+                      fontSize: '0.96rem',
+                      color: '#38bdf8',
+                      fontWeight: 600,
+                      lineHeight: 1.45,
+                      marginBottom: '1rem'
+                    }}>
                       D4 Sistem Informasi Bisnis (Business Information Systems)
-                    </span>
-                    <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.6, margin: '0.85rem 0 0 0' }}>
+                    </div>
+
+                    <p style={{
+                      fontSize: '0.86rem',
+                      color: '#94a3b8',
+                      lineHeight: 1.62,
+                      margin: 0,
+                      fontWeight: 400
+                    }}>
                       Specialized in Software Engineering, Enterprise Database Systems, Business Process Modeling, and Web Application Architecture.
                     </p>
                   </div>
 
+                  {/* Bottom Footer: Minimalist Interactive Hint */}
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid #f1f5f9'
+                    paddingTop: '1.1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    marginTop: '1.25rem'
                   }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8' }}>
-                      Click or drag card to flip
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontSize: '0.76rem', fontWeight: 600 }}>
+                      <RotateCw size={13} color="#38bdf8" />
+                      <span>Click or drag to flip</span>
+                    </div>
                     <span style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#0284c7',
-                      background: '#f0f9ff',
+                      color: '#38bdf8',
+                      background: 'rgba(56, 189, 248, 0.1)',
+                      border: '1px solid rgba(56, 189, 248, 0.25)',
                       padding: '0.25rem 0.75rem',
                       borderRadius: '9999px'
                     }}>
-                      View Core Skills ↺
+                      View Core Modules
                     </span>
                   </div>
                 </div>
@@ -2636,31 +2715,43 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               back={
                 <div style={{
                   height: '100%',
-                  padding: '2rem',
+                  borderRadius: '28px',
+                  background: 'linear-gradient(150deg, #091326 0%, #0f172a 60%, #03142e 100%)',
+                  border: '1.5px solid rgba(56, 189, 248, 0.35)',
+                  padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
                   color: '#ffffff',
-                  border: '1.5px solid #334155',
-                  borderRadius: '24px'
+                  boxShadow: '0 25px 50px -12px rgba(2, 132, 199, 0.25)'
                 }}>
                   <div>
-                    <span style={{
-                      fontSize: '0.74rem',
-                      fontWeight: 700,
-                      color: '#38bdf8',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      display: 'block',
-                      marginBottom: '0.35rem'
-                    }}>
-                      Key Focus & Modules
-                    </span>
-                    <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', margin: '0 0 0.85rem 0' }}>
-                      Core Competencies
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.15rem' }}>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        fontWeight: 800,
+                        color: '#38bdf8',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>
+                        Curriculum & Competencies
+                      </span>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        color: '#94a3b8',
+                        background: 'rgba(255,255,255,0.06)',
+                        padding: '0.15rem 0.55rem',
+                        borderRadius: '6px',
+                        border: '1px solid rgba(255,255,255,0.08)'
+                      }}>
+                        GPA: High Standing
+                      </span>
+                    </div>
+
+                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
+                      Core Technical Modules
                     </h4>
-                    <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5, margin: '0 0 1.25rem 0' }}>
+                    <p style={{ fontSize: '0.84rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
                       Deep-dive curriculum covering enterprise application lifecycles, database normalization, and modern microservice paradigms.
                     </p>
 
@@ -2676,13 +2767,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         <span 
                           key={mIdx}
                           style={{
-                            fontSize: '0.75rem',
+                            fontSize: '0.74rem',
                             fontWeight: 600,
-                            padding: '0.3rem 0.7rem',
+                            padding: '0.35rem 0.75rem',
                             borderRadius: '9999px',
-                            background: 'rgba(255, 255, 255, 0.1)',
-                            color: '#f8fafc',
-                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                            background: 'rgba(56, 189, 248, 0.08)',
+                            color: '#e0f2fe',
+                            border: '1px solid rgba(56, 189, 248, 0.2)',
                             backdropFilter: 'blur(8px)'
                           }}
                         >
@@ -2696,14 +2787,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+                    paddingTop: '1.1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.08)'
                   }}>
-                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                      Polinema (2022 — 2026)
+                    <span style={{ fontSize: '0.76rem', color: '#64748b' }}>
+                      Polinema (2022 – 2026)
                     </span>
                     <span style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       fontWeight: 700,
                       color: '#38bdf8'
                     }}>
@@ -2714,85 +2805,165 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               }
             />
 
-            {/* Card 2: SMA Negeri 1 Malang */}
+            {/* Card 2: SMA Negeri 1 Malang (Academic Pass) */}
             <FlipCard
               width="100%"
-              height={440}
+              height={460}
               radius={28}
               perspective={1200}
-              background="#ffffff"
+              background="transparent"
               color="#0f172a"
-              shadowColor="#0f172a"
-              shadowOpacity={0.08}
-              glareOpacity={0.18}
+              shadowColor="#059669"
+              shadowOpacity={0.16}
+              glareOpacity={0.24}
               tiltMax={10}
               front={
                 <div style={{
                   height: '100%',
-                  padding: '2rem',
+                  borderRadius: '28px',
+                  background: 'linear-gradient(150deg, #061f18 0%, #0f172a 55%, #05261d 100%)',
+                  border: '1.5px solid rgba(52, 211, 153, 0.28)',
+                  padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
-                  border: '1.5px solid #e2e8f0',
-                  borderRadius: '24px'
+                  color: '#ffffff',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 25px 50px -12px rgba(5, 150, 105, 0.22)'
                 }}>
+                  {/* Subtle Background Glow & Radial Watermark */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-30%',
+                    right: '-20%',
+                    width: '260px',
+                    height: '260px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, rgba(52, 211, 153, 0) 70%)',
+                    pointerEvents: 'none'
+                  }} />
+
+                  {/* Watermark Monogram */}
+                  <span style={{
+                    position: 'absolute',
+                    bottom: '-15px',
+                    right: '10px',
+                    fontSize: '6.5rem',
+                    fontWeight: 900,
+                    color: 'rgba(255, 255, 255, 0.03)',
+                    letterSpacing: '-0.05em',
+                    lineHeight: 1,
+                    userSelect: 'none',
+                    pointerEvents: 'none'
+                  }}>
+                    MITREKA
+                  </span>
+
+                  {/* Top Bar: Holographic Header & Status Badge */}
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <div style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '12px',
+                          background: 'rgba(52, 211, 153, 0.14)',
+                          border: '1px solid rgba(52, 211, 153, 0.3)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#34d399'
+                        }}>
+                          <Landmark size={20} strokeWidth={2.2} />
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.68rem',
+                            fontWeight: 800,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            color: '#34d399',
+                            display: 'block'
+                          }}>
+                            Secondary Education Pass
+                          </span>
+                          <span style={{ fontSize: '0.62rem', color: '#94a3b8', letterSpacing: '0.04em' }}>
+                            MITREKA SATATA
+                          </span>
+                        </div>
+                      </div>
+
                       <span style={{
-                        fontSize: '0.75rem',
+                        fontSize: '0.72rem',
                         fontWeight: 700,
-                        color: '#64748b',
-                        background: '#f1f5f9',
-                        padding: '0.2rem 0.65rem',
+                        color: '#94a3b8',
+                        background: 'rgba(255, 255, 255, 0.08)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        padding: '0.25rem 0.65rem',
                         borderRadius: '9999px',
-                        border: '1px solid #e2e8f0'
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem'
                       }}>
-                        Secondary Education
-                      </span>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        color: '#64748b',
-                        background: '#f1f5f9',
-                        padding: '0.2rem 0.65rem',
-                        borderRadius: '9999px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        2019 — 2022
+                        2019 – 2022
                       </span>
                     </div>
 
-                    <h4 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.35rem 0', letterSpacing: '-0.02em' }}>
+                    {/* Institution Title & Major */}
+                    <h3 style={{
+                      fontSize: '1.45rem',
+                      fontWeight: 800,
+                      color: '#ffffff',
+                      margin: '0 0 0.35rem 0',
+                      letterSpacing: '-0.02em'
+                    }}>
                       SMA Negeri 1 Malang
-                    </h4>
-                    <span style={{ fontSize: '0.98rem', color: '#64748b', fontWeight: 600, display: 'block', lineHeight: 1.4 }}>
+                    </h3>
+                    <div style={{
+                      fontSize: '0.96rem',
+                      color: '#34d399',
+                      fontWeight: 600,
+                      lineHeight: 1.45,
+                      marginBottom: '1rem'
+                    }}>
                       Mathematics & Natural Science (MIPA)
-                    </span>
-                    <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.6, margin: '0.85rem 0 0 0' }}>
-                      Strong foundation in mathematics, analytical problem solving, and science curriculum at one of East Java's top academic high schools.
+                    </div>
+
+                    <p style={{
+                      fontSize: '0.86rem',
+                      color: '#94a3b8',
+                      lineHeight: 1.62,
+                      margin: 0,
+                      fontWeight: 400
+                    }}>
+                      Rigorous foundation in mathematics, analytical problem solving, and science curriculum at one of East Java's top academic high schools.
                     </p>
                   </div>
 
+                  {/* Bottom Footer: Minimalist Interactive Hint */}
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid #f1f5f9'
+                    paddingTop: '1.1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    marginTop: '1.25rem'
                   }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8' }}>
-                      Click or drag card to flip
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontSize: '0.76rem', fontWeight: 600 }}>
+                      <RotateCw size={13} color="#34d399" />
+                      <span>Click or drag to flip</span>
+                    </div>
                     <span style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#0f172a',
-                      background: '#f1f5f9',
+                      color: '#34d399',
+                      background: 'rgba(52, 211, 153, 0.1)',
+                      border: '1px solid rgba(52, 211, 153, 0.25)',
                       padding: '0.25rem 0.75rem',
                       borderRadius: '9999px'
                     }}>
-                      View Foundation ↺
+                      View Foundation Areas
                     </span>
                   </div>
                 </div>
@@ -2800,31 +2971,43 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               back={
                 <div style={{
                   height: '100%',
-                  padding: '2rem',
+                  borderRadius: '28px',
+                  background: 'linear-gradient(150deg, #061f18 0%, #0f172a 60%, #031c15 100%)',
+                  border: '1.5px solid rgba(52, 211, 153, 0.35)',
+                  padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  background: 'linear-gradient(145deg, #1e293b 0%, #0f172a 100%)',
                   color: '#ffffff',
-                  border: '1.5px solid #334155',
-                  borderRadius: '24px'
+                  boxShadow: '0 25px 50px -12px rgba(5, 150, 105, 0.25)'
                 }}>
                   <div>
-                    <span style={{
-                      fontSize: '0.74rem',
-                      fontWeight: 700,
-                      color: '#fde047',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      display: 'block',
-                      marginBottom: '0.35rem'
-                    }}>
-                      Academic Base
-                    </span>
-                    <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', margin: '0 0 0.85rem 0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.15rem' }}>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        fontWeight: 800,
+                        color: '#34d399',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>
+                        Academic Base
+                      </span>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        color: '#94a3b8',
+                        background: 'rgba(255,255,255,0.06)',
+                        padding: '0.15rem 0.55rem',
+                        borderRadius: '6px',
+                        border: '1px solid rgba(255,255,255,0.08)'
+                      }}>
+                        Distinction Cohort
+                      </span>
+                    </div>
+
+                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
                       Foundation Areas
                     </h4>
-                    <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5, margin: '0 0 1.25rem 0' }}>
+                    <p style={{ fontSize: '0.84rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
                       Early development of rigorous analytical thinking, competitive parliamentary debating, and computational mathematics.
                     </p>
 
@@ -2839,13 +3022,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         <span 
                           key={mIdx}
                           style={{
-                            fontSize: '0.75rem',
+                            fontSize: '0.74rem',
                             fontWeight: 600,
-                            padding: '0.3rem 0.7rem',
+                            padding: '0.35rem 0.75rem',
                             borderRadius: '9999px',
-                            background: 'rgba(255, 255, 255, 0.1)',
-                            color: '#f8fafc',
-                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                            background: 'rgba(52, 211, 153, 0.08)',
+                            color: '#d1fae5',
+                            border: '1px solid rgba(52, 211, 153, 0.2)',
                             backdropFilter: 'blur(8px)'
                           }}
                         >
@@ -2859,16 +3042,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+                    paddingTop: '1.1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.08)'
                   }}>
-                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                      SMAN 1 Malang (2019 — 2022)
+                    <span style={{ fontSize: '0.76rem', color: '#64748b' }}>
+                      SMAN 1 Malang (2019 – 2022)
                     </span>
                     <span style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#fde047'
+                      color: '#34d399'
                     }}>
                       Flip Back ↺
                     </span>
