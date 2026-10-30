@@ -2873,7 +2873,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             right: '50%',
             marginLeft: '-50vw',
             marginRight: '-50vw',
-            height: '580px',
+            height: '640px',
             overflow: 'hidden'
           }}>
             <CircularCarousel
@@ -2912,16 +2912,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               ]}
               preset="cylinder"
               intro="rise"
-              cardWidth={420}
-              aspectRatio={1.35}
-              spread={1.85}
+              scaleMode="fill"
+              cardWidth={480}
+              aspectRatio={1.42}
+              spread={1.8}
               speed={10}
-              gap={50}
+              gap={48}
               autoplay="drift"
               fadeColor="#ffffff"
-              innerShade={0.15}
-              depthFade={0.3}
-              cornerRadius={18}
+              innerShade={0.16}
+              depthFade={0.28}
+              cornerRadius={20}
               captions={true}
             />
           </div>

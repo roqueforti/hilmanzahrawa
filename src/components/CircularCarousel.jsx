@@ -129,6 +129,7 @@ export default function CircularCarousel({
   gap = 25,
   curve,
   spread,
+  scaleMode = 'contain',
   tilt,
   perspective,
   autoplay = 'drift',
@@ -258,6 +259,7 @@ export default function CircularCarousel({
     stretch: reduced ? 0 : clamp(stretch, 0, 1),
     depthFade: clamp(depthFade, 0, 1),
     captions,
+    scaleMode,
     reduced
   };
   const settingsRef = useRef(settings);
@@ -392,7 +394,12 @@ export default function CircularCarousel({
       }
       const spanX = Math.max(maxX - minX, 1);
       const spanY = Math.max(maxY - minY, 1);
-      const fit = Math.min(1, width / spanX, height / spanY);
+      let fit = Math.min(1, width / spanX, height / spanY);
+      if (s.scaleMode === 'fill') {
+        // Expand ring scale to immerse and fill screen width proportionally
+        const targetFillX = width * 0.95;
+        fit = Math.min(1.75, targetFillX / spanX, (height / spanY) * 1.05);
+      }
       state.fit = fit;
       state.shift = -((minY + maxY) / 2) * fit - room / 2;
       state.drop = s.axis === 'x' ? (rect.width / fit) * 0.55 + s.cardW : (rect.height / fit) * 0.55 + s.cardH;
