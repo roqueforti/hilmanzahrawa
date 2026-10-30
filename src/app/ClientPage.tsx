@@ -2054,6 +2054,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           const activeMeta = compMetaMap[activeExp.id] || { icon: <Briefcase size={22} strokeWidth={2.2} />, bg: '#f1f5f9', color: '#0f172a', short: activeExp.company, tags: ['Fullstack', 'UI/UX'] };
 
           const orbitExperiences = experiencesList.slice(0, 6);
+          const activeIdx = orbitExperiences.findIndex((e: any) => e.id === activeExp.id);
 
           const orbitImagesData = orbitExperiences.map((exp: any) => {
             const meta = compMetaMap[exp.id] || { icon: '✦', bg: '#f1f5f9', color: '#0f172a', short: exp.company, tags: [] };
@@ -2065,6 +2066,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               : periodStr;
             const roleSnippet = exp.role ? exp.role.split('–')[0].split('-')[0].trim() : '';
 
+            // Micro-tags for mobile satellite nodes
+            const microTags: Record<string, string> = {
+              'exp-pal': 'PAL',
+              'exp-mandala-strat': 'MPL',
+              'exp-mandala-dev': 'Brew',
+              'exp-nzbox': 'NZ Box',
+              'exp-seal': 'SEAL',
+              'exp-hmti-chair': 'HMTI'
+            };
+
             return {
               src: '',
               alt: exp.company,
@@ -2074,7 +2085,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   style={{
                     width: '100%',
                     height: '100%',
-                    borderRadius: '22px',
+                    borderRadius: isMobile ? '16px' : '22px',
                     background: isSelected 
                       ? 'linear-gradient(145deg, #ffffff 0%, #f0f9ff 55%, #e0f2fe 100%)' 
                       : 'rgba(255, 255, 255, 0.95)',
@@ -2084,13 +2095,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       ? '2px solid #0284c7' 
                       : '1.5px solid rgba(226, 232, 240, 0.9)',
                     boxShadow: isSelected 
-                      ? '0 16px 36px -6px rgba(2, 132, 199, 0.35), 0 0 24px rgba(56, 189, 248, 0.3)' 
-                      : '0 10px 24px -6px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03)',
+                      ? (isMobile ? '0 10px 24px -4px rgba(2, 132, 199, 0.45), 0 0 16px rgba(56, 189, 248, 0.4)' : '0 16px 36px -6px rgba(2, 132, 199, 0.35), 0 0 24px rgba(56, 189, 248, 0.3)') 
+                      : '0 8px 20px -6px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0.85rem 0.75rem 0.75rem 0.75rem',
+                    justifyContent: isMobile ? 'center' : 'space-between',
+                    gap: isMobile ? '3px' : undefined,
+                    padding: isMobile ? '4px 2px' : '0.85rem 0.75rem 0.75rem 0.75rem',
                     color: '#0f172a',
                     textAlign: 'center',
                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -2109,101 +2121,137 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     height: '35%',
                     background: 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 100%)',
                     pointerEvents: 'none',
-                    borderRadius: '22px 22px 0 0'
+                    borderRadius: isMobile ? '16px 16px 0 0' : '22px 22px 0 0'
                   }} />
 
-                  {/* Clean Vector SVG Brand Badge */}
-                  <div style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '12px',
-                    background: isSelected ? '#dbeafe' : meta.bg,
-                    color: isSelected ? '#0284c7' : meta.color,
-                    border: isSelected ? '1.5px solid #93c5fd' : '1px solid rgba(226, 232, 240, 0.8)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: isSelected 
-                      ? '0 4px 14px rgba(2, 132, 199, 0.2)' 
-                      : '0 2px 8px rgba(0,0,0,0.03)',
-                    flexShrink: 0,
-                    position: 'relative',
-                    zIndex: 2
-                  }}>
-                    {meta.icon}
-                  </div>
-
-                  {/* Company & Role Headline */}
-                  <div style={{ position: 'relative', zIndex: 2, width: '100%', overflow: 'hidden' }}>
-                    <span style={{
-                      fontSize: '0.78rem',
-                      fontWeight: 800,
-                      lineHeight: 1.2,
-                      letterSpacing: '-0.015em',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      color: isSelected ? '#0369a1' : '#0f172a'
-                    }}>
-                      {meta.short}
-                    </span>
-                    <span style={{
-                      fontSize: '0.65rem',
-                      fontWeight: 600,
-                      lineHeight: 1.2,
-                      color: isSelected ? '#0284c7' : '#64748b',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 1,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      marginTop: '2px'
-                    }}>
-                      {roleSnippet}
-                    </span>
-                  </div>
-
-                  {/* Period or Current Status Pill Badge */}
-                  <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-                    {isCurrent ? (
-                      <span style={{
-                        fontSize: '0.64rem',
-                        fontWeight: 700,
-                        padding: '0.18rem 0.5rem',
-                        borderRadius: '9999px',
-                        background: '#dcfce7',
-                        color: '#15803d',
-                        border: '1px solid rgba(34, 197, 94, 0.3)',
-                        display: 'inline-flex',
+                  {isMobile ? (
+                    /* Mobile Satellite: High-fidelity Crystal Node */
+                    <>
+                      <div style={{
+                        color: isSelected ? '#0284c7' : meta.color,
+                        display: 'flex',
                         alignItems: 'center',
-                        gap: '0.25rem',
-                        lineHeight: 1
+                        justifyContent: 'center',
+                        transform: isSelected ? 'scale(1.15)' : 'scale(1)',
+                        transition: 'transform 0.2s ease',
+                        position: 'relative',
+                        zIndex: 2
                       }}>
-                        <span style={{
-                          width: '5px',
-                          height: '5px',
-                          borderRadius: '50%',
-                          background: '#16a34a',
-                          boxShadow: '0 0 6px rgba(34, 197, 94, 0.6)'
-                        }} />
-                        Current
-                      </span>
-                    ) : (
+                        {React.cloneElement(meta.icon as any, { size: isSelected ? 20 : 17, strokeWidth: 2.2 })}
+                      </div>
                       <span style={{
-                        fontSize: '0.65rem',
-                        fontWeight: 600,
-                        color: isSelected ? '#0369a1' : '#64748b',
-                        padding: '0.12rem 0.4rem',
-                        borderRadius: '6px',
-                        background: isSelected ? '#e0f2fe' : '#f8fafc',
-                        border: isSelected ? '1px solid #bae6fd' : '1px solid #f1f5f9',
-                        display: 'inline-block',
-                        lineHeight: 1.2
+                        fontSize: '0.58rem',
+                        fontWeight: 800,
+                        lineHeight: 1,
+                        letterSpacing: '-0.02em',
+                        color: isSelected ? '#0284c7' : '#475569',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        maxWidth: '44px',
+                        position: 'relative',
+                        zIndex: 2
                       }}>
-                        {displayPeriod}
+                        {microTags[exp.id] || meta.short}
                       </span>
-                    )}
-                  </div>
+                    </>
+                  ) : (
+                    /* Desktop Satellite: Full Informative Glass Card */
+                    <>
+                      {/* Clean Vector SVG Brand Badge */}
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '12px',
+                        background: isSelected ? '#dbeafe' : meta.bg,
+                        color: isSelected ? '#0284c7' : meta.color,
+                        border: isSelected ? '1.5px solid #93c5fd' : '1px solid rgba(226, 232, 240, 0.8)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: isSelected 
+                          ? '0 4px 14px rgba(2, 132, 199, 0.2)' 
+                          : '0 2px 8px rgba(0,0,0,0.03)',
+                        flexShrink: 0,
+                        position: 'relative',
+                        zIndex: 2
+                      }}>
+                        {meta.icon}
+                      </div>
+
+                      {/* Company & Role Headline */}
+                      <div style={{ position: 'relative', zIndex: 2, width: '100%', overflow: 'hidden' }}>
+                        <span style={{
+                          fontSize: '0.78rem',
+                          fontWeight: 800,
+                          lineHeight: 1.2,
+                          letterSpacing: '-0.015em',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          color: isSelected ? '#0369a1' : '#0f172a'
+                        }}>
+                          {meta.short}
+                        </span>
+                        <span style={{
+                          fontSize: '0.65rem',
+                          fontWeight: 600,
+                          lineHeight: 1.2,
+                          color: isSelected ? '#0284c7' : '#64748b',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          marginTop: '2px'
+                        }}>
+                          {roleSnippet}
+                        </span>
+                      </div>
+
+                      {/* Period or Current Status Pill Badge */}
+                      <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+                        {isCurrent ? (
+                          <span style={{
+                            fontSize: '0.64rem',
+                            fontWeight: 700,
+                            padding: '0.18rem 0.5rem',
+                            borderRadius: '9999px',
+                            background: '#dcfce7',
+                            color: '#15803d',
+                            border: '1px solid rgba(34, 197, 94, 0.3)',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.25rem',
+                            lineHeight: 1
+                          }}>
+                            <span style={{
+                              width: '5px',
+                              height: '5px',
+                              borderRadius: '50%',
+                              background: '#16a34a',
+                              boxShadow: '0 0 6px rgba(34, 197, 94, 0.6)'
+                            }} />
+                            Current
+                          </span>
+                        ) : (
+                          <span style={{
+                            fontSize: '0.65rem',
+                            fontWeight: 600,
+                            color: isSelected ? '#0369a1' : '#64748b',
+                            padding: '0.12rem 0.4rem',
+                            borderRadius: '6px',
+                            background: isSelected ? '#e0f2fe' : '#f8fafc',
+                            border: isSelected ? '1px solid #bae6fd' : '1px solid #f1f5f9',
+                            display: 'inline-block',
+                            lineHeight: 1.2
+                          }}>
+                            {displayPeriod}
+                          </span>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               )
             };
@@ -2217,23 +2265,24 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 width: '100%',
                 maxWidth: '1520px',
                 margin: '0 auto',
-                height: isMobile ? '380px' : '490px',
+                height: isMobile ? '230px' : '490px',
                 overflow: 'visible'
               }}>
                 <OrbitImages
                   images={orbitImagesData}
                   shape="ellipse"
-                  radiusX={isMobile ? 380 : 700}
-                  radiusY={isMobile ? 120 : 180}
-                  rotation={-2}
-                  duration={38}
-                  itemSize={isMobile ? 115 : 132}
-                  itemRadius={22}
-                  depth={0.68}
+                  baseWidth={isMobile ? 400 : 1400}
+                  radiusX={isMobile ? 160 : 700}
+                  radiusY={isMobile ? 65 : 180}
+                  rotation={isMobile ? -1 : -2}
+                  duration={36}
+                  itemSize={isMobile ? 52 : 132}
+                  itemRadius={isMobile ? 16 : 22}
+                  depth={isMobile ? 0.6 : 0.68}
                   showPath={true}
-                  pathColor="rgba(2, 132, 199, 0.22)"
-                  pathWidth={2}
-                  pathDash={6}
+                  pathColor="rgba(2, 132, 199, 0.28)"
+                  pathWidth={isMobile ? 1.5 : 2}
+                  pathDash={isMobile ? 4 : 6}
                   hoverSpeed={0.15}
                   clickToFront={true}
                   onItemClick={(idx) => {
@@ -2283,7 +2332,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                               borderRadius: '9999px',
                               border: '1px solid rgba(2, 132, 199, 0.2)'
                             }}>
-                              Milestone {orbitExperiences.findIndex((e: any) => e.id === activeExp.id) + 1} / {orbitExperiences.length}
+                              Milestone {activeIdx + 1} / {orbitExperiences.length}
                             </span>
                             <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>·</span>
                             <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600 }}>Active Trajectory Focus</span>
@@ -2432,150 +2481,156 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         </div>
                       </div>
                     ) : (
-                      /* Compact Center Hub for Mobile Screen */
+                      /* Mobile Starlight Celestial Core (Zero collision, pure aesthetic) */
                       <div style={{
                         display: 'flex',
-                        flexDirection: 'column',
                         alignItems: 'center',
-                        textAlign: 'center',
-                        pointerEvents: 'auto'
+                        justifyContent: 'center',
+                        pointerEvents: 'none'
                       }}>
                         <div style={{
-                          width: '54px',
-                          height: '54px',
-                          borderRadius: '16px',
-                          background: activeMeta.bg,
-                          color: activeMeta.color,
-                          border: '1.5px solid rgba(2, 132, 199, 0.4)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 8px 24px -6px rgba(2, 132, 199, 0.35)',
-                          marginBottom: '0.35rem'
-                        }}>
-                          {activeMeta.icon}
-                        </div>
-                        <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0f172a' }}>
-                          {activeMeta.short}
-                        </span>
-                        <span style={{ fontSize: '0.64rem', color: '#0284c7', fontWeight: 600 }}>
-                          Tap to inspect
-                        </span>
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '50%',
+                          background: 'radial-gradient(circle, #38bdf8 0%, #0284c7 65%, transparent 100%)',
+                          boxShadow: '0 0 16px rgba(56, 189, 248, 0.6)',
+                          border: '1.5px solid rgba(255, 255, 255, 0.9)'
+                        }} />
                       </div>
                     )
                   }
                 />
               </div>
 
-              {/* Inspected Experience Milestone Showcase Card for Mobile View */}
+              {/* Inspected Experience Milestone Showcase Cockpit for Mobile View */}
               {isMobile && activeExp && (
                 <motion.div
                   key={activeExp.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   style={{
-                    maxWidth: '920px',
-                    width: '100%',
-                    margin: '0.75rem auto 0 auto',
+                    maxWidth: '540px',
+                    width: '92%',
+                    margin: '0.5rem auto 0 auto',
                     background: '#ffffff',
-                    border: '1.5px solid rgba(2, 132, 199, 0.4)',
-                    borderRadius: '22px',
-                    padding: '1.25rem 1.75rem',
-                    boxShadow: '0 16px 40px -12px rgba(2, 132, 199, 0.14), 0 2px 10px rgba(15, 23, 42, 0.03)',
+                    border: '1.5px solid rgba(2, 132, 199, 0.35)',
+                    borderRadius: '24px',
+                    padding: '1.25rem 1.35rem',
+                    boxShadow: '0 16px 40px -10px rgba(2, 132, 199, 0.15), 0 2px 10px rgba(15, 23, 42, 0.03)',
                     position: 'relative'
                   }}
                 >
+                  {/* Top Row: Milestone Index & Current Status */}
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    gap: '1rem',
-                    flexWrap: 'wrap',
-                    marginBottom: '0.75rem',
-                    paddingBottom: '0.75rem',
-                    borderBottom: '1px solid #f1f5f9'
+                    gap: '0.5rem',
+                    marginBottom: '0.65rem'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '260px' }}>
-                      <div style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '12px',
-                        background: activeMeta.bg,
-                        color: activeMeta.color,
-                        border: '1px solid rgba(226, 232, 240, 0.8)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 14px rgba(0,0,0,0.04)'
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.05em',
+                        textTransform: 'uppercase',
+                        color: '#0284c7',
+                        background: '#f0f9ff',
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: '9999px',
+                        border: '1px solid #bae6fd'
                       }}>
-                        {activeMeta.icon}
-                      </div>
-                      <div>
-                        <span style={{
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          color: '#0284c7',
-                          letterSpacing: '0.04em',
-                          textTransform: 'uppercase',
-                          display: 'block'
-                        }}>
-                          {activeExp.company}
-                        </span>
-                        <h3 style={{
-                          fontSize: '1.2rem',
-                          fontWeight: 800,
-                          color: '#0f172a',
-                          margin: '0.1rem 0 0 0',
-                          letterSpacing: '-0.02em'
-                        }}>
-                          {activeExp.role}
-                        </h3>
-                      </div>
+                        Milestone {activeIdx + 1} / {orbitExperiences.length}
+                      </span>
+                      <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>·</span>
+                      <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Active Trajectory</span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      {((activeExp.period || activeExp.start_date || '').toLowerCase().includes('present')) && (
-                        <span style={{
-                          fontSize: '0.74rem',
-                          fontWeight: 700,
-                          color: '#15803d',
-                          background: '#dcfce7',
-                          padding: '0.25rem 0.65rem',
-                          borderRadius: '9999px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.35rem',
-                          border: '1px solid rgba(22, 163, 74, 0.25)'
-                        }}>
-                          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#16a34a', boxShadow: '0 0 6px #16a34a' }} />
-                          Current Role
-                        </span>
-                      )}
-                      <div style={{
-                        padding: '0.45rem 1rem',
-                        borderRadius: '9999px',
-                        background: '#f8fafc',
-                        border: '1px solid #e2e8f0',
-                        fontSize: '0.84rem',
+                    {((activeExp.period || activeExp.start_date || '').toLowerCase().includes('present')) ? (
+                      <span style={{
+                        fontSize: '0.66rem',
                         fontWeight: 700,
-                        color: '#334155',
+                        color: '#15803d',
+                        background: '#dcfce7',
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: '9999px',
+                        border: '1px solid rgba(34, 197, 94, 0.3)',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.45rem'
+                        gap: '0.28rem'
                       }}>
-                        <Calendar size={14} color="#64748b" />
-                        <span>{(activeExp.period || activeExp.start_date || '').replace('—', '–')}</span>
-                      </div>
+                        <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a', boxShadow: '0 0 6px #16a34a' }} />
+                        Current
+                      </span>
+                    ) : (
+                      <span style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 600,
+                        color: '#64748b',
+                        background: '#f1f5f9',
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: '9999px',
+                        border: '1px solid #e2e8f0'
+                      }}>
+                        {activeExp.period}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Main Headline: Icon + Company & Role Title */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    marginBottom: '0.65rem'
+                  }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '12px',
+                      background: activeMeta.bg,
+                      color: activeMeta.color,
+                      border: '1px solid rgba(226, 232, 240, 0.9)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                    }}>
+                      {activeMeta.icon}
+                    </div>
+
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{
+                        fontSize: '0.74rem',
+                        fontWeight: 700,
+                        color: '#0284c7',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em',
+                        display: 'block'
+                      }}>
+                        {activeExp.company}
+                      </span>
+                      <h3 style={{
+                        fontSize: '1.12rem',
+                        fontWeight: 800,
+                        color: '#0f172a',
+                        margin: '0.1rem 0 0 0',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1.25
+                      }}>
+                        {activeExp.role}
+                      </h3>
                     </div>
                   </div>
 
+                  {/* Description */}
                   <p style={{
-                    fontSize: '0.92rem',
-                    color: '#334155',
-                    lineHeight: 1.6,
-                    margin: '0 0 0.85rem 0',
-                    fontWeight: 400
+                    fontSize: '0.86rem',
+                    color: '#475569',
+                    lineHeight: 1.55,
+                    margin: '0 0 0.75rem 0'
                   }}>
                     {activeExp.description}
                   </p>
@@ -2585,34 +2640,107 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     alignItems: 'center',
                     flexWrap: 'wrap',
-                    gap: '0.55rem'
+                    gap: '0.4rem',
+                    marginBottom: '0.85rem'
                   }}>
-                    <span style={{
-                      fontSize: '0.74rem',
-                      fontWeight: 800,
-                      color: '#64748b',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.04em',
-                      marginRight: '0.25rem'
-                    }}>
-                      Key Focus:
-                    </span>
-                    {activeMeta.tags.map((tag: string, tIdx: number) => (
+                    {(activeMeta.tags || []).slice(0, 3).map((tag: string, tIdx: number) => (
                       <span
                         key={tIdx}
                         style={{
-                          fontSize: '0.78rem',
+                          fontSize: '0.68rem',
                           fontWeight: 600,
-                          padding: '0.3rem 0.75rem',
-                          borderRadius: '9999px',
-                          background: '#f0f9ff',
-                          color: '#0284c7',
-                          border: '1px solid #bae6fd'
+                          padding: '0.18rem 0.5rem',
+                          borderRadius: '6px',
+                          background: '#f8fafc',
+                          color: '#334155',
+                          border: '1px solid #e2e8f0'
                         }}
                       >
                         {tag}
                       </span>
                     ))}
+                  </div>
+
+                  {/* Mobile Interactive Touch Stepper Bar */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingTop: '0.75rem',
+                    borderTop: '1px solid #f1f5f9'
+                  }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const prevIdx = (activeIdx - 1 + orbitExperiences.length) % orbitExperiences.length;
+                        setSelectedExpId(orbitExperiences[prevIdx].id);
+                      }}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
+                        padding: '0.4rem 0.75rem',
+                        borderRadius: '9999px',
+                        background: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        color: '#334155',
+                        fontSize: '0.74rem',
+                        fontWeight: 700,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <ChevronLeft size={14} />
+                      <span>Prev</span>
+                    </button>
+
+                    {/* Stepper Dots */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                      {orbitExperiences.map((expItem: any) => {
+                        const isDotActive = expItem.id === activeExp.id;
+                        return (
+                          <button
+                            key={expItem.id}
+                            type="button"
+                            onClick={() => setSelectedExpId(expItem.id)}
+                            style={{
+                              width: isDotActive ? '18px' : '7px',
+                              height: '7px',
+                              borderRadius: '9999px',
+                              background: isDotActive ? '#0284c7' : '#cbd5e1',
+                              border: 'none',
+                              cursor: 'pointer',
+                              padding: 0,
+                              transition: 'all 0.25s ease'
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const nextIdx = (activeIdx + 1) % orbitExperiences.length;
+                        setSelectedExpId(orbitExperiences[nextIdx].id);
+                      }}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
+                        padding: '0.4rem 0.75rem',
+                        borderRadius: '9999px',
+                        background: '#0284c7',
+                        border: '1px solid #0284c7',
+                        color: '#ffffff',
+                        fontSize: '0.74rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 12px rgba(2, 132, 199, 0.3)'
+                      }}
+                    >
+                      <span>Next</span>
+                      <ChevronRight size={14} />
+                    </button>
                   </div>
                 </motion.div>
               )}
@@ -3236,7 +3364,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             right: '50%',
             marginLeft: '-50vw',
             marginRight: '-50vw',
-            height: '490px',
+            height: isMobile ? '340px' : '490px',
             overflow: 'hidden'
           }}>
             <CircularCarousel
@@ -3277,11 +3405,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               intro="rise"
               scaleMode="fill"
               curve={0}
-              cardWidth={390}
-              aspectRatio={1.42}
-              spread={1.45}
+              cardWidth={isMobile ? 245 : 390}
+              aspectRatio={isMobile ? 1.35 : 1.42}
+              spread={isMobile ? 1.15 : 1.45}
               speed={10}
-              gap={36}
+              gap={isMobile ? 16 : 36}
               autoplay="drift"
               fadeColor="#ffffff"
               innerShade={0.16}
