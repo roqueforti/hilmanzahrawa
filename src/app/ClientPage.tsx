@@ -24,7 +24,10 @@ import {
   Trophy,
   GraduationCap, 
   Briefcase, 
-  Code2, 
+  Code2,
+  Shield,
+  Workflow,
+  Compass, 
   Check, 
   BookOpen,
   Sparkles,
@@ -39,6 +42,7 @@ import {
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
 const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
+const CardSwap = dynamic(() => import('@/components/CardSwap'), { ssr: false });
 
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
@@ -77,6 +81,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
   const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
+  const [activeFocusIndex, setActiveFocusIndex] = useState<number>(0);
   const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
   const [isRealPhoto, setIsRealPhoto] = useState<boolean>(false);
   const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
@@ -1592,104 +1597,337 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          4. STATEMENT & FOCUS AREAS ("I focus on")
          ========================================================================= */}
       <section id="about" className="focus-section-container" style={{
-        padding: '5rem 1.5rem',
+        padding: '5.5rem 1.5rem',
         maxWidth: '1240px',
         margin: '0 auto',
-        textAlign: 'center',
         position: 'relative'
       }}>
-        <span 
-          className="editorial-serif-italic"
+        {/* Editorial Subheader */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <span 
+            className="editorial-serif-italic"
+            style={{
+              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+              color: '#0f172a',
+              display: 'block',
+              margin: '0 0 0.5rem 0'
+            }}
+          >
+            I focus on
+          </span>
+          <p style={{
+            fontSize: '1rem',
+            color: '#64748b',
+            maxWidth: '680px',
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Blending scalable engineering, human-centered UI/UX, and empathetic strategy to solve real problems and deliver measurable impact.
+          </p>
+        </div>
+
+        {/* Interactive 2-Column Showcase: CardSwap Stack (Left) + Interactive Focus Explorer (Right) */}
+        <div 
+          className="focus-showcase-grid"
           style={{
-            fontSize: '2.4rem',
-            color: '#0f172a',
-            display: 'block',
-            marginBottom: '2.5rem'
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 1.25fr)',
+            gap: '3.5rem',
+            alignItems: 'center'
           }}
         >
-          I focus on
-        </span>
+          {/* LEFT: 3D Interactive CardSwap Stack from React Bits */}
+          <div style={{
+            width: '100%',
+            height: '420px',
+            position: 'relative',
+            borderRadius: '24px',
+            background: 'radial-gradient(ellipse at center, #1e293b 0%, #090d16 100%)',
+            border: '1.5px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 25px 60px -15px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            {/* Ambient Background Glow */}
+            <div style={{
+              position: 'absolute',
+              top: '20%',
+              left: '25%',
+              width: '240px',
+              height: '240px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, transparent 70%)',
+              filter: 'blur(30px)',
+              pointerEvents: 'none'
+            }} />
 
-        <div className="focus-grid-layout" style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(180px, 220px) 1fr minmax(180px, 220px)',
-          gap: '2.5rem',
-          alignItems: 'center'
-        }}>
-          {/* Left Column */}
-          <div className="focus-left-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-start' }}>
-            {[
-              { label: "Fullstack Web Apps", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa" },
-              { label: "UI/UX Architecture", color: "#0284c7", bg: "#f0f9ff", border: "#bae6fd" },
-              { label: "Enterprise Systems", color: "#4f46e5", bg: "#eef2ff", border: "#c7d2fe" }
-            ].map((p, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.04, x: 4 }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.65rem',
-                  padding: '0.55rem 1.25rem',
-                  borderRadius: '9999px',
-                  background: '#ffffff',
-                  border: `1.5px solid ${p.border}`,
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
-                  fontSize: '0.85rem',
-                  fontWeight: 500,
-                  color: '#0f172a'
-                }}
-              >
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: p.color }} />
-                <span>{p.label}</span>
-              </motion.div>
-            ))}
+            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+              <CardSwap
+                width={360}
+                height={260}
+                cardDistance={38}
+                verticalDistance={48}
+                depth={70}
+                skewAmount={5}
+                visibleCards={4}
+                delay={4200}
+                autoplay={true}
+                pauseOnHover={true}
+                draggable={true}
+                speed={1.1}
+                bounce={0.3}
+                parallax={0.4}
+                theme="dark"
+                onChange={(idx: number) => setActiveFocusIndex(idx)}
+                onCardClick={(idx: number) => setActiveFocusIndex(idx)}
+                items={[
+                  {
+                    title: 'Fullstack Web Apps',
+                    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80&auto=format&fit=crop',
+                    icon: <Layers size={14} color="#38bdf8" />
+                  },
+                  {
+                    title: 'UI/UX Architecture',
+                    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=900&q=80&auto=format&fit=crop',
+                    icon: <Sparkles size={14} color="#f472b6" />
+                  },
+                  {
+                    title: 'Enterprise Systems',
+                    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&q=80&auto=format&fit=crop',
+                    icon: <Shield size={14} color="#818cf8" />
+                  },
+                  {
+                    title: 'Workflow Automation',
+                    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80&auto=format&fit=crop',
+                    icon: <Workflow size={14} color="#34d399" />
+                  },
+                  {
+                    title: 'Google Apps Script',
+                    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80&auto=format&fit=crop',
+                    icon: <Code2 size={14} color="#2dd4bf" />
+                  },
+                  {
+                    title: 'Inclusive Design',
+                    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&q=80&auto=format&fit=crop',
+                    icon: <Compass size={14} color="#fb7185" />
+                  }
+                ]}
+              />
+            </div>
+
+            {/* Bottom Subtle Drag Hint */}
+            <div style={{
+              position: 'absolute',
+              bottom: '0.85rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: 'rgba(15, 23, 42, 0.75)',
+              backdropFilter: 'blur(8px)',
+              padding: '0.25rem 0.8rem',
+              borderRadius: '9999px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              fontSize: '0.72rem',
+              color: '#94a3b8',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              pointerEvents: 'none',
+              zIndex: 10
+            }}>
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#38bdf8' }} />
+              <span>Interactive Card Stack • Drag or click cards to swap</span>
+            </div>
           </div>
 
-          {/* Center Column: Statement */}
-          <blockquote className="focus-center-quote" style={{
-            fontSize: 'clamp(1.8rem, 3.8vw, 2.9rem)',
-            fontWeight: 400,
-            letterSpacing: '-0.025em',
-            lineHeight: 1.25,
-            color: '#0f172a',
-            margin: 0,
-            textAlign: 'center'
-          }}>
-            focus is on blending scalable engineering, human-centered UI/UX, and empathetic strategy to{' '}
-            <span style={{ color: '#94a3b8' }}>
-              solve real problems and deliver measurable impact
-            </span>
-          </blockquote>
+          {/* RIGHT: Active Focus Area Detailed Explorer & Interactive Category Grid */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {/* Interactive Selected Domain Spotlight Card */}
+            {(() => {
+              const focusAreas = [
+                {
+                  id: 0,
+                  title: 'Fullstack Web Apps',
+                  tag: 'Core Engineering',
+                  description: 'End-to-end fullstack development using Next.js, TypeScript, React, and server-side logic designed for high performance, accessibility, and zero compromise.',
+                  metrics: 'Next.js • TypeScript • Node.js • Supabase',
+                  color: '#ea580c',
+                  bg: '#fff7ed',
+                  border: '#fed7aa',
+                  icon: '⚡'
+                },
+                {
+                  id: 1,
+                  title: 'UI/UX Architecture',
+                  tag: 'Human-Centered Design',
+                  description: 'Translating complex operational workflows into intuitive, beautiful design systems in Figma and pixel-perfect interactive component libraries.',
+                  metrics: 'Figma • Design Systems • Wireframing • User Research',
+                  color: '#0284c7',
+                  bg: '#f0f9ff',
+                  border: '#bae6fd',
+                  icon: '✨'
+                },
+                {
+                  id: 2,
+                  title: 'Enterprise Systems',
+                  tag: 'Scalable Infrastructure',
+                  description: 'Architecting robust relational databases, HCM/HRIS platforms, and enterprise data models capable of handling thousands of organizational records reliably.',
+                  metrics: 'Relational DB • HRIS Workflows • Microservices • PostgreSQL',
+                  color: '#4f46e5',
+                  bg: '#eef2ff',
+                  border: '#c7d2fe',
+                  icon: '🏛️'
+                },
+                {
+                  id: 3,
+                  title: 'Workflow Automation',
+                  tag: 'Operational Efficiency',
+                  description: 'Streamlining cross-departmental operations and eliminating repetitive manual overhead through smart, reliable digital pipelines and integrations.',
+                  metrics: 'Process Optimization • API Integrations • Webhooks',
+                  color: '#059669',
+                  bg: '#f0fdf4',
+                  border: '#bbf7d0',
+                  icon: '🔄'
+                },
+                {
+                  id: 4,
+                  title: 'Google Apps Script',
+                  tag: 'Business Cloud Tools',
+                  description: 'Custom scripting, automated Google Sheets dashboards, and automated email reporting workflows that empower teams to move 10x faster with zero friction.',
+                  metrics: 'GAS Engine • Sheet Automations • Custom Workspace Tools',
+                  color: '#0d9488',
+                  bg: '#f0fdfa',
+                  border: '#99f6e4',
+                  icon: '📊'
+                },
+                {
+                  id: 5,
+                  title: 'Inclusive Design',
+                  tag: 'Social Impact',
+                  description: 'Designing certified digital education tools and accessible vocational platforms that empower youth with disabilities to build real careers.',
+                  metrics: 'WCAG 2.1 • Inclusive Barista Program • Social Tech',
+                  color: '#db2777',
+                  bg: '#fdf2f8',
+                  border: '#fbcfe8',
+                  icon: '🤝'
+                }
+              ];
 
-          {/* Right Column */}
-          <div className="focus-right-pills" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', alignItems: 'flex-end' }}>
-            {[
-              { label: "Workflow Automation", color: "#059669", bg: "#f0fdf4", border: "#bbf7d0" },
-              { label: "Google Apps Script", color: "#0d9488", bg: "#f0fdfa", border: "#99f6e4" },
-              { label: "Inclusive Design", color: "#db2777", bg: "#fdf2f8", border: "#fbcfe8" }
-            ].map((p, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.04, x: -4 }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.65rem',
-                  padding: '0.55rem 1.25rem',
-                  borderRadius: '9999px',
-                  background: '#ffffff',
-                  border: `1.5px solid ${p.border}`,
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.04)',
-                  fontSize: '0.85rem',
-                  fontWeight: 500,
-                  color: '#0f172a'
-                }}
-              >
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: p.color }} />
-                <span>{p.label}</span>
-              </motion.div>
-            ))}
+              const current = focusAreas[activeFocusIndex % focusAreas.length] || focusAreas[0];
+
+              return (
+                <>
+                  {/* Spotlight Card */}
+                  <motion.div
+                    key={current.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      background: '#ffffff',
+                      borderRadius: '22px',
+                      padding: '1.75rem',
+                      border: `1.5px solid ${current.border}`,
+                      boxShadow: '0 12px 35px -10px rgba(15, 23, 42, 0.08)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>{current.icon}</span>
+                        <div>
+                          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>
+                            {current.title}
+                          </h3>
+                          <span style={{ fontSize: '0.78rem', fontWeight: 700, color: current.color, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                            {current.tag}
+                          </span>
+                        </div>
+                      </div>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        padding: '0.2rem 0.65rem',
+                        borderRadius: '9999px',
+                        background: current.bg,
+                        color: current.color,
+                        border: `1px solid ${current.border}`
+                      }}>
+                        Active Focus #{current.id + 1}
+                      </span>
+                    </div>
+
+                    <p style={{
+                      fontSize: '0.94rem',
+                      color: '#475569',
+                      lineHeight: 1.65,
+                      margin: '0 0 1.15rem 0'
+                    }}>
+                      {current.description}
+                    </p>
+
+                    <div style={{
+                      padding: '0.65rem 0.95rem',
+                      borderRadius: '12px',
+                      background: '#f8fafc',
+                      border: '1px solid #e2e8f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.8rem',
+                      color: '#334155',
+                      fontWeight: 600
+                    }}>
+                      <span style={{ color: current.color, fontWeight: 700 }}>Stack:</span>
+                      <span>{current.metrics}</span>
+                    </div>
+                  </motion.div>
+
+                  {/* Interactive Quick Select Badges Grid */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '0.65rem'
+                  }}>
+                    {focusAreas.map((fa) => {
+                      const isSel = (activeFocusIndex % focusAreas.length) === fa.id;
+                      return (
+                        <button
+                          key={fa.id}
+                          type="button"
+                          onClick={() => setActiveFocusIndex(fa.id)}
+                          style={{
+                            padding: '0.65rem 0.75rem',
+                            borderRadius: '14px',
+                            background: isSel ? '#0f172a' : '#ffffff',
+                            color: isSel ? '#ffffff' : '#334155',
+                            border: isSel ? '1.5px solid #0f172a' : '1px solid #e2e8f0',
+                            boxShadow: isSel ? '0 6px 16px rgba(15,23,42,0.18)' : '0 1px 3px rgba(0,0,0,0.02)',
+                            fontSize: '0.78rem',
+                            fontWeight: isSel ? 700 : 500,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.45rem',
+                            textAlign: 'left',
+                            transition: 'all 0.18s ease'
+                          }}
+                        >
+                          <span style={{ fontSize: '0.95rem' }}>{fa.icon}</span>
+                          <span style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {fa.title.split(' ')[0]}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
       </section>

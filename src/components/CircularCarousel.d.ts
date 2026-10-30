@@ -44,3 +44,4 @@ export interface CircularCarouselProps {
 
 declare const CircularCarousel: ComponentType<CircularCarouselProps>;
 export default CircularCarousel;
+
