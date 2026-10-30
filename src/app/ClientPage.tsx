@@ -2581,7 +2581,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           padding: '0 1.5rem'
         }}>
           <span className="editorial-kicker">
-            / Qualifications & Accolades /
+            / Academic Foundations /
           </span>
           <h2 style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
@@ -2590,7 +2590,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             margin: 0,
             color: '#0f172a'
           }}>
-            Education & Honors
+            Education
           </h2>
           <p style={{
             color: '#64748b',
@@ -2598,7 +2598,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             margin: '0.65rem 0 0 0',
             fontWeight: 400
           }}>
-            Academic foundations, verified milestones, and national & international competition recognitions.
+            Formal academic background, institutional milestones, and core engineering competencies.
           </p>
         </div>
 
@@ -2608,51 +2608,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           margin: '0 auto 4.5rem auto',
           padding: '0 1.5rem'
         }}>
-          {/* Header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingBottom: '1.25rem',
-            marginBottom: '2rem',
-            borderBottom: '1px solid #e2e8f0'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '12px',
-                background: '#e0f2fe',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#0284c7'
-              }}>
-                <GraduationCap size={22} />
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
-                  Academic Journey
-                </h3>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
-                  Click or drag to flip cards • Degrees & Competencies
-                </span>
-              </div>
-            </div>
-
-            <span style={{
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              color: '#0284c7',
-              background: '#f0f9ff',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '9999px',
-              border: '1px solid #bae6fd'
-            }}>
-              2 Institutions
-            </span>
-          </div>
-
           {/* Interactive Flip Cards Grid */}
           <div style={{
             display: 'grid',
