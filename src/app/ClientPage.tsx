@@ -2604,23 +2604,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         {/* 1. Academic Journey (Interactive 3D FlipCards) */}
         <div style={{
-          maxWidth: '1080px',
+          maxWidth: '820px',
           margin: '0 auto 4.5rem auto',
           padding: '0 1.5rem'
         }}>
           {/* Interactive Flip Cards Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: '2.5rem',
             justifyItems: 'center',
-            alignItems: 'stretch'
+            alignItems: 'center'
           }}>
             {/* Card 1: Politeknik Negeri Malang */}
             <FlipCard
               width="100%"
-              height={360}
-              radius={24}
+              height={440}
+              radius={28}
               perspective={1200}
               background="#ffffff"
               color="#0f172a"
@@ -2787,8 +2787,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             {/* Card 2: SMA Negeri 1 Malang */}
             <FlipCard
               width="100%"
-              height={360}
-              radius={24}
+              height={440}
+              radius={28}
               perspective={1200}
               background="#ffffff"
               color="#0f172a"
