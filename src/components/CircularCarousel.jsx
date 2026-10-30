@@ -129,6 +129,7 @@ export default function CircularCarousel({
   gap = 25,
   curve,
   spread,
+  segments,
   scaleMode = 'contain',
   tilt,
   perspective,
@@ -180,7 +181,8 @@ export default function CircularCarousel({
   }, [count, along, gap, curveValue, spreadValue]);
 
   const tiles = useMemo(() => {
-    const total = curveValue > 0.001 ? TILES : 1;
+    const tileCount = segments ?? (curveValue > 0.001 ? TILES : 1);
+    const total = Math.max(1, tileCount);
     const length = along / total;
     const bend = curveValue > 0.001 ? radius / curveValue : 0;
     return Array.from({ length: total }, (_, index) => {
@@ -198,7 +200,7 @@ export default function CircularCarousel({
           : `translate3d(${shift}px, 0px, ${depth}px) rotateY(${turn}deg)`;
       return { index, total, start, end, size: end - start, move };
     });
-  }, [along, axis, curveValue, layout.inward, radius]);
+  }, [along, axis, curveValue, layout.inward, radius, segments]);
 
   const rootRef = useRef(null);
   const stageRef = useRef(null);

@@ -2897,6 +2897,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               preset="cylinder"
               intro="rise"
               scaleMode="fill"
+              curve={0}
               cardWidth={390}
               aspectRatio={1.42}
               spread={1.45}

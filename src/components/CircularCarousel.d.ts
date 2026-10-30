@@ -19,6 +19,7 @@ export interface CircularCarouselProps {
   gap?: number;
   curve?: number;
   spread?: number;
+  segments?: number;
   scaleMode?: 'contain' | 'fill' | 'auto';
   tilt?: number;
   perspective?: number;
