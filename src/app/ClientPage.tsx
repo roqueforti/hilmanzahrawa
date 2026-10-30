@@ -91,7 +91,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
   const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
   const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
-  const [isRealPhoto, setIsRealPhoto] = useState<boolean>(false);
   const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
   const [activeAwardId, setActiveAwardId] = useState<number | null>(0);
   const [awardsCategoryFilter, setAwardsCategoryFilter] = useState<string>("all");
@@ -2063,6 +2062,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             const displayPeriod = periodStr.includes('—') 
               ? periodStr.split('—').map((s: string) => s.trim()).join(' – ') 
               : periodStr;
+            const roleSnippet = exp.role ? exp.role.split('–')[0].split('-')[0].trim() : '';
 
             return {
               src: '',
@@ -2073,23 +2073,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   style={{
                     width: '100%',
                     height: '100%',
-                    borderRadius: '24px',
+                    borderRadius: '22px',
                     background: isSelected 
                       ? 'linear-gradient(145deg, #0f172a 0%, #1e293b 85%, #0284c7 180%)' 
-                      : 'rgba(255, 255, 255, 0.92)',
+                      : 'rgba(255, 255, 255, 0.94)',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     border: isSelected 
                       ? '2px solid #38bdf8' 
-                      : '1.5px solid rgba(226, 232, 240, 0.85)',
+                      : '1.5px solid rgba(226, 232, 240, 0.9)',
                     boxShadow: isSelected 
-                      ? '0 20px 40px -10px rgba(2, 132, 199, 0.42), 0 0 28px rgba(56, 189, 248, 0.28)' 
-                      : '0 12px 30px -8px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03)',
+                      ? '0 20px 40px -10px rgba(2, 132, 199, 0.45), 0 0 28px rgba(56, 189, 248, 0.28)' 
+                      : '0 10px 24px -6px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '1.05rem 0.85rem 0.9rem 0.85rem',
+                    padding: '0.85rem 0.75rem 0.75rem 0.75rem',
                     color: isSelected ? '#ffffff' : '#0f172a',
                     textAlign: 'center',
                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -2107,17 +2107,17 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     right: 0,
                     height: '35%',
                     background: isSelected 
-                      ? 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 100%)' 
+                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 100%)' 
                       : 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%)',
                     pointerEvents: 'none',
-                    borderRadius: '24px 24px 0 0'
+                    borderRadius: '22px 22px 0 0'
                   }} />
 
                   {/* Clean Vector SVG Brand Badge */}
                   <div style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '14px',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '12px',
                     background: isSelected ? 'rgba(255,255,255,0.12)' : meta.bg,
                     color: isSelected ? '#38bdf8' : meta.color,
                     border: isSelected ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(226, 232, 240, 0.8)',
@@ -2135,19 +2135,32 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   </div>
 
                   {/* Company & Role Headline */}
-                  <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+                  <div style={{ position: 'relative', zIndex: 2, width: '100%', overflow: 'hidden' }}>
                     <span style={{
-                      fontSize: '0.82rem',
+                      fontSize: '0.78rem',
                       fontWeight: 800,
-                      lineHeight: 1.25,
+                      lineHeight: 1.2,
                       letterSpacing: '-0.015em',
                       display: '-webkit-box',
-                      WebkitLineClamp: 2,
+                      WebkitLineClamp: 1,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
                       color: isSelected ? '#ffffff' : '#0f172a'
                     }}>
                       {meta.short}
+                    </span>
+                    <span style={{
+                      fontSize: '0.65rem',
+                      fontWeight: 600,
+                      lineHeight: 1.2,
+                      color: isSelected ? '#93c5fd' : '#64748b',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      marginTop: '2px'
+                    }}>
+                      {roleSnippet}
                     </span>
                   </div>
 
@@ -2155,16 +2168,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
                     {isCurrent ? (
                       <span style={{
-                        fontSize: '0.66rem',
+                        fontSize: '0.64rem',
                         fontWeight: 700,
-                        padding: '0.2rem 0.55rem',
+                        padding: '0.18rem 0.5rem',
                         borderRadius: '9999px',
                         background: isSelected ? 'rgba(34, 197, 94, 0.22)' : '#dcfce7',
                         color: isSelected ? '#4ade80' : '#15803d',
                         border: isSelected ? '1px solid rgba(74, 222, 128, 0.4)' : '1px solid rgba(34, 197, 94, 0.25)',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '0.28rem',
+                        gap: '0.25rem',
                         lineHeight: 1
                       }}>
                         <span style={{
@@ -2178,10 +2191,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       </span>
                     ) : (
                       <span style={{
-                        fontSize: '0.68rem',
+                        fontSize: '0.65rem',
                         fontWeight: 600,
                         color: isSelected ? '#93c5fd' : '#64748b',
-                        padding: '0.15rem 0.45rem',
+                        padding: '0.12rem 0.4rem',
                         borderRadius: '6px',
                         background: isSelected ? 'rgba(255,255,255,0.08)' : '#f8fafc',
                         border: isSelected ? '1px solid rgba(255,255,255,0.1)' : '1px solid #f1f5f9',
@@ -2205,19 +2218,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 width: '100%',
                 maxWidth: '1520px',
                 margin: '0 auto',
-                height: '420px',
+                height: isMobile ? '380px' : '490px',
                 overflow: 'visible'
               }}>
                 <OrbitImages
                   images={orbitImagesData}
                   shape="ellipse"
-                  radiusX={680}
-                  radiusY={130}
-                  rotation={-3}
-                  duration={36}
-                  itemSize={150}
-                  itemRadius={24}
-                  depth={0.75}
+                  radiusX={isMobile ? 380 : 700}
+                  radiusY={isMobile ? 120 : 180}
+                  rotation={-2}
+                  duration={38}
+                  itemSize={isMobile ? 115 : 132}
+                  itemRadius={22}
+                  depth={0.68}
                   showPath={true}
                   pathColor="rgba(2, 132, 199, 0.22)"
                   pathWidth={2}
@@ -2231,86 +2244,232 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     }
                   }}
                   centerContent={
-                    <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      pointerEvents: 'auto'
-                    }}>
-                      <div style={{
-                        width: '136px',
-                        height: '136px',
-                        borderRadius: '50%',
-                        padding: '4px',
-                        background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #fde68a 100%)',
-                        boxShadow: '0 16px 36px -8px rgba(2, 132, 199, 0.35)',
-                        position: 'relative',
-                        marginBottom: '0.75rem'
-                      }}>
+                    !isMobile ? (
+                      /* Desktop Interactive Trajectory Console */
+                      <div 
+                        className="orbit-center-console"
+                        style={{
+                          maxWidth: '540px',
+                          width: '88vw',
+                          background: 'rgba(255, 255, 255, 0.94)',
+                          backdropFilter: 'blur(20px)',
+                          WebkitBackdropFilter: 'blur(20px)',
+                          border: '1.5px solid rgba(2, 132, 199, 0.35)',
+                          borderRadius: '24px',
+                          padding: '1.2rem 1.55rem',
+                          boxShadow: '0 24px 60px -15px rgba(2, 132, 199, 0.22), 0 4px 20px rgba(15, 23, 42, 0.04)',
+                          position: 'relative',
+                          textAlign: 'left',
+                          pointerEvents: 'auto',
+                          userSelect: 'none'
+                        }}
+                      >
+                        {/* Top Row: Milestone Kicker & Live Status */}
                         <div style={{
-                          width: '100%',
-                          height: '100%',
-                          borderRadius: '50%',
-                          overflow: 'hidden',
-                          background: '#0f172a',
-                          position: 'relative'
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.5rem',
+                          marginBottom: '0.65rem'
                         }}>
-                          <img 
-                            src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
-                            alt={name}
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              objectPosition: isRealPhoto ? 'center 20%' : 'center 15%'
-                            }}
-                          />
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsRealPhoto(prev => !prev);
-                            }}
-                            title="Toggle Himmel / Real Avatar"
-                            style={{
-                              position: 'absolute',
-                              bottom: '4px',
-                              left: '50%',
-                              transform: 'translateX(-50%)',
-                              background: 'rgba(15, 23, 42, 0.88)',
-                              backdropFilter: 'blur(6px)',
-                              border: '1px solid rgba(255,255,255,0.3)',
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                            <span style={{
+                              fontSize: '0.68rem',
+                              fontWeight: 800,
+                              letterSpacing: '0.06em',
+                              textTransform: 'uppercase',
+                              color: '#0284c7',
+                              background: 'rgba(2, 132, 199, 0.08)',
+                              padding: '0.2rem 0.55rem',
                               borderRadius: '9999px',
-                              padding: '0.15rem 0.5rem',
-                              color: '#ffffff',
-                              fontSize: '0.62rem',
+                              border: '1px solid rgba(2, 132, 199, 0.2)'
+                            }}>
+                              Milestone {orbitExperiences.findIndex((e: any) => e.id === activeExp.id) + 1} / {orbitExperiences.length}
+                            </span>
+                            <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>·</span>
+                            <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600 }}>Active Trajectory Focus</span>
+                          </div>
+
+                          {((activeExp.period || activeExp.start_date || '').toLowerCase().includes('present')) ? (
+                            <span style={{
+                              fontSize: '0.68rem',
                               fontWeight: 700,
-                              cursor: 'pointer',
-                              display: 'flex',
+                              color: '#15803d',
+                              background: '#dcfce7',
+                              padding: '0.2rem 0.6rem',
+                              borderRadius: '9999px',
+                              border: '1px solid rgba(22, 163, 74, 0.3)',
+                              display: 'inline-flex',
                               alignItems: 'center',
-                              gap: '0.25rem',
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            <Sparkles size={10} color="#38bdf8" />
-                            <span>{isRealPhoto ? 'Himmel' : 'Real'}</span>
-                          </button>
+                              gap: '0.3rem'
+                            }}>
+                              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#16a34a', boxShadow: '0 0 6px #16a34a' }} />
+                              Current Role
+                            </span>
+                          ) : (
+                            <span style={{
+                              fontSize: '0.7rem',
+                              fontWeight: 600,
+                              color: '#64748b',
+                              background: '#f1f5f9',
+                              padding: '0.2rem 0.6rem',
+                              borderRadius: '9999px',
+                              border: '1px solid #e2e8f0'
+                            }}>
+                              {activeExp.period}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Main Headline: Icon + Company & Role Title */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.85rem',
+                          marginBottom: '0.65rem'
+                        }}>
+                          <div style={{
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '12px',
+                            background: activeMeta.bg,
+                            color: activeMeta.color,
+                            border: '1px solid rgba(226, 232, 240, 0.9)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                          }}>
+                            {activeMeta.icon}
+                          </div>
+
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <span style={{
+                              fontSize: '0.76rem',
+                              fontWeight: 700,
+                              color: '#0284c7',
+                              letterSpacing: '0.03em',
+                              textTransform: 'uppercase',
+                              display: 'block'
+                            }}>
+                              {activeExp.company}
+                            </span>
+                            <h3 style={{
+                              fontSize: '1.15rem',
+                              fontWeight: 800,
+                              color: '#0f172a',
+                              margin: '0.1rem 0 0 0',
+                              letterSpacing: '-0.02em',
+                              lineHeight: 1.25
+                            }}>
+                              {activeExp.role}
+                            </h3>
+                          </div>
+                        </div>
+
+                        {/* Impact Description */}
+                        <p style={{
+                          fontSize: '0.85rem',
+                          color: '#475569',
+                          lineHeight: 1.5,
+                          margin: '0 0 0.75rem 0'
+                        }}>
+                          {activeExp.description}
+                        </p>
+
+                        {/* Key Focus Tags & Stepper Dots */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.75rem',
+                          flexWrap: 'wrap',
+                          paddingTop: '0.6rem',
+                          borderTop: '1px solid #f1f5f9'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                            {(activeMeta.tags || []).slice(0, 3).map((tag: string, tIdx: number) => (
+                              <span key={tIdx} style={{
+                                fontSize: '0.68rem',
+                                fontWeight: 600,
+                                padding: '0.18rem 0.5rem',
+                                borderRadius: '6px',
+                                background: '#f8fafc',
+                                color: '#334155',
+                                border: '1px solid #e2e8f0'
+                              }}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          {/* Stepper Navigation Dots */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            {orbitExperiences.map((expItem: any) => {
+                              const isDotActive = expItem.id === activeExp.id;
+                              return (
+                                <button
+                                  key={expItem.id}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedExpId(expItem.id);
+                                  }}
+                                  title={`Switch to ${expItem.company}`}
+                                  style={{
+                                    width: isDotActive ? '20px' : '8px',
+                                    height: '8px',
+                                    borderRadius: '9999px',
+                                    background: isDotActive ? '#0284c7' : '#cbd5e1',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.25s ease',
+                                    padding: 0
+                                  }}
+                                />
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.01em' }}>
-                        {name}
-                      </span>
-                      <span style={{ fontSize: '0.68rem', color: '#0284c7', fontWeight: 600 }}>
-                        Trajectory Nexus
-                      </span>
-                    </div>
+                    ) : (
+                      /* Compact Center Hub for Mobile Screen */
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        pointerEvents: 'auto'
+                      }}>
+                        <div style={{
+                          width: '54px',
+                          height: '54px',
+                          borderRadius: '16px',
+                          background: activeMeta.bg,
+                          color: activeMeta.color,
+                          border: '1.5px solid rgba(2, 132, 199, 0.4)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 8px 24px -6px rgba(2, 132, 199, 0.35)',
+                          marginBottom: '0.35rem'
+                        }}>
+                          {activeMeta.icon}
+                        </div>
+                        <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#0f172a' }}>
+                          {activeMeta.short}
+                        </span>
+                        <span style={{ fontSize: '0.64rem', color: '#0284c7', fontWeight: 600 }}>
+                          Tap to inspect
+                        </span>
+                      </div>
+                    )
                   }
                 />
               </div>
 
-              {/* Inspected Experience Milestone Showcase Card */}
-              {activeExp && (
+              {/* Inspected Experience Milestone Showcase Card for Mobile View */}
+              {isMobile && activeExp && (
                 <motion.div
                   key={activeExp.id}
                   initial={{ opacity: 0, y: 12 }}
