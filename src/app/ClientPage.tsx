@@ -818,20 +818,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
            - Clicking (X) collapses cleanly back to standard 4-column cards.
            ========================================================================= */}
         {(() => {
-          const expandedWork = expandedProject
-            ? (filteredWorks.find((w: any) => 
+          const expandedIdx = expandedProject
+            ? filteredWorks.findIndex((w: any) => 
                 (w.id && expandedProject.id && w.id === expandedProject.id) ||
                 (w.slug && expandedProject.slug && w.slug === expandedProject.slug) ||
                 (w.title && expandedProject.title && w.title === expandedProject.title)
-              ) || expandedProject)
-            : null;
-          const remainingWorks = expandedWork
-            ? filteredWorks.filter((w: any) => 
-                !((w.id && expandedWork.id && w.id === expandedWork.id) ||
-                  (w.slug && expandedWork.slug && w.slug === expandedWork.slug) ||
-                  (w.title && expandedWork.title && w.title === expandedWork.title))
               )
-            : filteredWorks;
+            : -1;
+          const expandedWork = expandedIdx !== -1 ? filteredWorks[expandedIdx] : expandedProject;
+          const remainingWorks = expandedIdx !== -1
+            ? [...filteredWorks.slice(expandedIdx + 1), ...filteredWorks.slice(0, expandedIdx)]
+            : (expandedWork
+                ? filteredWorks.filter((w: any) => 
+                    !((w.id && expandedWork.id && w.id === expandedWork.id) ||
+                      (w.slug && expandedWork.slug && w.slug === expandedWork.slug) ||
+                      (w.title && expandedWork.title && w.title === expandedWork.title))
+                  )
+                : filteredWorks);
 
           const renderExpandedPanel = (work: any) => {
             const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0
