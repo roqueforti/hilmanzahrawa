@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './CircularCarousel.css';
 
 const DEFAULT_ITEMS = [
@@ -328,7 +328,7 @@ export default function CircularCarousel({\n
     return () => clearTimeout(timer);
   }, [leaving]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const root = rootRef.current;
     const stage = stageRef.current;
     const camera = cameraRef.current;
@@ -619,7 +619,7 @@ export default function CircularCarousel({\n
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     measureRef.current();
     wakeRef.current();
   }, [radius, cardW, cardH, tiltValue, perspective, preset, captions, count]);

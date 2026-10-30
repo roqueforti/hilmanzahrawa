@@ -38,7 +38,7 @@ import {
   Globe
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
-import CircularCarousel from '@/components/CircularCarousel';
+const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
 
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
