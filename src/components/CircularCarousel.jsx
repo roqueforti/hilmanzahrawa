@@ -119,7 +119,8 @@ const usePrefersReducedMotion = () => {
   return reduced;
 };
 
-export default function CircularCarousel({\n
+export default function CircularCarousel({
+
   items = DEFAULT_ITEMS,
   preset = 'cylinder',
   intro = 'rise',
