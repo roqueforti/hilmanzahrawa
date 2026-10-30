@@ -2818,7 +2818,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <div style={{
             textAlign: 'center',
             maxWidth: '1240px',
-            margin: '0 auto 1.5rem auto',
+            margin: '0 auto 0.75rem auto',
             padding: '0 1.5rem',
             display: 'flex',
             flexDirection: 'column',
@@ -2827,16 +2827,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.6rem',
-              padding: '0.35rem 0.95rem',
+              gap: '0.5rem',
+              padding: '0.3rem 0.85rem',
               borderRadius: '9999px',
               background: '#fffbeb',
               border: '1px solid #fde68a',
-              marginBottom: '0.75rem'
+              marginBottom: '0.5rem'
             }}>
-              <Trophy size={16} color="#b45309" />
+              <Trophy size={15} color="#b45309" />
               <span style={{
-                fontSize: '0.78rem',
+                fontSize: '0.74rem',
                 fontWeight: 700,
                 color: '#b45309',
                 letterSpacing: '0.03em',
@@ -2847,16 +2847,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             </div>
 
             <h3 style={{
-              fontSize: 'clamp(1.5rem, 3vw, 2.1rem)',
+              fontSize: 'clamp(1.4rem, 2.5vw, 1.95rem)',
               fontWeight: 600,
               color: '#0f172a',
-              margin: '0 0 0.4rem 0',
+              margin: '0 0 0.25rem 0',
               letterSpacing: '-0.02em'
             }}>
               Competitive Trophies & Grants
             </h3>
             <p style={{
-              fontSize: '0.9rem',
+              fontSize: '0.86rem',
               color: '#64748b',
               margin: 0,
               maxWidth: '560px'
@@ -2873,7 +2873,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             right: '50%',
             marginLeft: '-50vw',
             marginRight: '-50vw',
-            height: '640px',
+            height: '490px',
             overflow: 'hidden'
           }}>
             <CircularCarousel
@@ -2913,16 +2913,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               preset="cylinder"
               intro="rise"
               scaleMode="fill"
-              cardWidth={480}
+              cardWidth={390}
               aspectRatio={1.42}
-              spread={1.8}
+              spread={1.45}
               speed={10}
-              gap={48}
+              gap={36}
               autoplay="drift"
               fadeColor="#ffffff"
               innerShade={0.16}
               depthFade={0.28}
-              cornerRadius={20}
+              cornerRadius={18}
               captions={true}
             />
           </div>

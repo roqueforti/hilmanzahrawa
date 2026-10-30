@@ -396,9 +396,8 @@ export default function CircularCarousel({
       const spanY = Math.max(maxY - minY, 1);
       let fit = Math.min(1, width / spanX, height / spanY);
       if (s.scaleMode === 'fill') {
-        // Expand ring scale to immerse and fill screen width proportionally
-        const targetFillX = width * 0.95;
-        fit = Math.min(1.75, targetFillX / spanX, (height / spanY) * 1.05);
+        // Balance horizontal fill while ensuring entire vertical card and caption remain visible in viewport
+        fit = Math.min(width * 0.94 / spanX, height / spanY, 1.35);
       }
       state.fit = fit;
       state.shift = -((minY + maxY) / 2) * fit - room / 2;
