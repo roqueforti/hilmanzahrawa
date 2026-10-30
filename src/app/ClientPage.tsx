@@ -2377,12 +2377,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   const isCurrent = (exp.period || exp.start_date || '').toLowerCase().includes('present');
 
                   return (
-                    <motion.div 
+                    <div 
                       key={expId} 
-                      layout
                       onClick={() => setSelectedExpId(isOpen ? null : expId)}
                       style={{
-                        background: isOpen ? '#ffffff' : '#ffffff',
+                        background: '#ffffff',
                         border: isOpen ? '1.5px solid #0284c7' : '1px solid #e2e8f0',
                         borderRadius: '18px',
                         padding: '1.15rem 1.35rem',
@@ -2390,7 +2389,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         boxShadow: isOpen 
                           ? '0 12px 30px -8px rgba(2, 132, 199, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04)' 
                           : '0 2px 6px rgba(15, 23, 42, 0.02)',
-                        transition: 'border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease'
+                        transition: 'border-color 0.25s ease, box-shadow 0.25s ease'
                       }}
                       className="about-exp-item"
                     >
@@ -2493,7 +2492,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
                             <div style={{
@@ -2550,7 +2549,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </motion.div>
+                    </div>
                   );
                 });
               })()}
@@ -2968,9 +2967,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   const isOpen = activeAwardId === aw.id;
 
                   return (
-                    <motion.div
+                    <div
                       key={aw.id}
-                      layout
                       onClick={() => setActiveAwardId(isOpen ? null : aw.id)}
                       style={{
                         background: '#ffffff',
@@ -2981,7 +2979,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         boxShadow: isOpen 
                           ? '0 10px 25px -6px rgba(15, 23, 42, 0.08)' 
                           : '0 2px 6px rgba(15, 23, 42, 0.02)',
-                        transition: 'all 0.2s ease'
+                        transition: 'border-color 0.25s ease, box-shadow 0.25s ease'
                       }}
                       className="award-interactive-item"
                     >
@@ -3058,7 +3056,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
                             <div style={{
@@ -3078,7 +3076,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </motion.div>
+                    </div>
                   );
                 });
               })()}
