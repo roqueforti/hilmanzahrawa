@@ -1999,523 +1999,358 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
             {/* =========================================================================
-         7. ABOUT & CAREER TIMELINE (Hilman's Real Experience)
+         7. ABOUT & CAREER TIMELINE (Full-Stage Interactive Experience Orbit)
          ========================================================================= */}
       <section id="experience" style={{
         padding: '5rem 1.5rem',
-        maxWidth: '1240px',
+        maxWidth: '1380px',
         margin: '0 auto'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <span className="editorial-kicker">
-            / Background & Career /
+            / Career & Trajectory /
           </span>
           <h2 style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
             fontWeight: 500,
             letterSpacing: '-0.025em',
-            margin: 0,
+            margin: '0 0 0.85rem 0',
             color: '#0f172a'
           }}>
             Pushing Boundaries <span style={{ fontWeight: 300, color: '#94a3b8' }}>since 2021</span>
           </h2>
+          <p style={{
+            fontSize: '1rem',
+            color: '#64748b',
+            maxWidth: '680px',
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Interactive Career Orbit · Click any organization satellite or swipe across the trajectory to inspect roles, milestones, and technological impact.
+          </p>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.45fr)',
-          gap: '3.5rem',
-          alignItems: 'start'
-        }} className="about-2col">
-          {/* Left: Interactive OrbitImages Stage around Profile Centerpiece */}
-          <div style={{ position: 'sticky', top: '90px' }}>
-            <div style={{
-              background: '#ffffff',
-              borderRadius: '28px',
-              padding: '1.75rem 1.25rem',
-              border: '1.5px solid #e2e8f0',
-              boxShadow: '0 20px 45px -12px rgba(15, 23, 42, 0.08)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
-              <OrbitImages
-                images={[
-                  '/profilephoto.jpg',
-                  '/himmel_card.jpg',
-                  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&q=80&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=300&q=80&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&q=80&auto=format&fit=crop',
-                  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&q=80&auto=format&fit=crop'
-                ]}
-                shape="ellipse"
-                radiusX={460}
-                radiusY={145}
-                rotation={-6}
-                duration={32}
-                itemSize={78}
-                itemRadius={16}
-                depth={0.65}
-                showPath={true}
-                pathColor="rgba(2, 132, 199, 0.18)"
-                pathWidth={2}
-                pathDash={4}
-                centerContent={
-                  <div style={{
-                    width: '180px',
-                    height: '180px',
-                    borderRadius: '50%',
-                    padding: '6px',
-                    background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #fde68a 100%)',
-                    boxShadow: '0 16px 36px -8px rgba(2, 132, 199, 0.35)',
-                    position: 'relative'
-                  }}>
-                    <div style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: '50%',
-                      overflow: 'hidden',
-                      background: '#0f172a',
-                      position: 'relative'
-                    }}>
-                      <img 
-                        src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
-                        alt={name}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          objectPosition: isRealPhoto ? 'center 20%' : 'center 15%'
-                        }}
-                      />
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsRealPhoto(prev => !prev);
-                        }}
-                        title="Toggle Himmel / Real Avatar"
-                        style={{
-                          position: 'absolute',
-                          bottom: '6px',
-                          left: '50%',
-                          transform: 'translateX(-50%)',
-                          background: 'rgba(15, 23, 42, 0.88)',
-                          backdropFilter: 'blur(6px)',
-                          border: '1px solid rgba(255,255,255,0.3)',
-                          borderRadius: '9999px',
-                          padding: '0.2rem 0.55rem',
-                          color: '#ffffff',
-                          fontSize: '0.66rem',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.3rem',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        <Sparkles size={11} color="#38bdf8" />
-                        <span>{isRealPhoto ? 'Himmel' : 'Real'}</span>
-                      </button>
-                    </div>
-                  </div>
-                }
-              />
+        {(() => {
+          const compMetaMap: Record<string, { icon: string; bg: string; color: string; short: string; tags: string[] }> = {
+            'exp-pal': { icon: '⚓', bg: '#e0f2fe', color: '#0369a1', short: 'PT PAL Indonesia', tags: ['HRIS Architecture', 'Next.js', 'Enterprise Workflows', 'Relational DB'] },
+            'exp-mandala-strat': { icon: '💙', bg: '#fee2e2', color: '#e11d48', short: 'Mandala Pure Love', tags: ['Inclusive Strategy', 'Kafe Among Rasa', 'Sociopreneurship', 'Creative Direction'] },
+            'exp-mandala-dev': { icon: '🌱', bg: '#ecfdf5', color: '#059669', short: 'BrewTech (Innovillage)', tags: ['BrewTech', 'Next.js', 'TypeScript', 'Innovillage Top 180'] },
+            'exp-nzbox': { icon: '🧺', bg: '#f3e8ff', color: '#9333ea', short: 'NZ Box Smart Laundry', tags: ['Campaign Strategy', 'Performance Ads', 'Brand Marketing', 'Growth'] },
+            'exp-seal': { icon: '⚡', bg: '#fef3c7', color: '#d97706', short: 'SEAL Accelerator', tags: ['Disnakertrans Jatim', 'ProFile+ HRIS', 'Figma', 'Design Systems'] },
+            'exp-hmti-chair': { icon: '🎓', bg: '#dcfce7', color: '#15803d', short: 'HMTI Polinema', tags: ['Executive Leadership', '30+ Agendas', 'Inter-Campus Collaboration'] }
+          };
 
-              {/* Bio Details Footer */}
-              <div style={{
-                textAlign: 'center',
-                paddingTop: '1.25rem',
-                borderTop: '1px solid #f1f5f9',
-                marginTop: '0.75rem'
-              }}>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.15rem 0', letterSpacing: '-0.02em' }}>
-                  {name}
-                </h4>
-                <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 500, display: 'block', marginBottom: '0.85rem' }}>
-                  {headline}
-                </span>
+          const activeExpId = selectedExpId || experiencesList[0]?.id || 'exp-pal';
+          const activeExp = experiencesList.find((e: any) => e.id === activeExpId) || experiencesList[0];
+          const activeMeta = compMetaMap[activeExp.id] || { icon: '✦', bg: '#f1f5f9', color: '#0f172a', short: activeExp.company, tags: ['Fullstack', 'UI/UX'] };
 
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                  <a 
-                    href={`https://wa.me/${whatsapp}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    title="Chat via WhatsApp"
-                    style={{ 
-                      width: '36px', 
-                      height: '36px', 
-                      borderRadius: '50%', 
-                      background: '#f8fafc', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      color: '#475569', 
-                      border: '1px solid #e2e8f0',
-                      transition: 'all 0.2s' 
-                    }}
-                    className="about-social-icon"
-                  >
-                    <MessageCircle size={16} />
-                  </a>
-                  <a 
-                    href={`mailto:${email}`} 
-                    title="Send Email"
-                    style={{ 
-                      width: '36px', 
-                      height: '36px', 
-                      borderRadius: '50%', 
-                      background: '#f8fafc', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      color: '#475569', 
-                      border: '1px solid #e2e8f0',
-                      transition: 'all 0.2s' 
-                    }}
-                    className="about-social-icon"
-                  >
-                    <Mail size={16} />
-                  </a>
-                  <a 
-                    href="https://linkedin.com/in/hilmanzahrawa" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    title="LinkedIn Profile"
-                    style={{ 
-                      width: '36px', 
-                      height: '36px', 
-                      borderRadius: '50%', 
-                      background: '#f8fafc', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      color: '#475569', 
-                      border: '1px solid #e2e8f0',
-                      transition: 'all 0.2s' 
-                    }}
-                    className="about-social-icon"
-                  >
-                    <Linkedin size={16} />
-                  </a>
-                </div>
+          const orbitExperiences = experiencesList.slice(0, 6);
 
-                {/* Status Indicator */}
+          const orbitImagesData = orbitExperiences.map((exp: any) => {
+            const meta = compMetaMap[exp.id] || { icon: '✦', bg: '#f1f5f9', color: '#0f172a', short: exp.company, tags: [] };
+            const isSelected = exp.id === activeExpId;
+            return {
+              src: '',
+              alt: exp.company,
+              node: (
                 <div style={{
-                  padding: '0.45rem 0.85rem',
-                  borderRadius: '12px',
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
-                  display: 'inline-flex',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '20px',
+                  background: isSelected 
+                    ? 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)' 
+                    : '#ffffff',
+                  border: isSelected ? '2px solid #38bdf8' : '1.5px solid #e2e8f0',
+                  boxShadow: isSelected 
+                    ? '0 16px 36px -8px rgba(2, 132, 199, 0.4), 0 0 20px rgba(56, 189, 248, 0.3)' 
+                    : '0 8px 24px -4px rgba(15, 23, 42, 0.08)',
+                  display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: '0.78rem'
+                  justifyContent: 'center',
+                  padding: '0.85rem',
+                  color: isSelected ? '#ffffff' : '#0f172a',
+                  textAlign: 'center',
+                  transition: 'all 0.25s ease',
+                  cursor: 'pointer',
+                  userSelect: 'none'
                 }}>
+                  <div style={{
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '12px',
+                    background: isSelected ? 'rgba(255,255,255,0.12)' : meta.bg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.45rem',
+                    marginBottom: '0.45rem'
+                  }}>
+                    {meta.icon}
+                  </div>
                   <span style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    background: '#10b981',
-                    boxShadow: '0 0 8px #10b981',
-                    flexShrink: 0
-                  }} />
-                  <span style={{ color: '#334155', fontWeight: 600 }}>
-                    {location.split(',')[0]}, Indonesia • Open for High-Impact Roles
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    lineHeight: 1.25,
+                    maxWidth: '100px',
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}>
+                    {meta.short}
+                  </span>
+                  <span style={{
+                    fontSize: '0.65rem',
+                    color: isSelected ? '#38bdf8' : '#64748b',
+                    fontWeight: 600,
+                    marginTop: '0.2rem'
+                  }}>
+                    {(exp.period || exp.start_date || '').split('—')[0].trim()}
                   </span>
                 </div>
-              </div>
-            </div>
-          </div>
+              )
+            };
+          });
 
-          {/* Right: Bio & Interactive Career Experience Timeline */}
-          <div>
-            <p style={{
-              fontSize: '1.05rem',
-              color: '#334155',
-              lineHeight: 1.68,
-              fontWeight: 400,
-              margin: '0 0 2rem 0'
-            }}>
-              {about}
-            </p>
-
-            {/* Interactive Category Filter Pills */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '0.5rem',
-              marginBottom: '1.5rem'
-            }}>
-              {[
-                { id: 'all', label: 'All Roles', count: 6 },
-                { id: 'engineering', label: 'Engineering & Tech', count: 3 },
-                { id: 'design-strategy', label: 'Design & Strategy', count: 3 },
-                { id: 'leadership', label: 'Leadership', count: 2 }
-              ].map((cat) => {
-                const isActive = expCategoryFilter === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setExpCategoryFilter(cat.id)}
-                    style={{
-                      padding: '0.4rem 0.95rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.8rem',
-                      fontWeight: isActive ? 700 : 500,
-                      background: isActive ? '#0f172a' : '#ffffff',
-                      color: isActive ? '#ffffff' : '#64748b',
-                      border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
-                      boxShadow: isActive ? '0 3px 10px rgba(15,23,42,0.12)' : '0 1px 3px rgba(0,0,0,0.02)',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
+          return (
+            <div>
+              {/* Full-width Orbit Images Interactive Stage */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '1180px',
+                margin: '0 auto',
+                minHeight: '380px'
+              }}>
+                <OrbitImages
+                  images={orbitImagesData}
+                  shape="ellipse"
+                  radiusX={540}
+                  radiusY={130}
+                  rotation={-4}
+                  duration={38}
+                  itemSize={130}
+                  itemRadius={20}
+                  depth={0.7}
+                  showPath={true}
+                  pathColor="rgba(2, 132, 199, 0.22)"
+                  pathWidth={2}
+                  pathDash={6}
+                  hoverSpeed={0.15}
+                  clickToFront={true}
+                  onItemClick={(idx) => {
+                    const selected = orbitExperiences[idx];
+                    if (selected) {
+                      setSelectedExpId(selected.id);
+                    }
+                  }}
+                  centerContent={
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
-                      gap: '0.4rem',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    <span>{cat.label}</span>
-                    <span style={{
-                      fontSize: '0.72rem',
-                      padding: '0.05rem 0.45rem',
-                      borderRadius: '9999px',
-                      background: isActive ? 'rgba(255,255,255,0.22)' : '#f1f5f9',
-                      color: isActive ? '#ffffff' : '#0f172a',
-                      fontWeight: 700
+                      textAlign: 'center',
+                      pointerEvents: 'auto'
                     }}>
-                      {cat.count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Interactive Expandable Experience Accordion Cards */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {(() => {
-                const filteredExps = experiencesList.slice(0, 6).filter((exp: any) => {
-                  if (expCategoryFilter === 'all') return true;
-                  const role = (exp.role || '').toLowerCase();
-                  const comp = (exp.company || '').toLowerCase();
-                  if (expCategoryFilter === 'engineering') {
-                    return role.includes('developer') || role.includes('engineer') || comp.includes('pal');
-                  }
-                  if (expCategoryFilter === 'design-strategy') {
-                    return role.includes('designer') || role.includes('strategist') || role.includes('specialist');
-                  }
-                  if (expCategoryFilter === 'leadership') {
-                    return role.includes('chairman') || role.includes('lead') || role.includes('strategist');
-                  }
-                  return true;
-                });
-
-                const getCompanyMeta = (comp: string) => {
-                  if (comp.includes('PT PAL')) return { icon: '⚓', bg: '#e0f2fe', color: '#0369a1' };
-                  if (comp.includes('Mandala')) return { icon: '💙', bg: '#fee2e2', color: '#e11d48' };
-                  if (comp.includes('SEAL')) return { icon: '⚡', bg: '#fef3c7', color: '#d97706' };
-                  if (comp.includes('NZ Box')) return { icon: '🧺', bg: '#f3e8ff', color: '#9333ea' };
-                  if (comp.includes('HMTI') || comp.includes('Polinema')) return { icon: '🎓', bg: '#dcfce7', color: '#15803d' };
-                  return { icon: '✦', bg: '#f1f5f9', color: '#475569' };
-                };
-
-                const getExpSkills = (exp: any) => {
-                  if (exp.id === 'exp-pal') return ['HRIS Architecture', 'Next.js', 'Enterprise Workflows', 'Relational DB'];
-                  if (exp.id === 'exp-mandala-strat') return ['Inclusive Strategy', 'Kafe Among Rasa', 'Partnership', 'Creative Direction'];
-                  if (exp.id === 'exp-mandala-dev') return ['BrewTech', 'Next.js', 'TypeScript', 'Innovillage', 'Database'];
-                  if (exp.id === 'exp-nzbox') return ['Campaign Strategy', 'Performance Ads', 'Brand Marketing', 'Growth'];
-                  if (exp.id === 'exp-seal') return ['Disnakertrans Jatim', 'ProFile+ HRIS', 'Figma', 'Design System'];
-                  if (exp.id === 'exp-hmti-chair') return ['Executive Leadership', '30+ Agendas', 'Inter-Campus Collaboration'];
-                  return ['Fullstack', 'UI/UX'];
-                };
-
-                return filteredExps.map((exp: any, i: number) => {
-                  const expId = exp.id || `exp-${i}`;
-                  const isOpen = selectedExpId === expId;
-                  const compMeta = getCompanyMeta(exp.company || '');
-                  const skills = getExpSkills(exp);
-                  const isCurrent = (exp.period || exp.start_date || '').toLowerCase().includes('present');
-
-                  return (
-                    <div 
-                      key={expId} 
-                      onClick={() => setSelectedExpId(isOpen ? null : expId)}
-                      style={{
-                        background: '#ffffff',
-                        border: isOpen ? '1.5px solid #0284c7' : '1px solid #e2e8f0',
-                        borderRadius: '18px',
-                        padding: '1.15rem 1.35rem',
-                        cursor: 'pointer',
-                        boxShadow: isOpen 
-                          ? '0 12px 30px -8px rgba(2, 132, 199, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04)' 
-                          : '0 2px 6px rgba(15, 23, 42, 0.02)',
-                        transition: 'border-color 0.25s ease, box-shadow 0.25s ease'
-                      }}
-                      className="about-exp-item"
-                    >
-                      {/* Accordion Row Header */}
                       <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: '1rem'
+                        width: '136px',
+                        height: '136px',
+                        borderRadius: '50%',
+                        padding: '4px',
+                        background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #fde68a 100%)',
+                        boxShadow: '0 16px 36px -8px rgba(2, 132, 199, 0.35)',
+                        position: 'relative',
+                        marginBottom: '0.75rem'
                       }}>
-                        {/* Left: Icon Disc + Role & Company */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', flex: 1, minWidth: 0 }}>
-                          <div style={{
-                            width: '42px',
-                            height: '42px',
-                            borderRadius: '12px',
-                            background: compMeta.bg,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.25rem',
-                            flexShrink: 0,
-                            boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)'
-                          }}>
-                            {compMeta.icon}
-                          </div>
-
-                          <div style={{ minWidth: 0 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                              <h4 style={{
-                                fontSize: '0.98rem',
-                                fontWeight: 700,
-                                color: '#0f172a',
-                                margin: 0,
-                                letterSpacing: '-0.01em'
-                              }}>
-                                {exp.role}
-                              </h4>
-                              {isCurrent && (
-                                <span style={{
-                                  fontSize: '0.68rem',
-                                  fontWeight: 700,
-                                  color: '#15803d',
-                                  background: '#dcfce7',
-                                  padding: '0.12rem 0.5rem',
-                                  borderRadius: '9999px',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  gap: '0.3rem',
-                                  border: '1px solid rgba(22, 163, 74, 0.2)'
-                                }}>
-                                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} />
-                                  Current
-                                </span>
-                              )}
-                            </div>
-                            <span style={{
-                              fontSize: '0.84rem',
-                              color: '#64748b',
-                              fontWeight: 500,
-                              display: 'block',
-                              marginTop: '0.15rem'
-                            }}>
-                              {exp.company}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Right: Period + Chevron Indicator */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexShrink: 0 }}>
-                          <span style={{
-                            fontSize: '0.82rem',
-                            fontWeight: 600,
-                            color: '#94a3b8',
-                            textAlign: 'right'
-                          }}>
-                            {exp.period || exp.start_date}
-                          </span>
-                          <div style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            background: isOpen ? '#e0f2fe' : '#f8fafc',
-                            color: isOpen ? '#0284c7' : '#94a3b8',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'all 0.2s ease',
-                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
-                          }}>
-                            <ChevronDown size={16} />
-                          </div>
+                        <div style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          overflow: 'hidden',
+                          background: '#0f172a',
+                          position: 'relative'
+                        }}>
+                          <img 
+                            src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
+                            alt={name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: isRealPhoto ? 'center 20%' : 'center 15%'
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsRealPhoto(prev => !prev);
+                            }}
+                            title="Toggle Himmel / Real Avatar"
+                            style={{
+                              position: 'absolute',
+                              bottom: '4px',
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              background: 'rgba(15, 23, 42, 0.88)',
+                              backdropFilter: 'blur(6px)',
+                              border: '1px solid rgba(255,255,255,0.3)',
+                              borderRadius: '9999px',
+                              padding: '0.15rem 0.5rem',
+                              color: '#ffffff',
+                              fontSize: '0.62rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.25rem',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            <Sparkles size={10} color="#38bdf8" />
+                            <span>{isRealPhoto ? 'Himmel' : 'Real'}</span>
+                          </button>
                         </div>
                       </div>
-
-                      {/* Expandable Accordion Content Drawer */}
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ overflow: 'hidden' }}
-                          >
-                            <div style={{
-                              paddingTop: '1rem',
-                              marginTop: '0.85rem',
-                              borderTop: '1px solid #f1f5f9'
-                            }}>
-                              <p style={{
-                                fontSize: '0.88rem',
-                                color: '#334155',
-                                lineHeight: 1.62,
-                                margin: '0 0 0.85rem 0',
-                                fontWeight: 400
-                              }}>
-                                {exp.description}
-                              </p>
-
-                              {/* Skills & Technologies Pills */}
-                              <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                                gap: '0.45rem',
-                                marginTop: '0.65rem'
-                              }}>
-                                <span style={{
-                                  fontSize: '0.72rem',
-                                  fontWeight: 700,
-                                  color: '#64748b',
-                                  textTransform: 'uppercase',
-                                  letterSpacing: '0.04em',
-                                  marginRight: '0.2rem'
-                                }}>
-                                  Key Focus:
-                                </span>
-                                {skills.map((skill: string, sIdx: number) => (
-                                  <span
-                                    key={sIdx}
-                                    style={{
-                                      fontSize: '0.74rem',
-                                      fontWeight: 600,
-                                      padding: '0.2rem 0.6rem',
-                                      borderRadius: '9999px',
-                                      background: '#f1f5f9',
-                                      color: '#0f172a',
-                                      border: '1px solid #e2e8f0'
-                                    }}
-                                  >
-                                    {skill}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.01em' }}>
+                        {name}
+                      </span>
+                      <span style={{ fontSize: '0.68rem', color: '#0284c7', fontWeight: 600 }}>
+                        Trajectory Nexus
+                      </span>
                     </div>
-                  );
-                });
-              })()}
+                  }
+                />
+              </div>
+
+              {/* Inspected Experience Milestone Showcase Card */}
+              {activeExp && (
+                <motion.div
+                  key={activeExp.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    maxWidth: '860px',
+                    margin: '2.5rem auto 0 auto',
+                    background: '#ffffff',
+                    border: '1.5px solid #0284c7',
+                    borderRadius: '26px',
+                    padding: '2.25rem 2.5rem',
+                    boxShadow: '0 20px 50px -15px rgba(2, 132, 199, 0.18), 0 4px 16px rgba(15, 23, 42, 0.04)',
+                    position: 'relative'
+                  }}
+                >
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    gap: '1.5rem',
+                    flexWrap: 'wrap',
+                    marginBottom: '1.25rem',
+                    paddingBottom: '1.25rem',
+                    borderBottom: '1px solid #f1f5f9'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '260px' }}>
+                      <div style={{
+                        width: '54px',
+                        height: '54px',
+                        borderRadius: '16px',
+                        background: activeMeta.bg,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.65rem',
+                        boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.06)'
+                      }}>
+                        {activeMeta.icon}
+                      </div>
+                      <div>
+                        <span style={{
+                          fontSize: '0.8rem',
+                          fontWeight: 700,
+                          color: '#0284c7',
+                          letterSpacing: '0.04em',
+                          textTransform: 'uppercase',
+                          display: 'block'
+                        }}>
+                          {activeExp.company}
+                        </span>
+                        <h3 style={{
+                          fontSize: '1.45rem',
+                          fontWeight: 800,
+                          color: '#0f172a',
+                          margin: '0.15rem 0 0 0',
+                          letterSpacing: '-0.02em'
+                        }}>
+                          {activeExp.role}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      padding: '0.45rem 1rem',
+                      borderRadius: '9999px',
+                      background: '#f8fafc',
+                      border: '1px solid #e2e8f0',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      color: '#475569'
+                    }}>
+                      🗓 {activeExp.period || activeExp.start_date}
+                    </div>
+                  </div>
+
+                  <p style={{
+                    fontSize: '1.02rem',
+                    color: '#334155',
+                    lineHeight: 1.72,
+                    margin: '0 0 1.5rem 0',
+                    fontWeight: 400
+                  }}>
+                    {activeExp.description}
+                  </p>
+
+                  {/* Skills / Key Focus Highlights */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '0.55rem'
+                  }}>
+                    <span style={{
+                      fontSize: '0.74rem',
+                      fontWeight: 800,
+                      color: '#64748b',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      marginRight: '0.25rem'
+                    }}>
+                      Key Focus:
+                    </span>
+                    {activeMeta.tags.map((tag: string, tIdx: number) => (
+                      <span
+                        key={tIdx}
+                        style={{
+                          fontSize: '0.78rem',
+                          fontWeight: 600,
+                          padding: '0.3rem 0.75rem',
+                          borderRadius: '9999px',
+                          background: '#f0f9ff',
+                          color: '#0284c7',
+                          border: '1px solid #bae6fd'
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
-          </div>
-        </div>
+          );
+        })()}
       </section>
 
       {/* =========================================================================

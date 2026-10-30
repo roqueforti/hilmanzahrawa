@@ -613,7 +613,7 @@ const createEngine = (root: HTMLElement, config: any, setAspect: (aspect: number
 };
 
 export interface OrbitImagesProps {
-  images?: Array<string | { src: string; alt?: string }>;
+  images?: Array<string | { src?: string; alt?: string; node?: ReactNode }>;
   altPrefix?: string;
   shape?: 'ellipse' | 'circle' | 'square' | 'rectangle' | 'triangle' | 'star' | 'heart' | 'infinity' | 'wave' | 'custom';
   customPath?: string;
@@ -644,7 +644,7 @@ export interface OrbitImagesProps {
   hoverSpeed?: number;
   draggable?: boolean;
   clickToFront?: boolean;
-  onItemClick?: (index: number, src: string) => void;
+  onItemClick?: (index: number, src?: string) => void;
   alignToPath?: boolean;
   intro?: boolean;
   centerContent?: ReactNode;
@@ -727,7 +727,7 @@ export default function OrbitImages({
       images.map((image, index) =>
         typeof image === 'string'
           ? { src: image, alt: `${altPrefix} ${index + 1}` }
-          : { src: image.src, alt: image.alt ?? `${altPrefix} ${index + 1}` }
+          : { src: image.src, alt: image.alt ?? `${altPrefix} ${index + 1}`, node: image.node }
       ),
     [images, altPrefix]
   );
@@ -754,7 +754,7 @@ export default function OrbitImages({
     onItemClick,
     alignToPath,
     intro,
-    sources: items.map(item => item.src)
+    sources: items.map(item => item.src || '')
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -862,7 +862,11 @@ export default function OrbitImages({
           aria-label={interactive ? item.alt : undefined}
         >
           <div className="orbit-item-inner">
-            <img src={item.src} alt={item.alt} draggable={false} decoding="async" className="orbit-image" />
+            {item.node ? (
+              item.node
+            ) : item.src ? (
+              <img src={item.src} alt={item.alt} draggable={false} decoding="async" className="orbit-image" />
+            ) : null}
           </div>
         </div>
       ))}
