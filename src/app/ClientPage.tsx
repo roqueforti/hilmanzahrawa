@@ -1364,7 +1364,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   setExpandedImageIndex(0);
                   setIsExpandedMediaLoading(true);
 
-
+                  // Navigate smoothly to showcase panel if scrolled down
+                  requestAnimationFrame(() => {
+                    const gridEl = document.querySelector('.works-grid-image1') as HTMLElement | null;
+                    if (gridEl) {
+                      const rect = gridEl.getBoundingClientRect();
+                      // If the top of the grid is not already framed near the top (60px - 120px)
+                      if (rect.top < 60 || rect.top > 130) {
+                        const targetY = Math.max(0, window.scrollY + rect.top - 80);
+                        window.scrollTo({
+                          top: targetY,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }
+                  });
                 }}
               >
                 {/* 16:9 Thumbnail */}
