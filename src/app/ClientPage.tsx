@@ -51,6 +51,7 @@ import { fallbackPortfolioData } from '@/lib/supabase';
 const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
 const FlipCard = dynamic(() => import('@/components/FlipCard'), { ssr: false });
 const OrbitImages = dynamic(() => import('@/components/OrbitImages'), { ssr: false });
+const CardNav = dynamic(() => import('@/components/CardNav'), { ssr: false });
 
 function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   if (!url) return null;
@@ -364,6 +365,45 @@ export default function ClientPage({ initialData }: ClientPageProps) {
     }
   ];
 
+  const cardNavItems = [
+    {
+      label: 'Works',
+      description: 'Production systems, UI/UX, and enterprise solutions.',
+      links: [
+        { label: 'Selected Works', href: '#works' },
+        { label: 'Web Applications', href: '#works' },
+        { label: 'Creative Media', href: '#works' }
+      ]
+    },
+    {
+      label: 'About',
+      description: 'Background, design philosophy, and technical skills.',
+      links: [
+        { label: 'About Me', href: '#about' },
+        { label: 'Core Services', href: '#services' },
+        { label: 'Engineering Process', href: '#process' }
+      ]
+    },
+    {
+      label: 'Trajectory',
+      description: 'Professional career timeline and academic credentials.',
+      links: [
+        { label: 'Career Orbit', href: '#experience' },
+        { label: 'Education Pass', href: '#credentials' },
+        { label: 'Honors & Grants', href: '#credentials' }
+      ]
+    },
+    {
+      label: 'Connect',
+      description: 'Technical articles and consultation inquiries.',
+      links: [
+        { label: 'Tech Articles', href: '#articles' },
+        { label: 'WhatsApp Chat', href: `https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20connect` },
+        { label: 'Send Email', href: `mailto:${email}` }
+      ]
+    }
+  ];
+
   return (
     <div style={{
       background: '#ffffff',
@@ -377,129 +417,49 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       <BlueMoonPetals />
 
       {/* =========================================================================
-         1. TOP NAVIGATION
+         1. TOP NAVIGATION (CardNav Floating Dock)
          ========================================================================= */}
       <header className="landing-header" style={{
-        padding: '1.75rem 2.5rem',
+        padding: '1.25rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        position: 'relative',
-        zIndex: 50
+        justifyContent: 'center',
+        position: 'sticky',
+        top: '0.75rem',
+        zIndex: 100
       }}>
-        {/* Brand Logo in Italic Editorial Serif */}
-        <Link href="/" style={{ textDecoration: 'none', color: '#0f172a' }}>
-          <span 
-            className="editorial-serif-italic landing-logo"
-            style={{
-              fontSize: '1.9rem',
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              fontWeight: 400
-            }}
-          >
-            {name}
-          </span>
-        </Link>
-
-        {/* Center Desktop Navigation */}
-        <nav className="desktop-portfolio-nav" style={{ display: 'none', alignItems: 'center', gap: '2rem' }}>
-          <a href="#works" style={{ textDecoration: 'none', color: '#0f172a', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}>Works</a>
-          <a href="#about" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>About</a>
-          <a href="#process" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Process</a>
-          <a href="#experience" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Experience</a>
-          <a href="#credentials" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Education</a>
-          <a href="#articles" style={{ textDecoration: 'none', color: '#475569', fontSize: '0.9rem', fontWeight: 500, transition: 'color 0.2s' }}>Articles</a>
-        </nav>
-
-        {/* Right Navigation: Primary Contact CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Let's Talk CTA */}
-          <a
-            href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="desktop-header-cta"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.55rem 1.25rem',
-              borderRadius: '9999px',
-              background: '#0f172a',
-              color: '#ffffff',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              textDecoration: 'none',
-              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.15)',
-              transition: 'transform 0.2s ease',
-            }}
-          >
-            <span>Let's Talk</span>
-            <ArrowUpRight size={14} />
-          </a>
-
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation"
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '50%',
-              border: '1.5px solid #e2e8f0',
-              background: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#0f172a',
-              transition: 'background 0.2s'
-            }}
-          >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
-        </div>
+        <CardNav
+          logo={
+            <span 
+              className="editorial-serif-italic landing-logo"
+              style={{
+                fontSize: '1.65rem',
+                lineHeight: 1,
+                letterSpacing: '-0.02em',
+                fontWeight: 600,
+                color: '#0f172a',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {name}
+            </span>
+          }
+          logoAlt={name}
+          logoHref="#"
+          items={cardNavItems}
+          cta={{
+            label: "Let's Talk",
+            href: `https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`
+          }}
+          theme="light"
+          surface="glass"
+          cardEffect="rise"
+          openOn="click"
+          maxWidth={920}
+        />
       </header>
-
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            style={{
-              position: 'absolute',
-              top: '5rem',
-              right: '2rem',
-              background: '#ffffff',
-              border: '1.5px solid #e2e8f0',
-              borderRadius: '20px',
-              padding: '1.5rem',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-              zIndex: 100,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
-              minWidth: '240px'
-            }}
-          >
-            <a href="#works" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 700, fontSize: '0.95rem' }}>Selected Works</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>About Me</a>
-            <a href="#credentials" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Education & Honors</a>
-            <a href="#process" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Process</a>
-            <a href="#experience" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Experience & Career</a>
-            <a href="#articles" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#475569', fontWeight: 500, fontSize: '0.95rem' }}>Articles</a>
-            <a href={`https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: 'none', color: '#0f172a', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span>Let's Talk (WhatsApp)</span>
-              <ArrowUpRight size={14} />
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* =========================================================================
          2. HERO SECTION
