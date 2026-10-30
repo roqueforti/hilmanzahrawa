@@ -2811,23 +2811,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               background="transparent"
               color="#0f172a"
               shadowColor="#0284c7"
-              shadowOpacity={0.16}
-              glareOpacity={0.24}
+              shadowOpacity={0.12}
+              glareOpacity={0.16}
               tiltMax={10}
               front={
                 <div style={{
                   height: '100%',
                   borderRadius: '28px',
-                  background: 'linear-gradient(150deg, #091326 0%, #0f172a 55%, #071938 100%)',
-                  border: '1.5px solid rgba(56, 189, 248, 0.28)',
+                  background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0f9ff 100%)',
+                  border: '1.5px solid rgba(2, 132, 199, 0.25)',
                   padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  color: '#ffffff',
+                  color: '#0f172a',
                   position: 'relative',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px -12px rgba(2, 132, 199, 0.22)'
+                  boxShadow: '0 20px 45px -12px rgba(2, 132, 199, 0.12), 0 4px 16px rgba(15, 23, 42, 0.04)'
                 }}>
                   {/* Subtle Background Glow & Radial Watermark */}
                   <div style={{
@@ -2837,7 +2837,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     width: '260px',
                     height: '260px',
                     borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0) 70%)',
+                    background: 'radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0) 70%)',
                     pointerEvents: 'none'
                   }} />
 
@@ -2848,7 +2848,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     right: '10px',
                     fontSize: '6.5rem',
                     fontWeight: 900,
-                    color: 'rgba(255, 255, 255, 0.03)',
+                    color: 'rgba(15, 23, 42, 0.03)',
                     letterSpacing: '-0.05em',
                     lineHeight: 1,
                     userSelect: 'none',
@@ -2857,7 +2857,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     POLINEMA
                   </span>
 
-                  {/* Top Bar: Holographic Header & Status Badge */}
+                  {/* Top Bar: Credential Header & Status Badge */}
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -2865,12 +2865,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           width: '38px',
                           height: '38px',
                           borderRadius: '12px',
-                          background: 'rgba(56, 189, 248, 0.14)',
-                          border: '1px solid rgba(56, 189, 248, 0.3)',
+                          background: '#e0f2fe',
+                          border: '1px solid #bae6fd',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#38bdf8'
+                          color: '#0284c7'
                         }}>
                           <GraduationCap size={20} strokeWidth={2.2} />
                         </div>
@@ -2880,12 +2880,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             fontWeight: 800,
                             letterSpacing: '0.08em',
                             textTransform: 'uppercase',
-                            color: '#38bdf8',
+                            color: '#0284c7',
                             display: 'block'
                           }}>
                             Undergraduate Pass
                           </span>
-                          <span style={{ fontSize: '0.62rem', color: '#94a3b8', letterSpacing: '0.04em' }}>
+                          <span style={{ fontSize: '0.62rem', color: '#64748b', letterSpacing: '0.04em' }}>
                             REG NO. 22417600
                           </span>
                         </div>
@@ -2894,16 +2894,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: 700,
-                        color: '#4ade80',
-                        background: 'rgba(34, 197, 94, 0.14)',
-                        border: '1px solid rgba(74, 222, 128, 0.3)',
+                        color: '#15803d',
+                        background: '#dcfce7',
+                        border: '1px solid rgba(34, 197, 94, 0.3)',
                         padding: '0.25rem 0.65rem',
                         borderRadius: '9999px',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '0.35rem'
                       }}>
-                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
+                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#16a34a', boxShadow: '0 0 6px #16a34a' }} />
                         2022 – 2026
                       </span>
                     </div>
@@ -2912,7 +2912,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <h3 style={{
                       fontSize: '1.45rem',
                       fontWeight: 800,
-                      color: '#ffffff',
+                      color: '#0f172a',
                       margin: '0 0 0.35rem 0',
                       letterSpacing: '-0.02em'
                     }}>
@@ -2920,7 +2920,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     </h3>
                     <div style={{
                       fontSize: '0.96rem',
-                      color: '#38bdf8',
+                      color: '#0284c7',
                       fontWeight: 600,
                       lineHeight: 1.45,
                       marginBottom: '1rem'
@@ -2930,7 +2930,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
                     <p style={{
                       fontSize: '0.86rem',
-                      color: '#94a3b8',
+                      color: '#475569',
                       lineHeight: 1.62,
                       margin: 0,
                       fontWeight: 400
@@ -2945,19 +2945,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     paddingTop: '1.1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderTop: '1px solid #f1f5f9',
                     marginTop: '1.25rem'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontSize: '0.76rem', fontWeight: 600 }}>
-                      <RotateCw size={13} color="#38bdf8" />
+                      <RotateCw size={13} color="#0284c7" />
                       <span>Click or drag to flip</span>
                     </div>
                     <span style={{
                       fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#38bdf8',
-                      background: 'rgba(56, 189, 248, 0.1)',
-                      border: '1px solid rgba(56, 189, 248, 0.25)',
+                      color: '#0284c7',
+                      background: '#f0f9ff',
+                      border: '1px solid #bae6fd',
                       padding: '0.25rem 0.75rem',
                       borderRadius: '9999px'
                     }}>
@@ -2970,21 +2970,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 <div style={{
                   height: '100%',
                   borderRadius: '28px',
-                  background: 'linear-gradient(150deg, #091326 0%, #0f172a 60%, #03142e 100%)',
-                  border: '1.5px solid rgba(56, 189, 248, 0.35)',
+                  background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0f9ff 100%)',
+                  border: '1.5px solid rgba(2, 132, 199, 0.25)',
                   padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  color: '#ffffff',
-                  boxShadow: '0 25px 50px -12px rgba(2, 132, 199, 0.25)'
+                  color: '#0f172a',
+                  boxShadow: '0 20px 45px -12px rgba(2, 132, 199, 0.12), 0 4px 16px rgba(15, 23, 42, 0.04)'
                 }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.15rem' }}>
                       <span style={{
                         fontSize: '0.7rem',
                         fontWeight: 800,
-                        color: '#38bdf8',
+                        color: '#0284c7',
                         textTransform: 'uppercase',
                         letterSpacing: '0.08em'
                       }}>
@@ -2992,20 +2992,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       </span>
                       <span style={{
                         fontSize: '0.7rem',
-                        color: '#94a3b8',
-                        background: 'rgba(255,255,255,0.06)',
+                        color: '#475569',
+                        background: '#f1f5f9',
                         padding: '0.15rem 0.55rem',
                         borderRadius: '6px',
-                        border: '1px solid rgba(255,255,255,0.08)'
+                        border: '1px solid #e2e8f0'
                       }}>
                         GPA: High Standing
                       </span>
                     </div>
 
-                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
+                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
                       Core Technical Modules
                     </h4>
-                    <p style={{ fontSize: '0.84rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
+                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
                       Deep-dive curriculum covering enterprise application lifecycles, database normalization, and modern microservice paradigms.
                     </p>
 
@@ -3025,10 +3025,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             fontWeight: 600,
                             padding: '0.35rem 0.75rem',
                             borderRadius: '9999px',
-                            background: 'rgba(56, 189, 248, 0.08)',
-                            color: '#e0f2fe',
-                            border: '1px solid rgba(56, 189, 248, 0.2)',
-                            backdropFilter: 'blur(8px)'
+                            background: '#f0f9ff',
+                            color: '#0284c7',
+                            border: '1px solid #bae6fd'
                           }}
                         >
                           {mod}
@@ -3042,7 +3041,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     paddingTop: '1.1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+                    borderTop: '1px solid #f1f5f9'
                   }}>
                     <span style={{ fontSize: '0.76rem', color: '#64748b' }}>
                       Polinema (2022 – 2026)
@@ -3050,7 +3049,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <span style={{
                       fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#38bdf8'
+                      color: '#0284c7'
                     }}>
                       Flip Back ↺
                     </span>
@@ -3068,23 +3067,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               background="transparent"
               color="#0f172a"
               shadowColor="#059669"
-              shadowOpacity={0.16}
-              glareOpacity={0.24}
+              shadowOpacity={0.12}
+              glareOpacity={0.16}
               tiltMax={10}
               front={
                 <div style={{
                   height: '100%',
                   borderRadius: '28px',
-                  background: 'linear-gradient(150deg, #061f18 0%, #0f172a 55%, #05261d 100%)',
-                  border: '1.5px solid rgba(52, 211, 153, 0.28)',
+                  background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0fdf4 100%)',
+                  border: '1.5px solid rgba(16, 185, 129, 0.25)',
                   padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  color: '#ffffff',
+                  color: '#0f172a',
                   position: 'relative',
                   overflow: 'hidden',
-                  boxShadow: '0 25px 50px -12px rgba(5, 150, 105, 0.22)'
+                  boxShadow: '0 20px 45px -12px rgba(16, 185, 129, 0.12), 0 4px 16px rgba(15, 23, 42, 0.04)'
                 }}>
                   {/* Subtle Background Glow & Radial Watermark */}
                   <div style={{
@@ -3094,7 +3093,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     width: '260px',
                     height: '260px',
                     borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, rgba(52, 211, 153, 0) 70%)',
+                    background: 'radial-gradient(circle, rgba(52, 211, 153, 0.12) 0%, rgba(52, 211, 153, 0) 70%)',
                     pointerEvents: 'none'
                   }} />
 
@@ -3105,7 +3104,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     right: '10px',
                     fontSize: '6.5rem',
                     fontWeight: 900,
-                    color: 'rgba(255, 255, 255, 0.03)',
+                    color: 'rgba(15, 23, 42, 0.03)',
                     letterSpacing: '-0.05em',
                     lineHeight: 1,
                     userSelect: 'none',
@@ -3114,7 +3113,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     MITREKA
                   </span>
 
-                  {/* Top Bar: Holographic Header & Status Badge */}
+                  {/* Top Bar: Credential Header & Status Badge */}
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -3122,12 +3121,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           width: '38px',
                           height: '38px',
                           borderRadius: '12px',
-                          background: 'rgba(52, 211, 153, 0.14)',
-                          border: '1px solid rgba(52, 211, 153, 0.3)',
+                          background: '#d1fae5',
+                          border: '1px solid #a7f3d0',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#34d399'
+                          color: '#059669'
                         }}>
                           <Landmark size={20} strokeWidth={2.2} />
                         </div>
@@ -3137,12 +3136,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             fontWeight: 800,
                             letterSpacing: '0.08em',
                             textTransform: 'uppercase',
-                            color: '#34d399',
+                            color: '#059669',
                             display: 'block'
                           }}>
                             Secondary Education Pass
                           </span>
-                          <span style={{ fontSize: '0.62rem', color: '#94a3b8', letterSpacing: '0.04em' }}>
+                          <span style={{ fontSize: '0.62rem', color: '#64748b', letterSpacing: '0.04em' }}>
                             MITREKA SATATA
                           </span>
                         </div>
@@ -3151,9 +3150,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       <span style={{
                         fontSize: '0.72rem',
                         fontWeight: 700,
-                        color: '#94a3b8',
-                        background: 'rgba(255, 255, 255, 0.08)',
-                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        color: '#475569',
+                        background: '#f1f5f9',
+                        border: '1px solid #e2e8f0',
                         padding: '0.25rem 0.65rem',
                         borderRadius: '9999px',
                         display: 'inline-flex',
@@ -3168,7 +3167,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <h3 style={{
                       fontSize: '1.45rem',
                       fontWeight: 800,
-                      color: '#ffffff',
+                      color: '#0f172a',
                       margin: '0 0 0.35rem 0',
                       letterSpacing: '-0.02em'
                     }}>
@@ -3176,7 +3175,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     </h3>
                     <div style={{
                       fontSize: '0.96rem',
-                      color: '#34d399',
+                      color: '#059669',
                       fontWeight: 600,
                       lineHeight: 1.45,
                       marginBottom: '1rem'
@@ -3186,7 +3185,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
                     <p style={{
                       fontSize: '0.86rem',
-                      color: '#94a3b8',
+                      color: '#475569',
                       lineHeight: 1.62,
                       margin: 0,
                       fontWeight: 400
@@ -3201,19 +3200,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     paddingTop: '1.1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderTop: '1px solid #f1f5f9',
                     marginTop: '1.25rem'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontSize: '0.76rem', fontWeight: 600 }}>
-                      <RotateCw size={13} color="#34d399" />
+                      <RotateCw size={13} color="#059669" />
                       <span>Click or drag to flip</span>
                     </div>
                     <span style={{
                       fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#34d399',
-                      background: 'rgba(52, 211, 153, 0.1)',
-                      border: '1px solid rgba(52, 211, 153, 0.25)',
+                      color: '#059669',
+                      background: '#ecfdf5',
+                      border: '1px solid #a7f3d0',
                       padding: '0.25rem 0.75rem',
                       borderRadius: '9999px'
                     }}>
@@ -3226,21 +3225,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 <div style={{
                   height: '100%',
                   borderRadius: '28px',
-                  background: 'linear-gradient(150deg, #061f18 0%, #0f172a 60%, #031c15 100%)',
-                  border: '1.5px solid rgba(52, 211, 153, 0.35)',
+                  background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0fdf4 100%)',
+                  border: '1.5px solid rgba(16, 185, 129, 0.25)',
                   padding: '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  color: '#ffffff',
-                  boxShadow: '0 25px 50px -12px rgba(5, 150, 105, 0.25)'
+                  color: '#0f172a',
+                  boxShadow: '0 20px 45px -12px rgba(16, 185, 129, 0.12), 0 4px 16px rgba(15, 23, 42, 0.04)'
                 }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.15rem' }}>
                       <span style={{
                         fontSize: '0.7rem',
                         fontWeight: 800,
-                        color: '#34d399',
+                        color: '#059669',
                         textTransform: 'uppercase',
                         letterSpacing: '0.08em'
                       }}>
@@ -3248,20 +3247,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       </span>
                       <span style={{
                         fontSize: '0.7rem',
-                        color: '#94a3b8',
-                        background: 'rgba(255,255,255,0.06)',
+                        color: '#475569',
+                        background: '#f1f5f9',
                         padding: '0.15rem 0.55rem',
                         borderRadius: '6px',
-                        border: '1px solid rgba(255,255,255,0.08)'
+                        border: '1px solid #e2e8f0'
                       }}>
                         Distinction Cohort
                       </span>
                     </div>
 
-                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
+                    <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.65rem 0', letterSpacing: '-0.02em' }}>
                       Foundation Areas
                     </h4>
-                    <p style={{ fontSize: '0.84rem', color: '#94a3b8', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
+                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.55, margin: '0 0 1.25rem 0' }}>
                       Early development of rigorous analytical thinking, competitive parliamentary debating, and computational mathematics.
                     </p>
 
@@ -3280,10 +3279,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             fontWeight: 600,
                             padding: '0.35rem 0.75rem',
                             borderRadius: '9999px',
-                            background: 'rgba(52, 211, 153, 0.08)',
-                            color: '#d1fae5',
-                            border: '1px solid rgba(52, 211, 153, 0.2)',
-                            backdropFilter: 'blur(8px)'
+                            background: '#ecfdf5',
+                            color: '#059669',
+                            border: '1px solid #a7f3d0'
                           }}
                         >
                           {mod}
@@ -3297,7 +3295,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     paddingTop: '1.1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+                    borderTop: '1px solid #f1f5f9'
                   }}>
                     <span style={{ fontSize: '0.76rem', color: '#64748b' }}>
                       SMAN 1 Malang (2019 – 2022)
@@ -3305,7 +3303,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <span style={{
                       fontSize: '0.74rem',
                       fontWeight: 700,
-                      color: '#34d399'
+                      color: '#059669'
                     }}>
                       Flip Back ↺
                     </span>
