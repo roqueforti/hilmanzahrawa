@@ -20,7 +20,8 @@ import {
   Sliders, 
   Smartphone, 
   Layers, 
-  Award, 
+  Award,
+  Trophy,
   GraduationCap, 
   Briefcase, 
   Code2, 
@@ -78,6 +79,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
   const [isRealPhoto, setIsRealPhoto] = useState<boolean>(false);
   const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
+  const [activeAwardId, setActiveAwardId] = useState<number | null>(0);
+  const [awardsCategoryFilter, setAwardsCategoryFilter] = useState<string>("all");
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
@@ -2557,89 +2560,532 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         9. CREDENTIALS, EDUCATION & AWARDS (from previous website)
+         9. CREDENTIALS, EDUCATION & AWARDS (Interactive Academic Journey & Trophy Cabinet)
          ========================================================================= */}
-      <section style={{
+      <section id="credentials" style={{
         padding: '5rem 1.5rem',
         maxWidth: '1240px',
         margin: '0 auto'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
           <span className="editorial-kicker">
-            / Qualifications /
+            / Qualifications & Accolades /
           </span>
           <h2 style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
-            fontWeight: 400,
+            fontWeight: 500,
             letterSpacing: '-0.025em',
             margin: 0,
             color: '#0f172a'
           }}>
             Education & Honors
           </h2>
+          <p style={{
+            color: '#64748b',
+            fontSize: '1rem',
+            margin: '0.65rem 0 0 0',
+            fontWeight: 400
+          }}>
+            Academic foundations, verified milestones, and national & international competition recognitions.
+          </p>
         </div>
 
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 540px), 1fr))',
-          gap: '3rem'
+          gap: '2.5rem',
+          alignItems: 'start'
         }}>
-          {/* Education Column */}
+          {/* ==================== LEFT COLUMN: INTERACTIVE EDUCATION JOURNEY ==================== */}
           <div style={{
             background: '#ffffff',
-            borderRadius: '24px',
+            borderRadius: '26px',
             padding: '2.25rem',
             border: '1.5px solid #e2e8f0',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.03)'
+            boxShadow: '0 12px 35px -10px rgba(15, 23, 42, 0.05)',
+            position: 'relative'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
-              <GraduationCap size={22} color="#0284c7" />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>Education</h3>
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingBottom: '1.25rem',
+              borderBottom: '1px solid #f1f5f9',
+              marginBottom: '1.75rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '12px',
+                  background: '#e0f2fe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#0284c7'
+                }}>
+                  <GraduationCap size={22} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                    Academic Journey
+                  </h3>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                    Formal Degrees & Core Competencies
+                  </span>
+                </div>
+              </div>
+
+              <span style={{
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                color: '#0284c7',
+                background: '#f0f9ff',
+                padding: '0.2rem 0.65rem',
+                borderRadius: '9999px',
+                border: '1px solid #bae6fd'
+              }}>
+                2 Institutions
+              </span>
             </div>
 
+            {/* Education Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-              {educationList.map((edu: any, idx: number) => (
-                <div key={idx} style={{ borderBottom: idx !== educationList.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== educationList.length - 1 ? '1.5rem' : 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.35rem' }}>
-                    <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>{edu.school}</h4>
-                    <span style={{ fontSize: '0.84rem', color: '#475569', fontWeight: 600 }}>{edu.period || `${edu.start_date} - ${edu.end_date}`}</span>
+              {/* Institution 1: Polinema */}
+              <div 
+                style={{
+                  background: '#f8fafc',
+                  borderRadius: '20px',
+                  padding: '1.65rem',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 14px rgba(15, 23, 42, 0.02)',
+                  transition: 'all 0.2s ease'
+                }}
+                className="edu-interactive-card"
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                  <div>
+                    <h4 style={{ fontSize: '1.18rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>
+                      Politeknik Negeri Malang
+                    </h4>
+                    <span style={{ fontSize: '0.94rem', color: '#0284c7', fontWeight: 700, display: 'block', marginTop: '0.2rem' }}>
+                      D4 Sistem Informasi Bisnis (Business Information Systems)
+                    </span>
                   </div>
-                  <span style={{ fontSize: '0.92rem', color: '#0284c7', fontWeight: 700, display: 'block', marginBottom: '0.45rem' }}>{edu.degree}</span>
-                  <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.55, margin: 0, fontWeight: 400 }}>{edu.desc || edu.description}</p>
+                  
+                  <span style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    color: '#15803d',
+                    background: '#dcfce7',
+                    padding: '0.25rem 0.65rem',
+                    borderRadius: '9999px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    border: '1px solid rgba(22, 163, 74, 0.2)',
+                    flexShrink: 0
+                  }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#16a34a' }} />
+                    2022 — 2026
+                  </span>
                 </div>
-              ))}
+
+                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.6, margin: '0 0 1rem 0' }}>
+                  Specialized in Software Engineering, Enterprise Database Systems, Business Process Modeling, and Web Application Architecture.
+                </p>
+
+                {/* Key Coursework Pills Cloud */}
+                <div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'block', marginBottom: '0.45rem' }}>
+                    Core Competencies:
+                  </span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    {[
+                      'Enterprise Database Systems',
+                      'Web Architecture & API',
+                      'Business Process (BPMN)',
+                      'Fullstack Development',
+                      'Systems Analysis'
+                    ].map((mod, mIdx) => (
+                      <span 
+                        key={mIdx}
+                        style={{
+                          fontSize: '0.74rem',
+                          fontWeight: 600,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '9999px',
+                          background: '#ffffff',
+                          color: '#0f172a',
+                          border: '1px solid #cbd5e1',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
+                        }}
+                      >
+                        {mod}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Institution 2: SMAN 1 Malang */}
+              <div 
+                style={{
+                  background: '#ffffff',
+                  borderRadius: '20px',
+                  padding: '1.65rem',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 14px rgba(15, 23, 42, 0.02)',
+                  transition: 'all 0.2s ease'
+                }}
+                className="edu-interactive-card"
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                  <div>
+                    <h4 style={{ fontSize: '1.18rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>
+                      SMA Negeri 1 Malang
+                    </h4>
+                    <span style={{ fontSize: '0.94rem', color: '#64748b', fontWeight: 600, display: 'block', marginTop: '0.2rem' }}>
+                      Mathematics & Natural Science (MIPA)
+                    </span>
+                  </div>
+
+                  <span style={{
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    color: '#64748b',
+                    background: '#f1f5f9',
+                    padding: '0.25rem 0.65rem',
+                    borderRadius: '9999px',
+                    border: '1px solid #e2e8f0',
+                    flexShrink: 0
+                  }}>
+                    2019 — 2022
+                  </span>
+                </div>
+
+                <p style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.6, margin: '0 0 1rem 0' }}>
+                  Strong foundation in mathematics, analytical problem solving, and science curriculum at one of East Java's top academic high schools.
+                </p>
+
+                {/* Key Focus Pills */}
+                <div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'block', marginBottom: '0.45rem' }}>
+                    Foundation Areas:
+                  </span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    {['Analytical Logic', 'Mathematical Modeling', 'Scientific Research', 'Public Speaking'].map((mod, mIdx) => (
+                      <span 
+                        key={mIdx}
+                        style={{
+                          fontSize: '0.74rem',
+                          fontWeight: 600,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '9999px',
+                          background: '#f8fafc',
+                          color: '#334155',
+                          border: '1px solid #e2e8f0'
+                        }}
+                      >
+                        {mod}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Honors & Awards Column */}
+          {/* ==================== RIGHT COLUMN: INTERACTIVE TROPHY CABINET ==================== */}
           <div style={{
             background: '#ffffff',
-            borderRadius: '24px',
+            borderRadius: '26px',
             padding: '2.25rem',
             border: '1.5px solid #e2e8f0',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.03)'
+            boxShadow: '0 12px 35px -10px rgba(15, 23, 42, 0.05)',
+            position: 'relative'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
-              <Award size={22} color="#f59e0b" />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Honors & Awards</h3>
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingBottom: '1.25rem',
+              borderBottom: '1px solid #f1f5f9',
+              marginBottom: '1.25rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '12px',
+                  background: '#fef3c7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#b45309'
+                }}>
+                  <Trophy size={22} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                    Honors & Awards
+                  </h3>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                    Recognitions & Competitive Accolades
+                  </span>
+                </div>
+              </div>
+
+              <span style={{
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                color: '#b45309',
+                background: '#fffbeb',
+                padding: '0.2rem 0.65rem',
+                borderRadius: '9999px',
+                border: '1px solid #fde68a'
+              }}>
+                5 Awards
+              </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              {honorsList.slice(0, 4).map((aw: any, idx: number) => (
-                <div key={idx} style={{ borderBottom: idx !== 3 ? '1px solid #f1f5f9' : 'none', paddingBottom: idx !== 3 ? '1.25rem' : 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.35rem' }}>
-                    <h4 style={{ fontSize: '1.08rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.015em' }}>{aw.title}</h4>
-                    <span style={{ fontSize: '0.84rem', color: '#475569', fontWeight: 600 }}>{aw.year || aw.date}</span>
-                  </div>
-                  <span style={{ fontSize: '0.88rem', color: '#b45309', fontWeight: 700, display: 'block', marginBottom: '0.35rem' }}>{aw.issuer}</span>
-                  <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.55, margin: 0, fontWeight: 400 }}>{aw.desc || aw.description}</p>
-                </div>
-              ))}
+            {/* Category Quick Filter */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '0.45rem',
+              marginBottom: '1.25rem'
+            }}>
+              {[
+                { id: 'all', label: 'All Accolades (5)' },
+                { id: 'impact', label: 'Community & Grants (2)' },
+                { id: 'competition', label: 'Debate & Design (3)' }
+              ].map((cat) => {
+                const isActive = awardsCategoryFilter === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setAwardsCategoryFilter(cat.id)}
+                    style={{
+                      padding: '0.35rem 0.8rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.78rem',
+                      fontWeight: isActive ? 700 : 500,
+                      background: isActive ? '#0f172a' : '#f8fafc',
+                      color: isActive ? '#ffffff' : '#64748b',
+                      border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Interactive Awards List (Accordion Cards) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {(() => {
+                const allAwards = [
+                  {
+                    id: 0,
+                    title: '"Mandala Pure Love" Most Inspiring Community Empowerment',
+                    issuer: 'Djarum Beasiswa Plus',
+                    year: '2026',
+                    scope: 'National Winner',
+                    category: 'impact',
+                    icon: '🏆',
+                    bgLight: '#fef3c7',
+                    textAccent: '#b45309',
+                    borderAccent: 'rgba(245, 158, 11, 0.4)',
+                    desc: 'Awarded as the most inspiring community empowerment initiative for 2024/2025 across all Djarum Beasiswa Plus partner programs in Indonesia.'
+                  },
+                  {
+                    id: 1,
+                    title: 'Innovillage Top 180 for Brewtech',
+                    issuer: 'Innovillage — Telkom Indonesia',
+                    year: '2026',
+                    scope: 'Social Venture Grant',
+                    category: 'impact',
+                    icon: '🚀',
+                    bgLight: '#e0f2fe',
+                    textAccent: '#0369a1',
+                    borderAccent: 'rgba(2, 132, 199, 0.4)',
+                    desc: 'Selected as one of the top 180 social engineering projects in Indonesia for the BrewTech platform under the national Innovillage social venture program.'
+                  },
+                  {
+                    id: 2,
+                    title: '2nd Runner Up - IT Poly Debate Cup',
+                    issuer: 'IT Debate Society',
+                    year: '2024',
+                    scope: 'National Competition',
+                    category: 'competition',
+                    icon: '🎙️',
+                    bgLight: '#e0e7ff',
+                    textAccent: '#4338ca',
+                    borderAccent: 'rgba(99, 102, 241, 0.4)',
+                    desc: 'National level public debating event adhering to the rigorous British Parliamentary Debate System format, testing rhetoric and critical argumentation.'
+                  },
+                  {
+                    id: 3,
+                    title: 'Finalis Desain Poster Infografis - 4C National Competition',
+                    issuer: 'Universitas Brawijaya (FILKOM)',
+                    year: '2024',
+                    scope: 'National Design Contest',
+                    category: 'competition',
+                    icon: '🎨',
+                    bgLight: '#f3e8ff',
+                    textAccent: '#7e22ce',
+                    borderAccent: 'rgba(168, 85, 247, 0.4)',
+                    desc: 'National digital design and infographic architecture competition hosted by the Faculty of Computer Science (FILKOM) at Universitas Brawijaya.'
+                  },
+                  {
+                    id: 4,
+                    title: '2nd Best Novice Team - International I&T Open Debate',
+                    issuer: 'Indonesian Student Association in Taiwan (PPI)',
+                    year: '2023',
+                    scope: 'International Competition',
+                    category: 'competition',
+                    icon: '🌏',
+                    bgLight: '#ffe4e6',
+                    textAccent: '#be123c',
+                    borderAccent: 'rgba(244, 63, 94, 0.4)',
+                    desc: 'Cross-cultural public debating tournament drawing competitive collegiate participants from universities across Asia.'
+                  }
+                ];
+
+                const filteredAwards = allAwards.filter(aw => {
+                  if (awardsCategoryFilter === 'all') return true;
+                  return aw.category === awardsCategoryFilter;
+                });
+
+                return filteredAwards.map((aw) => {
+                  const isOpen = activeAwardId === aw.id;
+
+                  return (
+                    <motion.div
+                      key={aw.id}
+                      layout
+                      onClick={() => setActiveAwardId(isOpen ? null : aw.id)}
+                      style={{
+                        background: '#ffffff',
+                        border: isOpen ? `1.5px solid ${aw.borderAccent}` : '1px solid #e2e8f0',
+                        borderRadius: '18px',
+                        padding: '1.15rem 1.25rem',
+                        cursor: 'pointer',
+                        boxShadow: isOpen 
+                          ? '0 10px 25px -6px rgba(15, 23, 42, 0.08)' 
+                          : '0 2px 6px rgba(15, 23, 42, 0.02)',
+                        transition: 'all 0.2s ease'
+                      }}
+                      className="award-interactive-item"
+                    >
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '0.85rem'
+                      }}>
+                        {/* Icon & Title */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: 0 }}>
+                          <div style={{
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '12px',
+                            background: aw.bgLight,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.2rem',
+                            flexShrink: 0
+                          }}>
+                            {aw.icon}
+                          </div>
+
+                          <div style={{ minWidth: 0 }}>
+                            <h4 style={{
+                              fontSize: '0.96rem',
+                              fontWeight: 700,
+                              color: '#0f172a',
+                              margin: 0,
+                              lineHeight: 1.35,
+                              letterSpacing: '-0.01em'
+                            }}>
+                              {aw.title}
+                            </h4>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginTop: '0.2rem', flexWrap: 'wrap' }}>
+                              <span style={{ fontSize: '0.82rem', color: aw.textAccent, fontWeight: 700 }}>
+                                {aw.issuer}
+                              </span>
+                              <span style={{ fontSize: '0.72rem', color: '#64748b', background: '#f1f5f9', padding: '0.1rem 0.45rem', borderRadius: '9999px' }}>
+                                {aw.scope}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Year & Chevron */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#94a3b8' }}>
+                            {aw.year}
+                          </span>
+                          <div style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            background: isOpen ? aw.bgLight : '#f8fafc',
+                            color: isOpen ? aw.textAccent : '#94a3b8',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s ease',
+                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+                          }}>
+                            <ChevronDown size={16} />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Expandable Award Description */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div style={{
+                              paddingTop: '0.85rem',
+                              marginTop: '0.85rem',
+                              borderTop: '1px solid #f1f5f9'
+                            }}>
+                              <p style={{
+                                fontSize: '0.88rem',
+                                color: '#334155',
+                                lineHeight: 1.6,
+                                margin: 0
+                              }}>
+                                {aw.desc}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                });
+              })()}
             </div>
           </div>
         </div>
       </section>
-
       {/* =========================================================================
          10. MEDIUM ARTICLES (Integrated from previous website)
          ========================================================================= */}
