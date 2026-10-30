@@ -38,7 +38,12 @@ import {
   Play,
   Maximize2,
   Eye,
-  Globe
+  Globe,
+  Anchor,
+  HeartHandshake,
+  Sprout,
+  Shirt,
+  Zap
 } from 'lucide-react';
 import { fallbackPortfolioData } from '@/lib/supabase';
 const CircularCarousel = dynamic(() => import('@/components/CircularCarousel'), { ssr: false });
@@ -2031,18 +2036,54 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
 
         {(() => {
-          const compMetaMap: Record<string, { icon: string; bg: string; color: string; short: string; tags: string[] }> = {
-            'exp-pal': { icon: '⚓', bg: '#e0f2fe', color: '#0369a1', short: 'PT PAL Indonesia', tags: ['HRIS Architecture', 'Next.js', 'Enterprise Workflows', 'Relational DB'] },
-            'exp-mandala-strat': { icon: '💙', bg: '#fee2e2', color: '#e11d48', short: 'Mandala Pure Love', tags: ['Inclusive Strategy', 'Kafe Among Rasa', 'Sociopreneurship', 'Creative Direction'] },
-            'exp-mandala-dev': { icon: '🌱', bg: '#ecfdf5', color: '#059669', short: 'BrewTech (Innovillage)', tags: ['BrewTech', 'Next.js', 'TypeScript', 'Innovillage Top 180'] },
-            'exp-nzbox': { icon: '🧺', bg: '#f3e8ff', color: '#9333ea', short: 'NZ Box Smart Laundry', tags: ['Campaign Strategy', 'Performance Ads', 'Brand Marketing', 'Growth'] },
-            'exp-seal': { icon: '⚡', bg: '#fef3c7', color: '#d97706', short: 'SEAL Accelerator', tags: ['Disnakertrans Jatim', 'ProFile+ HRIS', 'Figma', 'Design Systems'] },
-            'exp-hmti-chair': { icon: '🎓', bg: '#dcfce7', color: '#15803d', short: 'HMTI Polinema', tags: ['Executive Leadership', '30+ Agendas', 'Inter-Campus Collaboration'] }
+          const compMetaMap: Record<string, { icon: React.ReactNode; bg: string; color: string; short: string; tags: string[] }> = {
+            'exp-pal': { 
+              icon: <Anchor size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(56, 189, 248, 0.06) 100%)', 
+              color: '#0284c7', 
+              short: 'PT PAL Indonesia', 
+              tags: ['HRIS Architecture', 'Next.js', 'Enterprise Workflows', 'Relational DB'] 
+            },
+            'exp-mandala-strat': { 
+              icon: <HeartHandshake size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.12) 0%, rgba(251, 113, 133, 0.06) 100%)', 
+              color: '#e11d48', 
+              short: 'Mandala Pure Love', 
+              tags: ['Inclusive Strategy', 'Kafe Among Rasa', 'Sociopreneurship', 'Creative Direction'] 
+            },
+            'exp-mandala-dev': { 
+              icon: <Sprout size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(52, 211, 153, 0.06) 100%)', 
+              color: '#059669', 
+              short: 'BrewTech (Innovillage)', 
+              tags: ['BrewTech', 'Next.js', 'TypeScript', 'Innovillage Top 180'] 
+            },
+            'exp-nzbox': { 
+              icon: <Shirt size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(147, 51, 234, 0.12) 0%, rgba(192, 132, 252, 0.06) 100%)', 
+              color: '#9333ea', 
+              short: 'NZ Box Smart Laundry', 
+              tags: ['Campaign Strategy', 'Performance Ads', 'Brand Marketing', 'Growth'] 
+            },
+            'exp-seal': { 
+              icon: <Zap size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(217, 119, 6, 0.12) 0%, rgba(251, 191, 36, 0.06) 100%)', 
+              color: '#d97706', 
+              short: 'SEAL Accelerator', 
+              tags: ['Disnakertrans Jatim', 'ProFile+ HRIS', 'Figma', 'Design Systems'] 
+            },
+            'exp-hmti-chair': { 
+              icon: <GraduationCap size={22} strokeWidth={2.2} />, 
+              bg: 'linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(96, 165, 250, 0.06) 100%)', 
+              color: '#2563eb', 
+              short: 'HMTI Polinema', 
+              tags: ['Executive Leadership', '30+ Agendas', 'Inter-Campus Collaboration'] 
+            }
           };
 
           const activeExpId = selectedExpId || experiencesList[0]?.id || 'exp-pal';
           const activeExp = experiencesList.find((e: any) => e.id === activeExpId) || experiencesList[0];
-          const activeMeta = compMetaMap[activeExp.id] || { icon: '✦', bg: '#f1f5f9', color: '#0f172a', short: activeExp.company, tags: ['Fullstack', 'UI/UX'] };
+          const activeMeta = compMetaMap[activeExp.id] || { icon: <Briefcase size={22} strokeWidth={2.2} />, bg: '#f1f5f9', color: '#0f172a', short: activeExp.company, tags: ['Fullstack', 'UI/UX'] };
 
           const orbitExperiences = experiencesList.slice(0, 6);
 
@@ -2104,19 +2145,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     borderRadius: '24px 24px 0 0'
                   }} />
 
-                  {/* Icon with Glowing Squircle Badge */}
+                  {/* Clean Vector SVG Brand Badge */}
                   <div style={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '15px',
-                    background: isSelected ? 'rgba(255,255,255,0.14)' : meta.bg,
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '14px',
+                    background: isSelected ? 'rgba(255,255,255,0.12)' : meta.bg,
+                    color: isSelected ? '#38bdf8' : meta.color,
+                    border: isSelected ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(226, 232, 240, 0.8)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.55rem',
                     boxShadow: isSelected 
-                      ? '0 6px 16px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.2)' 
-                      : '0 4px 12px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(0,0,0,0.04)',
+                      ? '0 6px 18px rgba(0,0,0,0.25)' 
+                      : '0 2px 8px rgba(0,0,0,0.03)',
                     flexShrink: 0,
                     position: 'relative',
                     zIndex: 2
@@ -2332,11 +2374,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         height: '54px',
                         borderRadius: '16px',
                         background: activeMeta.bg,
+                        color: activeMeta.color,
+                        border: '1px solid rgba(226, 232, 240, 0.8)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.65rem',
-                        boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.06)'
+                        boxShadow: '0 4px 14px rgba(0,0,0,0.04)'
                       }}>
                         {activeMeta.icon}
                       </div>
@@ -2388,9 +2431,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         border: '1px solid #e2e8f0',
                         fontSize: '0.84rem',
                         fontWeight: 700,
-                        color: '#334155'
+                        color: '#334155',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem'
                       }}>
-                        🗓 {(activeExp.period || activeExp.start_date || '').replace('—', '–')}
+                        <Calendar size={14} color="#64748b" />
+                        <span>{(activeExp.period || activeExp.start_date || '').replace('—', '–')}</span>
                       </div>
                     </div>
                   </div>
