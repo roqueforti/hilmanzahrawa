@@ -1700,7 +1700,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       </section>
 
       {/* =========================================================================
-         5. SERVICES & SPECIALIZATIONS (Hidden by user request)
+         5. SERVICES & SPECIALIZATIONS (from previous website)
          ========================================================================= */}
       {false && (
       <section id="specializations" style={{
@@ -2027,158 +2027,131 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           gap: '3.5rem',
           alignItems: 'start'
         }} className="about-2col">
-          {/* Left: 3D Interactive Portrait Card with Persona Switcher & Live Status */}
+          {/* Left: Interactive OrbitImages Stage around Profile Centerpiece */}
           <div style={{ position: 'sticky', top: '90px' }}>
-            <div 
-              className="about-portrait-card" 
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -6;
-                const rotateY = ((x - centerX) / centerX) * 6;
-                setCardTilt({
-                  x: rotateX,
-                  y: rotateY,
-                  glowX: (x / rect.width) * 100,
-                  glowY: (y / rect.height) * 100
-                });
-              }}
-              onMouseLeave={() => {
-                setCardTilt({ x: 0, y: 0, glowX: 50, glowY: 50 });
-              }}
-              style={{
-                background: `radial-gradient(circle at ${cardTilt.glowX}% ${cardTilt.glowY}%, rgba(56, 189, 248, 0.16) 0%, #0f172a 68%)`,
-                transform: `perspective(1000px) rotateX(${cardTilt.x}deg) rotateY(${cardTilt.y}deg)`,
-                transition: 'transform 0.16s ease-out, box-shadow 0.25s ease',
-                borderRadius: '26px',
-                padding: '1.75rem',
-                color: '#ffffff',
-                border: '1.5px solid rgba(255, 255, 255, 0.12)',
-                boxShadow: '0 24px 60px -12px rgba(15, 23, 42, 0.35), 0 0 35px rgba(56, 189, 248, 0.08)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                minHeight: '410px',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              {/* Image Viewport with Persona Toggle Switch */}
-              <div className="about-portrait-img-wrap" style={{
-                width: '100%',
-                height: '275px',
-                borderRadius: '18px',
-                overflow: 'hidden',
-                background: '#1e293b',
-                marginBottom: '1.25rem',
-                position: 'relative',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-                border: '1px solid rgba(255,255,255,0.1)'
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '28px',
+              padding: '1.75rem 1.25rem',
+              border: '1.5px solid #e2e8f0',
+              boxShadow: '0 20px 45px -12px rgba(15, 23, 42, 0.08)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <OrbitImages
+                images={[
+                  '/profilephoto.jpg',
+                  '/himmel_card.jpg',
+                  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&q=80&auto=format&fit=crop',
+                  'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=300&q=80&auto=format&fit=crop',
+                  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&q=80&auto=format&fit=crop',
+                  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&q=80&auto=format&fit=crop'
+                ]}
+                shape="ellipse"
+                radiusX={460}
+                radiusY={145}
+                rotation={-6}
+                duration={32}
+                itemSize={78}
+                itemRadius={16}
+                depth={0.65}
+                showPath={true}
+                pathColor="rgba(2, 132, 199, 0.18)"
+                pathWidth={2}
+                pathDash={4}
+                centerContent={
+                  <div style={{
+                    width: '180px',
+                    height: '180px',
+                    borderRadius: '50%',
+                    padding: '6px',
+                    background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #fde68a 100%)',
+                    boxShadow: '0 16px 36px -8px rgba(2, 132, 199, 0.35)',
+                    position: 'relative'
+                  }}>
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '50%',
+                      overflow: 'hidden',
+                      background: '#0f172a',
+                      position: 'relative'
+                    }}>
+                      <img 
+                        src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
+                        alt={name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: isRealPhoto ? 'center 20%' : 'center 15%'
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsRealPhoto(prev => !prev);
+                        }}
+                        title="Toggle Himmel / Real Avatar"
+                        style={{
+                          position: 'absolute',
+                          bottom: '6px',
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          background: 'rgba(15, 23, 42, 0.88)',
+                          backdropFilter: 'blur(6px)',
+                          border: '1px solid rgba(255,255,255,0.3)',
+                          borderRadius: '9999px',
+                          padding: '0.2rem 0.55rem',
+                          color: '#ffffff',
+                          fontSize: '0.66rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.3rem',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        <Sparkles size={11} color="#38bdf8" />
+                        <span>{isRealPhoto ? 'Himmel' : 'Real'}</span>
+                      </button>
+                    </div>
+                  </div>
+                }
+              />
+
+              {/* Bio Details Footer */}
+              <div style={{
+                textAlign: 'center',
+                paddingTop: '1.25rem',
+                borderTop: '1px solid #f1f5f9',
+                marginTop: '0.75rem'
               }}>
-                <AnimatePresence mode="wait">
-                  <motion.img 
-                    key={isRealPhoto ? 'real' : 'himmel'}
-                    src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
-                    alt={`${name} - ${headline}`}
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover', 
-                      objectPosition: isRealPhoto ? 'center 20%' : 'center 15%' 
-                    }}
-                  />
-                </AnimatePresence>
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.15rem 0', letterSpacing: '-0.02em' }}>
+                  {name}
+                </h4>
+                <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 500, display: 'block', marginBottom: '0.85rem' }}>
+                  {headline}
+                </span>
 
-                {/* Persona Switcher Pill Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsRealPhoto(prev => !prev);
-                  }}
-                  title="Switch between Himmel Avatar and Real Portrait"
-                  style={{
-                    position: 'absolute',
-                    top: '0.85rem',
-                    right: '0.85rem',
-                    background: 'rgba(15, 23, 42, 0.82)',
-                    backdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(255, 255, 255, 0.25)',
-                    borderRadius: '9999px',
-                    padding: '0.35rem 0.75rem',
-                    color: '#ffffff',
-                    fontSize: '0.74rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    zIndex: 10,
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
-                    transition: 'all 0.2s ease'
-                  }}
-                  className="persona-switch-btn"
-                >
-                  <Sparkles size={13} color="#38bdf8" />
-                  <span>{isRealPhoto ? 'Switch to Himmel' : 'Switch to Real'}</span>
-                </button>
-
-                {/* Role Pill on Image Bottom */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '0.75rem',
-                  left: '0.75rem',
-                  background: 'rgba(15, 23, 42, 0.78)',
-                  backdropFilter: 'blur(8px)',
-                  color: '#ffffff',
-                  fontSize: '0.72rem',
-                  fontWeight: 600,
-                  padding: '0.22rem 0.65rem',
-                  borderRadius: '9999px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem'
-                }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#38bdf8' }} />
-                  <span>{isRealPhoto ? 'Verified Engineer' : 'Hero Himmel Mode'}</span>
-                </div>
-              </div>
-
-              {/* Name & Headline & Socials */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '0.9rem' }}>
-                <div>
-                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.15rem 0', letterSpacing: '-0.02em' }}>
-                    {name}
-                  </h4>
-                  <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500 }}>
-                    {headline}
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                   <a 
                     href={`https://wa.me/${whatsapp}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     title="Chat via WhatsApp"
                     style={{ 
-                      width: '34px', 
-                      height: '34px', 
+                      width: '36px', 
+                      height: '36px', 
                       borderRadius: '50%', 
-                      background: 'rgba(255,255,255,0.08)', 
+                      background: '#f8fafc', 
                       display: 'flex', 
                       alignItems: 'center', 
                       justifyContent: 'center', 
-                      color: '#94a3b8', 
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#475569', 
+                      border: '1px solid #e2e8f0',
                       transition: 'all 0.2s' 
                     }}
                     className="about-social-icon"
@@ -2189,15 +2162,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     href={`mailto:${email}`} 
                     title="Send Email"
                     style={{ 
-                      width: '34px', 
-                      height: '34px', 
+                      width: '36px', 
+                      height: '36px', 
                       borderRadius: '50%', 
-                      background: 'rgba(255,255,255,0.08)', 
+                      background: '#f8fafc', 
                       display: 'flex', 
                       alignItems: 'center', 
                       justifyContent: 'center', 
-                      color: '#94a3b8', 
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#475569', 
+                      border: '1px solid #e2e8f0',
                       transition: 'all 0.2s' 
                     }}
                     className="about-social-icon"
@@ -2210,15 +2183,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     rel="noopener noreferrer" 
                     title="LinkedIn Profile"
                     style={{ 
-                      width: '34px', 
-                      height: '34px', 
+                      width: '36px', 
+                      height: '36px', 
                       borderRadius: '50%', 
-                      background: 'rgba(255,255,255,0.08)', 
+                      background: '#f8fafc', 
                       display: 'flex', 
                       alignItems: 'center', 
                       justifyContent: 'center', 
-                      color: '#94a3b8', 
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#475569', 
+                      border: '1px solid #e2e8f0',
                       transition: 'all 0.2s' 
                     }}
                     className="about-social-icon"
@@ -2226,51 +2199,30 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <Linkedin size={16} />
                   </a>
                 </div>
-              </div>
 
-              {/* Live Interactive Context Footer (Mirroring Currently Inspected Experience) */}
-              <div style={{
-                padding: '0.65rem 0.95rem',
-                borderRadius: '14px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '0.75rem',
-                fontSize: '0.78rem'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', overflow: 'hidden' }}>
+                {/* Status Indicator */}
+                <div style={{
+                  padding: '0.45rem 0.85rem',
+                  borderRadius: '12px',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.78rem'
+                }}>
                   <span style={{
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
                     background: '#10b981',
-                    boxShadow: '0 0 10px #10b981',
+                    boxShadow: '0 0 8px #10b981',
                     flexShrink: 0
                   }} />
-                  <span style={{
-                    color: '#e2e8f0',
-                    fontWeight: 600,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}>
-                    {(() => {
-                      const activeExp = experiencesList.find((e: any) => e.id === selectedExpId);
-                      return activeExp ? `Viewing: ${activeExp.company.split('(')[0].trim()}` : 'Available for High-Impact Roles';
-                    })()}
+                  <span style={{ color: '#334155', fontWeight: 600 }}>
+                    {location.split(',')[0]}, Indonesia • Open for High-Impact Roles
                   </span>
                 </div>
-                <span style={{
-                  color: '#38bdf8',
-                  fontWeight: 700,
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.04em',
-                  flexShrink: 0
-                }}>
-                  {location.split(',')[0]}, ID
-                </span>
               </div>
             </div>
           </div>
@@ -2607,23 +2559,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         {/* 1. Academic Journey (Interactive 3D FlipCards) */}
         <div style={{
-          maxWidth: '1080px',
+          maxWidth: '820px',
           margin: '0 auto 4.5rem auto',
           padding: '0 1.5rem'
         }}>
           {/* Interactive Flip Cards Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: '2.5rem',
             justifyItems: 'center',
-            alignItems: 'stretch'
+            alignItems: 'center'
           }}>
             {/* Card 1: Politeknik Negeri Malang */}
             <FlipCard
               width="100%"
-              height={360}
-              radius={24}
+              height={440}
+              radius={28}
               perspective={1200}
               background="#ffffff"
               color="#0f172a"
@@ -2790,8 +2742,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             {/* Card 2: SMA Negeri 1 Malang */}
             <FlipCard
               width="100%"
-              height={360}
-              radius={24}
+              height={440}
+              radius={28}
               perspective={1200}
               background="#ffffff"
               color="#0f172a"
