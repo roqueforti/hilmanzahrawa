@@ -18,6 +18,7 @@ export interface CircularCarouselProps {
   aspectRatio?: number;
   gap?: number;
   curve?: number;
+  spread?: number;
   tilt?: number;
   perspective?: number;
   autoplay?: 'drift' | 'step' | 'off';

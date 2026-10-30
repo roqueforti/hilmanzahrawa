@@ -128,6 +128,7 @@ export default function CircularCarousel({
   aspectRatio = 1,
   gap = 25,
   curve,
+  spread,
   tilt,
   perspective,
   autoplay = 'drift',
@@ -167,13 +168,15 @@ export default function CircularCarousel({
   const along = axis === 'x' ? cardH : cardW;
   const step = 360 / count;
 
+  const spreadValue = spread ?? layout.spread;
+
   const radius = useMemo(() => {
     const n = Math.max(count, 3);
-    const pitch = (along + gap) * layout.spread;
+    const pitch = (along + gap) * spreadValue;
     const chord = pitch / (2 * Math.sin(Math.PI / n));
     const arc = (n * pitch) / (2 * Math.PI);
     return Math.max(chord + (arc - chord) * curveValue, along * 0.6);
-  }, [count, along, gap, curveValue, layout.spread]);
+  }, [count, along, gap, curveValue, spreadValue]);
 
   const tiles = useMemo(() => {
     const total = curveValue > 0.001 ? TILES : 1;
