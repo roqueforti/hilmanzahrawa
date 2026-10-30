@@ -2009,31 +2009,37 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          7. ABOUT & CAREER TIMELINE (Full-Stage Interactive Experience Orbit)
          ========================================================================= */}
       <section id="experience" style={{
-        padding: '5rem 1.5rem',
-        maxWidth: '1380px',
-        margin: '0 auto'
+        padding: '3rem 1.5rem 3.5rem 1.5rem',
+        width: '100%',
+        maxWidth: '1560px',
+        margin: '0 auto',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <span className="editorial-kicker">
+        <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+          <span className="editorial-kicker" style={{ marginBottom: '0.25rem', fontSize: '1rem' }}>
             / Career & Trajectory /
           </span>
           <h2 style={{
-            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)',
             fontWeight: 500,
             letterSpacing: '-0.025em',
-            margin: '0 0 0.85rem 0',
-            color: '#0f172a'
+            margin: '0 0 0.35rem 0',
+            color: '#0f172a',
+            lineHeight: 1.15
           }}>
             Pushing Boundaries <span style={{ fontWeight: 300, color: '#94a3b8' }}>since 2021</span>
           </h2>
           <p style={{
-            fontSize: '1rem',
+            fontSize: '0.94rem',
             color: '#64748b',
-            maxWidth: '680px',
+            maxWidth: '640px',
             margin: '0 auto',
-            lineHeight: 1.6
+            lineHeight: 1.5
           }}>
-            Interactive Career Orbit · Click any organization satellite or swipe across the trajectory to inspect roles, milestones, and technological impact.
+            Interactive Career Orbit · Swipe horizontally or click any organization satellite to inspect trajectory milestones and engineering impact.
           </p>
         </div>
 
@@ -2237,20 +2243,21 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               <div style={{
                 position: 'relative',
                 width: '100%',
-                maxWidth: '1180px',
+                maxWidth: '1520px',
                 margin: '0 auto',
-                minHeight: '380px'
+                height: '420px',
+                overflow: 'visible'
               }}>
                 <OrbitImages
                   images={orbitImagesData}
                   shape="ellipse"
-                  radiusX={560}
-                  radiusY={135}
-                  rotation={-4}
-                  duration={38}
-                  itemSize={142}
+                  radiusX={680}
+                  radiusY={130}
+                  rotation={-3}
+                  duration={36}
+                  itemSize={150}
                   itemRadius={24}
-                  depth={0.7}
+                  depth={0.75}
                   showPath={true}
                   pathColor="rgba(2, 132, 199, 0.22)"
                   pathWidth={2}
@@ -2346,35 +2353,36 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               {activeExp && (
                 <motion.div
                   key={activeExp.id}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   style={{
-                    maxWidth: '860px',
-                    margin: '2.5rem auto 0 auto',
+                    maxWidth: '920px',
+                    width: '100%',
+                    margin: '0.75rem auto 0 auto',
                     background: '#ffffff',
-                    border: '1.5px solid #0284c7',
-                    borderRadius: '26px',
-                    padding: '2.25rem 2.5rem',
-                    boxShadow: '0 20px 50px -15px rgba(2, 132, 199, 0.18), 0 4px 16px rgba(15, 23, 42, 0.04)',
+                    border: '1.5px solid rgba(2, 132, 199, 0.4)',
+                    borderRadius: '22px',
+                    padding: '1.25rem 1.75rem',
+                    boxShadow: '0 16px 40px -12px rgba(2, 132, 199, 0.14), 0 2px 10px rgba(15, 23, 42, 0.03)',
                     position: 'relative'
                   }}
                 >
                   <div style={{
                     display: 'flex',
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    gap: '1.5rem',
+                    gap: '1rem',
                     flexWrap: 'wrap',
-                    marginBottom: '1.25rem',
-                    paddingBottom: '1.25rem',
+                    marginBottom: '0.75rem',
+                    paddingBottom: '0.75rem',
                     borderBottom: '1px solid #f1f5f9'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '260px' }}>
                       <div style={{
-                        width: '54px',
-                        height: '54px',
-                        borderRadius: '16px',
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '12px',
                         background: activeMeta.bg,
                         color: activeMeta.color,
                         border: '1px solid rgba(226, 232, 240, 0.8)',
@@ -2397,10 +2405,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           {activeExp.company}
                         </span>
                         <h3 style={{
-                          fontSize: '1.45rem',
+                          fontSize: '1.2rem',
                           fontWeight: 800,
                           color: '#0f172a',
-                          margin: '0.15rem 0 0 0',
+                          margin: '0.1rem 0 0 0',
                           letterSpacing: '-0.02em'
                         }}>
                           {activeExp.role}
@@ -2445,10 +2453,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   </div>
 
                   <p style={{
-                    fontSize: '1.02rem',
+                    fontSize: '0.92rem',
                     color: '#334155',
-                    lineHeight: 1.72,
-                    margin: '0 0 1.5rem 0',
+                    lineHeight: 1.6,
+                    margin: '0 0 0.85rem 0',
                     fontWeight: 400
                   }}>
                     {activeExp.description}
