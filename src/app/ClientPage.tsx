@@ -847,14 +847,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             return (
               <motion.div
                 layout
-                key={`expanded-${work.id || work.slug}`}
+                key="gallery-project-expanded"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
                 className="gallery-project-expanded"
               >
-                <div className="expanded-inner-grid">
+                <motion.div
+                  key={`content-${work.id || work.slug}`}
+                  initial={{ opacity: 0.6 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                  className="expanded-inner-grid"
+                >
                   {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {/* Media Viewport (16:9 Aspect Ratio) */}
@@ -994,6 +1000,25 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           e.stopPropagation();
                           setExpandedAnchorId(null);
                           setExpandedProject(null);
+
+                          // Smoothly keep viewport framed at works section without sudden layout drop
+                          const worksEl = document.getElementById('works');
+                          if (worksEl) {
+                            const rect = worksEl.getBoundingClientRect();
+                            if (rect.top < -40 || rect.top > 120) {
+                              const targetY = Math.max(0, window.scrollY + rect.top - 15);
+                              const startY = window.scrollY;
+                              const startTime = performance.now();
+                              const duration = 280;
+                              const step = (now: number) => {
+                                const p = Math.min((now - startTime) / duration, 1);
+                                const ease = 1 - Math.pow(1 - p, 3);
+                                window.scrollTo(0, startY + (targetY - startY) * ease);
+                                if (p < 1) requestAnimationFrame(step);
+                              };
+                              requestAnimationFrame(step);
+                            }
+                          }
                         }}
                         title="Close expanded view"
                         aria-label="Close project preview"
@@ -1340,7 +1365,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             );
           };
@@ -1356,7 +1381,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               <motion.div
                 layout="position"
                 key={work.id || work.slug}
-                transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                 className="gallery-project-item"
                 onClick={() => {
                   setExpandedAnchorId(work.id || work.slug);
@@ -1364,21 +1389,23 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   setExpandedImageIndex(0);
                   setIsExpandedMediaLoading(true);
 
-                  // Navigate smoothly to showcase panel if scrolled down
-                  requestAnimationFrame(() => {
-                    const gridEl = document.querySelector('.works-grid-image1') as HTMLElement | null;
-                    if (gridEl) {
-                      const rect = gridEl.getBoundingClientRect();
-                      // If the top of the grid is not already framed near the top (60px - 120px)
-                      if (rect.top < 60 || rect.top > 130) {
-                        const targetY = Math.max(0, window.scrollY + rect.top - 80);
-                        window.scrollTo({
-                          top: targetY,
-                          behavior: 'smooth'
-                        });
-                      }
+                  // Smooth mathematical cubic ease-out glide to works section (matching Ritchie Ollie)
+                  const worksEl = document.getElementById('works');
+                  if (worksEl) {
+                    const targetY = Math.max(0, worksEl.getBoundingClientRect().top + window.scrollY - 15);
+                    const startY = window.scrollY;
+                    if (Math.abs(targetY - startY) > 25) {
+                      const startTime = performance.now();
+                      const duration = 280;
+                      const step = (now: number) => {
+                        const p = Math.min((now - startTime) / duration, 1);
+                        const ease = 1 - Math.pow(1 - p, 3);
+                        window.scrollTo(0, startY + (targetY - startY) * ease);
+                        if (p < 1) requestAnimationFrame(step);
+                      };
+                      requestAnimationFrame(step);
                     }
-                  });
+                  }
                 }}
               >
                 {/* 16:9 Thumbnail */}
