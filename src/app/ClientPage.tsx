@@ -26,6 +26,8 @@ import {
   Code2, 
   Check, 
   BookOpen,
+  Sparkles,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Image as ImageIcon,
@@ -72,6 +74,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
+  const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
+  const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
+  const [isRealPhoto, setIsRealPhoto] = useState<boolean>(false);
+  const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
 
   React.useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
@@ -2006,95 +2012,545 @@ export default function ClientPage({ initialData }: ClientPageProps) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.4fr)',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.45fr)',
           gap: '3.5rem',
-          alignItems: 'center'
+          alignItems: 'start'
         }} className="about-2col">
-          {/* Left: Portrait Card */}
-          <div className="about-portrait-card" style={{
-            background: '#0f172a',
-            borderRadius: '24px',
-            padding: '1.75rem',
-            color: '#ffffff',
-            boxShadow: '0 20px 50px rgba(15, 23, 42, 0.2)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: '380px'
-          }}>
-            <div className="about-portrait-img-wrap" style={{
-              width: '100%',
-              height: '260px',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              background: '#1e293b',
-              marginBottom: '1.25rem'
-            }}>
-              <img 
-                src="/himmel_card.jpg" 
-                alt={`${name} - ${headline}`}
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center 15%' 
-                }}
-              />
-            </div>
+          {/* Left: 3D Interactive Portrait Card with Persona Switcher & Live Status */}
+          <div style={{ position: 'sticky', top: '90px' }}>
+            <div 
+              className="about-portrait-card" 
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+                setCardTilt({
+                  x: rotateX,
+                  y: rotateY,
+                  glowX: (x / rect.width) * 100,
+                  glowY: (y / rect.height) * 100
+                });
+              }}
+              onMouseLeave={() => {
+                setCardTilt({ x: 0, y: 0, glowX: 50, glowY: 50 });
+              }}
+              style={{
+                background: `radial-gradient(circle at ${cardTilt.glowX}% ${cardTilt.glowY}%, rgba(56, 189, 248, 0.16) 0%, #0f172a 68%)`,
+                transform: `perspective(1000px) rotateX(${cardTilt.x}deg) rotateY(${cardTilt.y}deg)`,
+                transition: 'transform 0.16s ease-out, box-shadow 0.25s ease',
+                borderRadius: '26px',
+                padding: '1.75rem',
+                color: '#ffffff',
+                border: '1.5px solid rgba(255, 255, 255, 0.12)',
+                boxShadow: '0 24px 60px -12px rgba(15, 23, 42, 0.35), 0 0 35px rgba(56, 189, 248, 0.08)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '410px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              {/* Image Viewport with Persona Toggle Switch */}
+              <div className="about-portrait-img-wrap" style={{
+                width: '100%',
+                height: '275px',
+                borderRadius: '18px',
+                overflow: 'hidden',
+                background: '#1e293b',
+                marginBottom: '1.25rem',
+                position: 'relative',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}>
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={isRealPhoto ? 'real' : 'himmel'}
+                    src={isRealPhoto ? '/profilephoto.jpg' : '/himmel_card.jpg'} 
+                    alt={`${name} - ${headline}`}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover', 
+                      objectPosition: isRealPhoto ? 'center 20%' : 'center 15%' 
+                    }}
+                  />
+                </AnimatePresence>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-              <div>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 600, color: '#ffffff', margin: 0 }}>
-                  {name}
-                </h4>
-                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-                  {headline}
-                </span>
+                {/* Persona Switcher Pill Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsRealPhoto(prev => !prev);
+                  }}
+                  title="Switch between Himmel Avatar and Real Portrait"
+                  style={{
+                    position: 'absolute',
+                    top: '0.85rem',
+                    right: '0.85rem',
+                    background: 'rgba(15, 23, 42, 0.82)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                    borderRadius: '9999px',
+                    padding: '0.35rem 0.75rem',
+                    color: '#ffffff',
+                    fontSize: '0.74rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    zIndex: 10,
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+                    transition: 'all 0.2s ease'
+                  }}
+                  className="persona-switch-btn"
+                >
+                  <Sparkles size={13} color="#38bdf8" />
+                  <span>{isRealPhoto ? 'Switch to Himmel' : 'Switch to Real'}</span>
+                </button>
+
+                {/* Role Pill on Image Bottom */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '0.75rem',
+                  left: '0.75rem',
+                  background: 'rgba(15, 23, 42, 0.78)',
+                  backdropFilter: 'blur(8px)',
+                  color: '#ffffff',
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  padding: '0.22rem 0.65rem',
+                  borderRadius: '9999px',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem'
+                }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#38bdf8' }} />
+                  <span>{isRealPhoto ? 'Verified Engineer' : 'Hero Himmel Mode'}</span>
+                </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '0.85rem' }}>
-                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8' }}><MessageCircle size={17} /></a>
-                <a href={`mailto:${email}`} style={{ color: '#94a3b8' }}><Mail size={17} /></a>
-                <a href="https://linkedin.com/in/hilmanzahrawa" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8' }}><Linkedin size={17} /></a>
+              {/* Name & Headline & Socials */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '0.9rem' }}>
+                <div>
+                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.15rem 0', letterSpacing: '-0.02em' }}>
+                    {name}
+                  </h4>
+                  <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500 }}>
+                    {headline}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <a 
+                    href={`https://wa.me/${whatsapp}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    title="Chat via WhatsApp"
+                    style={{ 
+                      width: '34px', 
+                      height: '34px', 
+                      borderRadius: '50%', 
+                      background: 'rgba(255,255,255,0.08)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: '#94a3b8', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      transition: 'all 0.2s' 
+                    }}
+                    className="about-social-icon"
+                  >
+                    <MessageCircle size={16} />
+                  </a>
+                  <a 
+                    href={`mailto:${email}`} 
+                    title="Send Email"
+                    style={{ 
+                      width: '34px', 
+                      height: '34px', 
+                      borderRadius: '50%', 
+                      background: 'rgba(255,255,255,0.08)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: '#94a3b8', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      transition: 'all 0.2s' 
+                    }}
+                    className="about-social-icon"
+                  >
+                    <Mail size={16} />
+                  </a>
+                  <a 
+                    href="https://linkedin.com/in/hilmanzahrawa" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    title="LinkedIn Profile"
+                    style={{ 
+                      width: '34px', 
+                      height: '34px', 
+                      borderRadius: '50%', 
+                      background: 'rgba(255,255,255,0.08)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: '#94a3b8', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      transition: 'all 0.2s' 
+                    }}
+                    className="about-social-icon"
+                  >
+                    <Linkedin size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Live Interactive Context Footer (Mirroring Currently Inspected Experience) */}
+              <div style={{
+                padding: '0.65rem 0.95rem',
+                borderRadius: '14px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.75rem',
+                fontSize: '0.78rem'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', overflow: 'hidden' }}>
+                  <span style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: '#10b981',
+                    boxShadow: '0 0 10px #10b981',
+                    flexShrink: 0
+                  }} />
+                  <span style={{
+                    color: '#e2e8f0',
+                    fontWeight: 600,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
+                    {(() => {
+                      const activeExp = experiencesList.find((e: any) => e.id === selectedExpId);
+                      return activeExp ? `Viewing: ${activeExp.company.split('(')[0].trim()}` : 'Available for High-Impact Roles';
+                    })()}
+                  </span>
+                </div>
+                <span style={{
+                  color: '#38bdf8',
+                  fontWeight: 700,
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.04em',
+                  flexShrink: 0
+                }}>
+                  {location.split(',')[0]}, ID
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right: Bio & Experience Rows */}
+          {/* Right: Bio & Interactive Career Experience Timeline */}
           <div>
             <p style={{
               fontSize: '1.05rem',
               color: '#334155',
-              lineHeight: 1.65,
+              lineHeight: 1.68,
               fontWeight: 400,
-              margin: '0 0 2.5rem 0'
+              margin: '0 0 2rem 0'
             }}>
               {about}
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {experiencesList.slice(0, 6).map((exp: any, i: number) => (
-                <div 
-                  key={i} 
-                  className="about-exp-row"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '1.15rem 0',
-                    borderTop: '1px solid #f1f5f9',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  <span className="about-exp-role" style={{ fontWeight: 600, color: '#0f172a', flex: '1 1 40%' }}>
-                    {exp.role}
-                  </span>
-                  <div className="about-exp-company-period" style={{ display: 'contents' }}>
-                    <span style={{ color: '#64748b', flex: '1 1 35%' }}>{exp.company}</span>
-                    <span style={{ color: '#94a3b8', textAlign: 'right', flex: '1 1 25%' }}>{exp.period || exp.start_date}</span>
-                  </div>
-                </div>
-              ))}
+            {/* Interactive Category Filter Pills */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '0.5rem',
+              marginBottom: '1.5rem'
+            }}>
+              {[
+                { id: 'all', label: 'All Roles', count: 6 },
+                { id: 'engineering', label: 'Engineering & Tech', count: 3 },
+                { id: 'design-strategy', label: 'Design & Strategy', count: 3 },
+                { id: 'leadership', label: 'Leadership', count: 2 }
+              ].map((cat) => {
+                const isActive = expCategoryFilter === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setExpCategoryFilter(cat.id)}
+                    style={{
+                      padding: '0.4rem 0.95rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.8rem',
+                      fontWeight: isActive ? 700 : 500,
+                      background: isActive ? '#0f172a' : '#ffffff',
+                      color: isActive ? '#ffffff' : '#64748b',
+                      border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
+                      boxShadow: isActive ? '0 3px 10px rgba(15,23,42,0.12)' : '0 1px 3px rgba(0,0,0,0.02)',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <span>{cat.label}</span>
+                    <span style={{
+                      fontSize: '0.72rem',
+                      padding: '0.05rem 0.45rem',
+                      borderRadius: '9999px',
+                      background: isActive ? 'rgba(255,255,255,0.22)' : '#f1f5f9',
+                      color: isActive ? '#ffffff' : '#0f172a',
+                      fontWeight: 700
+                    }}>
+                      {cat.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Interactive Expandable Experience Accordion Cards */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {(() => {
+                const filteredExps = experiencesList.slice(0, 6).filter((exp: any) => {
+                  if (expCategoryFilter === 'all') return true;
+                  const role = (exp.role || '').toLowerCase();
+                  const comp = (exp.company || '').toLowerCase();
+                  if (expCategoryFilter === 'engineering') {
+                    return role.includes('developer') || role.includes('engineer') || comp.includes('pal');
+                  }
+                  if (expCategoryFilter === 'design-strategy') {
+                    return role.includes('designer') || role.includes('strategist') || role.includes('specialist');
+                  }
+                  if (expCategoryFilter === 'leadership') {
+                    return role.includes('chairman') || role.includes('lead') || role.includes('strategist');
+                  }
+                  return true;
+                });
+
+                const getCompanyMeta = (comp: string) => {
+                  if (comp.includes('PT PAL')) return { icon: '⚓', bg: '#e0f2fe', color: '#0369a1' };
+                  if (comp.includes('Mandala')) return { icon: '💙', bg: '#fee2e2', color: '#e11d48' };
+                  if (comp.includes('SEAL')) return { icon: '⚡', bg: '#fef3c7', color: '#d97706' };
+                  if (comp.includes('NZ Box')) return { icon: '🧺', bg: '#f3e8ff', color: '#9333ea' };
+                  if (comp.includes('HMTI') || comp.includes('Polinema')) return { icon: '🎓', bg: '#dcfce7', color: '#15803d' };
+                  return { icon: '✦', bg: '#f1f5f9', color: '#475569' };
+                };
+
+                const getExpSkills = (exp: any) => {
+                  if (exp.id === 'exp-pal') return ['HRIS Architecture', 'Next.js', 'Enterprise Workflows', 'Relational DB'];
+                  if (exp.id === 'exp-mandala-strat') return ['Inclusive Strategy', 'Kafe Among Rasa', 'Partnership', 'Creative Direction'];
+                  if (exp.id === 'exp-mandala-dev') return ['BrewTech', 'Next.js', 'TypeScript', 'Innovillage', 'Database'];
+                  if (exp.id === 'exp-nzbox') return ['Campaign Strategy', 'Performance Ads', 'Brand Marketing', 'Growth'];
+                  if (exp.id === 'exp-seal') return ['Disnakertrans Jatim', 'ProFile+ HRIS', 'Figma', 'Design System'];
+                  if (exp.id === 'exp-hmti-chair') return ['Executive Leadership', '30+ Agendas', 'Inter-Campus Collaboration'];
+                  return ['Fullstack', 'UI/UX'];
+                };
+
+                return filteredExps.map((exp: any, i: number) => {
+                  const expId = exp.id || `exp-${i}`;
+                  const isOpen = selectedExpId === expId;
+                  const compMeta = getCompanyMeta(exp.company || '');
+                  const skills = getExpSkills(exp);
+                  const isCurrent = (exp.period || exp.start_date || '').toLowerCase().includes('present');
+
+                  return (
+                    <motion.div 
+                      key={expId} 
+                      layout
+                      onClick={() => setSelectedExpId(isOpen ? null : expId)}
+                      style={{
+                        background: isOpen ? '#ffffff' : '#ffffff',
+                        border: isOpen ? '1.5px solid #0284c7' : '1px solid #e2e8f0',
+                        borderRadius: '18px',
+                        padding: '1.15rem 1.35rem',
+                        cursor: 'pointer',
+                        boxShadow: isOpen 
+                          ? '0 12px 30px -8px rgba(2, 132, 199, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04)' 
+                          : '0 2px 6px rgba(15, 23, 42, 0.02)',
+                        transition: 'border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease'
+                      }}
+                      className="about-exp-item"
+                    >
+                      {/* Accordion Row Header */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '1rem'
+                      }}>
+                        {/* Left: Icon Disc + Role & Company */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', flex: 1, minWidth: 0 }}>
+                          <div style={{
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '12px',
+                            background: compMeta.bg,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.25rem',
+                            flexShrink: 0,
+                            boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)'
+                          }}>
+                            {compMeta.icon}
+                          </div>
+
+                          <div style={{ minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                              <h4 style={{
+                                fontSize: '0.98rem',
+                                fontWeight: 700,
+                                color: '#0f172a',
+                                margin: 0,
+                                letterSpacing: '-0.01em'
+                              }}>
+                                {exp.role}
+                              </h4>
+                              {isCurrent && (
+                                <span style={{
+                                  fontSize: '0.68rem',
+                                  fontWeight: 700,
+                                  color: '#15803d',
+                                  background: '#dcfce7',
+                                  padding: '0.12rem 0.5rem',
+                                  borderRadius: '9999px',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.3rem',
+                                  border: '1px solid rgba(22, 163, 74, 0.2)'
+                                }}>
+                                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} />
+                                  Current
+                                </span>
+                              )}
+                            </div>
+                            <span style={{
+                              fontSize: '0.84rem',
+                              color: '#64748b',
+                              fontWeight: 500,
+                              display: 'block',
+                              marginTop: '0.15rem'
+                            }}>
+                              {exp.company}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Right: Period + Chevron Indicator */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexShrink: 0 }}>
+                          <span style={{
+                            fontSize: '0.82rem',
+                            fontWeight: 600,
+                            color: '#94a3b8',
+                            textAlign: 'right'
+                          }}>
+                            {exp.period || exp.start_date}
+                          </span>
+                          <div style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            background: isOpen ? '#e0f2fe' : '#f8fafc',
+                            color: isOpen ? '#0284c7' : '#94a3b8',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s ease',
+                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+                          }}>
+                            <ChevronDown size={16} />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Expandable Accordion Content Drawer */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div style={{
+                              paddingTop: '1rem',
+                              marginTop: '0.85rem',
+                              borderTop: '1px solid #f1f5f9'
+                            }}>
+                              <p style={{
+                                fontSize: '0.88rem',
+                                color: '#334155',
+                                lineHeight: 1.62,
+                                margin: '0 0 0.85rem 0',
+                                fontWeight: 400
+                              }}>
+                                {exp.description}
+                              </p>
+
+                              {/* Skills & Technologies Pills */}
+                              <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                                gap: '0.45rem',
+                                marginTop: '0.65rem'
+                              }}>
+                                <span style={{
+                                  fontSize: '0.72rem',
+                                  fontWeight: 700,
+                                  color: '#64748b',
+                                  textTransform: 'uppercase',
+                                  letterSpacing: '0.04em',
+                                  marginRight: '0.2rem'
+                                }}>
+                                  Key Focus:
+                                </span>
+                                {skills.map((skill: string, sIdx: number) => (
+                                  <span
+                                    key={sIdx}
+                                    style={{
+                                      fontSize: '0.74rem',
+                                      fontWeight: 600,
+                                      padding: '0.2rem 0.6rem',
+                                      borderRadius: '9999px',
+                                      background: '#f1f5f9',
+                                      color: '#0f172a',
+                                      border: '1px solid #e2e8f0'
+                                    }}
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                });
+              })()}
             </div>
           </div>
         </div>
