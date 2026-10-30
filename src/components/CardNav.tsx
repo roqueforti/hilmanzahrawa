@@ -37,10 +37,10 @@ const THEMES: Record<string, Record<string, string>> = {
     '--cn-tile': 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
     '--cn-tile-rim':
       'inset 0 0 0 1px rgba(226, 232, 240, 0.9), inset 0 1px 0 rgba(255, 255, 255, 1), 0 4px 12px -4px rgba(15, 23, 42, 0.06)',
-    '--cn-cta': 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
+    '--cn-cta': 'linear-gradient(180deg, #0284c7 0%, #0369a1 100%)',
     '--cn-cta-ink': '#ffffff',
-    '--cn-cta-shadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 6px 14px -6px rgba(15, 23, 42, 0.35)',
-    '--cn-cta-hover': 'brightness(1.2)'
+    '--cn-cta-shadow': 'inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px -6px rgba(2, 132, 199, 0.5)',
+    '--cn-cta-hover': 'brightness(1.1)'
   }
 };
 

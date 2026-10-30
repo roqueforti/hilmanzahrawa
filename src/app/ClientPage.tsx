@@ -452,6 +452,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             label: "Let's Talk",
             href: `https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`
           }}
+          accentColor="#0284c7"
           theme="light"
           surface="glass"
           cardEffect="rise"
@@ -2075,22 +2076,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     height: '100%',
                     borderRadius: '22px',
                     background: isSelected 
-                      ? 'linear-gradient(145deg, #0f172a 0%, #1e293b 85%, #0284c7 180%)' 
-                      : 'rgba(255, 255, 255, 0.94)',
+                      ? 'linear-gradient(145deg, #ffffff 0%, #f0f9ff 55%, #e0f2fe 100%)' 
+                      : 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
                     border: isSelected 
-                      ? '2px solid #38bdf8' 
+                      ? '2px solid #0284c7' 
                       : '1.5px solid rgba(226, 232, 240, 0.9)',
                     boxShadow: isSelected 
-                      ? '0 20px 40px -10px rgba(2, 132, 199, 0.45), 0 0 28px rgba(56, 189, 248, 0.28)' 
+                      ? '0 16px 36px -6px rgba(2, 132, 199, 0.35), 0 0 24px rgba(56, 189, 248, 0.3)' 
                       : '0 10px 24px -6px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '0.85rem 0.75rem 0.75rem 0.75rem',
-                    color: isSelected ? '#ffffff' : '#0f172a',
+                    color: '#0f172a',
                     textAlign: 'center',
                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                     cursor: 'pointer',
@@ -2106,9 +2107,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     left: 0,
                     right: 0,
                     height: '35%',
-                    background: isSelected 
-                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 100%)' 
-                      : 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%)',
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 100%)',
                     pointerEvents: 'none',
                     borderRadius: '22px 22px 0 0'
                   }} />
@@ -2118,14 +2117,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     width: '40px',
                     height: '40px',
                     borderRadius: '12px',
-                    background: isSelected ? 'rgba(255,255,255,0.12)' : meta.bg,
-                    color: isSelected ? '#38bdf8' : meta.color,
-                    border: isSelected ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(226, 232, 240, 0.8)',
+                    background: isSelected ? '#dbeafe' : meta.bg,
+                    color: isSelected ? '#0284c7' : meta.color,
+                    border: isSelected ? '1.5px solid #93c5fd' : '1px solid rgba(226, 232, 240, 0.8)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     boxShadow: isSelected 
-                      ? '0 6px 18px rgba(0,0,0,0.25)' 
+                      ? '0 4px 14px rgba(2, 132, 199, 0.2)' 
                       : '0 2px 8px rgba(0,0,0,0.03)',
                     flexShrink: 0,
                     position: 'relative',
@@ -2145,7 +2144,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       WebkitLineClamp: 1,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
-                      color: isSelected ? '#ffffff' : '#0f172a'
+                      color: isSelected ? '#0369a1' : '#0f172a'
                     }}>
                       {meta.short}
                     </span>
@@ -2153,7 +2152,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       fontSize: '0.65rem',
                       fontWeight: 600,
                       lineHeight: 1.2,
-                      color: isSelected ? '#93c5fd' : '#64748b',
+                      color: isSelected ? '#0284c7' : '#64748b',
                       display: '-webkit-box',
                       WebkitLineClamp: 1,
                       WebkitBoxOrient: 'vertical',
@@ -2172,9 +2171,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         fontWeight: 700,
                         padding: '0.18rem 0.5rem',
                         borderRadius: '9999px',
-                        background: isSelected ? 'rgba(34, 197, 94, 0.22)' : '#dcfce7',
-                        color: isSelected ? '#4ade80' : '#15803d',
-                        border: isSelected ? '1px solid rgba(74, 222, 128, 0.4)' : '1px solid rgba(34, 197, 94, 0.25)',
+                        background: '#dcfce7',
+                        color: '#15803d',
+                        border: '1px solid rgba(34, 197, 94, 0.3)',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '0.25rem',
@@ -2184,7 +2183,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           width: '5px',
                           height: '5px',
                           borderRadius: '50%',
-                          background: isSelected ? '#4ade80' : '#16a34a',
+                          background: '#16a34a',
                           boxShadow: '0 0 6px rgba(34, 197, 94, 0.6)'
                         }} />
                         Current
@@ -2193,11 +2192,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       <span style={{
                         fontSize: '0.65rem',
                         fontWeight: 600,
-                        color: isSelected ? '#93c5fd' : '#64748b',
+                        color: isSelected ? '#0369a1' : '#64748b',
                         padding: '0.12rem 0.4rem',
                         borderRadius: '6px',
-                        background: isSelected ? 'rgba(255,255,255,0.08)' : '#f8fafc',
-                        border: isSelected ? '1px solid rgba(255,255,255,0.1)' : '1px solid #f1f5f9',
+                        background: isSelected ? '#e0f2fe' : '#f8fafc',
+                        border: isSelected ? '1px solid #bae6fd' : '1px solid #f1f5f9',
                         display: 'inline-block',
                         lineHeight: 1.2
                       }}>
