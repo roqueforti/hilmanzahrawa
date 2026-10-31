@@ -909,11 +909,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                 aria-label="Previous screenshot"
                                 style={{
                                   position: 'absolute',
-                                  left: '0.85rem',
+                                  left: isMobile ? '0.5rem' : '0.85rem',
                                   top: '50%',
                                   transform: 'translateY(-50%)',
-                                  width: '38px',
-                                  height: '38px',
+                                  width: isMobile ? '32px' : '38px',
+                                  height: isMobile ? '32px' : '38px',
                                   borderRadius: '50%',
                                   background: 'rgba(15, 23, 42, 0.75)',
                                   backdropFilter: 'blur(8px)',
@@ -926,7 +926,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                   transition: 'all 0.2s'
                                 }}
                               >
-                                <ChevronLeft size={20} />
+                                <ChevronLeft size={isMobile ? 16 : 20} />
                               </button>
                               <button
                                 type="button"
@@ -937,11 +937,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                 aria-label="Next screenshot"
                                 style={{
                                   position: 'absolute',
-                                  right: '0.85rem',
+                                  right: isMobile ? '0.5rem' : '0.85rem',
                                   top: '50%',
                                   transform: 'translateY(-50%)',
-                                  width: '38px',
-                                  height: '38px',
+                                  width: isMobile ? '32px' : '38px',
+                                  height: isMobile ? '32px' : '38px',
                                   borderRadius: '50%',
                                   background: 'rgba(15, 23, 42, 0.75)',
                                   backdropFilter: 'blur(8px)',
@@ -954,20 +954,20 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                   transition: 'all 0.2s'
                                 }}
                               >
-                                <ChevronRight size={20} />
+                                <ChevronRight size={isMobile ? 16 : 20} />
                               </button>
 
                               {/* Screenshot Counter Pill */}
                               <div style={{
                                 position: 'absolute',
-                                bottom: '0.85rem',
-                                left: '0.85rem',
+                                bottom: isMobile ? '0.55rem' : '0.85rem',
+                                left: isMobile ? '0.55rem' : '0.85rem',
                                 background: 'rgba(15, 23, 42, 0.85)',
                                 backdropFilter: 'blur(8px)',
                                 color: '#ffffff',
-                                fontSize: '0.74rem',
+                                fontSize: isMobile ? '0.68rem' : '0.74rem',
                                 fontWeight: 700,
-                                padding: '0.25rem 0.65rem',
+                                padding: isMobile ? '0.18rem 0.5rem' : '0.25rem 0.65rem',
                                 borderRadius: '9999px',
                                 border: '1px solid rgba(255,255,255,0.2)'
                               }}>
@@ -1009,10 +1009,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         aria-label="Close project preview"
                         style={{
                           position: 'absolute',
-                          top: '1rem',
-                          right: '1rem',
-                          width: '38px',
-                          height: '38px',
+                          top: isMobile ? '0.6rem' : '1rem',
+                          right: isMobile ? '0.6rem' : '1rem',
+                          width: isMobile ? '32px' : '38px',
+                          height: isMobile ? '32px' : '38px',
                           borderRadius: '50%',
                           background: 'rgba(15, 23, 42, 0.82)',
                           backdropFilter: 'blur(8px)',
@@ -1026,7 +1026,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           transition: 'transform 0.2s ease, background 0.2s ease'
                         }}
                       >
-                        <X size={18} />
+                        <X size={isMobile ? 16 : 18} />
                       </button>
                     </div>
 
@@ -1377,7 +1377,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   // Smooth mathematical cubic ease-out glide to works section (matching Ritchie Ollie)
                   const worksEl = document.getElementById('works');
                   if (worksEl) {
-                    const targetY = Math.max(0, worksEl.getBoundingClientRect().top + window.scrollY - 15);
+                    const offset = isMobile ? 70 : -15;
+                    const targetY = Math.max(0, worksEl.getBoundingClientRect().top + window.scrollY + offset);
                     const startY = window.scrollY;
                     if (Math.abs(targetY - startY) > 25) {
                       const startTime = performance.now();
@@ -3610,7 +3611,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '1.5rem'
+                padding: isMobile ? '0.75rem 0.5rem' : '1.5rem'
               }}
               onClick={() => setSelectedProject(null)}
             >
@@ -3623,14 +3624,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 onClick={(e) => e.stopPropagation()}
                 style={{
                   background: '#ffffff',
-                  borderRadius: '28px',
+                  borderRadius: isMobile ? '20px' : '28px',
                   maxWidth: '960px',
                   width: '100%',
-                  maxHeight: '92vh',
+                  maxHeight: isMobile ? '94vh' : '92vh',
                   overflowY: 'auto',
                   position: 'relative',
                   boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
-                  padding: '2.5rem'
+                  padding: isMobile ? '1.35rem 1.15rem' : '2.5rem'
                 }}
               >
                 {/* Close Button */}
@@ -3638,28 +3639,35 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   onClick={() => setSelectedProject(null)}
                   style={{
                     position: 'absolute',
-                    top: '1.5rem',
-                    right: '1.5rem',
+                    top: isMobile ? '0.85rem' : '1.5rem',
+                    right: isMobile ? '0.85rem' : '1.5rem',
                     background: '#f1f5f9',
                     border: 'none',
                     borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
+                    width: isMobile ? '34px' : '40px',
+                    height: isMobile ? '34px' : '40px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#0f172a',
-                    zIndex: 10,
+                    zIndex: 20,
                     transition: 'all 0.2s ease'
                   }}
                   title="Close modal"
                 >
-                  <X size={20} />
+                  <X size={isMobile ? 18 : 20} />
                 </button>
 
                 {/* Top Badges */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.85rem', flexWrap: 'wrap' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  marginBottom: '0.85rem',
+                  flexWrap: 'wrap',
+                  paddingRight: isMobile ? '2.8rem' : '3.5rem'
+                }}>
                   <span style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
@@ -3750,7 +3758,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <div style={{
                       position: 'relative',
                       width: '100%',
-                      height: 'clamp(300px, 45vh, 480px)',
+                      height: isMobile ? 'clamp(210px, 35vh, 320px)' : 'clamp(300px, 45vh, 480px)',
                       borderRadius: '20px',
                       overflow: 'hidden',
                       background: '#090d16',
@@ -3792,15 +3800,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             onClick={() => setActiveModalImageIndex((prev) => (prev > 0 ? prev - 1 : projectGallery.length - 1))}
                             style={{
                               position: 'absolute',
-                              left: '1rem',
+                              left: isMobile ? '0.5rem' : '1rem',
                               top: '50%',
                               transform: 'translateY(-50%)',
                               background: 'rgba(15, 23, 42, 0.75)',
                               backdropFilter: 'blur(6px)',
                               border: '1px solid rgba(255,255,255,0.2)',
                               borderRadius: '50%',
-                              width: '44px',
-                              height: '44px',
+                              width: isMobile ? '36px' : '44px',
+                              height: isMobile ? '36px' : '44px',
                               color: '#ffffff',
                               cursor: 'pointer',
                               display: 'flex',
@@ -3810,22 +3818,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             }}
                             title="Previous image"
                           >
-                            <ChevronLeft size={24} />
+                            <ChevronLeft size={isMobile ? 18 : 24} />
                           </button>
 
                           <button
                             onClick={() => setActiveModalImageIndex((prev) => (prev < projectGallery.length - 1 ? prev + 1 : 0))}
                             style={{
                               position: 'absolute',
-                              right: '1rem',
+                              right: isMobile ? '0.5rem' : '1rem',
                               top: '50%',
                               transform: 'translateY(-50%)',
                               background: 'rgba(15, 23, 42, 0.75)',
                               backdropFilter: 'blur(6px)',
                               border: '1px solid rgba(255,255,255,0.2)',
                               borderRadius: '50%',
-                              width: '44px',
-                              height: '44px',
+                              width: isMobile ? '36px' : '44px',
+                              height: isMobile ? '36px' : '44px',
                               color: '#ffffff',
                               cursor: 'pointer',
                               display: 'flex',
@@ -3835,7 +3843,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             }}
                             title="Next image"
                           >
-                            <ChevronRight size={24} />
+                            <ChevronRight size={isMobile ? 18 : 24} />
                           </button>
 
                           {/* Image Counter Badge */}
@@ -3989,8 +3997,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 {/* Action Buttons Row */}
                 <div style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  alignItems: isMobile ? 'stretch' : 'center',
+                  gap: isMobile ? '0.65rem' : '1rem',
                   paddingTop: '1.5rem',
                   borderTop: '1px solid #f1f5f9',
                   flexWrap: 'wrap'
@@ -4003,6 +4012,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '0.55rem',
                         padding: '0.85rem 1.65rem',
                         borderRadius: '9999px',
@@ -4011,6 +4021,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         fontSize: '0.92rem',
                         fontWeight: 700,
                         textDecoration: 'none',
+                        width: isMobile ? '100%' : 'auto',
+                        textAlign: 'center',
                         boxShadow: '0 4px 14px rgba(2, 132, 199, 0.25)'
                       }}
                     >
@@ -4027,6 +4039,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '0.55rem',
                         padding: '0.85rem 1.65rem',
                         borderRadius: '9999px',
@@ -4035,6 +4048,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         fontSize: '0.92rem',
                         fontWeight: 700,
                         textDecoration: 'none',
+                        width: isMobile ? '100%' : 'auto',
+                        textAlign: 'center',
                         boxShadow: '0 4px 14px rgba(239, 68, 68, 0.25)'
                       }}
                     >
@@ -4050,6 +4065,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
+                      justifyContent: 'center',
                       gap: '0.55rem',
                       padding: '0.85rem 1.65rem',
                       borderRadius: '9999px',
@@ -4057,6 +4073,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       color: '#ffffff',
                       fontSize: '0.92rem',
                       fontWeight: 700,
+                      width: isMobile ? '100%' : 'auto',
+                      textAlign: 'center',
                       textDecoration: 'none'
                     }}
                   >
@@ -4067,7 +4085,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   <button
                     onClick={() => setSelectedProject(null)}
                     style={{
-                      marginLeft: 'auto',
+                      marginLeft: isMobile ? 0 : 'auto',
+                      width: isMobile ? '100%' : 'auto',
+                      justifyContent: 'center',
                       padding: '0.85rem 1.4rem',
                       borderRadius: '9999px',
                       background: '#f8fafc',
