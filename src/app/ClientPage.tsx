@@ -695,9 +695,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          3. PROJECT SHOWCASE GALLERY (Hilman's Selected Works)
          ========================================================================= */}
       <section id="works" className="works-section" style={{
-        padding: '3rem 1.5rem 5.5rem 1.5rem',
+        padding: isMobile ? '2rem 0.85rem 3.5rem 0.85rem' : '3rem 1.5rem 5.5rem 1.5rem',
         maxWidth: '1380px',
-        margin: '0 auto'
+        margin: '0 auto',
+        overflow: 'hidden'
       }}>
         {/* Gallery Top Navigation Header (Matching Image 2: "SELECTED WORK" / Location) */}
         <div style={{
@@ -838,6 +839,16 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
                 className="gallery-project-expanded"
+                style={{
+                  gridColumn: isMobile ? '1 / -1' : undefined,
+                  padding: isMobile ? '1rem 0.85rem' : '1.75rem',
+                  borderRadius: isMobile ? '20px' : '24px',
+                  minWidth: 0,
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  overflow: 'hidden'
+                }}
               >
                 <motion.div
                   key={`content-${work.id || work.slug}`}
@@ -845,9 +856,26 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.22, ease: 'easeOut' }}
                   className="expanded-inner-grid"
+                  style={{
+                    gridTemplateColumns: isMobile ? '100%' : 'minmax(0, 1.85fr) minmax(0, 1.15fr)',
+                    gap: isMobile ? '1.25rem' : '2rem',
+                    minWidth: 0,
+                    width: '100%',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box'
+                  }}
                 >
                   {/* LEFT COLUMN: Media Viewport + Info Row + Screenshots Thumbnails */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                    minWidth: 0,
+                    width: '100%',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box',
+                    overflow: 'hidden'
+                  }}>
                     {/* Media Viewport (16:9 Aspect Ratio) */}
                     <div style={{
                       width: '100%',
@@ -1031,29 +1059,47 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     </div>
 
                     {/* Info Row directly below Media Viewport */}
-                    <div style={{ marginTop: '0.25rem' }}>
+                    <div style={{
+                      marginTop: '0.25rem',
+                      width: '100%',
+                      maxWidth: '100%',
+                      minWidth: 0,
+                      boxSizing: 'border-box'
+                    }}>
                       <div style={{
                         display: 'flex',
-                        alignItems: 'baseline',
+                        alignItems: isMobile ? 'flex-start' : 'baseline',
                         justifyContent: 'space-between',
-                        gap: '0.75rem',
-                        marginBottom: '0.25rem'
+                        flexWrap: 'wrap',
+                        gap: isMobile ? '0.35rem 0.75rem' : '0.75rem',
+                        marginBottom: '0.35rem',
+                        width: '100%',
+                        minWidth: 0
                       }}>
                         <h3 style={{
-                          fontSize: '1.35rem',
+                          fontSize: isMobile ? '1.18rem' : '1.35rem',
                           fontWeight: 800,
                           color: '#0f172a',
                           margin: 0,
                           letterSpacing: '-0.02em',
-                          lineHeight: 1.3
+                          lineHeight: 1.3,
+                          flex: '1 1 auto',
+                          minWidth: 0,
+                          wordBreak: 'break-word',
+                          overflowWrap: 'anywhere'
                         }}>
                           {work.title}
                         </h3>
                         <span style={{
-                          fontSize: '0.9rem',
-                          fontWeight: 800,
-                          color: '#64748b',
-                          flexShrink: 0
+                          fontSize: isMobile ? '0.78rem' : '0.88rem',
+                          fontWeight: 700,
+                          color: '#0284c7',
+                          background: '#f0f9ff',
+                          border: '1px solid #bae6fd',
+                          padding: isMobile ? '0.15rem 0.55rem' : '0.2rem 0.65rem',
+                          borderRadius: '9999px',
+                          flexShrink: 0,
+                          alignSelf: isMobile ? 'flex-start' : 'baseline'
                         }}>
                           {work.year || '2025'}
                         </span>
@@ -1063,20 +1109,29 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        flexWrap: 'wrap',
                         gap: '0.5rem',
-                        fontSize: '0.86rem'
+                        fontSize: isMobile ? '0.78rem' : '0.86rem',
+                        width: '100%',
+                        minWidth: 0
                       }}>
                         <span style={{
                           color: '#64748b',
                           fontWeight: 600,
                           textTransform: 'uppercase',
-                          letterSpacing: '0.04em'
+                          letterSpacing: '0.04em',
+                          minWidth: 0,
+                          overflowWrap: 'anywhere'
                         }}>
                           {work.subtitle || work.role || 'Project'}
                         </span>
                         <span style={{
-                          color: '#0284c7',
+                          color: '#64748b',
                           fontWeight: 700,
+                          background: '#f1f5f9',
+                          padding: '0.12rem 0.5rem',
+                          borderRadius: '6px',
+                          fontSize: '0.75rem',
                           flexShrink: 0
                         }}>
                           {work.displayCategory || work.category || 'Platform'}
@@ -1090,7 +1145,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           gap: '0.5rem',
                           marginTop: '1rem',
                           overflowX: 'auto',
-                          paddingBottom: '0.4rem'
+                          WebkitOverflowScrolling: 'touch',
+                          paddingBottom: '0.4rem',
+                          width: '100%',
+                          maxWidth: '100%',
+                          minWidth: 0,
+                          boxSizing: 'border-box'
                         }}>
                           {projectGallery.slice(0, 8).map((imgUrl: string, idx: number) => (
                             <button
@@ -1151,9 +1211,15 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '1.25rem',
-                    borderLeft: '1px solid #f1f5f9',
-                    paddingLeft: '1.5rem',
-                    height: '100%'
+                    borderLeft: isMobile ? 'none' : '1px solid #f1f5f9',
+                    paddingLeft: isMobile ? 0 : '1.5rem',
+                    borderTop: isMobile ? '1px solid #f1f5f9' : 'none',
+                    paddingTop: isMobile ? '1.25rem' : 0,
+                    height: '100%',
+                    width: '100%',
+                    maxWidth: '100%',
+                    minWidth: 0,
+                    boxSizing: 'border-box'
                   }}>
                     <h4 style={{
                       fontSize: '0.75rem',
@@ -1209,7 +1275,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     </div>
 
                     {work.stack && (
-                      <div>
+                      <div style={{ width: '100%', minWidth: 0 }}>
                         <span style={{
                           fontSize: '0.72rem',
                           fontWeight: 700,
@@ -1221,8 +1287,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         }}>
                           Technologies
                         </span>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                          {work.stack.split('·').slice(0, 5).map((t: string, i: number) => (
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '0.35rem',
+                          width: '100%',
+                          minWidth: 0
+                        }}>
+                          {work.stack.split('·').slice(0, 6).map((t: string, i: number) => (
                             <span
                               key={i}
                               style={{
@@ -1232,7 +1304,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                 background: '#f8fafc',
                                 border: '1px solid #e2e8f0',
                                 padding: '0.2rem 0.55rem',
-                                borderRadius: '6px'
+                                borderRadius: '6px',
+                                maxWidth: '100%',
+                                overflowWrap: 'anywhere'
                               }}
                             >
                               {t.trim()}
@@ -1243,7 +1317,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     )}
 
                     {work.impact && (
-                      <div>
+                      <div style={{ width: '100%', minWidth: 0 }}>
                         <span style={{
                           fontSize: '0.72rem',
                           fontWeight: 700,
@@ -1260,7 +1334,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           color: '#334155',
                           lineHeight: 1.5,
                           margin: 0,
-                          fontWeight: 500
+                          fontWeight: 500,
+                          wordBreak: 'break-word',
+                          overflowWrap: 'anywhere'
                         }}>
                           {work.impact}
                         </p>
@@ -1272,7 +1348,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       flexDirection: 'column',
                       gap: '0.65rem',
                       marginTop: 'auto',
-                      paddingTop: '1rem'
+                      paddingTop: '1rem',
+                      width: '100%',
+                      minWidth: 0,
+                      boxSizing: 'border-box'
                     }}>
                       {work.link && (
                         <a
@@ -1483,7 +1562,9 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       display: '-webkit-box',
                       WebkitLineClamp: 1,
                       WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      minWidth: 0,
+                      flex: '1 1 auto'
                     }}
                     className="gallery-item-title"
                     >
@@ -1548,9 +1629,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               className="works-grid-image1"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '1.75rem 1.25rem',
-                alignItems: 'start'
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+                gap: isMobile ? '1.25rem' : '1.75rem 1.25rem',
+                alignItems: 'start',
+                width: '100%',
+                minWidth: 0
               }}
             >
               <AnimatePresence>
