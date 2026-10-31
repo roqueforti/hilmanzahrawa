@@ -24,6 +24,13 @@
   backdrop-filter: var(--cn-blur);
 }
 
+.card-nav[data-shown] .card-nav__panel {
+  max-height: calc(100dvh - 1.5rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
 .card-nav__rim {
   position: absolute;
   inset: 0;

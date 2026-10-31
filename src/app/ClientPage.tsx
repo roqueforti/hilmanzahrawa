@@ -86,7 +86,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [processHovered, setProcessHovered] = useState(false);
   const [hoveredProcessCard, setHoveredProcessCard] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 900 : false);
   const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
   const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
@@ -419,14 +419,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
          1. TOP NAVIGATION (CardNav Floating Dock)
          ========================================================================= */}
       <header className="landing-header" style={{
-        padding: '1.25rem 1.5rem',
+        padding: isMobile ? '0.65rem 0.75rem' : '1.25rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'sticky',
-        top: '0.75rem',
+        top: isMobile ? '0.4rem' : '0.75rem',
         zIndex: 100
       }}>
         <CardNav
@@ -434,7 +434,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <span 
               className="editorial-serif-italic landing-logo"
               style={{
-                fontSize: '1.65rem',
+                fontSize: isMobile ? '1.35rem' : '1.65rem',
                 lineHeight: 1,
                 letterSpacing: '-0.02em',
                 fontWeight: 600,
@@ -1794,7 +1794,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           }}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
             gap: '2.5rem',
             position: 'relative',
             padding: '1.5rem 0'
@@ -2271,13 +2271,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 <OrbitImages
                   images={orbitImagesData}
                   shape="ellipse"
-                  baseWidth={isMobile ? 400 : 1400}
-                  radiusX={isMobile ? 160 : 700}
-                  radiusY={isMobile ? 65 : 180}
+                  baseWidth={isMobile ? 380 : 1400}
+                  radiusX={isMobile ? 155 : 700}
+                  radiusY={isMobile ? 60 : 180}
                   rotation={isMobile ? -1 : -2}
                   duration={36}
-                  itemSize={isMobile ? 52 : 132}
-                  itemRadius={isMobile ? 16 : 22}
+                  itemSize={isMobile ? 50 : 132}
+                  itemRadius={isMobile ? 15 : 22}
                   depth={isMobile ? 0.6 : 0.68}
                   showPath={true}
                   pathColor="rgba(2, 132, 199, 0.28)"
@@ -2511,12 +2511,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     maxWidth: '540px',
-                    width: '92%',
-                    margin: '0.5rem auto 0 auto',
+                    width: '94%',
+                    margin: '0.4rem auto 0 auto',
                     background: '#ffffff',
                     border: '1.5px solid rgba(2, 132, 199, 0.35)',
                     borderRadius: '24px',
-                    padding: '1.25rem 1.35rem',
+                    padding: isMobile ? '1.15rem 1.25rem' : '1.25rem 1.35rem',
                     boxShadow: '0 16px 40px -10px rgba(2, 132, 199, 0.15), 0 2px 10px rgba(15, 23, 42, 0.03)',
                     position: 'relative'
                   }}
@@ -2805,7 +2805,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             {/* Card 1: Politeknik Negeri Malang (Academic Pass) */}
             <FlipCard
               width="100%"
-              height={460}
+              height={isMobile ? 440 : 460}
               radius={28}
               perspective={1200}
               background="transparent"
@@ -2820,7 +2820,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   borderRadius: '28px',
                   background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0f9ff 100%)',
                   border: '1.5px solid rgba(2, 132, 199, 0.25)',
-                  padding: '2.2rem',
+                  padding: isMobile ? '1.65rem 1.35rem' : '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -2972,7 +2972,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   borderRadius: '28px',
                   background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0f9ff 100%)',
                   border: '1.5px solid rgba(2, 132, 199, 0.25)',
-                  padding: '2.2rem',
+                  padding: isMobile ? '1.65rem 1.35rem' : '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -3061,7 +3061,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             {/* Card 2: SMA Negeri 1 Malang (Academic Pass) */}
             <FlipCard
               width="100%"
-              height={460}
+              height={isMobile ? 440 : 460}
               radius={28}
               perspective={1200}
               background="transparent"
@@ -3076,7 +3076,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   borderRadius: '28px',
                   background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0fdf4 100%)',
                   border: '1.5px solid rgba(16, 185, 129, 0.25)',
-                  padding: '2.2rem',
+                  padding: isMobile ? '1.65rem 1.35rem' : '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -3227,7 +3227,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   borderRadius: '28px',
                   background: 'linear-gradient(150deg, #ffffff 0%, #f8fafc 55%, #f0fdf4 100%)',
                   border: '1.5px solid rgba(16, 185, 129, 0.25)',
-                  padding: '2.2rem',
+                  padding: isMobile ? '1.65rem 1.35rem' : '2.2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -3323,18 +3323,18 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           <div style={{
             textAlign: 'center',
             maxWidth: '1240px',
-            margin: '0 auto 0.75rem auto',
+            margin: isMobile ? '0 auto 0.5rem auto' : '0 auto 0.75rem auto',
             padding: '0 1.5rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
           }}>
-            <span className="editorial-kicker" style={{ marginBottom: '0.4rem', fontSize: '1.05rem' }}>
+            <span className="editorial-kicker" style={{ marginBottom: '0.4rem', fontSize: isMobile ? '0.84rem' : '1.05rem' }}>
               / Honors & Accolades /
             </span>
 
             <h3 style={{
-              fontSize: 'clamp(2.2rem, 4.2vw, 3.2rem)',
+              fontSize: 'clamp(2rem, 4.2vw, 3.2rem)',
               fontWeight: 400,
               letterSpacing: '-0.025em',
               margin: '0 0 0.35rem 0',
@@ -3362,7 +3362,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             right: '50%',
             marginLeft: '-50vw',
             marginRight: '-50vw',
-            height: isMobile ? '340px' : '490px',
+            height: isMobile ? '350px' : '490px',
             overflow: 'hidden'
           }}>
             <CircularCarousel
@@ -3371,43 +3371,43 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 {
                   src: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=900&q=80&auto=format&fit=crop',
                   alt: 'Mandala Pure Love Most Inspiring Community Empowerment',
-                  title: '🏆 "Mandala Pure Love" Initiative',
+                  title: '"Mandala Pure Love" Initiative',
                   subtitle: 'Djarum Beasiswa Plus (2026) • National Winner'
                 },
                 {
                   src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80&auto=format&fit=crop',
                   alt: 'Innovillage Top 180 for Brewtech',
-                  title: '🚀 Top 180 for Brewtech',
+                  title: 'Top 180 for Brewtech',
                   subtitle: 'Telkom Indonesia / Innovillage (2026) • Social Venture Grant'
                 },
                 {
                   src: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=900&q=80&auto=format&fit=crop',
                   alt: '2nd Runner Up - IT Poly Debate Cup',
-                  title: '🎙️ 2nd Runner Up - Debate Cup',
+                  title: '2nd Runner Up — Debate Cup',
                   subtitle: 'IT Debate Society (2024) • National Parliamentary Debate'
                 },
                 {
                   src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=900&q=80&auto=format&fit=crop',
                   alt: 'Finalis Desain Poster Infografis 4C',
-                  title: '🎨 Finalis Desain Infografis 4C',
+                  title: 'Finalis Desain Infografis 4C',
                   subtitle: 'Universitas Brawijaya (2024) • National Design Contest'
                 },
                 {
                   src: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=900&q=80&auto=format&fit=crop',
                   alt: '2nd Best Novice Team - International Debate',
-                  title: '🌏 2nd Best Novice Team',
+                  title: '2nd Best Novice Team — Debate',
                   subtitle: 'PPI Taiwan Open Debate (2023) • International Competition'
                 }
               ]}
               preset="cylinder"
-              intro="rise"
+              intro={isMobile ? 'none' : 'rise'}
               scaleMode="fill"
               curve={0}
-              cardWidth={isMobile ? 245 : 390}
-              aspectRatio={isMobile ? 1.35 : 1.42}
+              cardWidth={isMobile ? 220 : 390}
+              aspectRatio={isMobile ? 1.25 : 1.42}
               spread={isMobile ? 1.15 : 1.45}
               speed={10}
-              gap={isMobile ? 16 : 36}
+              gap={isMobile ? 14 : 36}
               autoplay="drift"
               fadeColor="#ffffff"
               innerShade={0.16}
