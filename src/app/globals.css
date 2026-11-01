@@ -1930,6 +1930,17 @@ html, body {
   background: rgba(56, 189, 248, 0.85);
 }
 
+.tech-stack-chip {
+  cursor: default;
+  user-select: none;
+}
+
+.tech-stack-chip:hover {
+  border-color: #94a3b8 !important;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
 /* =========================================================================
    ENHANCED ARTICLES & PUBLICATIONS SHOWCASE
    ========================================================================= */

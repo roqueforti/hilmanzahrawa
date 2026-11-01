@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowUpRight, 
@@ -58,7 +59,247 @@ function getYoutubeEmbedUrl(url: string | null | undefined): string | null {
   const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
   return match ? `https://www.youtube-nocookie.com/embed/${match[1]}?rel=0&playsinline=1` : null;
 }
-import dynamic from 'next/dynamic';
+
+function getTechIcon(name: string) {
+  const norm = name.trim().toLowerCase();
+
+  // Next.js
+  if (norm.includes('next')) {
+    return (
+      <svg viewBox="0 0 180 180" width="16" height="16" fill="none">
+        <circle cx="90" cy="90" r="90" fill="#000000" />
+        <path d="M149.508 157.438L69.1432 54H54V125.97H66.0827V69.3789L139.999 164.848C143.344 162.593 146.526 160.113 149.508 157.438Z" fill="url(#paint0_linear_next)" />
+        <rect x="115" y="54" width="12" height="72" fill="url(#paint1_linear_next)" />
+        <defs>
+          <linearGradient id="paint0_linear_next" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="paint1_linear_next" x1="121" y1="54" x2="120.799" y2="106.875" gradientUnits="userSpaceOnUse">
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
+  // TypeScript
+  if (norm.includes('typescript') || norm === 'ts') {
+    return (
+      <svg viewBox="0 0 256 256" width="16" height="16">
+        <rect width="256" height="256" rx="40" fill="#3178C6" />
+        <path d="M150.7 159.2c4.8 7.7 12 12.3 21.6 12.3 9 0 14.6-4.6 14.6-11 0-7.3-5.8-10-16.2-14.5l-5.6-2.4c-16.1-6.8-26.8-15.4-26.8-33.8 0-17.5 13.5-30.8 34.6-30.8 15.3 0 26.4 5.7 33.6 17.7l-13.8 8.9c-4-6.8-9.3-9.5-19.8-9.5-8.5 0-13.4 4.5-13.4 10.3 0 6.6 5.3 9.3 15.6 13.8l5.6 2.4c18.5 7.9 27.6 16.9 27.6 34.8 0 19.9-15.1 32.2-36.4 32.2-20.2 0-33.3-9.9-39.7-22.6l14.2-9zM80.2 89.2h63.7v16.2H113v83.4H90.9v-83.4H80.2V89.2z" fill="#ffffff" />
+      </svg>
+    );
+  }
+
+  // Supabase
+  if (norm.includes('supabase')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <path d="M13.35 2.5L3.6 14.25c-.35.42-.05 1.05.5 1.05h7.15l-1.5 6.7c-.12.56.55.94.94.52l9.75-11.75c.35-.42.05-1.05-.5-1.05h-7.15l1.5-6.7c.12-.56-.55-.94-.94-.52z" fill="#3ECF8E" />
+      </svg>
+    );
+  }
+
+  // Tailwind / TailwindCSS
+  if (norm.includes('tailwind')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="#38BDF8">
+        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z" />
+      </svg>
+    );
+  }
+
+  // Figma
+  if (norm.includes('figma')) {
+    return (
+      <svg viewBox="0 0 38 57" width="12" height="16" fill="none">
+        <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" fill="#1ABCFE" />
+        <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" fill="#0ACF83" />
+        <path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" fill="#FF7262" />
+        <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E" />
+        <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF" />
+      </svg>
+    );
+  }
+
+  // React
+  if (norm.includes('react')) {
+    return (
+      <svg viewBox="-11.5 -10.23174 23 20.46348" width="16" height="16" fill="none">
+        <circle cx="0" cy="0" r="2.05" fill="#61DAFB"/>
+        <g stroke="#61DAFB" strokeWidth="1" fill="none">
+          <ellipse rx="11" ry="4.2"/>
+          <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+          <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+        </g>
+      </svg>
+    );
+  }
+
+  // Laravel
+  if (norm.includes('laravel')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="#FF2D20">
+        <path d="M21.2 5.5l-8.6-5c-.4-.2-.8-.2-1.2 0l-8.6 5c-.5.3-.8.8-.8 1.4v10.2c0 .6.3 1.1.8 1.4l8.6 5c.2.1.4.2.6.2.2 0 .4-.1.6-.2l8.6-5c.5-.3.8-.8.8-1.4V6.9c0-.6-.3-1.1-.8-1.4zm-9.2 15.3l-7-4.1V8.5l7 4.1v8.2zm1-9.4L6.1 7.3l6.9-4 6.9 4-6.9 4.1zm7 5.3l-7 4.1v-8.2l7-4.1v8.2z" />
+      </svg>
+    );
+  }
+
+  // MySQL / Database
+  if (norm.includes('mysql') || norm.includes('sql') || norm.includes('database')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="#00758F">
+        <path d="M12 3c-4.97 0-9 1.34-9 3v12c0 1.66 4.03 3 9 3s9-1.34 9-3V6c0-1.66-4.03-3-9-3zm0 2c4.32 0 7 1.06 7 1.5S16.32 8 12 8s-7-1.06-7-1.5S7.68 5 12 5zm-7 4.72c1.78.78 4.29 1.28 7 1.28s5.22-.5 7-1.28V12c0 .44-2.68 1.5-7 1.5s-7-1.06-7-1.5V9.72zm0 5c1.78.78 4.29 1.28 7 1.28s5.22-.5 7-1.28V18c0 .44-2.68 1.5-7 1.5s-7-1.06-7-1.5v-3.28z" />
+      </svg>
+    );
+  }
+
+  // Bootstrap
+  if (norm.includes('bootstrap')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <rect width="24" height="24" rx="5" fill="#7952B3" />
+        <path d="M8 6h4.5c1.4 0 2.5.3 3.2 1 .7.7 1.1 1.6 1.1 2.7 0 .8-.2 1.5-.7 2-.5.5-1.1.9-1.9 1 1 .2 1.8.6 2.4 1.2.6.7.9 1.5.9 2.6 0 1.2-.4 2.2-1.2 3-.8.7-2 1.1-3.6 1.1H8V6zm2.2 6.2h2.2c.8 0 1.4-.2 1.8-.6.4-.4.6-.9.6-1.5 0-.6-.2-1.1-.6-1.5-.4-.4-1-.6-1.8-.6h-2.2v4.2zm0 6.4h2.5c.9 0 1.6-.2 2.1-.7.5-.4.7-1 .7-1.8 0-.7-.2-1.3-.7-1.7-.5-.4-1.2-.7-2.1-.7h-2.5v4.9z" fill="#ffffff" />
+      </svg>
+    );
+  }
+
+  // PHP
+  if (norm.includes('php')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <rect width="24" height="24" rx="12" fill="#777BB4" />
+        <path d="M5.5 14.5l.8-4.5h2.4c.8 0 1.4.2 1.7.5.3.3.4.8.3 1.4-.1.7-.4 1.3-.9 1.7-.5.4-1.2.6-2 .6h-.8l-.5 2.7H5.5zm1.7-2.3h.8c.4 0 .7-.1.9-.3.2-.2.4-.5.4-.9 0-.3-.1-.5-.2-.7-.1-.1-.4-.2-.7-.2h-.8l-.4 2.1zm5.2 2.3l1.3-7h1.4l-.5 2.7h.8c.8 0 1.4.2 1.7.5.3.3.4.8.3 1.4-.1.7-.4 1.3-.9 1.7-.5.4-1.2.6-2 .6h-2.1zm1.7-2.3h.8c.4 0 .7-.1.9-.3.2-.2.4-.5.4-.9 0-.3-.1-.5-.2-.7-.1-.1-.4-.2-.7-.2h-.8l-.4 2.1z" fill="#ffffff" />
+      </svg>
+    );
+  }
+
+  // Livewire
+  if (norm.includes('livewire')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="#FB70A9">
+        <path d="m13.4 2.1-9 12.2c-.3.4 0 1 .5 1h6.6l-1.9 6.6c-.2.6.5 1 .9.6l9.6-12.8c.3-.4 0-1-.5-1H13l1.5-6c.2-.5-.5-1-.9-.6z" />
+      </svg>
+    );
+  }
+
+  // Accessibility / WCAG
+  if (norm.includes('access') || norm.includes('wcag') || norm.includes('a11y')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0284c7" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="4" r="2" />
+        <path d="m5 9 7 2 7-2" />
+        <path d="M12 11v11" />
+        <path d="m8 22 4-7 4 7" />
+      </svg>
+    );
+  }
+
+  // REST APIs / API
+  if (norm.includes('api') || norm.includes('rest')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#10b981" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+      </svg>
+    );
+  }
+
+  // Adobe Premiere
+  if (norm.includes('premiere')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <rect width="24" height="24" rx="5" fill="#00005B" />
+        <text x="12" y="16.5" fill="#EA77FF" fontSize="11" fontWeight="800" fontFamily="sans-serif" textAnchor="middle">Pr</text>
+      </svg>
+    );
+  }
+
+  // Adobe After Effects
+  if (norm.includes('after effect') || norm.includes('effects')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <rect width="24" height="24" rx="5" fill="#00005B" />
+        <text x="12" y="16.5" fill="#9999FF" fontSize="11" fontWeight="800" fontFamily="sans-serif" textAnchor="middle">Ae</text>
+      </svg>
+    );
+  }
+
+  // Film Direction / Cinematography / Video / Production / VFX
+  if (norm.includes('film') || norm.includes('direct') || norm.includes('cinema') || norm.includes('screenplay') || norm.includes('video') || norm.includes('vfx') || norm.includes('production')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#e11d48" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="18" height="18" x="3" y="3" rx="2" />
+        <path d="m3 9 2.44-6" />
+        <path d="m9 9 2.44-6" />
+        <path d="m15 9 2.44-6" />
+        <path d="m21 9-2.44-6" />
+      </svg>
+    );
+  }
+
+  // Sound / Audio
+  if (norm.includes('sound') || norm.includes('audio') || norm.includes('mixing')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10v4" /><path d="M7 6v12" /><path d="M11 3v18" /><path d="M15 8v8" /><path d="M19 11v2" />
+      </svg>
+    );
+  }
+
+  // Color Grading
+  if (norm.includes('color') || norm.includes('grading')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="#ec4899" strokeWidth="2.2" />
+        <path d="M12 3a9 9 0 0 1 0 18Z" fill="#ec4899" opacity="0.4" />
+      </svg>
+    );
+  }
+
+  // Design System / Creative Direction
+  if (norm.includes('design system') || norm.includes('micro') || norm.includes('creative')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8b5cf6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+      </svg>
+    );
+  }
+
+  // Responsive / Mobile-First UI
+  if (norm.includes('responsive') || norm.includes('mobile')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6366f1" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="16" height="12" x="2" y="3" rx="2" />
+        <path d="M8 19h8" /><path d="M12 15v4" />
+      </svg>
+    );
+  }
+
+  // Dashboard
+  if (norm.includes('dash')) {
+    return (
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0ea5e9" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="7" height="9" x="3" y="3" rx="1" />
+        <rect width="7" height="5" x="14" y="3" rx="1" />
+        <rect width="7" height="9" x="14" y="12" rx="1" />
+        <rect width="7" height="5" x="3" y="16" rx="1" />
+      </svg>
+    );
+  }
+
+  // Fallback Code Tag
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#64748b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  );
+}
+
 import MediumArticles from '@/components/MediumArticles';
 
 // Code-split heavy 3D WebGL canvases to keep initial page bundle ultra-light and fast
@@ -1418,14 +1659,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           textTransform: 'uppercase',
                           color: '#64748b',
                           display: 'block',
-                          marginBottom: '0.35rem'
+                          marginBottom: '0.45rem'
                         }}>
                           Technologies
                         </span>
                         <div style={{
                           display: 'flex',
                           flexWrap: 'wrap',
-                          gap: '0.35rem',
+                          gap: '0.4rem',
                           width: '100%',
                           minWidth: 0
                         }}>
@@ -1433,18 +1674,27 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                             <span
                               key={i}
                               style={{
-                                fontSize: '0.74rem',
-                                fontWeight: 600,
-                                color: '#1e293b',
-                                background: '#f8fafc',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.4rem',
+                                fontSize: isMobile ? '0.74rem' : '0.78rem',
+                                fontWeight: 650,
+                                color: '#0f172a',
+                                background: '#ffffff',
                                 border: '1px solid #e2e8f0',
-                                padding: '0.2rem 0.55rem',
-                                borderRadius: '6px',
+                                padding: isMobile ? '0.24rem 0.55rem' : '0.28rem 0.65rem',
+                                borderRadius: '8px',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
                                 maxWidth: '100%',
-                                overflowWrap: 'anywhere'
+                                transition: 'all 0.2s ease'
                               }}
+                              className="tech-stack-chip"
+                              title={t.trim()}
                             >
-                              {t.trim()}
+                              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: 16, height: 16 }}>
+                                {getTechIcon(t)}
+                              </span>
+                              <span style={{ overflowWrap: 'anywhere' }}>{t.trim()}</span>
                             </span>
                           ))}
                         </div>
@@ -2504,7 +2754,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                   pathDash={isMobile ? 4 : 6}
                   hoverSpeed={0.15}
                   clickToFront={true}
-                  onItemClick={(idx) => {
+                  onItemClick={(idx: number) => {
                     const selected = orbitExperiences[idx];
                     if (selected) {
                       setSelectedExpId(selected.id);
@@ -4250,7 +4500,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 {/* Stack & Architecture */}
                 {selectedProject.stack && (
                   <div style={{ marginBottom: '2rem' }}>
-                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.6rem' }}>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.65rem' }}>
                       Technology Stack & Architecture
                     </span>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem' }}>
@@ -4258,17 +4508,26 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         <span
                           key={i}
                           style={{
-                            fontSize: '0.86rem',
-                            fontFamily: 'monospace',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.45rem',
+                            fontSize: '0.84rem',
                             color: '#0f172a',
-                            background: '#f8fafc',
+                            background: '#ffffff',
                             border: '1px solid #cbd5e1',
-                            padding: '0.4rem 0.85rem',
+                            padding: '0.38rem 0.8rem',
                             borderRadius: '8px',
-                            fontWeight: 700
+                            fontWeight: 650,
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+                            transition: 'all 0.2s ease'
                           }}
+                          className="tech-stack-chip"
+                          title={tech.trim()}
                         >
-                          {tech.trim()}
+                          <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: 17, height: 17 }}>
+                            {getTechIcon(tech)}
+                          </span>
+                          <span>{tech.trim()}</span>
                         </span>
                       ))}
                     </div>
