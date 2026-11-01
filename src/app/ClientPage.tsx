@@ -725,55 +725,62 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       <BlueMoonPetals />
 
       {/* =========================================================================
-         1. TOP NAVIGATION (CardNav Floating Dock)
+         1. TOP NAVIGATION (CardNav Floating Dock - Accessible Anywhere on Page)
          ========================================================================= */}
       <header className="landing-header" style={{
-        padding: isMobile ? '0.65rem 0.75rem' : '1.25rem 1.5rem',
+        position: 'fixed',
+        top: isMobile ? '0.45rem' : '0.85rem',
+        left: 0,
+        right: 0,
+        padding: isMobile ? '0 0.75rem' : '0 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'sticky',
-        top: isMobile ? '0.4rem' : '0.75rem',
-        zIndex: 100
+        zIndex: 999,
+        pointerEvents: 'none'
       }}>
-        <CardNav
-          logo={
-            <span 
-              className="editorial-serif-italic landing-logo"
-              style={{
-                fontSize: isMobile ? '1.35rem' : '1.65rem',
-                lineHeight: 1,
-                letterSpacing: '-0.02em',
-                fontWeight: 600,
-                color: '#0f172a',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {name}
-            </span>
-          }
-          logoAlt={name}
-          logoHref="#"
-          items={cardNavItems}
-          cta={{
-            label: "Let's Talk",
-            href: `https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`
-          }}
-          accentColor="#0284c7"
-          theme="light"
-          surface="glass"
-          cardEffect="rise"
-          openOn="click"
-          maxWidth={920}
-        />
+        <div style={{ pointerEvents: 'auto', width: '100%', maxWidth: '920px' }}>
+          <CardNav
+            logo={
+              <span 
+                className="editorial-serif-italic landing-logo"
+                style={{
+                  fontSize: isMobile ? '1.35rem' : '1.65rem',
+                  lineHeight: 1,
+                  letterSpacing: '-0.02em',
+                  fontWeight: 600,
+                  color: '#0f172a',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {name}
+              </span>
+            }
+            logoAlt={name}
+            logoHref="#"
+            items={cardNavItems}
+            cta={{
+              label: "Let's Talk",
+              href: `https://wa.me/${whatsapp}?text=Hi%20Hilman,%20let's%20talk%20about%20a%20project`
+            }}
+            accentColor="#0284c7"
+            theme="light"
+            surface="glass"
+            cardEffect="rise"
+            openOn="click"
+            maxWidth={920}
+          />
+        </div>
       </header>
 
       {/* =========================================================================
          2. HERO SECTION
          ========================================================================= */}
-      <section className="hero-section-wrapper">
+      <section className="hero-section-wrapper" style={{
+        paddingTop: isMobile ? '4.8rem' : '5.8rem'
+      }}>
         <div style={{
           maxWidth: '1380px',
           margin: '0 auto',
