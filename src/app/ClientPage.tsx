@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -89,6 +89,14 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 900 : false);
   const [isExpandedMediaLoading, setIsExpandedMediaLoading] = useState<boolean>(true);
   const [isModalMediaLoading, setIsModalMediaLoading] = useState<boolean>(true);
+  const [isExpandedScrollable, setIsExpandedScrollable] = useState<boolean>(false);
+  const [hasExpandedScrolled, setHasExpandedScrolled] = useState<boolean>(false);
+  const expandedScrollRef = useRef<HTMLDivElement>(null);
+
+  const [isModalScrollable, setIsModalScrollable] = useState<boolean>(false);
+  const [hasModalScrolled, setHasModalScrolled] = useState<boolean>(false);
+  const modalScrollRef = useRef<HTMLDivElement>(null);
+
   const [selectedExpId, setSelectedExpId] = useState<string | null>("exp-pal");
   const [expCategoryFilter, setExpCategoryFilter] = useState<string>("all");
   const [cardTilt, setCardTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
@@ -111,6 +119,36 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   }, [expandedProject?.id, expandedProject?.slug, expandedImageIndex]);
 
   React.useEffect(() => {
+    if (expandedScrollRef.current) {
+      expandedScrollRef.current.scrollTop = 0;
+      setHasExpandedScrolled(false);
+      const timer = setTimeout(() => {
+        if (expandedScrollRef.current) {
+          setIsExpandedScrollable(
+            expandedScrollRef.current.scrollHeight > expandedScrollRef.current.clientHeight + 25
+          );
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [expandedProject?.id, expandedProject?.slug, expandedImageIndex]);
+
+  const handleExpandedImageLoad = () => {
+    setIsExpandedMediaLoading(false);
+    if (expandedScrollRef.current) {
+      setIsExpandedScrollable(
+        expandedScrollRef.current.scrollHeight > expandedScrollRef.current.clientHeight + 25
+      );
+    }
+  };
+
+  const handleExpandedScroll = () => {
+    if (expandedScrollRef.current) {
+      setHasExpandedScrolled(expandedScrollRef.current.scrollTop > 40);
+    }
+  };
+
+  React.useEffect(() => {
     if (selectedProject) {
       setIsModalMediaLoading(true);
       const timer = setTimeout(() => {
@@ -119,6 +157,36 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       return () => clearTimeout(timer);
     }
   }, [selectedProject?.id, selectedProject?.slug, activeModalImageIndex]);
+
+  React.useEffect(() => {
+    if (modalScrollRef.current) {
+      modalScrollRef.current.scrollTop = 0;
+      setHasModalScrolled(false);
+      const timer = setTimeout(() => {
+        if (modalScrollRef.current) {
+          setIsModalScrollable(
+            modalScrollRef.current.scrollHeight > modalScrollRef.current.clientHeight + 25
+          );
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedProject?.id, selectedProject?.slug, activeModalImageIndex]);
+
+  const handleModalImageLoad = () => {
+    setIsModalMediaLoading(false);
+    if (modalScrollRef.current) {
+      setIsModalScrollable(
+        modalScrollRef.current.scrollHeight > modalScrollRef.current.clientHeight + 25
+      );
+    }
+  };
+
+  const handleModalScroll = () => {
+    if (modalScrollRef.current) {
+      setHasModalScrolled(modalScrollRef.current.scrollTop > 40);
+    }
+  };
 
   const bio = initialData?.bio || {};
   const rawName = bio?.name || "Hilman Zahrawa";
@@ -912,18 +980,39 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           />
                         </>
                       ) : (
-                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                          <img
-                            key={`img-${activeScreenshot}`}
-                            src={activeScreenshot}
-                            alt={work.title}
+                        <>
+                          {/* Scrollable Image Track */}
+                          <div
+                            ref={expandedScrollRef}
+                            onScroll={handleExpandedScroll}
+                            className="expanded-media-scroll-viewport"
                             style={{
                               width: '100%',
                               height: '100%',
-                              objectFit: 'cover',
-                              objectPosition: 'top center'
+                              overflowY: 'auto',
+                              overflowX: 'hidden',
+                              WebkitOverflowScrolling: 'touch',
+                              overscrollBehaviorY: 'contain',
+                              scrollBehavior: 'smooth',
+                              touchAction: 'pan-y',
+                              position: 'relative'
                             }}
-                          />
+                          >
+                            <img
+                              key={`img-${activeScreenshot}`}
+                              src={activeScreenshot}
+                              alt={work.title}
+                              onLoad={handleExpandedImageLoad}
+                              style={{
+                                width: '100%',
+                                height: 'auto',
+                                minHeight: '100%',
+                                display: 'block',
+                                objectFit: 'cover',
+                                objectPosition: 'top center'
+                              }}
+                            />
+                          </div>
 
                           {/* Navigation Chevrons if multi-screenshot */}
                           {screenshotCount > 1 && (
@@ -951,7 +1040,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  transition: 'all 0.2s'
+                                  transition: 'all 0.2s',
+                                  zIndex: 10
                                 }}
                               >
                                 <ChevronLeft size={isMobile ? 16 : 20} />
@@ -979,7 +1069,8 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  transition: 'all 0.2s'
+                                  transition: 'all 0.2s',
+                                  zIndex: 10
                                 }}
                               >
                                 <ChevronRight size={isMobile ? 16 : 20} />
@@ -997,13 +1088,57 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                                 fontWeight: 700,
                                 padding: isMobile ? '0.18rem 0.5rem' : '0.25rem 0.65rem',
                                 borderRadius: '9999px',
-                                border: '1px solid rgba(255,255,255,0.2)'
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                zIndex: 10
                               }}>
                                 {expandedImageIndex + 1} / {screenshotCount} Screens
                               </div>
                             </>
                           )}
-                        </div>
+
+                          {/* Scroll Page / Back to Top Action Indicator Button */}
+                          {isExpandedScrollable && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (expandedScrollRef.current) {
+                                  if (hasExpandedScrolled) {
+                                    expandedScrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+                                  } else {
+                                    expandedScrollRef.current.scrollBy({
+                                      top: expandedScrollRef.current.clientHeight * 0.8,
+                                      behavior: 'smooth'
+                                    });
+                                  }
+                                }
+                              }}
+                              title={hasExpandedScrolled ? "Back to top of mockup" : "Scroll to inspect full design"}
+                              style={{
+                                position: 'absolute',
+                                bottom: isMobile ? '0.55rem' : '0.85rem',
+                                right: isMobile ? '0.55rem' : '0.85rem',
+                                background: hasExpandedScrolled ? 'rgba(2, 132, 199, 0.92)' : 'rgba(15, 23, 42, 0.85)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#ffffff',
+                                fontSize: isMobile ? '0.66rem' : '0.72rem',
+                                fontWeight: 700,
+                                padding: isMobile ? '0.2rem 0.6rem' : '0.25rem 0.75rem',
+                                borderRadius: '9999px',
+                                border: hasExpandedScrolled ? '1px solid rgba(56, 189, 248, 0.5)' : '1px solid rgba(255,255,255,0.2)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.35rem',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                                transition: 'all 0.25s ease'
+                              }}
+                            >
+                              <span>{hasExpandedScrolled ? '↑ Back to Top' : '↕ Scroll Page'}</span>
+                            </button>
+                          )}
+                        </>
                       )}
 
                       {/* Top-Right (X) Close Button */}
@@ -1050,7 +1185,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          zIndex: 10,
+                          zIndex: 15,
                           transition: 'transform 0.2s ease, background 0.2s ease'
                         }}
                       >
@@ -3841,13 +3976,10 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <div style={{
                       position: 'relative',
                       width: '100%',
-                      height: isMobile ? 'clamp(210px, 35vh, 320px)' : 'clamp(300px, 45vh, 480px)',
+                      height: isMobile ? 'clamp(240px, 45vh, 380px)' : 'clamp(340px, 55vh, 520px)',
                       borderRadius: '20px',
                       overflow: 'hidden',
                       background: '#090d16',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
                       boxShadow: '0 15px 35px rgba(0,0,0,0.12)'
                     }}>
                       <div className={`media-skeleton-container ${!isModalMediaLoading ? 'is-hidden' : ''}`}>
@@ -3864,17 +3996,83 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                           </div>
                         </div>
                       </div>
-                      <img
-                        key={`modal-img-${currentImg}`}
-                        src={currentImg}
-                        alt={`${selectedProject.title} screenshot ${activeModalImageIndex + 1}`}
-                        onLoad={() => setIsModalMediaLoading(false)}
+
+                      {/* Scrollable Image Track */}
+                      <div
+                        ref={modalScrollRef}
+                        onScroll={handleModalScroll}
+                        className="expanded-media-scroll-viewport"
                         style={{
-                          maxWidth: '100%',
-                          maxHeight: '100%',
-                          objectFit: 'contain'
+                          width: '100%',
+                          height: '100%',
+                          overflowY: 'auto',
+                          overflowX: 'hidden',
+                          WebkitOverflowScrolling: 'touch',
+                          overscrollBehaviorY: 'contain',
+                          scrollBehavior: 'smooth',
+                          touchAction: 'pan-y',
+                          position: 'relative'
                         }}
-                      />
+                      >
+                        <img
+                          key={`modal-img-${currentImg}`}
+                          src={currentImg}
+                          alt={`${selectedProject.title} screenshot ${activeModalImageIndex + 1}`}
+                          onLoad={handleModalImageLoad}
+                          style={{
+                            width: '100%',
+                            height: 'auto',
+                            minHeight: '100%',
+                            display: 'block',
+                            objectFit: 'cover',
+                            objectPosition: 'top center'
+                          }}
+                        />
+                      </div>
+
+                      {/* Scroll Page / Back to Top Action Indicator Button in Modal */}
+                      {isModalScrollable && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (modalScrollRef.current) {
+                              if (hasModalScrolled) {
+                                modalScrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+                              } else {
+                                modalScrollRef.current.scrollBy({
+                                  top: modalScrollRef.current.clientHeight * 0.8,
+                                  behavior: 'smooth'
+                                });
+                              }
+                            }
+                          }}
+                          title={hasModalScrolled ? "Back to top of mockup" : "Scroll to inspect full design"}
+                          style={{
+                            position: 'absolute',
+                            bottom: '1rem',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            background: hasModalScrolled ? 'rgba(2, 132, 199, 0.92)' : 'rgba(15, 23, 42, 0.85)',
+                            backdropFilter: 'blur(8px)',
+                            color: '#ffffff',
+                            fontSize: '0.74rem',
+                            fontWeight: 700,
+                            padding: '0.3rem 0.85rem',
+                            borderRadius: '9999px',
+                            border: hasModalScrolled ? '1px solid rgba(56, 189, 248, 0.5)' : '1px solid rgba(255,255,255,0.2)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.35rem',
+                            cursor: 'pointer',
+                            zIndex: 10,
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                            transition: 'all 0.25s ease'
+                          }}
+                        >
+                          <span>{hasModalScrolled ? '↑ Back to Top' : '↕ Scroll Page'}</span>
+                        </button>
+                      )}
 
                       {/* Navigation Arrows (if > 1 image) */}
                       {projectGallery.length > 1 && (

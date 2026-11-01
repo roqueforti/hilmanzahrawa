@@ -1903,6 +1903,34 @@ html, body {
 }
 
 /* =========================================================================
+   Scrollable Mockup Viewport (for tall / full-page screenshots)
+   ========================================================================= */
+.expanded-media-scroll-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.45) rgba(15, 23, 42, 0.3);
+  -webkit-overflow-scrolling: touch;
+}
+
+.expanded-media-scroll-viewport::-webkit-scrollbar {
+  width: 6px;
+}
+
+.expanded-media-scroll-viewport::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.35);
+  border-radius: 9999px;
+}
+
+.expanded-media-scroll-viewport::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.5);
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+
+.expanded-media-scroll-viewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.85);
+}
+
+/* =========================================================================
    ENHANCED ARTICLES & PUBLICATIONS SHOWCASE
    ========================================================================= */
 .articles-section-wrapper {
