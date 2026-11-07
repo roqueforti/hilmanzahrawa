@@ -134,6 +134,7 @@ html {
   scroll-padding-top: 85px;
   background-color: var(--bg-primary);
   color-scheme: light;
+  overflow-x: clip;
 }
 
 body {
@@ -143,7 +144,9 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
+  min-height: 100%;
+  width: 100%;
 }
 
 /* Accessibility Focus States */
@@ -1391,9 +1394,22 @@ body {
 
 /* Viewport overflow protection */
 html, body {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   max-width: 100vw !important;
   width: 100%;
+}
+
+/* Swarm Rebuild Extension Compatibility: Hide full-screen ambient canvas during rebuild */
+html:has(swarm-rebuild) .blue-moon-petals-container,
+body:has(swarm-rebuild) .blue-moon-petals-container,
+swarm-rebuild ~ * .blue-moon-petals-container,
+html:has(swarm-rebuild) .skywaves-canvas-wrap,
+body:has(swarm-rebuild) .skywaves-canvas-wrap,
+swarm-rebuild ~ * .skywaves-canvas-wrap {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 @media (min-width: 768px) {

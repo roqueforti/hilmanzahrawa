@@ -118,23 +118,46 @@ function PetalsCloud({ count = 65 }: { count?: number }) {
 
 export default function BlueMoonPetals() {
   const [mounted, setMounted] = useState(false);
+  const [isSwarmActive, setIsSwarmActive] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+
+    const checkSwarm = () => {
+      if (typeof window !== 'undefined') {
+        const hasSwarm = Boolean(
+          (window as any).__swarmRebuild ||
+          (window as any).__swarmHidden ||
+          (window as any).__swarmShot ||
+          document.querySelector('swarm-rebuild') ||
+          document.documentElement.classList.contains('swarm-active')
+        );
+        if (hasSwarm) {
+          setIsSwarmActive(true);
+        }
+      }
+    };
+
+    checkSwarm();
+    const interval = setInterval(checkSwarm, 400);
+    return () => clearInterval(interval);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || isSwarmActive) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      width: '100vw',
-      height: '100vh',
-      pointerEvents: 'none',
-      zIndex: 0,
-      overflow: 'hidden'
-    }}>
+    <div 
+      className="blue-moon-petals-container"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100vw',
+        height: '100vh',
+        pointerEvents: 'none',
+        zIndex: 0,
+        overflow: 'hidden'
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0, 10], fov: 50 }}
         gl={{ antialias: true, alpha: true }}

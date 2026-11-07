@@ -67,22 +67,45 @@ function WavyGrid() {
 
 export default function SkyWaves3D() {
   const [mounted, setMounted] = useState(false);
+  const [isSwarmActive, setIsSwarmActive] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+
+    const checkSwarm = () => {
+      if (typeof window !== 'undefined') {
+        const hasSwarm = Boolean(
+          (window as any).__swarmRebuild ||
+          (window as any).__swarmHidden ||
+          (window as any).__swarmShot ||
+          document.querySelector('swarm-rebuild') ||
+          document.documentElement.classList.contains('swarm-active')
+        );
+        if (hasSwarm) {
+          setIsSwarmActive(true);
+        }
+      }
+    };
+
+    checkSwarm();
+    const interval = setInterval(checkSwarm, 400);
+    return () => clearInterval(interval);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || isSwarmActive) return null;
 
   return (
-    <div style={{
-      position: 'absolute',
-      inset: 0,
-      width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      opacity: 0.8
-    }}>
+    <div 
+      className="skywaves-canvas-wrap"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        opacity: 0.8
+      }}
+    >
       <Canvas
         camera={{ position: [0, 4, 5], fov: 50 }}
         gl={{ antialias: true, alpha: true }}

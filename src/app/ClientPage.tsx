@@ -718,7 +718,6 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       color: '#0f172a',
       fontFamily: 'var(--font-sans-display)',
       minHeight: '100vh',
-      overflowX: 'hidden',
       position: 'relative'
     }}>
       {/* 3D Falling Blue Moon Weed Petals (Subtle ambient background) */}
@@ -775,9 +774,11 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         </div>
       </header>
 
-      {/* =========================================================================
-         2. HERO SECTION
-         ========================================================================= */}
+      {/* Main Semantic Page Content (Allows Extensions like Swarm Rebuild to Traversal Cleanly) */}
+      <main id="main-content" style={{ width: '100%', position: 'relative' }}>
+        {/* =========================================================================
+           2. HERO SECTION
+           ========================================================================= */}
       <section className="hero-section-wrapper" style={{
         paddingTop: isMobile ? '4.8rem' : '5.8rem'
       }}>
@@ -1014,7 +1015,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         padding: isMobile ? '2rem 0.85rem 3.5rem 0.85rem' : '3rem 1.5rem 5.5rem 1.5rem',
         maxWidth: '1380px',
         margin: '0 auto',
-        overflow: 'hidden'
+        position: 'relative'
       }}>
         {/* Gallery Top Navigation Header (Matching Image 2: "SELECTED WORK" / Location) */}
         <div style={{
@@ -3232,7 +3233,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         padding: '5rem 0 3rem 0',
         width: '100%',
         margin: '0 auto',
-        overflow: 'hidden'
+        position: 'relative'
       }}>
         {/* Section Header */}
         <div style={{
@@ -3998,6 +3999,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           </div>
         </div>
       </section>
+      </main>
 
       {/* =========================================================================
          12. FOOTER NAVIGATION & GIANT WATERMARK NAME
