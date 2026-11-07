@@ -2455,7 +2455,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         flexDirection: 'column',
         justifyContent: 'center'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: isMobile ? '2.25rem' : '2.5rem' }}>
           <span className="editorial-kicker" style={{ marginBottom: '0.25rem', fontSize: '1rem' }}>
             / Career & Trajectory /
           </span>
@@ -2741,7 +2741,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 position: 'relative',
                 width: '100%',
                 maxWidth: '1520px',
-                margin: '0 auto',
+                margin: isMobile ? '0.75rem auto 0 auto' : '0 auto',
                 height: isMobile ? '230px' : '490px',
                 overflow: 'visible'
               }}>

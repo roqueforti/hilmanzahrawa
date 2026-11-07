@@ -1399,7 +1399,7 @@ html, body {
   width: 100%;
 }
 
-/* Swarm Rebuild Extension Compatibility: Hide full-screen ambient canvas during rebuild */
+/* Swarm Rebuild Extension Compatibility: Completely isolate Three.js and ambient canvases during rebuild */
 html:has(swarm-rebuild) .blue-moon-petals-container,
 body:has(swarm-rebuild) .blue-moon-petals-container,
 swarm-rebuild ~ * .blue-moon-petals-container,
@@ -1409,6 +1409,7 @@ swarm-rebuild ~ * .skywaves-canvas-wrap {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
+  clip-path: circle(0px) !important;
   pointer-events: none !important;
 }
 

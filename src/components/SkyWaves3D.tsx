@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import ClosedShadowCanvas from './ClosedShadowCanvas';
 
 function WavyGrid() {
   const meshRef = useRef<THREE.Points>(null!);
@@ -81,21 +82,29 @@ export default function SkyWaves3D() {
           document.querySelector('swarm-rebuild') ||
           document.documentElement.classList.contains('swarm-active')
         );
-        if (hasSwarm) {
-          setIsSwarmActive(true);
-        }
+        setIsSwarmActive(hasSwarm);
       }
     };
 
     checkSwarm();
-    const interval = setInterval(checkSwarm, 400);
-    return () => clearInterval(interval);
+
+    // Instant zero-latency detection when Swarm Rebuild is mounted or unmounted
+    const observer = new MutationObserver(() => {
+      checkSwarm();
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  if (!mounted || isSwarmActive) return null;
-
   return (
-    <div 
+    <ClosedShadowCanvas
       className="skywaves-canvas-wrap"
       style={{
         position: 'absolute',
@@ -106,14 +115,16 @@ export default function SkyWaves3D() {
         opacity: 0.8
       }}
     >
-      <Canvas
-        camera={{ position: [0, 4, 5], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <ambientLight intensity={1} />
-        <WavyGrid />
-      </Canvas>
-    </div>
+      {mounted && !isSwarmActive && (
+        <Canvas
+          camera={{ position: [0, 4, 5], fov: 50 }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <ambientLight intensity={1} />
+          <WavyGrid />
+        </Canvas>
+      )}
+    </ClosedShadowCanvas>
   );
 }

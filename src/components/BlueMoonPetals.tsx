@@ -3,6 +3,7 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import ClosedShadowCanvas from './ClosedShadowCanvas';
 
 interface PetalData {
   x: number;
@@ -132,21 +133,29 @@ export default function BlueMoonPetals() {
           document.querySelector('swarm-rebuild') ||
           document.documentElement.classList.contains('swarm-active')
         );
-        if (hasSwarm) {
-          setIsSwarmActive(true);
-        }
+        setIsSwarmActive(hasSwarm);
       }
     };
 
     checkSwarm();
-    const interval = setInterval(checkSwarm, 400);
-    return () => clearInterval(interval);
+
+    // Instant zero-latency detection when Swarm Rebuild is mounted or unmounted
+    const observer = new MutationObserver(() => {
+      checkSwarm();
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  if (!mounted || isSwarmActive) return null;
-
   return (
-    <div 
+    <ClosedShadowCanvas
       className="blue-moon-petals-container"
       style={{
         position: 'fixed',
@@ -158,17 +167,19 @@ export default function BlueMoonPetals() {
         overflow: 'hidden'
       }}
     >
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
-      >
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[5, 10, 7]} intensity={1.8} color="#ffffff" />
-        <pointLight position={[-5, -5, 5]} intensity={1} color="#60a5fa" />
-        
-        <PetalsCloud count={26} />
-      </Canvas>
-    </div>
+      {mounted && !isSwarmActive && (
+        <Canvas
+          camera={{ position: [0, 0, 10], fov: 50 }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
+        >
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[5, 10, 7]} intensity={1.8} color="#ffffff" />
+          <pointLight position={[-5, -5, 5]} intensity={1} color="#60a5fa" />
+          
+          <PetalsCloud count={26} />
+        </Canvas>
+      )}
+    </ClosedShadowCanvas>
   );
 }

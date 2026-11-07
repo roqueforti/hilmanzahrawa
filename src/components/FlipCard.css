@@ -108,3 +108,18 @@
 .flip-card[data-fade='back'] .flip-card__face--back {
   opacity: 1;
 }
+
+/* Swarm Rebuild Extension: Keep flip cards on clean front face so cursor agents draw pristine passes without overlapping backface text */
+html:has(swarm-rebuild) .flip-card__face--back,
+body:has(swarm-rebuild) .flip-card__face--back,
+swarm-rebuild ~ * .flip-card__face--back {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html:has(swarm-rebuild) .flip-card__rotor,
+body:has(swarm-rebuild) .flip-card__rotor,
+swarm-rebuild ~ * .flip-card__rotor {
+  transform: none !important;
+}
+
