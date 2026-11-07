@@ -314,3 +314,30 @@
 .circular-carousel-showcase .circular-carousel__inner {
   background: #e2e8f0 !important;
 }
+
+/* Swarm Rebuild Support: Keep carousel clean, render only the active trophy card without 3D side distortion */
+html:has(swarm-rebuild) .circular-carousel__card:not([data-active]),
+body:has(swarm-rebuild) .circular-carousel__card:not([data-active]),
+swarm-rebuild ~ * .circular-carousel__card:not([data-active]) {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html:has(swarm-rebuild) .circular-carousel__camera,
+body:has(swarm-rebuild) .circular-carousel__camera,
+html:has(swarm-rebuild) .circular-carousel__ring,
+body:has(swarm-rebuild) .circular-carousel__ring {
+  transform: none !important;
+}
+
+html:has(swarm-rebuild) .circular-carousel__stage,
+body:has(swarm-rebuild) .circular-carousel__stage {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+html:has(swarm-rebuild) .circular-carousel__card[data-active],
+body:has(swarm-rebuild) .circular-carousel__card[data-active] {
+  transform: none !important;
+}
+

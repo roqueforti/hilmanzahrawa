@@ -884,6 +884,7 @@ export default function CircularCarousel({
                   }}
                   className="circular-carousel__card"
                   data-cc-index={index}
+                  data-active={index === active ? '' : undefined}
                   role="group"
                   aria-roledescription="slide"
                   aria-label={`${item.title || item.alt || `Image ${index + 1}`}, ${index + 1} of ${count}`}

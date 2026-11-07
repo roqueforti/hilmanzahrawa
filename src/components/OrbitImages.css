@@ -95,3 +95,19 @@
   }
 }
 
+/* Swarm Rebuild Extension Support: Clean up orbit path & overlapping satellites so the Trajectory Console card is drawn pristinely */
+html:has(swarm-rebuild) .orbit-path-svg,
+body:has(swarm-rebuild) .orbit-path-svg,
+swarm-rebuild ~ * .orbit-path-svg {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html:has(swarm-rebuild) .orbit-item,
+body:has(swarm-rebuild) .orbit-item,
+swarm-rebuild ~ * .orbit-item {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+
