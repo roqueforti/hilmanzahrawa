@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useMemo, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -116,23 +117,36 @@ function PetalsCloud({ count = 65 }: { count?: number }) {
   );
 }
 
+function PetalsScene() {
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 10], fov: 50 }}
+      gl={{ antialias: true, alpha: true }}
+      style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
+    >
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[5, 10, 7]} intensity={1.8} color="#ffffff" />
+      <pointLight position={[-5, -5, 5]} intensity={1} color="#60a5fa" />
+      <PetalsCloud count={26} />
+    </Canvas>
+  );
+}
+
 export default function BlueMoonPetals() {
   const [mounted, setMounted] = useState(false);
-  const [isSwarmActive, setIsSwarmActive] = useState(false);
+  const [swarmShadowRoot, setSwarmShadowRoot] = useState<ShadowRoot | null>(null);
 
   useEffect(() => {
     setMounted(true);
 
     const checkSwarm = () => {
       if (typeof window !== 'undefined') {
-        const hasSwarm = Boolean(
-          (window as any).__swarmRebuild ||
-          (window as any).__swarmHidden ||
-          (window as any).__swarmShot ||
-          document.querySelector('swarm-rebuild') ||
-          document.documentElement.classList.contains('swarm-active')
-        );
-        setIsSwarmActive(hasSwarm);
+        const host = document.querySelector('swarm-rebuild');
+        if (host && host.shadowRoot && host.isConnected) {
+          setSwarmShadowRoot(host.shadowRoot);
+        } else {
+          setSwarmShadowRoot(null);
+        }
       }
     };
 
@@ -153,32 +167,47 @@ export default function BlueMoonPetals() {
     return () => observer.disconnect();
   }, []);
 
-  if (!mounted || isSwarmActive) return null;
+  if (!mounted) return null;
 
   return (
-    <div
-      className="blue-moon-petals-container"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        width: '100vw',
-        height: '100vh',
-        pointerEvents: 'none',
-        zIndex: 0,
-        overflow: 'hidden'
-      }}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
-      >
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[5, 10, 7]} intensity={1.8} color="#ffffff" />
-        <pointLight position={[-5, -5, 5]} intensity={1} color="#60a5fa" />
-        
-        <PetalsCloud count={26} />
-      </Canvas>
-    </div>
+    <>
+      {/* 1. Normal In-Page Canvas: Active during standard user browsing */}
+      {!swarmShadowRoot && (
+        <div
+          className="blue-moon-petals-container"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            width: '100vw',
+            height: '100vh',
+            pointerEvents: 'none',
+            zIndex: 0,
+            overflow: 'hidden'
+          }}
+        >
+          <PetalsScene />
+        </div>
+      )}
+
+      {/* 2. Swarm Rebuild Floating Layer (Option 1): Rendered directly inside Swarm's open ShadowRoot at completed end-position */}
+      {swarmShadowRoot &&
+        createPortal(
+          <div
+            className="swarm-petals-overlay"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none',
+              zIndex: 2,
+              overflow: 'hidden'
+            }}
+          >
+            <PetalsScene />
+          </div>,
+          swarmShadowRoot
+        )}
+    </>
   );
 }
