@@ -26,6 +26,7 @@ import {
   GraduationCap, 
   Briefcase, 
   Code2,
+  Palette,
   Shield,
   Workflow,
   Compass, 
@@ -1170,14 +1171,32 @@ export default function ClientPage({ initialData }: ClientPageProps) {
               boxShadow: `0 0 10px ${portfolioTrack === 'it' ? 'rgba(2,132,199,0.7)' : (portfolioTrack === 'art' ? 'rgba(236,72,153,0.7)' : 'rgba(139,92,246,0.7)')}`,
               transition: 'all 0.3s ease'
             }} />
-            <span style={{
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.45rem',
               fontSize: '0.86rem',
               fontWeight: 750,
               color: '#0f172a',
               letterSpacing: '-0.01em'
             }}>
-              {portfolioTrack === 'it' ? '💻 IT & Software Engineering' : (portfolioTrack === 'art' ? '🎬 Art, Film & Creative Media' : '✨ Complete Portfolio')}
-            </span>
+              {portfolioTrack === 'it' ? (
+                <>
+                  <Code2 size={16} strokeWidth={2.2} style={{ color: '#0284c7', flexShrink: 0 }} />
+                  <span>IT & Software Engineering</span>
+                </>
+              ) : portfolioTrack === 'art' ? (
+                <>
+                  <Palette size={16} strokeWidth={2.2} style={{ color: '#ec4899', flexShrink: 0 }} />
+                  <span>Art, Film & Creative Media</span>
+                </>
+              ) : (
+                <>
+                  <Layers size={16} strokeWidth={2.2} style={{ color: '#8b5cf6', flexShrink: 0 }} />
+                  <span>Complete Portfolio</span>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Interactive Switch / Segmented Control */}
@@ -1197,9 +1216,30 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             }}
           >
             {[
-              { id: 'it', label: '💻 IT Projects', count: itWorks.length },
-              { id: 'art', label: '🎬 Art Projects', count: artWorks.length },
-              { id: 'all', label: '✨ All Works', count: showcaseWorks.length }
+              { 
+                id: 'it', 
+                label: 'IT Projects', 
+                count: itWorks.length,
+                icon: (isActive: boolean) => (
+                  <Code2 size={14} strokeWidth={2.3} style={{ color: isActive ? '#38bdf8' : '#64748b', flexShrink: 0 }} />
+                )
+              },
+              { 
+                id: 'art', 
+                label: 'Art Projects', 
+                count: artWorks.length,
+                icon: (isActive: boolean) => (
+                  <Palette size={14} strokeWidth={2.3} style={{ color: isActive ? '#f472b6' : '#64748b', flexShrink: 0 }} />
+                )
+              },
+              { 
+                id: 'all', 
+                label: 'All Works', 
+                count: showcaseWorks.length,
+                icon: (isActive: boolean) => (
+                  <Layers size={14} strokeWidth={2.3} style={{ color: isActive ? '#c084fc' : '#64748b', flexShrink: 0 }} />
+                )
+              }
             ].map((track) => {
               const isActive = portfolioTrack === track.id;
               return (
@@ -1230,6 +1270,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     flex: isMobile ? 1 : 'initial'
                   }}
                 >
+                  {track.icon(isActive)}
                   <span>{track.label}</span>
                   <span style={{
                     fontSize: '0.7rem',
