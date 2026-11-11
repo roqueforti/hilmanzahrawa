@@ -29,3 +29,4 @@ export interface ProjectItem {
   sort_order: number;             // Ascending order in gallery
 }
 ```
+

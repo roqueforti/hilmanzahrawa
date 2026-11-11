@@ -126,3 +126,4 @@ When capturing screenshots or authoring sample data for enterprise/client system
    - Check commit status via `gh api /repos/roqueforti/hilmanzahrawa/commits/<sha>/statuses`.
    - Inspect production using Puppeteer script against `https://hilmanzahrawa.vercel.app`.
    - Ensure both IT and Art tracks switch cleanly with zero visual artifacts.
+
