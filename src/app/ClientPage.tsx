@@ -502,7 +502,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         { 
           id: 'govtech', 
           label: 'Enterprise & GovTech', 
-          count: itWorks.filter((p: any) => p.slug === 'persuratan-pal' || p.slug === 'learning-development-system' || p.slug === 'hca-pal' || p.slug === 'internship-pal' || p.slug === 'disnakertrans-jatim').length 
+          count: itWorks.filter((p: any) => p.slug === 'persuratan-pal' || p.slug === 'lsp-pal' || p.slug === 'learning-development-system' || p.slug === 'hca-pal' || p.slug === 'internship-pal' || p.slug === 'disnakertrans-jatim').length 
         },
         { 
           id: 'ui', 
@@ -559,7 +559,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           return work.categoryTab === 'web' || work.slug === 'certimatch' || work.slug === 'brewtech' || work.slug === 'duasisi-pos' || work.slug === 'hayday-daku-cello' || work.slug === 'polinema-creative-center';
         }
         if (galleryFilter === 'govtech') {
-          return work.slug === 'persuratan-pal' || work.slug === 'learning-development-system' || work.slug === 'hca-pal' || work.slug === 'internship-pal' || work.slug === 'disnakertrans-jatim';
+          return work.slug === 'persuratan-pal' || work.slug === 'lsp-pal' || work.slug === 'learning-development-system' || work.slug === 'hca-pal' || work.slug === 'internship-pal' || work.slug === 'disnakertrans-jatim';
         }
         if (galleryFilter === 'ui') {
           return work.categoryTab === 'ui' || work.slug === 'profile-plus' || work.slug === 'jayatrans' || work.slug === 'among-rasa' || work.slug === 'pos-paud-teratai';

@@ -74,16 +74,17 @@ export const fallbackPortfolioData = {
       displayCategory: "GovTech & E-Office",
       slug: "persuratan-pal",
       tags: ["Laravel 12", "Livewire 4.3", "Tailwind CSS 4", "DomPDF", "SQLite/MySQL", "E-Office"],
-      description: "Official enterprise digital correspondence governance (E-Office) platform for Indonesia's state naval shipyard and defense industry, built strictly in compliance with official ministerial administrative drafting guidelines. Engineered with a high-availability Dual-System architecture (Full Online Multi-tier Approval & Mass Offline Production Pipelines) supporting 4 official statutory document classifications: Decrees (Cat. A), Contracts & Treaties (Cat. B), Official Directives (Cat. C), and Administrative Dispatches (Cat. D).\n\nFeatures dynamic role-based approval routing, collision-resistant automated document numbering engine, cryptographic QR verification with timestamped digital signatures, and a high-fidelity mass legal PDF compilation engine.",
-      image: "/projects/persuratan-pal/dashboard-staff.png",
-      image_url: "/projects/persuratan-pal/dashboard-staff.png",
-      coverImage: "/projects/persuratan-pal/dashboard-staff.png",
+      description: "Official enterprise digital correspondence governance (E-Office) platform for Indonesia's state naval shipyard and defense industry, built strictly in compliance with official ministerial administrative drafting guidelines. Engineered with a high-availability Dual-System architecture (Full Online Multi-tier Approval & Mass Offline Production Pipelines) supporting 4 official statutory document classifications: Decrees (Cat. A), Contracts & Treaties (Cat. B), Official Directives (Cat. C), and Administrative Dispatches (Cat. D).\n\nFeatures dynamic role-based approval routing, split-screen letter composition with real-time official drafting preview, collision-resistant automated document numbering engine, an integrated Enterprise ID Card Design Studio with A4 batch print-sheet compilation, and cryptographic QR verification with timestamped digital signatures.",
+      image: "/projects/persuratan-pal/letter-live-preview.png",
+      image_url: "/projects/persuratan-pal/letter-live-preview.png",
+      coverImage: "/projects/persuratan-pal/letter-live-preview.png",
       gallery: [
-        "/projects/persuratan-pal/dashboard-staff.png",
-        "/projects/persuratan-pal/create-letter.png",
-        "/projects/persuratan-pal/approval-inbox.png",
-        "/projects/persuratan-pal/letter-published.png",
-        "/projects/persuratan-pal/login-page.png"
+        "/projects/persuratan-pal/letter-live-preview.png",
+        "/projects/persuratan-pal/id-card-studio.png",
+        "/projects/persuratan-pal/id-card-print-sheet.png",
+        "/projects/persuratan-pal/approval-stepper.png",
+        "/projects/persuratan-pal/letter-catalog.png",
+        "/projects/persuratan-pal/dashboard-staff.png"
       ],
       link: "https://github.com/roqueforti/persuratan-pal",
       videoUrl: null,
@@ -92,6 +93,38 @@ export const fallbackPortfolioData = {
       stack: "Laravel 12 · Livewire 4.3 · Tailwind CSS 4 · DomPDF · QR Engine · SQLite/MySQL",
       outcome: "Eliminated single-desk bureaucracy bottlenecks through structured multi-tier delegation, processing thousands of official dispatches and HR memos with zero numbering collisions.",
       sort_order: 2
+    },
+    {
+      id: "e5a198c3-7142-4dc6-b578-0e8b3f2c3d55",
+      _id: "e5a198c3-7142-4dc6-b578-0e8b3f2c3d55",
+      title: "LSP PAL — Maritime & Defense Professional Certification Body Platform",
+      subtitle: "PT PAL Indonesia (Persero) — Lembaga Sertifikasi Profesi (BNSP)",
+      year: "2026",
+      role: "Lead Fullstack Developer & System Architect",
+      category: "GovTech & Certification",
+      categoryTab: "web",
+      displayCategory: "GovTech & Certification",
+      slug: "lsp-pal",
+      tags: ["Laravel 13", "Livewire", "Tailwind CSS", "BNSP Standards", "SQLite/MySQL", "E-Office"],
+      description: "Official institutional digital certification body platform (LSP P-2) for PT PAL Indonesia (Persero), licensed under the National Professional Certification Agency (BNSP). Powers the sovereign assessment and credentialing ecosystem for Indonesia's defense and maritime shipyard industries across naval architecture, welding, marine machinery, NDT inspection, and maritime safety standards.\n\nArchitected with multi-stakeholder role workspaces (Admin LSP, Certified Assessors, Internal & Enterprise Partner Candidates, and Executive Leadership). Manages standard FR.APL-01/02 self-assessment portfolios, multi-method technical evaluations (demonstrations, theoretical exams, structured interviews), automated KUK competency matrices, independent LSP correspondence & provisional graduation decree (SKL) generation, and multi-candidate corporate billing pipelines.",
+      image: "/projects/lsp-pal/portal-homepage.png",
+      image_url: "/projects/lsp-pal/portal-homepage.png",
+      coverImage: "/projects/lsp-pal/portal-homepage.png",
+      gallery: [
+        "/projects/lsp-pal/portal-homepage.png",
+        "/projects/lsp-pal/skema-katalog.png",
+        "/projects/lsp-pal/admin-dashboard.png",
+        "/projects/lsp-pal/persuratan-mandiri.png",
+        "/projects/lsp-pal/event-asesmen.png",
+        "/projects/lsp-pal/master-skema.png"
+      ],
+      link: "https://github.com/angelaudia/lsp-pal",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Laravel 13 · Livewire · Tailwind CSS · SQLite/MySQL · DomPDF · BNSP SKKNI Standards",
+      outcome: "Digitized the end-to-end maritime competency certification pipeline from candidate registration to assessor assignment and provisional SKL dispatch, reducing examination cycle turnaround by 70%.",
+      sort_order: 3
     },
     {
       id: "ea0394c2-6031-4ed7-d689-1f9c403d2c33",
@@ -106,14 +139,15 @@ export const fallbackPortfolioData = {
       slug: "learning-development-system",
       tags: ["Laravel", "PHP 8.3", "PostgreSQL", "Tailwind CSS", "Blade", "Vite", "LDNA"],
       description: "Unified enterprise digital ecosystem engineered for human capital capability acceleration and shipyard workforce competency development at PT PAL Indonesia (Persero). Bridges the end-to-end organizational learning lifecycle: Learning & Development Needs Analysis (LDNA), job competency matrix mapping (SKKNI & occupational standards), specialized naval engineering training syllabi, in-class training cycles, self-paced interactive e-learning modules, mentorship programs, job shadowing, and executive Management Trainee (MT) tracks.\n\nTracks enterprise Learning Hours (LH), manages internal technical certifications, and integrates competency reconciliation pipelines to maintain sovereign maritime engineering readiness.",
-      image: "/projects/learning-development-system/lnd-overview.png",
-      image_url: "/projects/learning-development-system/lnd-overview.png",
-      coverImage: "/projects/learning-development-system/lnd-overview.png",
+      image: "/projects/learning-development-system/palka-executive-telemetry.png",
+      image_url: "/projects/learning-development-system/palka-executive-telemetry.png",
+      coverImage: "/projects/learning-development-system/palka-executive-telemetry.png",
       gallery: [
-        "/projects/learning-development-system/lnd-overview.png",
-        "/projects/learning-development-system/lnd-workflow-architecture.png",
-        "/projects/learning-development-system/lnd-module-cards.png",
-        "/projects/learning-development-system/palka-hero.png"
+        "/projects/learning-development-system/palka-executive-telemetry.png",
+        "/projects/learning-development-system/palka-dashboard.png",
+        "/projects/learning-development-system/palka-competency-matrix.png",
+        "/projects/learning-development-system/palka-career-ldna.png",
+        "/projects/learning-development-system/palka-training-management.png"
       ],
       link: "https://github.com/firdausbiaf/learning-development-system",
       videoUrl: null,
@@ -121,7 +155,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Laravel · PHP 8.3 · PostgreSQL · Blade · Tailwind CSS · Alpine.js · Vite · Enterprise Sync",
       outcome: "Standardized competency compliance across all shipyard business units with measurable telemetry, cutting training approval and certification turnaround by 65%.",
-      sort_order: 3
+      sort_order: 4
     },
     {
       id: "fb1405d3-7142-4fe8-e790-20ad514e3d44",
@@ -136,16 +170,16 @@ export const fallbackPortfolioData = {
       slug: "hca-pal",
       tags: ["Laravel 13", "PHP 8.3", "PostgreSQL", "Tailwind CSS", "Chart.js", "Three.js"],
       description: "Strategic Human Capital Analytics (HCA) and intelligent HRIS telemetry platform powering executive decision-making across the Human Capital division at PT PAL Indonesia (Persero). Consolidates multi-dimensional workforce telemetry into real-time interactive command dashboards.\n\nKey modules include Career Recruitment Funnel (7-stage pipeline analytics, departmental SLAs, talent pool telemetry), Continuous Improvement Idea (CII innovation trends & departmental engagement scoring), PACES (structured technical interview competency evaluation), MBPAL (operational logistics & catering satisfaction metrics), workforce demographic risk matrices, and an immersive WebGL 3D Shipyard Login experience.",
-      image: "/projects/hca-pal/shipyard-overview.png",
-      image_url: "/projects/hca-pal/shipyard-overview.png",
-      coverImage: "/projects/hca-pal/shipyard-overview.png",
+      image: "/projects/hca-pal/insights-dashboard.png",
+      image_url: "/projects/hca-pal/insights-dashboard.png",
+      coverImage: "/projects/hca-pal/insights-dashboard.png",
       gallery: [
-        "/projects/hca-pal/shipyard-overview.png",
-        "/projects/hca-pal/shipyard-login.png",
         "/projects/hca-pal/insights-dashboard.png",
         "/projects/hca-pal/cii-innovation.png",
         "/projects/hca-pal/paces-assessment.png",
-        "/projects/hca-pal/career-dashboard.png"
+        "/projects/hca-pal/career-dashboard.png",
+        "/projects/hca-pal/mbpal-operations.png",
+        "/projects/hca-pal/shipyard-overview.png"
       ],
       link: "https://github.com/hakan009/HCA-PAL",
       videoUrl: null,
@@ -153,7 +187,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Laravel 13 · PHP 8.3 · PostgreSQL 18 · Blade · Tailwind CSS · Chart.js · Three.js 3D · Vite",
       outcome: "Unified telemetry across 6 core HRIS strategic pillars into real-time executive dashboards, enabling predictive talent allocation for naval defense projects.",
-      sort_order: 4
+      sort_order: 5
     },
     {
       id: "ac2516e4-8253-40f9-f801-31be625f4e55",
@@ -174,7 +208,7 @@ export const fallbackPortfolioData = {
       gallery: [
         "/projects/intern-pal/portal-hero.webp",
         "/projects/intern-pal/internship-monitoring.png",
-        "/projects/intern-pal/portal-login.webp",
+        "/projects/intern-pal/internship-dashboard.png",
         "/projects/intern-pal/id-card-front.png",
         "/projects/intern-pal/certificate-template.png",
         "/projects/intern-pal/internship-activity.webp"
@@ -185,7 +219,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Laravel 13 · Livewire · Tailwind CSS · Alpine.js · Canvas/Fabric.js · SQLite/MySQL · Geolocation API",
       outcome: "Cut intern onboarding administrative turnaround by 80%, automating the generation and validation of hundreds of physical and digital ID cards and certificates in minutes.",
-      sort_order: 5
+      sort_order: 6
     },
     {
       id: "bd3627f5-9364-410a-0912-42cf73605f66",
@@ -215,7 +249,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Next.js 16 (Turbopack) · React 19 · TypeScript · Tailwind CSS · Google Apps Script · Web Bluetooth ESC/POS · OpenStreetMap Photon API",
       outcome: "Digitized 100% of cashier operations and Kanban production, eliminating per-shift cash discrepancies and providing transparent real-time tracking for hundreds of customer orders.",
-      sort_order: 6
+      sort_order: 7
     },
     {
       id: "ce473806-0475-421b-1a23-53d084716077",
@@ -244,7 +278,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Next.js 14 · React · Tailwind CSS · Firebase · SheetJS · WhatsApp API Integration",
       outcome: "Increased order conversion rates by 60% with instant dynamic cart calculations, completely removing checkout friction and manual price quote errors.",
-      sort_order: 7
+      sort_order: 8
     },
     {
       id: "23497c03-2630-4f1e-9308-6783922e2c43",
@@ -269,7 +303,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Next.js · TypeScript · Supabase · Tailwind · Accessibility",
       outcome: "Empowering 50+ youth with disabilities through certified barista vocational education and industry placement pipeline.",
-      sort_order: 8
+      sort_order: 9
     },
     {
       id: "e2117049-335d-420e-9797-20a35943bd7d",
