@@ -2084,7 +2084,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                     <span style={{ fontSize: '0.86rem', color: '#64748b', fontWeight: 500 }}>
                       Menampilkan{' '}
                       <strong style={{ color: '#0f172a', fontWeight: 700 }}>
-                        {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredWorks.length)}
+                        {(currentPage - 1) * ITEMS_PER_PAGE + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, filteredWorks.length)}
                       </strong>{' '}
                       dari{' '}
                       <strong style={{ color: '#0f172a', fontWeight: 700 }}>{filteredWorks.length}</strong>{' '}
