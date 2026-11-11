@@ -323,6 +323,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [expandedAnchorId, setExpandedAnchorId] = useState<string | null>(null);
   const [expandedImageIndex, setExpandedImageIndex] = useState<number>(0);
   const [galleryFilter, setGalleryFilter] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalImageIndex, setActiveModalImageIndex] = useState<number>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [processHovered, setProcessHovered] = useState(false);
@@ -426,6 +427,22 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const handleModalScroll = () => {
     if (modalScrollRef.current) {
       setHasModalScrolled(modalScrollRef.current.scrollTop > 40);
+    }
+  };
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+    setExpandedProject(null);
+    setExpandedAnchorId(null);
+  }, [galleryFilter]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    setExpandedProject(null);
+    setExpandedAnchorId(null);
+    const workElem = document.getElementById('work');
+    if (workElem) {
+      workElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -1118,23 +1135,36 @@ export default function ClientPage({ initialData }: ClientPageProps) {
            - Clicking (X) collapses cleanly back to standard 4-column cards.
            ========================================================================= */}
         {(() => {
+          const ITEMS_PER_PAGE = 12; // 3 baris x 4 kolom per halaman
+          const totalPages = Math.ceil(filteredWorks.length / ITEMS_PER_PAGE);
+          const paginatedWorks = filteredWorks.slice(
+            (currentPage - 1) * ITEMS_PER_PAGE,
+            currentPage * ITEMS_PER_PAGE
+          );
+
           const expandedIdx = expandedProject
-            ? filteredWorks.findIndex((w: any) => 
+            ? paginatedWorks.findIndex((w: any) => 
                 (w.id && expandedProject.id && w.id === expandedProject.id) ||
                 (w.slug && expandedProject.slug && w.slug === expandedProject.slug) ||
                 (w.title && expandedProject.title && w.title === expandedProject.title)
               )
             : -1;
-          const expandedWork = expandedIdx !== -1 ? filteredWorks[expandedIdx] : expandedProject;
+          const expandedWork = expandedIdx !== -1 ? paginatedWorks[expandedIdx] : (
+            paginatedWorks.some((w: any) => 
+              (w.id && expandedProject?.id && w.id === expandedProject.id) ||
+              (w.slug && expandedProject?.slug && w.slug === expandedProject.slug) ||
+              (w.title && expandedProject?.title && w.title === expandedProject.title)
+            ) ? expandedProject : null
+          );
           const remainingWorks = expandedIdx !== -1
-            ? [...filteredWorks.slice(expandedIdx + 1), ...filteredWorks.slice(0, expandedIdx)]
+            ? [...paginatedWorks.slice(expandedIdx + 1), ...paginatedWorks.slice(0, expandedIdx)]
             : (expandedWork
-                ? filteredWorks.filter((w: any) => 
+                ? paginatedWorks.filter((w: any) => 
                     !((w.id && expandedWork.id && w.id === expandedWork.id) ||
                       (w.slug && expandedWork.slug && w.slug === expandedWork.slug) ||
                       (w.title && expandedWork.title && w.title === expandedWork.title))
                   )
-                : filteredWorks);
+                : paginatedWorks);
 
           const renderExpandedPanel = (work: any) => {
             const screenshotCount = Array.isArray(work.gallery) && work.gallery.length > 0
@@ -2018,22 +2048,149 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           };
 
           return (
-            <div
-              className="works-grid-image1"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-                gap: isMobile ? '1.25rem' : '1.75rem 1.25rem',
-                alignItems: 'start',
-                width: '100%',
-                minWidth: 0
-              }}
-            >
-              <AnimatePresence>
-                {expandedWork && renderExpandedPanel(expandedWork)}
-                {remainingWorks.map((work: any) => renderNormalCard(work))}
-              </AnimatePresence>
-            </div>
+            <>
+              <div
+                className="works-grid-image1"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+                  gap: isMobile ? '1.25rem' : '1.75rem 1.25rem',
+                  alignItems: 'start',
+                  width: '100%',
+                  minWidth: 0
+                }}
+              >
+                <AnimatePresence>
+                  {expandedWork && renderExpandedPanel(expandedWork)}
+                  {remainingWorks.map((work: any) => renderNormalCard(work))}
+                </AnimatePresence>
+              </div>
+
+              {/* Elegant Pagination Controls */}
+              {totalPages > 1 && (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1.25rem',
+                    marginTop: '3.5rem',
+                    paddingTop: '2rem',
+                    borderTop: '1px solid #e2e8f0'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <span style={{ fontSize: '0.86rem', color: '#64748b', fontWeight: 500 }}>
+                      Menampilkan{' '}
+                      <strong style={{ color: '#0f172a', fontWeight: 700 }}>
+                        {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredWorks.length)}
+                      </strong>{' '}
+                      dari{' '}
+                      <strong style={{ color: '#0f172a', fontWeight: 700 }}>{filteredWorks.length}</strong>{' '}
+                      proyek
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        padding: '0.15rem 0.55rem',
+                        borderRadius: '9999px',
+                        background: '#f1f5f9',
+                        color: '#0284c7'
+                      }}
+                    >
+                      Halaman {currentPage} dari {totalPages}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <button
+                      type="button"
+                      disabled={currentPage === 1}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      aria-label="Halaman Sebelumnya"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        padding: '0.5rem 0.95rem',
+                        borderRadius: '12px',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        background: '#ffffff',
+                        color: currentPage === 1 ? '#cbd5e1' : '#0f172a',
+                        border: '1px solid #e2e8f0',
+                        cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                      <span>Prev</span>
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                      const isActive = pageNum === currentPage;
+                      return (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          onClick={() => handlePageChange(pageNum)}
+                          style={{
+                            minWidth: '40px',
+                            height: '40px',
+                            borderRadius: '12px',
+                            fontSize: '0.85rem',
+                            fontWeight: isActive ? 700 : 500,
+                            background: isActive ? '#0f172a' : '#ffffff',
+                            color: isActive ? '#ffffff' : '#475569',
+                            border: isActive ? '1px solid #0f172a' : '1px solid #e2e8f0',
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s ease',
+                            boxShadow: isActive ? '0 4px 12px rgba(15,23,42,0.18)' : '0 1px 2px rgba(0,0,0,0.04)'
+                          }}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+
+                    <button
+                      type="button"
+                      disabled={currentPage === totalPages}
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      aria-label="Halaman Berikutnya"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        padding: '0.5rem 0.95rem',
+                        borderRadius: '12px',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        background: '#ffffff',
+                        color: currentPage === totalPages ? '#cbd5e1' : '#0f172a',
+                        border: '1px solid #e2e8f0',
+                        cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+                      }}
+                    >
+                      <span>Next</span>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           );
         })()}      </section>
 
