@@ -322,6 +322,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const [expandedProject, setExpandedProject] = useState<any | null>(null);
   const [expandedAnchorId, setExpandedAnchorId] = useState<string | null>(null);
   const [expandedImageIndex, setExpandedImageIndex] = useState<number>(0);
+  const [portfolioTrack, setPortfolioTrack] = useState<'it' | 'art' | 'all'>('it');
   const [galleryFilter, setGalleryFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalImageIndex, setActiveModalImageIndex] = useState<number>(0);
@@ -434,7 +435,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
     setCurrentPage(1);
     setExpandedProject(null);
     setExpandedAnchorId(null);
-  }, [galleryFilter]);
+  }, [galleryFilter, portfolioTrack]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -463,64 +464,129 @@ export default function ClientPage({ initialData }: ClientPageProps) {
     ? initialData.projects
     : fallbackPortfolioData.projects;
 
-  const galleryCategories = [
-    { id: 'all', label: 'All Projects', count: showcaseWorks.length },
-    { 
-      id: 'web', 
-      label: 'Web Apps & SaaS', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'web' || p.slug === 'brewtech' || p.slug === 'polinema-creative-center' || p.role?.toLowerCase().includes('fullstack') || p.role?.toLowerCase().includes('developer')).length 
-    },
-    { 
-      id: 'ui', 
-      label: 'UI/UX Design', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'ui' || p.role?.toLowerCase().includes('designer') || p.slug === 'profile-plus' || p.slug === 'disnakertrans-jatim').length 
-    },
-    { 
-      id: 'landing', 
-      label: 'Landing Pages', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'landing' || p.title?.toLowerCase().includes('landing') || p.slug === 'among-rasa' || p.slug === 'pos-paud-teratai' || p.slug === 'jayatrans').length 
-    },
-    { 
-      id: 'creative', 
-      label: 'Film & Media', 
-      count: showcaseWorks.filter((p: any) => p.categoryTab === 'creative' || p.role?.toLowerCase().includes('director') || p.role?.toLowerCase().includes('editor') || Boolean(p.videoUrl)).length 
+  // Split projects cleanly between IT & Software and Art & Creative Media
+  const isArtProject = (work: any) => {
+    return (
+      work.categoryTab === 'creative' ||
+      work.role?.toLowerCase().includes('director') ||
+      work.role?.toLowerCase().includes('editor') ||
+      work.role?.toLowerCase().includes('cinematographer') ||
+      work.title?.toLowerCase().includes('nevasca') ||
+      work.title?.toLowerCase().includes('altruism') ||
+      work.title?.toLowerCase().includes('kos atos') ||
+      work.slug?.includes('nevasca') ||
+      work.slug?.includes('kos-atos') ||
+      Boolean(work.videoUrl)
+    );
+  };
+
+  const itWorks = React.useMemo(() => showcaseWorks.filter((p: any) => !isArtProject(p)), [showcaseWorks]);
+  const artWorks = React.useMemo(() => showcaseWorks.filter((p: any) => isArtProject(p)), [showcaseWorks]);
+
+  const trackFilteredWorks = React.useMemo(() => {
+    if (portfolioTrack === 'it') return itWorks;
+    if (portfolioTrack === 'art') return artWorks;
+    return showcaseWorks;
+  }, [portfolioTrack, itWorks, artWorks, showcaseWorks]);
+
+  const galleryCategories = React.useMemo(() => {
+    if (portfolioTrack === 'it') {
+      return [
+        { id: 'all', label: 'All IT Projects', count: itWorks.length },
+        { 
+          id: 'web', 
+          label: 'Web Apps & AI', 
+          count: itWorks.filter((p: any) => p.categoryTab === 'web' || p.slug === 'certimatch' || p.slug === 'brewtech' || p.slug === 'duasisi-pos' || p.slug === 'hayday-daku-cello' || p.slug === 'polinema-creative-center').length 
+        },
+        { 
+          id: 'govtech', 
+          label: 'Enterprise & GovTech', 
+          count: itWorks.filter((p: any) => p.slug === 'persuratan-pal' || p.slug === 'learning-development-system' || p.slug === 'hca-pal' || p.slug === 'internship-pal' || p.slug === 'disnakertrans-jatim').length 
+        },
+        { 
+          id: 'ui', 
+          label: 'UI/UX & Portals', 
+          count: itWorks.filter((p: any) => p.categoryTab === 'ui' || p.slug === 'profile-plus' || p.slug === 'jayatrans' || p.slug === 'among-rasa' || p.slug === 'pos-paud-teratai').length 
+        }
+      ];
     }
-  ];
+    if (portfolioTrack === 'art') {
+      return [
+        { id: 'all', label: 'All Art & Media', count: artWorks.length },
+        { 
+          id: 'series', 
+          label: 'Web Series & Drama', 
+          count: artWorks.filter((p: any) => p.slug?.includes('nevasca') && !p.slug?.includes('teaser')).length 
+        },
+        { 
+          id: 'music-video', 
+          label: 'Music Videos & Trailers', 
+          count: artWorks.filter((p: any) => p.slug?.includes('kos-atos') || p.slug?.includes('teaser')).length 
+        }
+      ];
+    }
+    return [
+      { id: 'all', label: 'All Projects', count: showcaseWorks.length },
+      { 
+        id: 'web', 
+        label: 'Web Apps & SaaS', 
+        count: showcaseWorks.filter((p: any) => p.categoryTab === 'web' || p.slug === 'brewtech' || p.slug === 'polinema-creative-center' || p.role?.toLowerCase().includes('fullstack') || p.role?.toLowerCase().includes('developer')).length 
+      },
+      { 
+        id: 'ui', 
+        label: 'UI/UX Design', 
+        count: showcaseWorks.filter((p: any) => p.categoryTab === 'ui' || p.role?.toLowerCase().includes('designer') || p.slug === 'profile-plus' || p.slug === 'disnakertrans-jatim').length 
+      },
+      { 
+        id: 'landing', 
+        label: 'Landing Pages', 
+        count: showcaseWorks.filter((p: any) => p.categoryTab === 'landing' || p.title?.toLowerCase().includes('landing') || p.slug === 'among-rasa' || p.slug === 'pos-paud-teratai' || p.slug === 'jayatrans').length 
+      },
+      { 
+        id: 'creative', 
+        label: 'Film & Media', 
+        count: showcaseWorks.filter((p: any) => isArtProject(p)).length 
+      }
+    ];
+  }, [portfolioTrack, itWorks, artWorks, showcaseWorks]);
 
   const filteredWorks = React.useMemo(() => {
-    return showcaseWorks.filter((work: any) => {
+    return trackFilteredWorks.filter((work: any) => {
       if (galleryFilter === 'all') return true;
+      if (portfolioTrack === 'it') {
+        if (galleryFilter === 'web') {
+          return work.categoryTab === 'web' || work.slug === 'certimatch' || work.slug === 'brewtech' || work.slug === 'duasisi-pos' || work.slug === 'hayday-daku-cello' || work.slug === 'polinema-creative-center';
+        }
+        if (galleryFilter === 'govtech') {
+          return work.slug === 'persuratan-pal' || work.slug === 'learning-development-system' || work.slug === 'hca-pal' || work.slug === 'internship-pal' || work.slug === 'disnakertrans-jatim';
+        }
+        if (galleryFilter === 'ui') {
+          return work.categoryTab === 'ui' || work.slug === 'profile-plus' || work.slug === 'jayatrans' || work.slug === 'among-rasa' || work.slug === 'pos-paud-teratai';
+        }
+      }
+      if (portfolioTrack === 'art') {
+        if (galleryFilter === 'series') {
+          return work.slug?.includes('nevasca') && !work.slug?.includes('teaser');
+        }
+        if (galleryFilter === 'music-video') {
+          return work.slug?.includes('kos-atos') || work.slug?.includes('teaser');
+        }
+      }
       if (galleryFilter === 'web') {
-        return work.categoryTab === 'web' || 
-          work.slug === 'brewtech' || 
-          work.slug === 'polinema-creative-center' ||
-          work.role?.toLowerCase().includes('fullstack') ||
-          work.role?.toLowerCase().includes('developer');
+        return work.categoryTab === 'web' || work.slug === 'brewtech' || work.slug === 'polinema-creative-center' || work.role?.toLowerCase().includes('fullstack') || work.role?.toLowerCase().includes('developer');
       }
       if (galleryFilter === 'ui') {
-        return work.categoryTab === 'ui' || 
-          work.slug === 'profile-plus' || 
-          work.slug === 'disnakertrans-jatim' || 
-          work.slug === 'jayatrans' ||
-          work.role?.toLowerCase().includes('designer');
+        return work.categoryTab === 'ui' || work.slug === 'profile-plus' || work.slug === 'disnakertrans-jatim' || work.slug === 'jayatrans' || work.role?.toLowerCase().includes('designer');
       }
       if (galleryFilter === 'landing') {
-        return work.categoryTab === 'landing' || 
-          work.title?.toLowerCase().includes('landing') ||
-          work.slug === 'among-rasa' ||
-          work.slug === 'pos-paud-teratai' ||
-          work.slug === 'jayatrans';
+        return work.categoryTab === 'landing' || work.title?.toLowerCase().includes('landing') || work.slug === 'among-rasa' || work.slug === 'pos-paud-teratai' || work.slug === 'jayatrans';
       }
       if (galleryFilter === 'creative') {
-        return work.categoryTab === 'creative' || 
-          work.role?.toLowerCase().includes('director') || 
-          work.role?.toLowerCase().includes('editor') ||
-          work.title?.toLowerCase().includes('nevasca') ||
-          work.title?.toLowerCase().includes('mv');
+        return isArtProject(work);
       }
       return true;
     });
-  }, [showcaseWorks, galleryFilter]);
+  }, [trackFilteredWorks, galleryFilter, portfolioTrack]);
 
   // Authentic partner & organization affiliations
   const partnerLogos = [
@@ -1037,17 +1103,19 @@ export default function ClientPage({ initialData }: ClientPageProps) {
         {/* Gallery Top Navigation Header (Matching Image 2: "SELECTED WORK" / Location) */}
         <div style={{
           display: 'flex',
-          alignItems: 'center',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'flex-start' : 'center',
           justifyContent: 'space-between',
+          gap: '1rem',
           borderBottom: '1px solid #e2e8f0',
           paddingBottom: '1.25rem',
-          marginBottom: '2rem'
+          marginBottom: '1.75rem'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             <span style={{
-              fontSize: '0.78rem',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
+              fontSize: '0.82rem',
+              fontWeight: 850,
+              letterSpacing: '0.14em',
               textTransform: 'uppercase',
               color: '#0f172a'
             }}>
@@ -1056,12 +1124,12 @@ export default function ClientPage({ initialData }: ClientPageProps) {
             <span style={{
               fontSize: '0.75rem',
               fontWeight: 700,
-              padding: '0.15rem 0.6rem',
+              padding: '0.15rem 0.65rem',
               borderRadius: '9999px',
               background: '#f1f5f9',
               color: '#0284c7'
             }}>
-              {filteredWorks.length} Projects
+              {filteredWorks.length} {filteredWorks.length === 1 ? 'Project' : 'Projects'}
             </span>
           </div>
 
@@ -1074,6 +1142,109 @@ export default function ClientPage({ initialData }: ClientPageProps) {
           }}>
             {location.split(',')[0]}, ID
           </span>
+        </div>
+
+        {/* =========================================================================
+           PORTFOLIO TRACK SWITCH (IT vs ART)
+           ========================================================================= */}
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'stretch' : 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          marginBottom: '1.75rem',
+          background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+          padding: isMobile ? '0.85rem' : '0.65rem 1.15rem',
+          borderRadius: '18px',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+        }}>
+          {/* Track Context Indicator */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div style={{
+              width: '9px',
+              height: '9px',
+              borderRadius: '50%',
+              background: portfolioTrack === 'it' ? '#0284c7' : (portfolioTrack === 'art' ? '#ec4899' : '#8b5cf6'),
+              boxShadow: `0 0 10px ${portfolioTrack === 'it' ? 'rgba(2,132,199,0.7)' : (portfolioTrack === 'art' ? 'rgba(236,72,153,0.7)' : 'rgba(139,92,246,0.7)')}`,
+              transition: 'all 0.3s ease'
+            }} />
+            <span style={{
+              fontSize: '0.86rem',
+              fontWeight: 750,
+              color: '#0f172a',
+              letterSpacing: '-0.01em'
+            }}>
+              {portfolioTrack === 'it' ? '💻 IT & Software Engineering' : (portfolioTrack === 'art' ? '🎬 Art, Film & Creative Media' : '✨ Complete Portfolio')}
+            </span>
+          </div>
+
+          {/* Interactive Switch / Segmented Control */}
+          <div
+            role="tablist"
+            aria-label="Filter portfolio by track"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              background: '#ffffff',
+              padding: '0.28rem',
+              borderRadius: '9999px',
+              border: '1px solid #cbd5e1',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              width: isMobile ? '100%' : 'auto',
+              justifyContent: isMobile ? 'space-between' : 'flex-start'
+            }}
+          >
+            {[
+              { id: 'it', label: '💻 IT Projects', count: itWorks.length },
+              { id: 'art', label: '🎬 Art Projects', count: artWorks.length },
+              { id: 'all', label: '✨ All Works', count: showcaseWorks.length }
+            ].map((track) => {
+              const isActive = portfolioTrack === track.id;
+              return (
+                <button
+                  key={track.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => {
+                    setPortfolioTrack(track.id as any);
+                    setGalleryFilter('all');
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.45rem',
+                    padding: isMobile ? '0.45rem 0.65rem' : '0.45rem 1.05rem',
+                    borderRadius: '9999px',
+                    fontSize: isMobile ? '0.76rem' : '0.82rem',
+                    fontWeight: isActive ? 750 : 550,
+                    color: isActive ? '#ffffff' : '#64748b',
+                    background: isActive ? '#0f172a' : 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.22s ease',
+                    boxShadow: isActive ? '0 4px 12px rgba(15,23,42,0.22)' : 'none',
+                    flex: isMobile ? 1 : 'initial'
+                  }}
+                >
+                  <span>{track.label}</span>
+                  <span style={{
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    padding: '0.1rem 0.45rem',
+                    borderRadius: '9999px',
+                    background: isActive ? 'rgba(255,255,255,0.22)' : '#f1f5f9',
+                    color: isActive ? '#ffffff' : '#475569'
+                  }}>
+                    {track.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Interactive Category Filter Pills */}
