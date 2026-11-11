@@ -33,6 +33,223 @@ export const supabaseAdmin = createClient(
 export const fallbackPortfolioData = {
   projects: [
     {
+      id: "c8e192a0-4819-4cb5-b467-9d7a2f1b0a11",
+      _id: "c8e192a0-4819-4cb5-b467-9d7a2f1b0a11",
+      title: "CertiMatch — AI & NLP Certification Matching System",
+      subtitle: "Undergraduate Thesis (Skripsi) - Hilman Zahrawa Budiarto",
+      year: "2026",
+      role: "Lead Fullstack & NLP Engineer",
+      category: "NLP & AI System",
+      categoryTab: "web",
+      displayCategory: "NLP & AI System",
+      slug: "certimatch",
+      tags: ["Next.js 16", "Python", "NLP", "Sentence Transformers", "Prisma", "Tailwind CSS", "Shadcn UI"],
+      description: "CertiMatch adalah platform cerdas berbasis Natural Language Processing (NLP) dan machine learning yang dirancang untuk menganalisis, memetakan, dan mencocokkan dokumen sertifikasi kompetensi (format PDF) secara otomatis terhadap standar kompetensi nasional dan internasional (seperti Adobe Certified Professional, Autodesk Certified User, Microsoft Office Specialist, Cisco CCST, dan Unity).\n\nSistem mengintegrasikan ekstraksi teks cerdas, semantik embedding berbasis Sentence Transformers (all-MiniLM-L6-v2), perankingan tingkat kesesuaian berbasis Cosine Similarity, serta dashboard interaktif untuk penelusuran riwayat analisis dan kurasi standar sertifikasi bagi institusi pendidikan maupun profesional.",
+      image: "/projects/certimatch/home.png",
+      image_url: "/projects/certimatch/home.png",
+      coverImage: "/projects/certimatch/home.png",
+      gallery: [
+        "/projects/certimatch/home.png",
+        "/projects/certimatch/history.png",
+        "/projects/certimatch/admin.png",
+        "/projects/certimatch/login.png"
+      ],
+      link: "https://github.com/roqueforti/Skripsi-Hilman-Zahrawa-Budiarto",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Next.js 16 (App Router) · Python · Sentence Transformers · NLTK · Prisma · Tailwind CSS · Shadcn UI",
+      outcome: "Otomatisasi evaluasi kesesuaian sertifikasi dengan presisi semantik tinggi, mereduksi waktu kurasi manual dokumen sertifikat hingga 75%.",
+      sort_order: 1
+    },
+    {
+      id: "d9f283b1-5920-4dc6-c578-0e8b3f2c1b22",
+      _id: "d9f283b1-5920-4dc6-c578-0e8b3f2c1b22",
+      title: "LAYARPAL — Sistem Persuratan Digital & E-Office Kedinasan",
+      subtitle: "PT PAL Indonesia (Persero)",
+      year: "2026",
+      role: "Fullstack Developer & Lead Engineer",
+      category: "GovTech & E-Office",
+      categoryTab: "web",
+      displayCategory: "GovTech & E-Office",
+      slug: "persuratan-pal",
+      tags: ["Laravel 12", "Livewire 4.3", "Tailwind CSS 4", "DomPDF", "SQLite/MySQL", "E-Office"],
+      description: "Platform tata kelola persuratan digital kedinasan (E-Office) resmi PT PAL Indonesia (Persero) yang dibangun berdasarkan Keputusan Direksi Nomor Skep/08/10000/I/2023. Mengadopsi arsitektur Dual-System (Full Online Approval & Mass Offline Production Tools) untuk 4 klasifikasi naskah dinas resmi: Surat Keputusan (Kat. A), Surat Perjanjian (Kat. B), Surat Perintah (Kat. C), dan Administrasi Umum (Kat. D).\n\nDilengkapi dengan engine alur persetujuan bertingkat dinamis (Dynamic Role-Based Approval), generator penomoran otomatis anti-duplikasi, verifikasi kode QR & tanda tangan digital ber-timestamp, serta pemroses produksi massal dokumen PDF legal berkualitas tinggi.",
+      image: "/projects/persuratan-pal/dashboard-staff.png",
+      image_url: "/projects/persuratan-pal/dashboard-staff.png",
+      coverImage: "/projects/persuratan-pal/dashboard-staff.png",
+      gallery: [
+        "/projects/persuratan-pal/dashboard-staff.png",
+        "/projects/persuratan-pal/create-letter.png",
+        "/projects/persuratan-pal/letter-submitted.png",
+        "/projects/persuratan-pal/approval-inbox.png",
+        "/projects/persuratan-pal/letter-published.png",
+        "/projects/persuratan-pal/login-page.png"
+      ],
+      link: "https://github.com/roqueforti/persuratan-pal",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Laravel 12 · Livewire 4.3 · Tailwind CSS 4 · DomPDF · QR Engine · SQLite/MySQL",
+      outcome: "Mengeliminasi bottleneck birokrasi manual 1 pintu melalui pendelegasian multi-akun terstruktur, memproses ribuan surat dinas dan dokumen kepegawaian dengan akurasi 100%.",
+      sort_order: 2
+    },
+    {
+      id: "ea0394c2-6031-4ed7-d689-1f9c403d2c33",
+      _id: "ea0394c2-6031-4ed7-d689-1f9c403d2c33",
+      title: "PALKA — Corporate Learning & Development Ecosystem",
+      subtitle: "PT PAL Indonesia (Persero)",
+      year: "2026",
+      role: "Fullstack Developer & System Architect",
+      category: "LMS & Competency Suite",
+      categoryTab: "web",
+      displayCategory: "LMS & Competency Suite",
+      slug: "learning-development-system",
+      tags: ["Laravel", "PHP 8.3", "PostgreSQL", "Tailwind CSS", "Blade", "Vite", "LDNA"],
+      description: "Ekosistem digital terpadu untuk akselerasi kapabilitas SDM dan pengembangan kompetensi pekerja di PT PAL Indonesia (Persero). Menghubungkan seluruh siklus pembelajaran organisasi: analisis kebutuhan pembelajaran (Learning & Development Needs Analysis / LDNA), matriks standar kompetensi jabatan (KUK & SKKNI), kurasi silabus & materi pelatihan industri galangan kapal, siklus in-class training, modul pembelajaran daring mandiri, program mentoring, job shadowing, hingga jalur Management Trainee (MT).\n\nSistem mengelola kredit jam pembelajaran (Learning Hours / LH), sertifikasi keahlian internal, serta integrasi rekonsiliasi kompetensi enterprise demi menjaga kesiapan kapabilitas teknis maritim nasional.",
+      image: "/projects/learning-development-system/lnd-overview.png",
+      image_url: "/projects/learning-development-system/lnd-overview.png",
+      coverImage: "/projects/learning-development-system/lnd-overview.png",
+      gallery: [
+        "/projects/learning-development-system/lnd-overview.png",
+        "/projects/learning-development-system/lnd-workflow-architecture.png",
+        "/projects/learning-development-system/lnd-module-cards.png",
+        "/projects/learning-development-system/palka-hero.png"
+      ],
+      link: "https://github.com/firdausbiaf/learning-development-system",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Laravel · PHP 8.3 · PostgreSQL · Blade · Tailwind CSS · Alpine.js · Vite · Enterprise Sync",
+      outcome: "Membakukan standardisasi pemenuhan kurikulum kompetensi pekerja galangan kapal secara terukur dan transparan di seluruh unit PT PAL Indonesia.",
+      sort_order: 3
+    },
+    {
+      id: "fb1405d3-7142-4fe8-e790-20ad514e3d44",
+      _id: "fb1405d3-7142-4fe8-e790-20ad514e3d44",
+      title: "HCA Insights & HRIS Analytics Portal",
+      subtitle: "PT PAL Indonesia (Persero)",
+      year: "2026",
+      role: "Fullstack & Analytics Engineer",
+      category: "Enterprise HRIS",
+      categoryTab: "web",
+      displayCategory: "Enterprise HRIS",
+      slug: "hca-pal",
+      tags: ["Laravel 13", "PHP 8.3", "PostgreSQL", "Tailwind CSS", "Chart.js", "Three.js"],
+      description: "Portal analitik Human Capital Analytics (HCA) dan HRIS cerdas untuk mendukung pengambilan keputusan strategis divisi Human Capital di PT PAL Indonesia (Persero). Mengintegrasikan telemetri tenaga kerja multidimensi ke dalam dasbor eksekutif responsif.\n\nModul sistem mencakup Career Recruitment Funnel (analisis 7-stage seleksi, SLA divisi, pemantauan talent pool), Continuous Improvement Idea (CII - tren inovasi harian & partisipasi divisi), PACES (evaluasi kompetensi wawancara kerja teknis), MBPAL (analitik logistik operasional & kepuasan vendor katering), serta telemetri risiko demografi dan kehadiran pekerja galangan kapal dengan antarmuka 3D Shipyard Login imersif.",
+      image: "/projects/hca-pal/career-dashboard.png",
+      image_url: "/projects/hca-pal/career-dashboard.png",
+      coverImage: "/projects/hca-pal/career-dashboard.png",
+      gallery: [
+        "/projects/hca-pal/career-dashboard.png",
+        "/projects/hca-pal/cii-innovation.png",
+        "/projects/hca-pal/paces-assessment.png",
+        "/projects/hca-pal/mbpal-operations.png",
+        "/projects/hca-pal/insights-dashboard.png",
+        "/projects/hca-pal/career-mobile.png"
+      ],
+      link: "https://github.com/hakan009/HCA-PAL",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Laravel 13 · PHP 8.3 · PostgreSQL 18 · Blade · Tailwind CSS · Chart.js · Three.js 3D · Vite",
+      outcome: "Mengintegrasikan analitik lintas 6 pilar HRIS strategis dan menyajikan dasbor prediktif real-time bagi jajaran manajemen dan HC specialist PT PAL Indonesia.",
+      sort_order: 4
+    },
+    {
+      id: "ac2516e4-8253-40f9-f801-31be625f4e55",
+      _id: "ac2516e4-8253-40f9-f801-31be625f4e55",
+      title: "Internship PAL — Sistem Manajemen Magang End-to-End",
+      subtitle: "PT PAL Indonesia (Persero)",
+      year: "2026",
+      role: "Fullstack Developer & System Engineer",
+      category: "Talent Acquisition",
+      categoryTab: "web",
+      displayCategory: "Talent Acquisition",
+      slug: "internship-pal",
+      tags: ["Laravel", "Livewire", "Tailwind CSS", "Alpine.js", "SQLite/MySQL", "Canvas Studio"],
+      description: "Platform komprehensif pengelolaan program magang industri di PT PAL Indonesia (Persero) yang mencakup keseluruhan siklus (end-to-end): mulai dari pengajuan formasi kebutuhan magang oleh PIC unit kerja, kurasi & publikasi lowongan resmi, pendaftaran pelamar individu/kelompok, seleksi kompetensi berjenjang, penempatan divisi kerja terintegrasi, hingga studio desain ID Card digital dan penerbitan sertifikat magang resmi terverifikasi.\n\nSistem dilengkapi presensi harian berbasis geofencing radius galangan kapal, monitoring logbook pembimbing, serta evaluasi performa terstandarisasi untuk ribuan mahasiswa dan siswa SMK di seluruh Indonesia.",
+      image: "/projects/intern-pal/internship-dashboard.png",
+      image_url: "/projects/intern-pal/internship-dashboard.png",
+      coverImage: "/projects/intern-pal/internship-dashboard.png",
+      gallery: [
+        "/projects/intern-pal/internship-dashboard.png",
+        "/projects/intern-pal/internship-monitoring.png",
+        "/projects/intern-pal/portal-hero.webp",
+        "/projects/intern-pal/id-card-front.png",
+        "/projects/intern-pal/certificate-template.png",
+        "/projects/intern-pal/internship-activity.webp",
+        "/projects/intern-pal/portal-login.webp",
+        "/projects/intern-pal/internship-mobile.png"
+      ],
+      link: "https://github.com/agustylabdanayoga25/internship-pal",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Laravel 13 · Livewire · Tailwind CSS · Alpine.js · Canvas/Fabric.js · SQLite/MySQL · Geolocation API",
+      outcome: "Memangkas waktu administrasi onboarding pemagang hingga 80%, mengotomatisasi cetak ratusan ID Card fisik dan digital dalam hitungan menit.",
+      sort_order: 5
+    },
+    {
+      id: "bd3627f5-9364-410a-0912-42cf73605f66",
+      _id: "bd3627f5-9364-410a-0912-42cf73605f66",
+      title: "Dua Sisi Laundry — Cloud POS & Production Pipeline System",
+      subtitle: "Dua Sisi Express & Coin Laundry",
+      year: "2026",
+      role: "Fullstack Developer & System Architect",
+      category: "Cloud POS & Operations",
+      categoryTab: "web",
+      displayCategory: "Cloud POS & Operations",
+      slug: "duasisi-pos",
+      tags: ["Next.js", "React 19", "TypeScript", "Tailwind CSS", "Google Apps Script", "Web Bluetooth", "PWA"],
+      description: "Sistem Point of Sale (POS) dan manajemen operasional laundry modern berbasis Cloud/PWA yang terintegrasi langsung dengan Google Apps Script sebagai serverless engine dan database. Dirancang khusus untuk operasional Express & Self-Service Coin Laundry dengan antarmuka layar sentuh ramah tablet.\n\nDilengkapi dengan Kanban pipa produksi fisik drop-off (cuci, kering, setrika, lipat, siap diambil), monitoring operasional mesin cuci & dryer real-time, kontrol shift kasir & serah terima kas fisik, presensi selfie berbasis verifikasi koordinat GPS, pencetakan struk termal via Web Bluetooth ESC/POS, pengiriman e-nota WhatsApp, serta portal mandiri pelanggan dengan galeri interaktif 3D DriftWall dan pelacakan cucian 2FA.",
+      image: "/projects/duasisi-pos/pos-terminal.png",
+      image_url: "/projects/duasisi-pos/pos-terminal.png",
+      coverImage: "/projects/duasisi-pos/pos-terminal.png",
+      gallery: [
+        "/projects/duasisi-pos/pos-terminal.png",
+        "/projects/duasisi-pos/customer-portal.png",
+        "/projects/duasisi-pos/enota.png",
+        "/projects/duasisi-pos/pos-internal.png"
+      ],
+      link: "https://github.com/roqueforti/duasisi-pos",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: true,
+      stack: "Next.js 16 (Turbopack) · React 19 · TypeScript · Tailwind CSS · Google Apps Script · Web Bluetooth ESC/POS · OpenStreetMap Photon API",
+      outcome: "Mendigitalkan 100% operasional kasir & Kanban produksi, menghilangkan selisih kas fisik per shift, dan memfasilitasi pelacakan mandiri ratusan pesanan pelanggan secara transparan.",
+      sort_order: 6
+    },
+    {
+      id: "ce473806-0475-421b-1a23-53d084716077",
+      _id: "ce473806-0475-421b-1a23-53d084716077",
+      title: "Hay Day Daku Cello — Interactive Catalog & WhatsApp Store",
+      subtitle: "Daku Cello Gaming Store",
+      year: "2025",
+      role: "Frontend Developer",
+      category: "Interactive Catalog",
+      categoryTab: "web",
+      displayCategory: "Interactive Catalog",
+      slug: "hayday-daku-cello",
+      tags: ["Next.js", "React", "Tailwind CSS", "Firebase", "SheetJS"],
+      description: "Website katalog interaktif dan kalkulator pemesanan real-time untuk toko item game Hay Day Daku Cello. Memudahkan ribuan pelanggan menelusuri katalog item lintas kategori (Alat & Bahan, Dapur & Peternakan, Hasil Laut, Produk Tambang), menghitung total biaya transaksi secara otomatis, dan melakukan checkout instan yang langsung terhubung ke format pesanan WhatsApp terstruktur.",
+      image: "/projects/hayday/catalog.png",
+      image_url: "/projects/hayday/catalog.png",
+      coverImage: "/projects/hayday/catalog.png",
+      gallery: [
+        "/projects/hayday/catalog.png",
+        "/projects/hayday/admin.png",
+        "/projects/hayday/mobile.png"
+      ],
+      link: "https://github.com/roqueforti/hayday-daku-cello",
+      videoUrl: null,
+      deviceType: "desktop",
+      featured: false,
+      stack: "Next.js 14 · React · Tailwind CSS · Firebase · SheetJS · WhatsApp API Integration",
+      outcome: "Meningkatkan konversi transaksi pemesanan item game hingga 60% dengan kalkulasi keranjang instan tanpa salah hitung nominal order.",
+      sort_order: 7
+    },
+    {
       id: "23497c03-2630-4f1e-9308-6783922e2c43",
       _id: "23497c03-2630-4f1e-9308-6783922e2c43",
       title: "Brewtech: SaaS Platform Connecting Schools and Cafés for Inclusive Barista Training and Sociopreneurship",
@@ -55,7 +272,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Next.js · TypeScript · Supabase · Tailwind · Accessibility",
       outcome: "Empowering 50+ youth with disabilities through certified barista vocational education and industry placement pipeline.",
-      sort_order: 1
+      sort_order: 8
     },
     {
       id: "e2117049-335d-420e-9797-20a35943bd7d",
@@ -80,7 +297,7 @@ export const fallbackPortfolioData = {
       featured: true,
       stack: "Figma · React · TailwindCSS · REST APIs · Dashboard",
       outcome: "Centralized personnel telemetry and employee lifecycle ops, cutting manual document verification by 40%.",
-      sort_order: 2
+      sort_order: 9
     },
     {
       id: "854c49d0-f6ee-4740-93da-3ed8b9d4f13a",
@@ -105,7 +322,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Laravel · MySQL · Bootstrap · Livewire · WCAG",
       outcome: "Standardized public labor service access across 38 regencies in East Java with dispute resolution and grievance channels.",
-      sort_order: 3
+      sort_order: 10
     },
     {
       id: "701a0e4b-4d6c-4404-a723-70e13b4aecb6",
@@ -130,7 +347,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Next.js · TailwindCSS · Creative Direction · Micro-interactions",
       outcome: "Empowering social entrepreneurship with Kafe Among Rasa & SLB YPAC Malang barista internships.",
-      sort_order: 4
+      sort_order: 11
     },
     {
       id: "db826ed7-478f-4d6d-bf6f-65c97ee66c70",
@@ -155,7 +372,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Figma · Responsive Web Design · Design System",
       outcome: "Streamlined travel shuttle booking flow and dynamic schedule exploration for customer convenience.",
-      sort_order: 5
+      sort_order: 12
     },
     {
       id: "30c330b6-88e0-4486-a29a-e1b4b75d2f25",
@@ -180,7 +397,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Next.js · TailwindCSS · Mobile-First UI",
       outcome: "Digital informational hub connecting parents and educators for early childhood programs.",
-      sort_order: 6
+      sort_order: 13
     },
     {
       id: "8148ca78-c69e-4925-8134-5e0544cd66f9",
@@ -205,7 +422,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "PHP · Laravel · MySQL · Bootstrap",
       outcome: "College ecosystem connecting student creative projects, digital portfolios, and cross-department collaboration.",
-      sort_order: 7
+      sort_order: 14
     },
     {
       id: "7cc8d06e-a901-4df8-ad46-9fb41913a917",
@@ -230,7 +447,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Film Direction · Screenplay · Production",
       outcome: "SMAN 1 Malang Web Series - Episode 1 (Intention) highlighting student creative aspirations.",
-      sort_order: 8
+      sort_order: 15
     },
     {
       id: "27dbca6a-c675-4981-8e69-3dccb43d2782",
@@ -255,7 +472,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Film Direction · Cinematography · Post-Production",
       outcome: "SMAN 1 Malang Web Series - Episode 2 (Decision).",
-      sort_order: 9
+      sort_order: 16
     },
     {
       id: "d0b450a0-ecf8-40bb-8ca0-4bfec5f57350",
@@ -280,7 +497,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Film Direction · Color Grading · Audio Post",
       outcome: "SMAN 1 Malang Web Series - Episode 3 (Reality).",
-      sort_order: 10
+      sort_order: 17
     },
     {
       id: "0e8bcc54-eaff-444f-84f3-5f7bb200fdab",
@@ -305,7 +522,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Film Direction · Sound Design · Final Cut",
       outcome: "SMAN 1 Malang Web Series - Finale Episode 4 (Final).",
-      sort_order: 11
+      sort_order: 18
     },
     {
       id: "e5550c64-f4ff-4eab-a876-316b9e5ca5d3",
@@ -330,7 +547,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Adobe Premiere · After Effects · Sound Mixing",
       outcome: "Official teaser trailer for SMAN 1 Malang's flagship creative series.",
-      sort_order: 12
+      sort_order: 19
     },
     {
       id: "608b9d00-a43e-4a51-8393-150694f13019",
@@ -355,7 +572,7 @@ export const fallbackPortfolioData = {
       featured: false,
       stack: "Video Editing · Color Grading · VFX",
       outcome: "Official Music Video for KOS ATOS - Kita Beda Berbahaya.",
-      sort_order: 13
+      sort_order: 20
     }
   ],
   bio: {
