@@ -454,7 +454,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
   const headline = bio?.headline || "Fullstack Developer | UI/UX Designer";
   const email = bio?.email || "budiarto3788@gmail.com";
   const whatsapp = bio?.whatsapp || "6285806003234";
-  const location = bio?.location || "Malang, Jawa Timur, Indonesia";
+  const location = bio?.location || "Malang, Indonesia (Available for Remote Worldwide)";
   const about = bio?.about || "Software Engineer passionate about building scalable web applications, AI-powered solutions, and meaningful digital experiences. I bridge engineering, product thinking, and visual design to create software that performs exceptionally and leaves a lasting impression.";
   const mediumUsername = bio?.mediumUsername || bio?.medium_username || "hilmanzahrawa";
 
@@ -2082,13 +2082,13 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     <span style={{ fontSize: '0.86rem', color: '#64748b', fontWeight: 500 }}>
-                      Menampilkan{' '}
+                      Showing{' '}
                       <strong style={{ color: '#0f172a', fontWeight: 700 }}>
                         {(currentPage - 1) * ITEMS_PER_PAGE + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, filteredWorks.length)}
                       </strong>{' '}
-                      dari{' '}
+                      of{' '}
                       <strong style={{ color: '#0f172a', fontWeight: 700 }}>{filteredWorks.length}</strong>{' '}
-                      proyek
+                      projects
                     </span>
                     <span
                       style={{
@@ -2100,7 +2100,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                         color: '#0284c7'
                       }}
                     >
-                      Halaman {currentPage} dari {totalPages}
+                      Page {currentPage} of {totalPages}
                     </span>
                   </div>
 
@@ -2109,7 +2109,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       type="button"
                       disabled={currentPage === 1}
                       onClick={() => handlePageChange(currentPage - 1)}
-                      aria-label="Halaman Sebelumnya"
+                      aria-label="Previous Page"
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -2165,7 +2165,7 @@ export default function ClientPage({ initialData }: ClientPageProps) {
                       type="button"
                       disabled={currentPage === totalPages}
                       onClick={() => handlePageChange(currentPage + 1)}
-                      aria-label="Halaman Berikutnya"
+                      aria-label="Next Page"
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
