@@ -80,8 +80,6 @@ export const fallbackPortfolioData = {
       coverImage: "/projects/persuratan-pal/letter-live-preview.webp",
       gallery: [
         "/projects/persuratan-pal/letter-live-preview.webp",
-        "/projects/persuratan-pal/id-card-studio.webp",
-        "/projects/persuratan-pal/id-card-print-sheet.webp",
         "/projects/persuratan-pal/approval-stepper.webp",
         "/projects/persuratan-pal/letter-catalog.webp",
         "/projects/persuratan-pal/dashboard-staff.webp"
