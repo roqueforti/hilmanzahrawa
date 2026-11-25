@@ -208,8 +208,8 @@ export const fallbackPortfolioData = {
         "/projects/intern-pal/portal-hero.webp",
         "/projects/intern-pal/internship-monitoring.webp",
         "/projects/intern-pal/internship-dashboard.webp",
-        "/projects/intern-pal/id-card-front.webp",
-        "/projects/intern-pal/certificate-template.webp",
+        "/projects/intern-pal/id-card-studio.webp",
+        "/projects/intern-pal/certificate-studio.webp",
         "/projects/intern-pal/internship-activity.webp"
       ],
       link: "https://github.com/agustylabdanayoga25/internship-pal",
