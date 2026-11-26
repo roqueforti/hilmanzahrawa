@@ -206,11 +206,13 @@ export const fallbackPortfolioData = {
       coverImage: "/projects/intern-pal/portal-hero.webp",
       gallery: [
         "/projects/intern-pal/portal-hero.webp",
-        "/projects/intern-pal/internship-monitoring.webp",
-        "/projects/intern-pal/internship-dashboard.webp",
+        "/projects/intern-pal/quota-approval.webp",
+        "/projects/intern-pal/applicant-screening.webp",
+        "/projects/intern-pal/intern-attendance.webp",
+        "/projects/intern-pal/unit-kerja-quota.webp",
         "/projects/intern-pal/id-card-studio.webp",
         "/projects/intern-pal/certificate-studio.webp",
-        "/projects/intern-pal/internship-activity.webp"
+        "/projects/intern-pal/internship-dashboard.webp"
       ],
       link: "https://github.com/agustylabdanayoga25/internship-pal",
       videoUrl: null,
